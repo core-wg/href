@@ -1,0 +1,14 @@
+<http://TBD6/rd-item> </sensors> {
+    <http://TBD6/ct> 40
+    <http://TBD6/title> "Sensor Index"
+}
+<http://TBD6/rd-item> </sensors/temp> {
+    <http://TBD6/rt> "temperature-c"
+    <http://TBD6/if> "sensor"
+    <http://www.iana.org/assignments/relation/describedby> <http://www.example.com/sensors/t123>
+    <http://www.iana.org/assignments/relation/alternate> </t>
+}
+<http://TBD6/rd-item> </sensors/light> {
+    <http://TBD6/rt> "light-lux"
+    <http://TBD6/if> "sensor"
+}

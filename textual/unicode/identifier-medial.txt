@@ -1,0 +1,30 @@
+# coral-identifier-medial-11.0.0.txt
+# Date: 2019-03-20, 11:29:22 GMT
+# © 2019 Unicode®, Inc.
+# Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
+# For terms of use, see http://www.unicode.org/terms_of_use.html
+#
+# Unicode Character Database
+# For documentation, see http://www.unicode.org/reports/tr44/
+#
+# This file is an extract from the
+# Unicode Character Database.
+#
+# This file lists all code points allowed in medial positions
+# in CoRAL identifiers, as per draft-hartke-t2trg-coral-08.
+#
+# ================================================
+
+002D          # Pd         HYPHEN-MINUS
+002E          # Po         FULL STOP
+007E          # Sm         TILDE
+058A          # Pd         ARMENIAN HYPHEN
+0F0B          # Po         TIBETAN MARK INTERSYLLABIC TSHEG
+2010          # Pd         HYPHEN
+2027          # Po         HYPHENATION POINT
+30A0          # Pd         KATAKANA-HIRAGANA DOUBLE HYPHEN
+30FB          # Po         KATAKANA MIDDLE DOT
+
+# Total code points: 9
+
+# EOF

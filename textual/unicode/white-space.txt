@@ -1,0 +1,31 @@
+# coral-white-space-11.0.0.txt
+# Date: 2019-03-20, 11:29:22 GMT
+# © 2019 Unicode®, Inc.
+# Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
+# For terms of use, see http://www.unicode.org/terms_of_use.html
+#
+# Unicode Character Database
+# For documentation, see http://www.unicode.org/reports/tr44/
+#
+# This file is an extract from the
+# Unicode Character Database.
+#
+# This file lists all code points with the White_Space property.
+#
+# ================================================
+
+0009..000D    # Cc     [5] <control-0009>..<control-000D>
+0020          # Zs         SPACE
+0085          # Cc         <control-0085>
+00A0          # Zs         NO-BREAK SPACE
+1680          # Zs         OGHAM SPACE MARK
+2000..200A    # Zs    [11] EN QUAD..HAIR SPACE
+2028          # Zl         LINE SEPARATOR
+2029          # Zp         PARAGRAPH SEPARATOR
+202F          # Zs         NARROW NO-BREAK SPACE
+205F          # Zs         MEDIUM MATHEMATICAL SPACE
+3000          # Zs         IDEOGRAPHIC SPACE
+
+# Total code points: 25
+
+# EOF

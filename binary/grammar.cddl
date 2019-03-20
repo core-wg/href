@@ -1,0 +1,55 @@
+body = [*(link / form / representation / directive)]
+
+link = [2, relation-type, link-target, ?body]
+
+relation-type = text
+
+link-target = ciri / literal
+
+literal = bool / int / float / time / bytes / text / null
+
+form = [3, operation-type, method, submission-target, ?form-fields]
+
+operation-type = text
+
+method = text / uint
+
+submission-target = ciri
+
+form-fields = [*(form-field-type, form-field-value)]
+
+form-field-type = text
+
+form-field-value = ciri / literal
+
+representation = [0, bytes, ?representation-metadata]
+
+representation-metadata = [*(metadata-name, metadata-value)]
+
+metadata-name = text
+
+metadata-value = ciri / literal
+
+directive = base-directive
+
+base-directive = [1, base]
+      
+base = ciri
+
+relation-type /= uint
+link-target /= #6.6(uint)
+operation-type /= uint
+submission-target /= #6.6(uint)
+form-field-type /= uint
+form-field-value /= #6.6(uint)
+metadata-name /= uint
+metadata-value /= #6.6(uint)
+
+ciri = [?(scheme:    1, text .regexp "[A-Za-z][A-Za-z0-9+.-]*"),
+        ?(host.name: 2, text //
+          host.ip:   3, bytes .size 4 / bytes .size 16),
+        ?(port:      4, 0..65535),
+        ?(path.type: 5, 0..127),
+        *(path:      6, text),
+        *(query:     7, text),
+        ?(fragment:  8, text)]
