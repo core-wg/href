@@ -1,13 +1,13 @@
 #base <coap://[2001:db8:4::1]:5683>
-<http://TBD6/rd-item> </light/left> {
-    <http://TBD6/rt> "light"
-    <http://TBD6/ct> 0
+<http://tbd6/rd-item> </light/left> {
+    <http://tbd6/rt> "light"
+    <http://tbd6/ct> 0
 }
-<http://TBD6/rd-item> </light/middle> {
-    <http://TBD6/rt> "light"
-    <http://TBD6/ct> 0
+<http://tbd6/rd-item> </light/middle> {
+    <http://tbd6/rt> "light"
+    <http://tbd6/ct> 0
 }
-<http://TBD6/rd-item> </light/right> {
-    <http://TBD6/rt> "light"
-    <http://TBD6/ct> 0
+<http://tbd6/rd-item> </light/right> {
+    <http://tbd6/rt> "light"
+    <http://tbd6/ct> 0
 }
