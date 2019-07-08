@@ -1,3 +1,7 @@
+; draft-hartke-t2trg-coral-09
+
+document = body
+
 body = [*(link / form / representation / directive)]
 
 link = [2, relation-type, link-target, ?body]
@@ -8,11 +12,9 @@ link-target = ciri / literal
 
 literal = bool / int / float / time / bytes / text / null
 
-form = [3, operation-type, method, submission-target, ?form-fields]
+form = [3, operation-type, submission-target, ?form-fields]
 
 operation-type = text
-
-method = text / uint
 
 submission-target = ciri
 
@@ -33,7 +35,7 @@ metadata-value = ciri / literal
 directive = base-directive
 
 base-directive = [1, base]
-      
+
 base = ciri
 
 relation-type /= uint

@@ -1,3 +1,5 @@
+; draft-hartke-t2trg-coral-09
+
 token = identifier / iri / iriref / literal / punctuator
 
 identifier = START *CONTINUE *(MEDIAL 1*CONTINUE)
@@ -52,11 +54,11 @@ float =/ "NaN"
 
 float =/ ["+" / "-"] "Infinity"
 
-datetime = DOLLAR date-time DOLLAR
+datetime = %x64.74 SQUOTE date-time SQUOTE
 
 date-time = <Defined in Section 5.6 of RFC 3339>
 
-DOLLAR = %x24
+SQUOTE = %x27
 
 bytes = base16 / base32 / base64
 
@@ -65,8 +67,6 @@ base16 = (%x68 / %x62.31.36) SQUOTE <Base16 encoded data> SQUOTE
 base32 = %x62.33.32 SQUOTE <Base32 encoded data> SQUOTE
 
 base64 = %x62.36.34 SQUOTE <Base64 encoded data> SQUOTE
-
-SQUOTE = %x27
 
 text = DQUOTE *(char / %x5C escape) DQUOTE
 

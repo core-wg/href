@@ -1,3 +1,7 @@
+; draft-hartke-t2trg-coral-09
+
+document = body
+
 body = *(link / form / representation / directive)
 
 link = relation-type link-target ["{" body "}"]
@@ -10,11 +14,9 @@ qualified-name = identifier ":" identifier
 
 link-target = iriref / literal
 
-form = operation-type "->" method submission-target ["[" form-fields "]"]
+form = operation-type "->" submission-target ["[" form-fields "]"]
 
 operation-type = iri / simple-name / qualified-name
-
-method = identifier
 
 submission-target = iriref
 

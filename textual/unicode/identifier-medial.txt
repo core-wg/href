@@ -11,7 +11,7 @@
 # Unicode Character Database.
 #
 # This file lists all code points allowed in medial positions
-# in CoRAL identifiers, as per draft-hartke-t2trg-coral-08.
+# in CoRAL identifiers, as per draft-hartke-t2trg-coral-09.
 #
 # ================================================
 

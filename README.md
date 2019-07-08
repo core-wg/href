@@ -4,9 +4,9 @@
 ## Specifications
 
 * CoRAL
-    * [draft-hartke-t2trg-coral-08](https://tools.ietf.org/html/draft-hartke-t2trg-coral-08) ([datatracker](https://datatracker.ietf.org/doc/draft-hartke-t2trg-coral/))
+    * [draft-hartke-t2trg-coral-09](https://tools.ietf.org/html/draft-hartke-t2trg-coral-09) ([datatracker](https://datatracker.ietf.org/doc/draft-hartke-t2trg-coral/))
 * CIRI
-    * [draft-hartke-t2trg-ciri-02](https://tools.ietf.org/html/draft-hartke-t2trg-ciri-02) ([datatracker](https://datatracker.ietf.org/doc/draft-hartke-t2trg-ciri/))
+    * [draft-hartke-t2trg-ciri-03](https://tools.ietf.org/html/draft-hartke-t2trg-ciri-03) ([datatracker](https://datatracker.ietf.org/doc/draft-hartke-t2trg-ciri/))
 
 
 ## Companion Material 
