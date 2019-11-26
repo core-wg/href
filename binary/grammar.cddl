@@ -1,4 +1,4 @@
-; draft-hartke-t2trg-coral-09
+; draft-ietf-core-coral-01
 
 document = body
 
@@ -8,7 +8,7 @@ link = [2, relation-type, link-target, ?body]
 
 relation-type = text
 
-link-target = ciri / literal
+link-target = CoRI / literal
 
 literal = bool / int / float / time / bytes / text / null
 
@@ -16,13 +16,13 @@ form = [3, operation-type, submission-target, ?form-fields]
 
 operation-type = text
 
-submission-target = ciri
+submission-target = CoRI
 
 form-fields = [*(form-field-type, form-field-value)]
 
 form-field-type = text
 
-form-field-value = ciri / literal
+form-field-value = CoRI / literal
 
 representation = [0, bytes, ?representation-metadata]
 
@@ -30,13 +30,13 @@ representation-metadata = [*(metadata-name, metadata-value)]
 
 metadata-name = text
 
-metadata-value = ciri / literal
+metadata-value = CoRI / literal
 
 directive = base-directive
 
 base-directive = [1, base]
 
-base = ciri
+base = CoRI
 
 relation-type /= uint
 link-target /= #6.6(uint)
@@ -47,7 +47,7 @@ form-field-value /= #6.6(uint)
 metadata-name /= uint
 metadata-value /= #6.6(uint)
 
-ciri = [?(scheme:    1, text .regexp "[A-Za-z][A-Za-z0-9+.-]*"),
+CoRI = [?(scheme:    1, text .regexp "[A-Za-z][A-Za-z0-9+.-]*"),
         ?(host.name: 2, text //
           host.ip:   3, bytes .size 4 / bytes .size 16),
         ?(port:      4, 0..65535),
