@@ -3,10 +3,10 @@
 
 ## Specifications
 
-* CoRAL
-    * [draft-hartke-t2trg-coral-09](https://tools.ietf.org/html/draft-hartke-t2trg-coral-09) ([datatracker](https://datatracker.ietf.org/doc/draft-hartke-t2trg-coral/))
-* CIRI
-    * [draft-hartke-t2trg-ciri-03](https://tools.ietf.org/html/draft-hartke-t2trg-ciri-03) ([datatracker](https://datatracker.ietf.org/doc/draft-hartke-t2trg-ciri/))
+* Constrained RESTful Application Language
+    * [draft-ietf-core-coral-01](https://tools.ietf.org/html/draft-ietf-core-coral-01) ([datatracker](https://datatracker.ietf.org/doc/draft-ietf-core-coral/))
+* Constrained Resource Identifiers
+    * [draft-ietf-core-href-01](https://tools.ietf.org/html/draft-ietf-core-href-01) ([datatracker](https://datatracker.ietf.org/doc/draft-ietf-core-href/))
 
 
 ## Companion Material 
