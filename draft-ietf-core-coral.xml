@@ -500,7 +500,7 @@
           An agent can navigate a browsing context by <em>traversing the
           session history</em> in addition to following links and submitting
           forms.
-          For example, if an agent received a representation that doesn't
+          For example, if an agent received a representation that does not
           contain any further links or forms, it can revert the active
           representation back to one it has visited earlier.
         </t>
@@ -508,7 +508,7 @@
         <t>
           Traversing the history should take advantage of caches to avoid new
           requests. An agent MAY reissue a safe request (e.g., a GET request) when
-          it doesn't have a fresh representation in its cache. An agent MUST NOT
+          it does not have a fresh representation in its cache. An agent MUST NOT
           reissue an unsafe request (e.g., a PUT or POST request) unless it
           intends to perform that operation again.
         </t>
