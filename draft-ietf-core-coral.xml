@@ -2132,7 +2132,7 @@
       <name>Security Considerations</name>
 
       <t>
-        CoRAL document processors need to be fully prepared fully prepared for
+        CoRAL document processors need to be fully prepared for
         all types of hostile input that may be designed to corrupt, overrun, or
         achieve control of the agent processing the document. For example,
         hostile input may be constructed to overrun buffers, allocate very big
@@ -2151,11 +2151,11 @@
 
       <t>
         Implementers of the CoRAL binary format need to consider the security
-        aspects of decoding CBOR. Different number representations for the same
-        numeric value are not equivalent in CoRAL (e.g., a floating-point value
-        of 0.0 is not the same as the integer 0). See Section XX of <xref
+        aspects of decoding CBOR. See Section XX of <xref
         target="I-D.ietf-cbor-7049bis">RFC XXXX</xref> for security
-        considerations relating to CBOR.
+        considerations relating to CBOR. In particular, different number
+        encodings for the same numeric value are not equivalent in CoRAL (e.g.,
+        a floating-point value of 0.0 is not the same as the integer 0). 
       </t>
 
       <t>
@@ -2184,7 +2184,7 @@
         entity providing a given string is connected to the wrong account or
         online resource based on different interpretations of the string. See
         <xref target="RFC6943">RFC 6943</xref> for security considerations
-        relating to identifiers in IRIs and other places.
+        relating to identifiers in IRIs and other strings.
       </t>
 
       <t>
@@ -2198,9 +2198,9 @@
 
       <t>
         CoRAL does not define any specific mechanisms for protecting the
-        confidentiality and integrity of CoRAL documents. It relies on
-        application layer or transport layer mechanisms for this, such as <xref
-        target="RFC8446">Transport Layer Security (TLS)</xref>.
+        confidentiality and integrity of CoRAL documents. It relies on security
+        mechanisms on the application layer or transport layer for this, such as
+        <xref target="RFC8446">Transport Layer Security (TLS)</xref>.
       </t>
 
       <t>
@@ -2214,18 +2214,18 @@
       <t>
         Applications using CoRAL ought to consider the attack vectors opened by
         automatically following, trusting, or otherwise using links and forms in
-        CoRAL documents. Notably, a server that is authoritative for the CoRAL
-        representation of a resource may not necessarily be authoritative for
-        nested elements in the document. See Section 5 of <xref
+        CoRAL documents. See Section 5 of <xref
         target="RFC8288">RFC 8288</xref> for related considerations.
       </t>
 
       <t>
-        Unless an application mitigates this risk by specifying more specific
-        rules, any link or form in a document where the link or form context and
-        the document's retrieval context don't share the same <xref
-        target="RFC6454">Web origin</xref> MUST be discarded ("same-origin
-        policy").
+        In particular, when a CoRAL document is the representation of a
+        resource, the server that is authoritative for that resource may not
+        necessarily be authoritative for nested elements in the document. In
+        this case, unless an application defines specific rules, any link or
+        form where the link/form context and the document's retrieval context do
+        not share the same <xref target="RFC6454">Web origin</xref> should be
+        discarded ("same-origin policy").
       </t>
 
     </section>
