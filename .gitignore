@@ -1,3 +1,4 @@
 *~
 .vs
-__pycache__
+__*__
+draft-*.txt
