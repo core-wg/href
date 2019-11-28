@@ -2207,7 +2207,7 @@
         CoRAL documents and the structure of a web of resources revealed from
         automatically following links can disclose personal information and
         other sensitive information. Implementations need to prevent the
-        unintentional disclosure of such information. See Section of 9 of <xref
+        unintentional disclosure of such information. See Section 9 of <xref
         target="RFC7231">RFC 7231</xref> for additional considerations.
       </t>
 
