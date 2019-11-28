@@ -84,46 +84,67 @@
         two specialized CoRAL serialization formats.
       </t>
 
-      <t>
-        The CoRAL data and interaction model is a superset of the Web Linking
-        model of <xref target="RFC8288">RFC 8288</xref>. The data model
-        consists of two primary elements: "links" that describe the
-        relationship between two resources and the type of that
-        relationship, and "forms" that describe a possible operation on a resource
-        and the type of that operation. Additionally,
-        the data model can describe simple resource metadata in a way similar to
-        the <xref target="W3C.REC-rdf11-concepts-20140225">Resource Description
-        Framework (RDF)</xref>. In contrast to RDF, the focus of CoRAL however is on the
-        interaction with resources, not just the relationships between them. The
-        interaction model derives from <xref
-        target="W3C.REC-html52-20171214">HTML 5</xref> and specifies how an
-        automated software agent can navigate between resources by following
-        links and perform operations on resources by submitting forms.
-      </t>
+      <section>
 
-      <t>
-        The primary CoRAL serialization format is a compact, binary encoding of
-        links and forms in <xref target="I-D.ietf-cbor-7049bis">Concise Binary Object
-        Representation (CBOR)</xref>. It is intended for <xref
-        target="RFC7228">environments with constraints on power, memory, and
-        processing resources</xref> and shares many similarities with the
-        message format of the <xref target="RFC7252">Constrained Application
-        Protocol (CoAP)</xref>: For example, it uses numeric identifiers instead
-        of verbose strings for link relation types and operation types, and pre-parses <xref
-        target="RFC3986">Uniform Resource Identifiers (URIs)</xref>
-        into (what CoAP considers to be) their components, which
-        simplifies URI processing for constrained nodes a lot. As a result, link serializations in CoRAL are often
-        much more compact than equivalent serializations in <xref
-        target="RFC6690">CoRE Link Format</xref>.
-      </t>
+        <name>Data and Interaction Model</name>
 
-      <t>
-        The secondary CoRAL serialization format is a lightweight, textual
-        encoding of links and forms that is intended to be easy to read and
-        write for humans. The format is loosely inspired by the syntax of <xref
-        target="W3C.REC-turtle-20140225">Turtle</xref> and is mainly intended
-        for giving examples.
-      </t>
+        <t>
+          The data model derives from the Web Linking model of <xref
+          target="RFC8288">RFC 8288</xref> and primarily consists of two
+          elements: "links" that describe the relationship between two resources
+          and the type of that relationship; and "forms" that describe a
+          possible operation on a resource and the type of that operation.
+        </t>
+
+        <t>
+          Additionally, the data model can describe simple resource metadata in
+          a way similar to the <xref
+          target="W3C.REC-rdf11-concepts-20140225">Resource Description
+          Framework (RDF)</xref>. In contrast to RDF, the focus of CoRAL however
+          is not on the description of a resource graph, but on the possible
+          future application states of a software agent.
+        </t>
+
+        <t>
+          The interaction model derives from <xref
+          target="W3C.REC-html52-20171214">HTML 5</xref> and specifies how an
+          automated software agent can navigate between resources by following
+          links and perform operations on resources by submitting forms.
+        </t>
+
+      </section>
+
+      <section>
+
+        <name>Serialization Formats</name>
+
+        <t>
+          The primary serialization format is a compact, binary encoding of
+          links and forms in <xref target="I-D.ietf-cbor-7049bis">Concise Binary
+          Object Representation (CBOR)</xref>. It is intended for <xref
+          target="RFC7228">environments with constraints on power, memory, and
+          processing resources</xref> and shares many similarities with the
+          message format of the <xref target="RFC7252">Constrained Application
+          Protocol (CoAP)</xref>. For example, it uses numeric identifiers
+          instead of verbose strings for link relation types and operation
+          types, and pre-parses <xref target="RFC3986">Uniform Resource
+          Identifiers (URIs)</xref> into (what CoAP considers to be) their
+          components, which considerably simplifies URI processing for
+          constrained nodes that already implement CoAP. As a result, link
+          serializations in CoRAL are often much more compact and easier to
+          process than equivalent serializations in <xref target="RFC6690">CoRE
+          Link Format</xref>.
+        </t>
+
+        <t>
+          The secondary serialization format is a lightweight, textual encoding
+          of links and forms that is intended to be easy to read and write for
+          humans. The format is loosely inspired by the syntax of <xref
+          target="W3C.REC-turtle-20140225">Turtle</xref> and is mainly intended
+          for giving examples with precise semantics.
+        </t>
+
+      </section>
 
       <section>
 
