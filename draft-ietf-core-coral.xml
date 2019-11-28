@@ -229,12 +229,15 @@
         <name>Links</name>
 
         <t>
-          A <em>link</em> describes a relationship between two resources
-          on the Web <xref target="RFC8288"/>. As defined in RFC 8288, it
-          consists of a <em>link context</em>, a <em>link relation
-          type</em>, and a <em>link target</em>. In CoRAL, a link can
-          additionally have a nested list of zero or more elements, which take
-          the place of link target attributes.
+          A <em>link</em> <xref target="RFC8288">describes a relationship
+          between two resources on the Web</xref>. As in RFC 8288, a link
+          consists of a <em>link context</em>, a <em>link relation type</em>,
+          and a <em>link target</em>. However, a link in CoRAL does not have
+          target attributes; instead, it can have a nested list of zero or more
+          elements. Nested elements cover both for the chaining of links that
+          can be done in RFC 8288 by setting the anchor of one link to the
+          target of another, and the description of resource metadata that is
+          done in RFC 8288 with target attributes.
         </t>
 
         <t>
