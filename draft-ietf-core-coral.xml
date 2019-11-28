@@ -186,7 +186,7 @@
 
       <section>
 
-        <name>Browsing Context</name>
+        <name>Browsing Contexts</name>
 
         <t>
           Borrowing from <xref target="W3C.REC-html52-20171214">HTML 5</xref>,
@@ -197,7 +197,7 @@
         </t>
 
         <t>
-          At any time, one representation in each browsing context is designated
+          At any time, one representation in a browsing context is designated
           the <em>active</em> representation.
         </t>
 
@@ -2176,7 +2176,7 @@
         target="I-D.ietf-cbor-7049bis">RFC XXXX</xref> for security
         considerations relating to CBOR. In particular, different number
         encodings for the same numeric value are not equivalent in CoRAL (e.g.,
-        a floating-point value of 0.0 is not the same as the integer 0). 
+        a floating-point value of 0.0 is not the same as the integer 0).
       </t>
 
       <t>
