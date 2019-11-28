@@ -288,39 +288,39 @@ ____ scheme __/             \___ port _
 
         <ul>
           <li>
-              the sequence of options is empty or starts with a "scheme",
-              "host.name", "host.ip", "port", "path.type", "path", "query",
-              or "fragment" option;
-            </li>
+            the sequence of options is empty or starts with a "scheme",
+            "host.name", "host.ip", "port", "path.type", "path", "query",
+            or "fragment" option;
+          </li>
           <li>
-              any "scheme" option is followed by either a "host.name" or a
-              "host.ip" option;
-            </li>
+            any "scheme" option is followed by either a "host.name" or a
+            "host.ip" option;
+          </li>
           <li>
-              any "host.name" option is followed by a "port" option;
-            </li>
+            any "host.name" option is followed by a "port" option;
+          </li>
           <li>
-              any "host.ip" option is followed by a "port" option;
-            </li>
+            any "host.ip" option is followed by a "port" option;
+          </li>
           <li>
-              any "port" option is followed by a "path", "query", or "fragment"
-              option or is at the end of the sequence;
-            </li>
+            any "port" option is followed by a "path", "query", or "fragment"
+            option or is at the end of the sequence;
+          </li>
           <li>
-              any "path.type" option is followed by a "path", "query", or
-              "fragment" option or is at the end of the sequence;
-            </li>
+            any "path.type" option is followed by a "path", "query", or
+            "fragment" option or is at the end of the sequence;
+          </li>
           <li>
-              any "path" option is followed by a "path", "query", or "fragment"
-              option or is at the end of the sequence;
-            </li>
+            any "path" option is followed by a "path", "query", or "fragment"
+            option or is at the end of the sequence;
+          </li>
           <li>
-              any "query" option is followed by a "query" or "fragment" option or
-              is at the end of the sequence; and
-            </li>
+            any "query" option is followed by a "query" or "fragment" option or
+            is at the end of the sequence; and
+          </li>
           <li>
-              any "fragment" option is at the end of the sequence.
-            </li>
+            any "fragment" option is at the end of the sequence.
+          </li>
         </ul>
 
         <t>
@@ -349,21 +349,28 @@ ____ scheme __/             \___ port _
 
         <dl newline="true">
           <dt>resolve(href, base)</dt>
-          <dd>Resolves a well-formed sequence of options `href` against
+          <dd>
+            <t>
+              Resolves a well-formed sequence of options `href` against
               an absolute sequence of options `base`. This operation MUST be
               performed by applying any algorithm that is functionally
               equivalent to the reference implementation in <xref target="py-resolve"/> of this document.
-            </dd>
+            </t>
+          </dd>
           <dt>relative(href, base)</dt>
-          <dd>Makes an absolute sequence of options `href` relative to
+          <dd>
+            <t>
+              Makes an absolute sequence of options `href` relative to
               an absolute sequence of options `base`. This operation MUST be
               performed by applying any algorithm that returns a sequence of
               options such that `resolve(relative(h, b), b)` is equal to `h`
               given the same `b`.
-            </dd>
+            </t>
+          </dd>
           <dt>recompose(href)</dt>
           <dd>
-            <t>Recomposes a URI from an absolute
+            <t>
+              Recomposes a URI from an absolute
               sequence of options `href`. This operation MUST be performed by
               applying any algorithm that is functionally equivalent to the
               reference implementation in <xref target="py-recompose"/> of this
@@ -378,19 +385,25 @@ ____ scheme __/             \___ port _
             </t>
           </dd>
           <dt>decompose(str)</dt>
-          <dd>Decomposes a URI `str` into a sequence of
+          <dd>
+            <t>
+              Decomposes a URI `str` into a sequence of
               options. This operation MUST be performed by applying any
               algorithm that returns a sequence of options such that
               `recompose(decompose(x))` is equivalent to `x`.
-            </dd>
+            </t>
+          </dd>
           <dt>coap(href)</dt>
-          <dd>Constructs CoAP options from an absolute, normalized
+          <dd>
+            <t>
+              Constructs CoAP options from an absolute, normalized
               sequence of options. This operation MUST be performed by
               recomposing the sequence of options to a URI (as
               described above) and decomposing the URI into CoAP options (as
               specified in Section 6.4 of RFC 7252). A concise implementation of this algorithm is
               illustrated in <xref target="py-coap"/> of this document.
-            </dd>
+            </t>
+          </dd>
         </dl>
 
       </section>
