@@ -51,6 +51,26 @@
 
     </abstract>
 
+    <note>
+
+      <name>Note to Readers</name>
+
+      <t>
+        The issues list for this Internet-Draft can be found at
+        &lt;https://github.com/core-wg/coral/labels/href&gt;.
+      </t>
+
+      <t>
+        A reference implementation and a set of test vectors can be found at
+        &lt;https://github.com/core-wg/coral/tree/master/binary/python&gt;.
+      </t>
+
+      <t>
+        [[NOTE TO RFC EDITOR: Please remove this section before publication.]]
+      </t>
+
+    </note>
+
   </front>
 
   <middle>
