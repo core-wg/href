@@ -1696,16 +1696,11 @@
 
     <section>
 
-      <name>Usage Considerations</name>
-
-      <t>
-        This section discusses some considerations in creating CoRAL-based
-        applications and vocabularies.
-      </t>
+      <name>Additional Semantics</name>
 
       <section>
 
-        <name>Submitting CoRAL Documents</name>
+        <name>Submitting Documents</name>
 
         <t>
           By default, a CoRAL document is a representation that captures the
@@ -1768,7 +1763,7 @@
 
       <section>
 
-        <name>Returning CoRAL Documents</name>
+        <name>Returning Documents</name>
 
         <t>
           In a response, the meaning of a CoRAL document changes depending on
@@ -1832,6 +1827,22 @@
         </section>
 
       </section>
+
+    </section>
+
+    <!-- **************************************************************** -->
+    <!-- **************************************************************** -->
+    <!-- **************************************************************** -->
+    <!-- **************************************************************** -->
+
+    <section>
+
+      <name>Usage Considerations</name>
+
+      <t>
+        This section discusses some considerations in creating CoRAL-based
+        applications and vocabularies.
+      </t>
 
       <section>
 
