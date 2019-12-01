@@ -839,7 +839,7 @@
 
       <section anchor="dictionaries">
 
-        <name>Dictionaries</name>
+        <name>Dictionary Compression</name>
 
         <t>
           The binary format can reference values from a dictionary to reduce
