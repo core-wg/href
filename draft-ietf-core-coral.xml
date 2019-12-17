@@ -2220,6 +2220,9 @@
         considerations relating to visual spoofing and misuse of character
         encodings. See Section 10 of <xref target="RFC3629">RFC 3629</xref> for
         security considerations relating to UTF-8.
+        See <xref target="UNICODE-UTS39">Unicode Technical Standard
+        #39</xref> for security mechanisms that can be used to detect possible
+        security problems relating to Unicode.
       </t>
 
       <t>
@@ -2562,6 +2565,16 @@
         <reference anchor="UNICODE-UTR36" target="http://unicode.org/reports/tr36/">
           <front>
             <title>Unicode Technical Report #36: Unicode Security Considerations</title>
+            <author>
+              <organization>The Unicode Consortium</organization>
+            </author>
+            <date/>
+          </front>
+        </reference>
+
+        <reference anchor="UNICODE-UTS39" target="http://unicode.org/reports/tr39/">
+          <front>
+            <title>Unicode Technical Standard #39: Unicode Security Mechanisms</title>
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
