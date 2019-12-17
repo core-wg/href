@@ -2216,7 +2216,7 @@
       <t>
         Implementers of the CoRAL textual format need to consider the security
         aspects of handling Unicode input. See the <xref
-        target="UNICODE-UAX36">Unicode Standard Annex #36</xref> for security
+        target="UNICODE-UTR36">Unicode Technical Report #36</xref> for security
         considerations relating to visual spoofing and misuse of character
         encodings. See Section 10 of <xref target="RFC3629">RFC 3629</xref> for
         security considerations relating to UTF-8.
@@ -2559,9 +2559,9 @@
           </front>
         </reference>
 
-        <reference anchor="UNICODE-UAX36" target="http://unicode.org/reports/tr36/">
+        <reference anchor="UNICODE-UTR36" target="http://unicode.org/reports/tr36/">
           <front>
-            <title>Unicode Standard Annex #36: Unicode Security Considerations</title>
+            <title>Unicode Technical Report #36: Unicode Security Considerations</title>
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
