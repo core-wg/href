@@ -875,7 +875,7 @@
           <t>
             A dictionary reference is encoded as an unsigned integer. Where a
             dictionary reference cannot be expressed unambiguously, the unsigned integer is
-            tagged with CBOR tag TBD6.
+            tagged with CBOR tag TBD6 as follows:
           </t>
 
           <ul empty="true">
@@ -2215,7 +2215,7 @@
 
       <t>
         Implementers of the CoRAL textual format need to consider the security
-        aspects of handling Unicode input. See the <xref
+        aspects of handling Unicode input. See <xref
         target="UNICODE-UTR36">Unicode Technical Report #36</xref> for security
         considerations relating to visual spoofing and misuse of character
         encodings. See Section 10 of <xref target="RFC3629">RFC 3629</xref> for
