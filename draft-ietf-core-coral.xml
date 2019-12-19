@@ -1777,7 +1777,8 @@
           </t>
 
           <t>
-            The retrieval context of a CoRAL document in a POST is an
+            The retrieval context of a CoRAL document in a POST is defined by
+            the target resource's processing semantics; it can be an
             unspecified URI. The base URI of the document is the request URI of
             the request.
           </t>
