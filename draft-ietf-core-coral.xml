@@ -589,6 +589,11 @@
         XX of RFC XXXX</xref>.
       </t>
 
+      <t>
+        CDDL rules not defined in this document are defined in Appendix D of
+        <xref target="RFC8610">RFC 8610</xref>.
+      </t>
+
       <section>
 
         <name>Data Structure</name>
