@@ -1809,7 +1809,7 @@
           <t>
             Success responses have a response status code that indicates that
             the client's request was successfully received, understood, and
-            accepted. When the representation in a success response does not
+            accepted (2xx in HTTP, 2.xx in CoAP). When the representation in a success response does not
             describe the state of the target resource, it describes result of
             processing the request.
             For example, when a request has been fulfilled and has resulted in
@@ -1834,17 +1834,45 @@
 
         <section>
 
+          <name>Redirection Responses</name>
+
+          <t>
+            Redirection responses have a response status code that indicates
+            that further action needs to be taken by the agent (3xx in HTTP). A
+            redirection response, for example, might indicate that the target
+            resource is available at a different URI or the server offers a
+            choice of multiple matching resources, each with its own specific
+            URI.
+          </t>
+
+          <t>
+            In the latter case, the representation in the response might contain
+            a list of resource metadata and URI references (i.e., links) from
+            which the agent can choose the most preferred one.
+          </t>
+
+          <t>
+            The retrieval context of a CoRAL document representing such multiple
+            choices in a redirection response is an unspecified URI that refers
+            to the redirection itself. The base URI of the document is the
+            request URI of the request.
+          </t>
+
+        </section>
+
+        <section>
+
           <name>Error Responses</name>
 
           <t>
             Error response have a response status code that indicates that
             either the request cannot be fulfilled or the server failed to
-            fulfill an apparently valid request. A representation in an error
+            fulfill an apparently valid request (4xx or 5xx in HTTP, 4.xx or 5.xx in CoAP). A representation in an error
             response describes the error condition.
           </t>
 
           <t>
-            The retrieval context of such a CoRAL document representing an error
+            The retrieval context of a CoRAL document representing such an error
             condition is an unspecified URI that refers to the error condition
             itself. The base URI of the document is the request URI of the
             request.
