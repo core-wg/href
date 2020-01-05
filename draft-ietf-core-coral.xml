@@ -1064,7 +1064,7 @@
           <t>
             An identifier token is a user-defined symbolic name. The rules for
             identifiers correspond to those recommended by the <xref
-            target="UNICODE-UAX31">Unicode Standard Annex #31</xref> using the
+            target="UAX31">Unicode Standard Annex #31</xref> using the
             following profile:
           </t>
 
@@ -1078,7 +1078,7 @@
 
           <t>
             All identifiers MUST be converted into Unicode Normalization Form C
-            (NFC), as defined by the <xref target="UNICODE-UAX15">Unicode
+            (NFC), as defined by the <xref target="UAX15">Unicode
             Standard Annex #15</xref>. Comparison of identifiers is based on NFC
             and is case-sensitive (unless otherwise noted).
           </t>
@@ -2088,7 +2088,7 @@
           <li>Dot segments ("/./" or "/../") in the path component of an IRI</li>
           <li>Lowercase hexadecimal letters within percent-encoding triplets (e.g., "%3F" is preferable over "%3f")</li>
           <li>Punycode-encoding of Internationalized Domain Names in IRIs</li>
-          <li>IRIs that are not in <xref target="UNICODE-UAX15">Unicode Normalization Form C</xref></li>
+          <li>IRIs that are not in <xref target="UAX15">Unicode Normalization Form C</xref></li>
         </ul>
 
         <t>
@@ -2271,11 +2271,11 @@
       <t>
         Implementers of the CoRAL textual format need to consider the security
         aspects of handling Unicode input. See <xref
-        target="UNICODE-UTR36">Unicode Technical Report #36</xref> for security
+        target="UTR36">Unicode Technical Report #36</xref> for security
         considerations relating to visual spoofing and misuse of character
         encodings. See Section 10 of <xref target="RFC3629">RFC 3629</xref> for
         security considerations relating to UTF-8.
-        See <xref target="UNICODE-UTS39">Unicode Technical Standard
+        See <xref target="UTS39">Unicode Technical Standard
         #39</xref> for security mechanisms that can be used to detect possible
         security problems relating to Unicode.
       </t>
@@ -2597,7 +2597,7 @@
           </annotation>
         </reference>
 
-        <reference anchor="UNICODE-UAX15" target="http://unicode.org/reports/tr15/">
+        <reference anchor="UAX15" target="http://unicode.org/reports/tr15/">
           <front>
             <title>Unicode Standard Annex #15: Unicode Normalization Forms</title>
             <author>
@@ -2607,29 +2607,9 @@
           </front>
         </reference>
 
-        <reference anchor="UNICODE-UAX31" target="http://unicode.org/reports/tr31/">
+        <reference anchor="UAX31" target="http://unicode.org/reports/tr31/">
           <front>
             <title>Unicode Standard Annex #31: Unicode Identifier and Pattern Syntax</title>
-            <author>
-              <organization>The Unicode Consortium</organization>
-            </author>
-            <date/>
-          </front>
-        </reference>
-
-        <reference anchor="UNICODE-UTR36" target="http://unicode.org/reports/tr36/">
-          <front>
-            <title>Unicode Technical Report #36: Unicode Security Considerations</title>
-            <author>
-              <organization>The Unicode Consortium</organization>
-            </author>
-            <date/>
-          </front>
-        </reference>
-
-        <reference anchor="UNICODE-UTS39" target="http://unicode.org/reports/tr39/">
-          <front>
-            <title>Unicode Technical Standard #39: Unicode Security Mechanisms</title>
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
@@ -2663,6 +2643,26 @@
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/reference.W3C.REC-rdf-schema-20140225.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/reference.W3C.REC-turtle-20140225.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/reference.W3C.REC-webarch-20041215.xml"/>
+
+        <reference anchor="UTR36" target="http://unicode.org/reports/tr36/">
+          <front>
+            <title>Unicode Technical Report #36: Unicode Security Considerations</title>
+            <author>
+              <organization>The Unicode Consortium</organization>
+            </author>
+            <date/>
+          </front>
+        </reference>
+
+        <reference anchor="UTS39" target="http://unicode.org/reports/tr39/">
+          <front>
+            <title>Unicode Technical Standard #39: Unicode Security Mechanisms</title>
+            <author>
+              <organization>The Unicode Consortium</organization>
+            </author>
+            <date/>
+          </front>
+        </reference>
 
         <reference anchor="HAL">
           <front>
