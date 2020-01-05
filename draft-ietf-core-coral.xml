@@ -206,7 +206,7 @@
 
       <section>
 
-        <name>Browsing Contexts</name>
+        <name>Browsing Context</name>
 
         <t>
           Borrowing from <xref target="W3C.REC-html52-20171214">HTML 5</xref>,
@@ -278,7 +278,7 @@
           An IRI also can lead to documentation, schema, and other information
           about the link relation type. These IRIs are only used as
           identity tokens, though, and are compared using Simple String
-          Comparison, as specified in Section 5.1 of RFC 3987.
+          Comparison as specified in Section 5.3.1 of RFC 3987.
         </t>
 
         <t>
@@ -473,7 +473,7 @@
               If the selected candidate contains an embedded representation,
               the agent MAY skip the following steps and immediately
               proceed with step <xref target="continue-with-representation"
-              format="counter"/>.
+              format="counter"/>
             </t>
           </li>
           <li>
@@ -576,22 +576,23 @@
       </t>
 
       <t>
-        A document in the binary format is a data item in <xref
-        target="I-D.ietf-cbor-7049bis">Concise Binary Object Representation (CBOR)</xref>. The
-        structure of this data item is presented in the <xref
-        target="RFC8610">Concise Data Definition Language
-        (CDDL)</xref>. The media type is "application/coral+cbor".
-      </t>
-
-      <t>
-        The CBOR encoding MUST satisfy the Core Deterministic Encoding
+        A document in the binary format is encoded in <xref
+        target="I-D.ietf-cbor-7049bis">Concise Binary Object Representation
+        (CBOR)</xref>. The encoding MUST satisfy the Core Deterministic Encoding
         Requirements specified in <xref target="I-D.ietf-cbor-7049bis">Section
         XX of RFC XXXX</xref>.
       </t>
 
       <t>
+        The CBOR structure of a document is presented in the <xref
+        target="RFC8610">Concise Data Definition Language (CDDL)</xref>. All
         CDDL rules not defined in this document are defined in Appendix D of
         <xref target="RFC8610">RFC 8610</xref>.
+      </t>
+
+      <t>
+        The media type of documents in the binary format is
+        "application/coral+cbor".
       </t>
 
       <section>
@@ -611,9 +612,9 @@
           Document processors need to maintain an <em>environment</em>
           while iterating an array of elements. The environment consists of
           two variables: the <em>current context</em> and the
-          <em>current base</em>. The current context and the
+          <em>current base</em>. Both the current context and the
           current base are initially set to the document's retrieval
-          context and the document's base URI, respectively.
+          context.
         </t>
 
         <section anchor="binary-body">
@@ -672,10 +673,10 @@
           </ul>
 
           <t>
-            The array of elements in the link body, if any, MUST be processed in
-            a fresh environment. Both the current context and the current
-            base in the new environment are initially set to the link target
-            of the enclosing link.
+            The nested elements in a link body, if any, MUST be processed in a
+            fresh environment. Both the current context and the current base in
+            the new environment are initially set to the link target of the
+            enclosing link.
           </t>
 
         </section>
@@ -729,9 +730,10 @@
           </ul>
 
           <t>
-            The list, if any, MUST be processed in a fresh environment. Both the
-            current context and the current base in the new environment are
-            initially set to the submission target of the enclosing form.
+            The form fields in a form body, if any, MUST be processed in a fresh
+            environment. Both the current context and the current base in the
+            new environment are initially set to the submission target of the
+            enclosing form.
           </t>
 
         </section>
@@ -828,7 +830,7 @@
 
           <t>
             Directives provide the ability to manipulate the environment when
-            processing a list of elements. There is one type of directives
+            processing an array of elements. There is one type of directives
             available: the Base directive.
           </t>
 
@@ -1413,11 +1415,11 @@
         <t>
           Elements are processed in the order they appear in the document.
           Document processors need to maintain an <em>environment</em>
-          while iterating a list of elements. The environment consists of three
+          while iterating a sequence of elements. The environment consists of three
           variables: the <em>current context</em>, the <em>current base</em>,
           and the <em>current mapping from identifiers to
-          IRIs</em>. The current context and the current base are
-          initially set to the document's retrieval context and the document's base URI, respectively. The current
+          IRIs</em>. Both the current context and the current base are
+          initially set to the document's retrieval context. The current
           mapping from identifiers to IRIs is initially empty.
         </t>
 
@@ -1497,11 +1499,11 @@
           </ul>
 
           <t>
-            The list of elements in the link body, if any, MUST be processed in
-            a fresh environment. Both the current context and current base in
-            this environment are initially set to the link target of the
-            enclosing link. The mapping from identifiers to IRIs is initially
-            set to a copy of the mapping from identifiers to IRIs in the current
+            The nested elements in a link body, if any, MUST be processed in a
+            fresh environment. Both the current context and current base in this
+            environment are initially set to the link target of the enclosing
+            link. The mapping from identifiers to IRIs is initially set to a
+            copy of the mapping from identifiers to IRIs in the current
             environment.
           </t>
 
@@ -1548,7 +1550,7 @@
           </ul>
 
           <t>
-            The form body consists of a list of zero or more form fields.
+            The form body consists of a sequence of zero or more form fields.
           </t>
 
           <ul empty="true">
@@ -1556,11 +1558,12 @@
           </ul>
 
           <t>
-            The list, if any, MUST be processed in a fresh environment. Both the
-            current context and the current base in this environment are
-            initially set to the submission target of the enclosing form. The
-            mapping from identifiers to IRIs is initially set to a copy of the
-            mapping from identifiers to IRIs in the current environment.
+            The form fields in a form body, if any, MUST be processed in a fresh
+            environment. Both the current context and the current base in this
+            environment are initially set to the submission target of the
+            enclosing form. The mapping from identifiers to IRIs is initially
+            set to a copy of the mapping from identifiers to IRIs in the current
+            environment.
           </t>
 
         </section>
@@ -1656,7 +1659,7 @@
 
           <t>
             Directives provide the ability to manipulate the environment when
-            processing a list of elements. All directives start with a number
+            processing a sequence of elements. All directives start with a number
             sign ("#") followed by a directive identifier. Directive identifiers
             are case-insensitive and constrained to Unicode characters in the
             Basic Latin block.
@@ -2208,9 +2211,9 @@
 
         <t>
           Data items in the CoRAL binary format (<xref target="binary"/>) may be
-          embedded in other <xref target="I-D.ietf-cbor-7049bis">CBOR data</xref>.
+          embedded in other <xref target="I-D.ietf-cbor-7049bis">CBOR structures</xref>.
           Specifications using <xref target="RFC8610">CDDL</xref>
-          SHOULD reference the following CDDL definitions for this purpose:
+          can reference the following CDDL definitions for this purpose:
         </t>
 
         <ul empty="true">
@@ -2220,8 +2223,9 @@
         </ul>
 
         <t>
-          For each embedded document, link, and form, the retrieval context,
-          link context, and form context needs to be specified, respectively.
+          For each embedded document, link, and form, the specification for the
+          embedding CBOR structure needs to specify the document retrieval
+          context, the link context, and the form context, respectively.
         </t>
 
       </section>
@@ -3104,7 +3108,7 @@
       <t>
         The recommendations for minting IRIs have been adopted from <xref
         target="W3C.REC-rdf11-concepts-20140225">RDF 1.1 Concepts and Abstract
-        Syntax</xref> to ease the interworking between RDF predicates and link
+        Syntax</xref> so as to ease the interworking between RDF predicates and link
         relation types.
       </t>
 
