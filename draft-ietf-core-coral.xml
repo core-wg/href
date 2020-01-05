@@ -996,12 +996,12 @@
           The lexical structure of a document in the textual format is made up
           of four basic elements: line terminators, white space, comments, and
           tokens. Of these, only tokens are significant in the syntactic
-          grammar. There are five kinds of tokens: identifiers, IRIs, IRI references,
+          grammar. There are four kinds of tokens: identifiers, IRI references,
           literals, and punctuators.
         </t>
 
         <ul empty="true">
-          <li>token = identifier / iri / iriref / literal / punctuator</li>
+          <li>token = identifier / iriref / literal / punctuator</li>
         </ul>
 
         <t>
@@ -1087,20 +1087,22 @@
 
         <section>
 
-          <name>IRIs and IRI References</name>
+          <name>IRI References</name>
 
           <t>
-            IRIs and IRI references are Unicode strings that conform to the
+            IRI references denote references to resources on the Web.
+          </t>
+            
+          <t>
+            An IRI reference consists of a Unicode string that conforms to the
             syntax defined in <xref target="RFC3987">RFC 3987</xref>. An IRI
-            reference can be either an IRI or a relative reference. Both IRIs
-            and IRI references are enclosed in angle brackets ("&lt;" and
+            reference can be either an IRI or a relative reference.
+            IRI references are enclosed in angle brackets ("&lt;" and
             "&gt;").
           </t>
 
           <ul empty="true">
-            <li>iri = "&lt;" IRI "&gt;"</li>
             <li>iriref = "&lt;" IRI-reference "&gt;"</li>
-            <li>IRI = &lt;Defined in Section 2.2 of RFC 3987&gt;</li>
             <li>IRI-reference = &lt;Defined in Section 2.2 of RFC 3987&gt;</li>
           </ul>
 
@@ -1454,12 +1456,13 @@
           </ul>
 
           <t>
-            The link relation type is denoted by either an IRI,
-            a simple name, or a qualified name.
+            The link relation type is denoted by either an IRI reference, a
+            simple name, or a qualified name. An IRI reference MUST be resolved
+            against the current base.
           </t>
 
           <ul empty="true">
-            <li>relation-type = iri / simple-name / qualified-name</li>
+            <li>relation-type = iriref / simple-name / qualified-name</li>
           </ul>
 
           <t>
@@ -1487,7 +1490,8 @@
           </ul>
 
           <t>
-            The link target is denoted by an IRI reference or represented by a
+            The link target is either denoted by an IRI reference,
+            simple name, or qualified name, or represented by a
             value literal. An IRI reference
             MUST be resolved against the current base.
             If the link target is
@@ -1495,7 +1499,7 @@
           </t>
 
           <ul empty="true">
-            <li>link-target = iriref / literal</li>
+            <li>link-target = iriref / simple-name / qualified-name / literal</li>
           </ul>
 
           <t>
@@ -1529,7 +1533,7 @@
           </t>
 
           <ul empty="true">
-            <li>operation-type = iri / simple-name / qualified-name</li>
+            <li>operation-type = iriref / simple-name / qualified-name</li>
           </ul>
 
           <t>
@@ -1541,12 +1545,13 @@
           </t>
 
           <t>
-            The submission target is denoted by an IRI reference. This IRI
-            reference MUST be resolved against the current base.
+            The submission target is denoted by an IRI reference, simple name,
+            or qualified name. An IRI reference MUST be resolved against the
+            current base.
           </t>
 
           <ul empty="true">
-            <li>submission-target = iriref</li>
+            <li>submission-target = iriref / simple-name / qualified-name</li>
           </ul>
 
           <t>
@@ -1587,18 +1592,18 @@
           </t>
 
           <ul empty="true">
-            <li>form-field-type = iri / simple-name / qualified-name</li>
+            <li>form-field-type = iriref / simple-name / qualified-name</li>
           </ul>
 
           <t>
-            The form field value can be an IRI reference, Boolean literal,
+            The form field value can be an IRI reference, simple name, qualified name, Boolean literal,
             integer literal, floating-point literal, byte string literal, text
             string literal, or null. An IRI reference MUST be resolved against
             the current base.
           </t>
 
           <ul empty="true">
-            <li>form-field-value = iriref / literal</li>
+            <li>form-field-value = iriref / simple-name / qualified-name / literal</li>
           </ul>
 
         </section>
@@ -1637,18 +1642,18 @@
           </t>
 
           <ul empty="true">
-            <li>metadata-name = iri / simple-name / qualified-name</li>
+            <li>metadata-name = iriref / simple-name / qualified-name</li>
           </ul>
 
           <t>
-            The metadata value can be an IRI reference, Boolean literal,
+            The metadata value can be an IRI reference, simple name, qualified name, Boolean literal,
             integer literal, floating-point literal, byte string literal, text
             string literal, or null. An IRI reference
             MUST be resolved against the current base.
           </t>
 
           <ul empty="true">
-            <li>metadata-value = iriref / literal</li>
+            <li>metadata-value = iriref / simple-name / qualified-name / literal</li>
           </ul>
 
         </section>
@@ -1688,13 +1693,14 @@
             </ul>
 
             <t>
-              The base is denoted by an IRI reference.
-              The IRI reference MUST be resolved against the current context
+              The base is denoted by an IRI reference, simple name,
+              or qualified name.
+              An IRI reference MUST be resolved against the current context
               (not the current base).
             </t>
 
             <ul empty="true">
-              <li>base = iriref</li>
+              <li>base = iriref / simple-name / qualified-name</li>
             </ul>
 
             <t>
@@ -1711,18 +1717,19 @@
             <t>
               A Using directive consists of a number sign ("#"), followed by the
               case-insensitive identifier "using", optionally followed by an
-              identifier and an equals sign ("="), finally followed by an
-              IRI. If the identifier is not specified, it is
+              identifier and an equals sign ("="), followed finally by an
+              IRI reference. If the identifier is not specified, it is
               assumed to be the empty string.
+              The IRI reference MUST be resolved against the current base.
             </t>
 
             <ul empty="true">
-              <li>using-directive = "#" "using" [identifier "="] iri</li>
+              <li>using-directive = "#" "using" [identifier "="] iriref</li>
             </ul>
 
             <t>
               The directive is processed by adding the specified identifier and
-              IRI to the current mapping from identifiers to IRIs. It is an
+              resolved IRI to the current mapping from identifiers to IRIs. It is an
               error if the identifier is already present in the mapping.
             </t>
 
