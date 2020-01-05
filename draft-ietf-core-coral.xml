@@ -720,57 +720,56 @@
             <li>submission-target = CoRI</li>
           </ul>
 
-            <t>
-              The form body is encoded as an array of zero or more form fields.
-            </t>
+          <t>
+            The form body is encoded as an array of zero or more form fields.
+          </t>
 
-            <ul empty="true">
-              <li>form-body = [*form-field]</li>
-            </ul>
+          <ul empty="true">
+            <li>form-body = [*form-field]</li>
+          </ul>
 
-            <t>
-              The list, if any, MUST be processed in a fresh environment. Both
-              the current context and the current base in the new
-              environment are initially set to the submission target of the
-              enclosing form.
-            </t>
+          <t>
+            The list, if any, MUST be processed in a fresh environment. Both the
+            current context and the current base in the new environment are
+            initially set to the submission target of the enclosing form.
+          </t>
 
         </section>
 
-          <section>
+        <section>
 
-            <name>Form Fields</name>
+          <name>Form Fields</name>
 
-            <t>
-              A form field is encoded as the sequence of a form field type 
-              and a form field value.
-            </t>
+          <t>
+            A form field is encoded as the sequence of a form field type and a
+            form field value.
+          </t>
 
-            <ul empty="true">
-              <li>form-field = (form-field-type, form-field-value)</li>
-            </ul>
+          <ul empty="true">
+            <li>form-field = (form-field-type, form-field-value)</li>
+          </ul>
 
-            <t>
-              A form field type is defined in the same way as a
-              link relation type (<xref target="binary-links"/>).
-            </t>
+          <t>
+            A form field type is defined in the same way as a link relation type
+            (<xref target="binary-links"/>).
+          </t>
 
-            <ul empty="true">
-              <li>form-field-type = text</li>
-            </ul>
+          <ul empty="true">
+            <li>form-field-type = text</li>
+          </ul>
 
-            <t>
-              A form field value can be a CoRI reference, a Boolean value, an
-              integer, a floating-point number, a date/time value, a byte string, a text string, or
-              null. A CoRI reference MUST be
-              resolved against the current base.
-            </t>
+          <t>
+            A form field value can be a CoRI reference, a Boolean value, an
+            integer, a floating-point number, a date/time value, a byte string,
+            a text string, or null. A CoRI reference MUST be resolved against
+            the current base.
+          </t>
 
-            <ul empty="true">
-              <li>form-field-value = CoRI / literal</li>
-            </ul>
+          <ul empty="true">
+            <li>form-field-value = CoRI / literal</li>
+          </ul>
 
-          </section>
+        </section>
 
         <section>
 
@@ -1514,8 +1513,8 @@
 
           <t>
             A form consists of the operation type, followed by a "-&gt;" token
-            and the submission target, optionally
-            followed by a form body enclosed in square brackets ("[" and "]").
+            and the submission target, optionally followed by a form body
+            enclosed in square brackets ("[" and "]").
           </t>
 
           <ul empty="true">
@@ -1540,65 +1539,66 @@
           </t>
 
           <t>
-            The submission target is denoted by an IRI reference.
-            This IRI reference MUST be resolved against the current base.
+            The submission target is denoted by an IRI reference. This IRI
+            reference MUST be resolved against the current base.
           </t>
 
           <ul empty="true">
             <li>submission-target = iriref</li>
           </ul>
 
-            <t>
-              The form body consists of a list of zero or more form fields.
-            </t>
+          <t>
+            The form body consists of a list of zero or more form fields.
+          </t>
 
-            <ul empty="true">
-              <li>form-body = *form-field</li>
-            </ul>
+          <ul empty="true">
+            <li>form-body = *form-field</li>
+          </ul>
 
-            <t>
-              The list, if any, MUST be processed in a fresh environment. Both the current
-              context and the current base in this environment are initially
-              set to the submission target of the enclosing form. The mapping
-              from identifiers to IRIs is initially set to a copy of the mapping
-              from identifiers to IRIs in the current environment.
-            </t>
+          <t>
+            The list, if any, MUST be processed in a fresh environment. Both the
+            current context and the current base in this environment are
+            initially set to the submission target of the enclosing form. The
+            mapping from identifiers to IRIs is initially set to a copy of the
+            mapping from identifiers to IRIs in the current environment.
+          </t>
 
         </section>
 
-          <section>
+        <section>
 
-            <name>Form Fields</name>
+          <name>Form Fields</name>
 
-            <t>
-              A form field consists of a form field type followed by a form field value.
-            </t>
+          <t>
+            A form field consists of a form field type followed by a form field
+            value.
+          </t>
 
-            <ul empty="true">
-              <li>form-field = form-field-type form-field-value</li>
-            </ul>
+          <ul empty="true">
+            <li>form-field = form-field-type form-field-value</li>
+          </ul>
 
-            <t>
-              The form field type is defined in the same way as a link relation
-              type (<xref target="textual-links"/>).
-            </t>
+          <t>
+            The form field type is defined in the same way as a link relation
+            type (<xref target="textual-links"/>).
+          </t>
 
-            <ul empty="true">
-              <li>form-field-type = iri / simple-name / qualified-name</li>
-            </ul>
+          <ul empty="true">
+            <li>form-field-type = iri / simple-name / qualified-name</li>
+          </ul>
 
-            <t>
-              The form field value can be an IRI reference, Boolean literal,
-              integer literal, floating-point literal, byte string literal, text
-              string literal, or null. An IRI reference
-              MUST be resolved against the current base.
-            </t>
+          <t>
+            The form field value can be an IRI reference, Boolean literal,
+            integer literal, floating-point literal, byte string literal, text
+            string literal, or null. An IRI reference MUST be resolved against
+            the current base.
+          </t>
 
-            <ul empty="true">
-              <li>form-field-value = iriref / literal</li>
-            </ul>
+          <ul empty="true">
+            <li>form-field-value = iriref / literal</li>
+          </ul>
 
-          </section>
+        </section>
 
         <section>
 
