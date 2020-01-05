@@ -3108,37 +3108,17 @@
         relation types.
       </t>
 
-      <t>
-        This document has benefited greatly from discussions and reviews of the
-        CoRAL design team:
-      </t>
-
-      <ul empty="true">
-        <li>
-          <t>Christian Amsüss</t>
-          <t>&lt;christian@amsuess.com&gt;</t>
-        </li>
-        <li>
-          <t>Carsten Bormann, Universität Bremen</t>
-          <t>&lt;cabo@tzi.org&gt;</t>
-        </li>
-        <li>
-          <t>Michael Koster, SmartThings</t>
-          <t>&lt;michael.koster@smartthings.com&gt;</t>
-        </li>
-        <li>
-          <t>Jim Schaad, August Cellars</t>
-          <t>&lt;ietf@augustcellars.com&gt;</t>
-        </li>
-      </ul>
-
       <!-- sorted by last name -->
       <t>
         Thanks to
+        Christian Amsüss,
+        Carsten Bormann,
         Thomas Fossati,
         Jaime Jiménez,
+        Jim Schaad,
         Sebastian Käbisch,
         Ari Keranen,
+        Michael Koster,
         Matthias Kovatsch, and
         Niklas Widell
         for helpful comments and discussions that have shaped the document.
