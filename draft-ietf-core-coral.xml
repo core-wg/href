@@ -687,11 +687,11 @@
           <t>
             A form is encoded as an array that consists of the unsigned integer
             3, followed by the operation type and the
-            submission target, optionally followed by a list of form fields.
+            submission target, optionally followed by a form body that contains form fields.
           </t>
 
           <ul empty="true">
-            <li>form = [3, operation-type, submission-target, ?form-fields]</li>
+            <li>form = [3, operation-type, submission-target, ?form-body]</li>
           </ul>
 
           <t>
@@ -720,16 +720,12 @@
             <li>submission-target = CoRI</li>
           </ul>
 
-          <section>
-
-            <name>Form Fields</name>
-
             <t>
-              A list of form fields is encoded as an array of zero or more type-value pairs.
+              The form body is encoded as an array of zero or more form fields.
             </t>
 
             <ul empty="true">
-              <li>form-fields = [*(form-field-type, form-field-value)]</li>
+              <li>form-body = [*form-field]</li>
             </ul>
 
             <t>
@@ -738,6 +734,21 @@
               environment are initially set to the submission target of the
               enclosing form.
             </t>
+
+        </section>
+
+          <section>
+
+            <name>Form Fields</name>
+
+            <t>
+              A form field is encoded as the sequence of a form field type 
+              and a form field value.
+            </t>
+
+            <ul empty="true">
+              <li>form-field = (form-field-type, form-field-value)</li>
+            </ul>
 
             <t>
               A form field type is defined in the same way as a
@@ -760,8 +771,6 @@
             </ul>
 
           </section>
-
-        </section>
 
         <section>
 
@@ -1506,11 +1515,11 @@
           <t>
             A form consists of the operation type, followed by a "-&gt;" token
             and the submission target, optionally
-            followed by a list of form fields enclosed in square brackets ("[" and "]").
+            followed by a form body enclosed in square brackets ("[" and "]").
           </t>
 
           <ul empty="true">
-            <li>form = operation-type "-&gt;" submission-target ["[" form-fields "]"]</li>
+            <li>form = operation-type "-&gt;" submission-target ["[" form-body "]"]</li>
           </ul>
 
           <t>
@@ -1539,16 +1548,12 @@
             <li>submission-target = iriref</li>
           </ul>
 
-          <section>
-
-            <name>Form Fields</name>
-
             <t>
-              A list of form fields consists of zero or more type-value pairs.
+              The form body consists of a list of zero or more form fields.
             </t>
 
             <ul empty="true">
-              <li>form-fields = *(form-field-type form-field-value)</li>
+              <li>form-body = *form-field</li>
             </ul>
 
             <t>
@@ -1558,6 +1563,20 @@
               from identifiers to IRIs is initially set to a copy of the mapping
               from identifiers to IRIs in the current environment.
             </t>
+
+        </section>
+
+          <section>
+
+            <name>Form Fields</name>
+
+            <t>
+              A form field consists of a form field type followed by a form field value.
+            </t>
+
+            <ul empty="true">
+              <li>form-field = form-field-type form-field-value</li>
+            </ul>
 
             <t>
               The form field type is defined in the same way as a link relation
@@ -1580,8 +1599,6 @@
             </ul>
 
           </section>
-
-        </section>
 
         <section>
 
