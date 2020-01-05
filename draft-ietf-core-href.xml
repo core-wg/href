@@ -194,7 +194,7 @@
               Specifies the URI scheme.
               The option value can be any Unicode string matching the "scheme"
               rule described in <xref target="RFC3986">Section 3.1 of RFC
-              3986</xref>.
+              3986</xref>, excluding uppercase letters.
             </t>
           </dd>
           <dt>host.name</dt>
@@ -447,7 +447,7 @@ ____ scheme __/             \___ port _
       </t>
 
       <artwork><![CDATA[
-   CoRI = [?(scheme:    1, text .regexp "[A-Za-z][A-Za-z0-9+.-]*"),
+   CoRI = [?(scheme:    1, text .regexp "[a-z][a-z0-9+.-]*"),
            ?(host.name: 2, text //
              host.ip:   3, bytes .size 4 / bytes .size 16),
            ?(port:      4, 0..65535),
