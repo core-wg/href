@@ -570,16 +570,6 @@
           common base more efficiently.
         </t>
 
-        <t>
-          Elements are processed in the order they appear in the document.
-          Document processors need to maintain an <em>environment</em>
-          while iterating an array of elements. The environment consists of
-          two variables: the <em>current context</em> and the
-          <em>current base</em>. Both the current context and the
-          current base are initially set to the document's retrieval
-          context.
-        </t>
-
         <section anchor="binary-body">
 
           <name>Documents</name>
@@ -594,6 +584,16 @@
             <li><sourcecode type="cddl" markers="false">document = body</sourcecode></li>
             <li><sourcecode type="cddl" markers="false">body = [*(link / form / directive)]</sourcecode></li>
           </ul>
+
+          <t>
+            Elements are processed in the order they appear in the document.
+            Document processors need to maintain an <em>environment</em>
+            while iterating an array of elements. The environment consists of
+            two variables: the <em>current context</em> and the
+            <em>current base</em>. Both the current context and the
+            current base are initially set to the document's retrieval
+            context.
+          </t>
 
         </section>
 
@@ -1324,17 +1324,6 @@
           IRIs.
         </t>
 
-        <t>
-          Elements are processed in the order they appear in the document.
-          Document processors need to maintain an <em>environment</em>
-          while iterating a sequence of elements. The environment consists of three
-          variables: the <em>current context</em>, the <em>current base</em>,
-          and the <em>current mapping from identifiers to
-          IRIs</em>. Both the current context and the current base are
-          initially set to the document's retrieval context. The current
-          mapping from identifiers to IRIs is initially empty.
-        </t>
-
         <section>
 
           <name>Documents</name>
@@ -1348,6 +1337,17 @@
             <li><sourcecode type="abnf" markers="false">document = body</sourcecode></li>
             <li><sourcecode type="abnf" markers="false">body = *(link / form / directive)</sourcecode></li>
           </ul>
+
+          <t>
+            Elements are processed in the order they appear in the document.
+            Document processors need to maintain an <em>environment</em>
+            while iterating a sequence of elements. The environment consists of three
+            variables: the <em>current context</em>, the <em>current base</em>,
+            and the <em>current mapping from identifiers to
+            IRIs</em>. Both the current context and the current base are
+            initially set to the document's retrieval context. The current
+            mapping from identifiers to IRIs is initially empty.
+          </t>
 
         </section>
 
