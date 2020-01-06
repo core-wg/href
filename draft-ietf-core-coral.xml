@@ -913,7 +913,7 @@
         </t>
 
         <ul empty="true">
-          <li><sourcecode type="abnf" markers="false">token = identifier / iriref / literal / punctuator</sourcecode></li>
+          <li><sourcecode type="abnf" markers="false">token = identifier / IRIref / literal / punctuator</sourcecode></li>
         </ul>
 
         <t>
@@ -1014,7 +1014,7 @@
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">iriref = "&lt;" IRI-reference "&gt;"</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">IRIref = "&lt;" IRI-reference "&gt;"</sourcecode></li>
             <li><sourcecode type="abnf" markers="false">IRI-reference = &lt;Defined in Section 2.2 of RFC 3987&gt;</sourcecode></li>
           </ul>
 
@@ -1364,8 +1364,8 @@
 
           <t>
             All directives start with a number
-            sign ("#") followed by a directive identifier. Directive identifiers
-            are case-insensitive and constrained to Unicode characters in the
+            sign ("#") followed by an identifier. The identifier
+            is case-insensitive and restricted to Unicode characters in the
             Basic Latin block.
           </t>
 
@@ -1398,7 +1398,7 @@
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">base = iriref</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">base = IRIref</sourcecode></li>
             </ul>
 
             <t>
@@ -1421,7 +1421,7 @@
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">using-directive = "#" "using" [identifier "="] iriref</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">using-directive = "#" "using" [identifier "="] IRIref</sourcecode></li>
             </ul>
 
             <t>
@@ -1435,7 +1435,127 @@
 
         </section>
 
-        <section anchor="textual-links">
+        <section>
+
+          <name>IRIs</name>
+
+          <t>
+            IRIs can either be written directly in the form of IRI references or
+            looked up from the current mapping from identifiers to IRIs using
+            names. A name can be a simple name, a qualified name, or a
+            predefined name.
+          </t>
+
+          <ul empty="true">
+            <li><sourcecode type="abnf" markers="false">IRI = IRIref / simple-name / qualified-name / predefined-name</sourcecode></li>
+          </ul>
+
+          <t>
+            In any case, an IRI reference or name is processed by resolving it
+            to an IRI as described in the following sub-sections.
+          </t>
+
+          <section>
+
+            <name>IRI References</name>
+
+            <t>
+              An IRI reference is resolved to an IRI as specified in Section 6.5
+              of <xref target="RFC3987">RFC 3987</xref>, against the current
+              base.
+            </t>
+
+          </section>
+
+          <section>
+
+           <name>Simple Names</name>
+
+            <t>
+              A simple name consists of a single identifier.
+            </t>
+
+            <ul empty="true">
+              <li><sourcecode type="abnf" markers="false">simple-name = identifier</sourcecode></li>
+            </ul>
+
+            <t>
+              A simple name is resolved to an IRI by looking up the empty string
+              in the current mapping from identifiers to IRIs and appending the
+              specified identifier to the result. It is an error if the empty
+              string is not present in the current mapping.
+            </t>
+
+          </section>
+
+          <section>
+
+            <name>Qualified Names</name>
+
+            <t>
+              A qualified name consists of two identifiers separated by a colon
+              (":").
+            </t>
+
+            <ul empty="true">
+              <li><sourcecode type="abnf" markers="false">qualified-name = identifier ":" identifier</sourcecode></li>
+            </ul>
+
+            <t>
+              A qualified name is resolved to an IRI by looking up the
+              identifier on the left hand side in the current mapping from
+              identifiers to IRIs. The identifier on the right hand side is then
+              appended to the result. It is an error if the identifier on the
+              left hand side is not present in the current mapping.
+            </t>
+
+          </section>
+
+          <section>
+
+            <name>Predefined Names</name>
+
+            <t>
+              A predefined name consists of a commercial at sign ("@") followed
+              by an identifier. The identifier is case-insensitive and
+              restricted to Unicode characters in the Basic Latin block.
+            </t>
+
+            <ul empty="true">
+              <li><sourcecode type="abnf" markers="false">predefined-name = "@" identifier</sourcecode></li>
+            </ul>
+
+            <t>
+              A predefined name is resolved to an IRI by looking up the
+              identifier in <xref target="predefined-names"/>. It is an error if
+              the identifier is not present in the table.
+            </t>
+
+            <table anchor="predefined-names" align="center">
+              <name>Predefined Names</name>
+              <thead>
+                <tr>
+                  <th align="left">Identifier</th>
+                  <th align="left">IRI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left">language</td>
+                  <td align="left">&lt;http://coreapps.org/base#language&gt;</td>
+                </tr>
+                <tr>
+                  <td align="left">direction</td>
+                  <td align="left">&lt;http://coreapps.org/base#direction&gt;</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </section>
+
+        </section>
+
+        <section>
 
           <name>Links</name>
 
@@ -1450,50 +1570,21 @@
           </ul>
 
           <t>
-            The link relation type is denoted by either an IRI reference, a
-            simple name, or a qualified name. An IRI reference MUST be resolved
-            against the current base.
+            The link relation type is an IRI.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">relation-type = iriref / simple-name / qualified-name</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">relation-type = IRI</sourcecode></li>
           </ul>
 
           <t>
-            A simple name consists of an identifier. It is resolved to an IRI by
-            looking up the empty string in the current mapping from identifiers
-            to IRIs and appending the specified identifier to the result. It is
-            an error if the empty string is not present in the current mapping.
-          </t>
-
-          <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">simple-name = identifier</sourcecode></li>
-          </ul>
-
-          <t>
-            A qualified name consists of two identifiers separated by a colon
-            (":"). It is resolved to an IRI by looking up the identifier on the
-            left hand side in the current mapping from identifiers to IRIs and
-            appending the identifier on the right hand side to the result. It is
-            an error if the identifier on the left hand side is not present in
-            the current mapping.
-          </t>
-
-          <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">qualified-name = identifier ":" identifier</sourcecode></li>
-          </ul>
-
-          <t>
-            The link target is either denoted by an IRI reference,
-            simple name, or qualified name, or represented by a
-            value literal. An IRI reference
-            MUST be resolved against the current base.
+            The link target is either an IRI or a value literal.
             If the link target is
             null, the link target is an unidentified resource.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">link-target = iriref / simple-name / qualified-name / literal</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">link-target = IRI / literal</sourcecode></li>
           </ul>
 
           <t>
@@ -1522,12 +1613,11 @@
           </ul>
 
           <t>
-            The operation type is defined in the same way as a link relation
-            type (<xref target="textual-links"/>).
+            The operation type is an IRI.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">operation-type = iriref / simple-name / qualified-name</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">operation-type = IRI</sourcecode></li>
           </ul>
 
           <t>
@@ -1539,13 +1629,11 @@
           </t>
 
           <t>
-            The submission target is denoted by an IRI reference, simple name,
-            or qualified name. An IRI reference MUST be resolved against the
-            current base.
+            The submission target is an IRI.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">submission-target = iriref / simple-name / qualified-name</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">submission-target = IRI</sourcecode></li>
           </ul>
 
           <t>
@@ -1573,23 +1661,19 @@
           </ul>
 
           <t>
-            The form field type is defined in the same way as a link relation
-            type (<xref target="textual-links"/>).
+            The form field type is an IRI.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">form-field-type = iriref / simple-name / qualified-name</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">form-field-type = IRI</sourcecode></li>
           </ul>
 
           <t>
-            The form field value can be an IRI reference, simple name, qualified name, Boolean literal,
-            integer literal, floating-point literal, byte string literal, text
-            string literal, or null. An IRI reference MUST be resolved against
-            the current base.
+            The form field value is either an IRI or a value literal.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">form-field-value = iriref / simple-name / qualified-name / literal</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">form-field-value = IRI / literal</sourcecode></li>
           </ul>
 
         </section>
