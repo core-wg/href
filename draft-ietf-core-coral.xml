@@ -814,6 +814,13 @@
             <li><sourcecode type="cddl" markers="false">form-field-value /= #6.TBD6(uint)</sourcecode></li>
           </ul>
 
+          <t>
+            A dictionary reference MUST NOT refer to a dictionary value that is
+            otherwise not allowed in the position. For example, a dictionary
+            reference in the position of a link relation type is not allowed to
+            refer to a Boolean value.
+          </t>
+
         </section>
 
         <section>
