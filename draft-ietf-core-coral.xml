@@ -235,8 +235,8 @@
         </t>
 
         <t>
-          A CoRAL document consists of a list of zero or more links, forms, and
-          embedded resource representations, collectively called <em>elements</em>.
+          A CoRAL document consists of a list of zero or more links and forms,
+          collectively called <em>elements</em>.
           CoRAL serialization formats may define additional types of elements
           for efficiency or convenience, such as a base for <xref
           target="RFC3986">relative URI references</xref>.
@@ -398,37 +398,6 @@
 
       <section>
 
-        <name>Embedded Representations</name>
-
-        <t>
-          When a document contains links to many resources and an agent needs a
-          representation of each link target, it may be inefficient to retrieve
-          each of these representations individually. To alleviate this,
-          documents can directly embed representations of resources.
-        </t>
-
-        <t>
-          An <em>embedded representation</em> consists of a sequence of
-          bytes, labeled with <em>representation metadata</em>.
-        </t>
-
-        <t>
-          An embedded representation may be a full, partial, or inconsistent
-          version of the representation served from the URI of the resource.
-        </t>
-
-        <t>
-          An embedded representation can occur as a top-level element in a
-          document or as a nested element within a link. When it occurs as a
-          top-level element, it provides an alternate representation of the
-          document's retrieval context. When it occurs nested within a link, it
-          provides a representation of link target of the enclosing link.
-        </t>
-
-      </section>
-
-      <section>
-
         <name>Navigation</name>
 
         <t>
@@ -463,17 +432,11 @@
           </li>
           <li>
             <t>
-              The agent selects one of the candidates based on the metadata
-              associated with each of these. Metadata
+              The agent selects one of the candidates based on the resource metadata
+              associated with each of these. Resource metadata
               includes the content type of the target resource representation, the
               URI scheme, the request method, and other information that is
               provided as nested elements in a link or form fields in a form.
-            </t>
-            <t>
-              If the selected candidate contains an embedded representation,
-              the agent MAY skip the following steps and immediately
-              proceed with step <xref target="continue-with-representation"
-              format="counter"/>
             </t>
           </li>
           <li>
@@ -492,7 +455,7 @@
             </t>
             <t>
               The agent should set HTTP header fields and CoAP request
-              options according to  metadata
+              options according to resource metadata
               associated with the link or form (e.g., set the HTTP Accept
               header field or the CoAP Accept option when the media type of the
               target resource is provided). Depending on the operation type of a
@@ -508,9 +471,9 @@
               agent dereferences the fragment identifier within the received
               representation.
           </li>
-          <li anchor="continue-with-representation">
+          <li>
               The agent <em>updates the browsing context</em> by making
-              the (embedded or received) representation the active representation.
+              the received representation the active representation.
           </li>
           <li>
               Finally, the agent processes the representation according to the
@@ -601,9 +564,9 @@
 
         <t>
           The data structure of a document in the binary format is made up of
-          four kinds of elements: links, forms, embedded representations, and
-          (as an extension to the CoRAL data model) base directives. Base
-          directives provide a way to encode URI references with a
+          three kinds of elements: links, forms, and
+          (as an extension to the CoRAL data model) directives. Directives
+          provide a way to compress documents by encoding URI references with a
           common base more efficiently.
         </t>
 
@@ -623,13 +586,13 @@
 
           <t>
             The body of a document in the binary format is encoded as an array
-            of zero or more links, forms, embedded representations, and
+            of zero or more links, forms, and
             directives.
           </t>
 
           <ul empty="true">
             <li>document = body</li>
-            <li>body = [*(link / form / representation / directive)]</li>
+            <li>body = [*(link / form / directive)]</li>
           </ul>
 
         </section>
@@ -775,57 +738,6 @@
 
         <section>
 
-          <name>Embedded Representations</name>
-
-          <t>
-            An embedded representation is encoded as an array that consists of
-            the unsigned integer 0, followed by a byte string containing the
-            representation data, optionally followed by representation metadata.
-          </t>
-
-          <ul empty="true">
-            <li>representation = [0, bytes, ?representation-metadata]</li>
-          </ul>
-
-          <t>
-            Representation metadata is encoded as an array of zero or more
-            name-value pairs.
-          </t>
-
-          <ul empty="true">
-            <li>representation-metadata = [*(metadata-name, metadata-value)]</li>
-          </ul>
-
-          <t>
-            The metadata, if any, MUST be processed in a fresh environment. All
-            variables in the new environment are initially set to a copy of the
-            variables in the current environment.
-          </t>
-
-          <t>
-            The metadata name is defined in the same way as a
-            link relation type (<xref target="binary-links"/>).
-          </t>
-
-          <ul empty="true">
-            <li>metadata-name = text</li>
-          </ul>
-
-          <t>
-            A metadata value can be a CoRI reference, a Boolean value, an
-            integer, a floating-point number, a date/time value, a byte string, a text string, or
-            null. A CoRI reference MUST be
-            resolved against the current base.
-          </t>
-
-          <ul empty="true">
-            <li>metadata-value = CoRI / literal</li>
-          </ul>
-
-        </section>
-
-        <section>
-
           <name>Directives</name>
 
           <t>
@@ -880,7 +792,7 @@
           The binary format can reference values from a dictionary to reduce
           representation size and processing cost. Dictionary references can be used in place of link relation
           types, link targets, operation types, submission targets, form field
-          types, form field values, representation metadata names, and representation metadata values.
+          types, and form field values.
         </t>
 
         <section>
@@ -900,8 +812,6 @@
             <li>submission-target /= #6.TBD6(uint)</li>
             <li>form-field-type /= uint</li>
             <li>form-field-value /= #6.TBD6(uint)</li>
-            <li>metadata-name /= uint</li>
-            <li>metadata-value /= #6.TBD6(uint)</li>
           </ul>
 
         </section>
@@ -1092,7 +1002,7 @@
           <t>
             IRI references denote references to resources on the Web.
           </t>
-            
+
           <t>
             An IRI reference consists of a Unicode string that conforms to the
             syntax defined in <xref target="RFC3987">RFC 3987</xref>. An IRI
@@ -1407,7 +1317,7 @@
 
         <t>
           The syntactic structure of a document in the textual format is made up
-          of four kinds of elements: links, forms, embedded representations, and
+          of three kinds of elements: links, forms, and
           (as an extension to the CoRAL data model) directives. Directives
           provide a way to make documents easier to read and write by setting
           a base for relative IRI references and introducing shorthands for
@@ -1431,12 +1341,12 @@
 
           <t>
             The body of a document in the textual format consists of zero or
-            more links, forms, embedded representations, and directives.
+            more links, forms, and directives.
           </t>
 
           <ul empty="true">
             <li>document = body</li>
-            <li>body = *(link / form / representation / directive)</li>
+            <li>body = *(link / form / directive)</li>
           </ul>
 
         </section>
@@ -1604,56 +1514,6 @@
 
           <ul empty="true">
             <li>form-field-value = iriref / simple-name / qualified-name / literal</li>
-          </ul>
-
-        </section>
-
-        <section>
-
-          <name>Embedded Representations</name>
-
-          <t>
-            An embedded representation consists of a "*" token, followed by the
-            representation data, optionally followed by representation metadata
-            enclosed in square brackets ("[" and "]").
-          </t>
-
-          <ul empty="true">
-            <li>representation = "*" bytes ["[" representation-metadata "]"]</li>
-          </ul>
-
-          <t>
-            Representation metadata consists of zero or more name-value pairs.
-          </t>
-
-          <ul empty="true">
-            <li>representation-metadata = *(metadata-name metadata-value)</li>
-          </ul>
-
-          <t>
-            The metadata, if any, MUST be processed in a fresh environment. All
-            variables in the new environment are initially set to a copy of the
-            variables in the current environment.
-          </t>
-
-          <t>
-            The metadata name is defined in the same way as a link relation
-            type (<xref target="textual-links"/>).
-          </t>
-
-          <ul empty="true">
-            <li>metadata-name = iriref / simple-name / qualified-name</li>
-          </ul>
-
-          <t>
-            The metadata value can be an IRI reference, simple name, qualified name, Boolean literal,
-            integer literal, floating-point literal, byte string literal, text
-            string literal, or null. An IRI reference
-            MUST be resolved against the current base.
-          </t>
-
-          <ul empty="true">
-            <li>metadata-value = iriref / simple-name / qualified-name / literal</li>
           </ul>
 
         </section>
@@ -1983,10 +1843,6 @@
               The form field types used. Additionally, for each form field
               type, the permissible form field values.
             </li>
-            <li>
-              The metadata names used. Additionally, for each metadata name,
-              the permissible metadata values.
-            </li>
           </ul>
 
         </section>
@@ -2071,7 +1927,7 @@
         <name>Minting Vocabulary</name>
 
         <t>
-          New link relation types, operation types, form field types, and metadata names can
+          New link relation types, operation types, and form field types can
           be minted by defining an <xref target="RFC3987">IRI</xref> that
           uniquely identifies the item. Although the IRI can point to a resource
           that contains a definition of the semantics,
@@ -2173,6 +2029,7 @@
       foaf:mbox       &lt;mailto:klaus.hartke@ericsson.com&gt;
    }
           </artwork>
+
       </section>
 
       <section>
@@ -2214,7 +2071,49 @@
 
       <section>
 
-        <name>Embedding CoRAL in CBOR Data</name>
+        <name>Embedding Representations in CoRAL</name>
+
+        <t>
+          When a document links to many Web resources and an agent needs a
+          representation of each of them, it can be inefficient to retrieve each
+          representations individually. To minimize round-trips, documents can
+          embed representations of resources.
+        </t>
+
+        <t>
+          A representation can be embedded in a document by including a link
+          of type &lt;http://coreapps.org/base#representation&gt;:
+        </t>
+
+        <artwork>
+   #using &lt;http://coreapps.org/base#&gt;
+   #using iana = &lt;http://www.iana.org/assignments/relation/&gt;
+
+   iana:icon b64'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAIAOw==' {
+      http:type "image/gif"
+   }
+        </artwork>
+
+        <t>
+          An embedded representation should have a nested link of type
+          &lt;http://coreapps.org/http#type&gt; or
+          &lt;http://coreapps.org/coap#type&gt; that indicates the content type
+          of the representation.
+        </t>
+        
+        <t>
+          The link relation types
+          &lt;http://coreapps.org/base#representation&gt;,
+          &lt;http://coreapps.org/http#type&gt;, and
+          &lt;http://coreapps.org/coap#type&gt; are defined in <xref
+          target="core-vocabulary"/>.
+        </t>
+
+      </section>
+
+      <section>
+
+        <name>Embedding CoRAL in CBOR Representations</name>
 
         <t>
           Data items in the CoRAL binary format (<xref target="binary"/>) may be
@@ -2721,7 +2620,7 @@
 
       <t>
         This section defines the core vocabulary for CoRAL: a set of link
-        relation types, operation types, form field types, and metadata names.
+        relation types, operation types, and form field types.
       </t>
 
       <section>
@@ -2776,6 +2675,28 @@
             <t>
               The link target MUST be either the text string "rtl" or the text
               string "ltr".
+            </t>
+          </dd>
+          <dt>&lt;http://coreapps.org/base#representation&gt;</dt>
+          <dd>
+            <t>
+              Indicates that the link target is a representation of the link
+              context.
+            </t>
+            <t>
+              The link target MUST be a byte string.
+            </t>
+            <t>
+              The representation may be a full, partial, or inconsistent version
+              of the representation served from the URI of the resource.
+            </t>
+            <t>
+              A link with link relation type can occur as a top-level element in
+              a document or as a nested element within a link. When it occurs as
+              a top-level element, it provides an alternate representation of
+              the document's retrieval context. When it occurs nested within a
+              link, it provides a representation of link target of the enclosing
+              link.
             </t>
           </dd>
         </dl>
@@ -2923,7 +2844,7 @@
         </dl>
 
         <t>
-          Representation Metadata:
+          Link Relation Types:
         </t>
 
         <dl newline="true">
@@ -2989,7 +2910,7 @@
         </dl>
 
         <t>
-          Representation Metadata:
+          Link Relation Types:
         </t>
 
         <dl newline="true" spacing="normal">
@@ -3093,6 +3014,10 @@
           <tr>
             <td align="right">13</td>
             <td align="left">"rtl"</td>
+          </tr>
+          <tr>
+            <td align="right">14</td>
+            <td align="left">&lt;http://coreapps.org/base#representation&gt;</td>
           </tr>
         </tbody>
       </table>
