@@ -2102,7 +2102,7 @@ iana:icon &lt;/favicon.gif&gt; {
           &lt;http://coreapps.org/coap#type&gt; that indicates the content type
           of the representation.
         </t>
-        
+
         <t>
           The link relation types
           &lt;http://coreapps.org/base#representation&gt;,
@@ -2320,7 +2320,7 @@ iana:icon &lt;/favicon.gif&gt; {
         <t>
           This document registers the media type "text/coral"
           according to the procedures of <xref target="RFC6838">BCP 13</xref>
-          and guidelines in <xref target="RFC6657">RFC 6657</xref>.
+          and guidelines of <xref target="RFC6657">RFC 6657</xref>.
         </t>
 
         <dl newline="true">
