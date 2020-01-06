@@ -591,8 +591,8 @@
           </t>
 
           <ul empty="true">
-            <li>document = body</li>
-            <li>body = [*(link / form / directive)]</li>
+            <li><sourcecode type="cddl" markers="false">document = body</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">body = [*(link / form / directive)]</sourcecode></li>
           </ul>
 
         </section>
@@ -608,7 +608,7 @@
           </t>
 
           <ul empty="true">
-            <li>link = [2, relation-type, link-target, ?body]</li>
+            <li><sourcecode type="cddl" markers="false">link = [2, relation-type, link-target, ?body]</sourcecode></li>
           </ul>
 
           <t>
@@ -617,7 +617,7 @@
           </t>
 
           <ul empty="true">
-            <li>relation-type = text</li>
+            <li><sourcecode type="cddl" markers="false">relation-type = text</sourcecode></li>
           </ul>
 
           <t>
@@ -630,9 +630,9 @@
           </t>
 
           <ul empty="true">
-            <li>link-target = CoRI / literal </li>
-            <li>CoRI = &lt;Defined in Section XX of RFC XXXX&gt;</li>
-            <li>literal = bool / int / float / time / bytes / text / null</li>
+            <li><sourcecode type="cddl" markers="false">link-target = CoRI / literal</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">CoRI = &lt;Defined in Section XX of RFC XXXX&gt;</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">literal = bool / int / float / time / bytes / text / null</sourcecode></li>
           </ul>
 
           <t>
@@ -655,7 +655,7 @@
           </t>
 
           <ul empty="true">
-            <li>form = [3, operation-type, submission-target, ?form-body]</li>
+            <li><sourcecode type="cddl" markers="false">form = [3, operation-type, submission-target, ?form-body]</sourcecode></li>
           </ul>
 
           <t>
@@ -664,7 +664,7 @@
           </t>
 
           <ul empty="true">
-            <li>operation-type = text</li>
+            <li><sourcecode type="cddl" markers="false">operation-type = text</sourcecode></li>
           </ul>
 
           <t>
@@ -681,7 +681,7 @@
           </t>
 
           <ul empty="true">
-            <li>submission-target = CoRI</li>
+            <li><sourcecode type="cddl" markers="false">submission-target = CoRI</sourcecode></li>
           </ul>
 
           <t>
@@ -689,7 +689,7 @@
           </t>
 
           <ul empty="true">
-            <li>form-body = [*form-field]</li>
+            <li><sourcecode type="cddl" markers="false">form-body = [*form-field]</sourcecode></li>
           </ul>
 
           <t>
@@ -711,7 +711,7 @@
           </t>
 
           <ul empty="true">
-            <li>form-field = (form-field-type, form-field-value)</li>
+            <li><sourcecode type="cddl" markers="false">form-field = (form-field-type, form-field-value)</sourcecode></li>
           </ul>
 
           <t>
@@ -720,7 +720,7 @@
           </t>
 
           <ul empty="true">
-            <li>form-field-type = text</li>
+            <li><sourcecode type="cddl" markers="false">form-field-type = text</sourcecode></li>
           </ul>
 
           <t>
@@ -731,7 +731,7 @@
           </t>
 
           <ul empty="true">
-            <li>form-field-value = CoRI / literal</li>
+            <li><sourcecode type="cddl" markers="false">form-field-value = CoRI / literal</sourcecode></li>
           </ul>
 
         </section>
@@ -742,12 +742,12 @@
 
           <t>
             Directives provide the ability to manipulate the environment when
-            processing an array of elements. There is one type of directives
+            processing nested elements and form fields. There is one type of directives
             available: the Base directive.
           </t>
 
           <ul empty="true">
-            <li>directive = base-directive</li>
+            <li><sourcecode type="cddl" markers="false">directive = base-directive</sourcecode></li>
           </ul>
 
           <section>
@@ -760,7 +760,7 @@
             </t>
 
             <ul empty="true">
-              <li>base-directive = [1, base]</li>
+              <li><sourcecode type="cddl" markers="false">base-directive = [1, base]</sourcecode></li>
             </ul>
 
             <t>
@@ -770,7 +770,7 @@
             </t>
 
             <ul empty="true">
-              <li>base = CoRI</li>
+              <li><sourcecode type="cddl" markers="false">base = CoRI</sourcecode></li>
             </ul>
 
             <t>
@@ -806,12 +806,12 @@
           </t>
 
           <ul empty="true">
-            <li>relation-type /= uint</li>
-            <li>link-target /= #6.TBD6(uint)</li>
-            <li>operation-type /= uint</li>
-            <li>submission-target /= #6.TBD6(uint)</li>
-            <li>form-field-type /= uint</li>
-            <li>form-field-value /= #6.TBD6(uint)</li>
+            <li><sourcecode type="cddl" markers="false">relation-type /= uint</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">link-target /= #6.TBD6(uint)</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">operation-type /= uint</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">submission-target /= #6.TBD6(uint)</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">form-field-type /= uint</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">form-field-value /= #6.TBD6(uint)</sourcecode></li>
           </ul>
 
         </section>
@@ -911,7 +911,7 @@
         </t>
 
         <ul empty="true">
-          <li>token = identifier / iriref / literal / punctuator</li>
+          <li><sourcecode type="abnf" markers="false">token = identifier / iriref / literal / punctuator</sourcecode></li>
         </ul>
 
         <t>
@@ -979,11 +979,11 @@
           </t>
 
           <ul empty="true">
-            <li>identifier = START *CONTINUE *(MEDIAL 1*CONTINUE)</li>
-            <li>START = &lt;Any character with the XID_Start property&gt;</li>
-            <li>CONTINUE = &lt;Any character with the XID_Continue property&gt;</li>
-            <li>MEDIAL = "-" / "." / "~" / %x58A / %xF0B</li>
-            <li>MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB</li>
+            <li><sourcecode type="abnf" markers="false">identifier = START *CONTINUE *(MEDIAL 1*CONTINUE)</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">START = &lt;Any character with the XID_Start property&gt;</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">CONTINUE = &lt;Any character with the XID_Continue property&gt;</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">MEDIAL = "-" / "." / "~" / %x58A / %xF0B</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB</sourcecode></li>
           </ul>
 
           <t>
@@ -1012,8 +1012,8 @@
           </t>
 
           <ul empty="true">
-            <li>iriref = "&lt;" IRI-reference "&gt;"</li>
-            <li>IRI-reference = &lt;Defined in Section 2.2 of RFC 3987&gt;</li>
+            <li><sourcecode type="abnf" markers="false">iriref = "&lt;" IRI-reference "&gt;"</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">IRI-reference = &lt;Defined in Section 2.2 of RFC 3987&gt;</sourcecode></li>
           </ul>
 
         </section>
@@ -1029,8 +1029,8 @@
           </t>
 
           <ul empty="true">
-            <li>literal = boolean / integer / float / datetime / bytes / text</li>
-            <li>literal =/ null</li>
+            <li><sourcecode type="abnf" markers="false">literal = boolean / integer / float / datetime / bytes / text</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">literal =/ null</sourcecode></li>
           </ul>
 
           <section>
@@ -1043,7 +1043,7 @@
             </t>
 
             <ul empty="true">
-              <li>boolean = "true" / "false"</li>
+              <li><sourcecode type="abnf" markers="false">boolean = "true" / "false"</sourcecode></li>
             </ul>
 
           </section>
@@ -1072,15 +1072,15 @@
             </t>
 
             <ul empty="true">
-              <li>integer = ["+" / "-"] (decimal / binary / octal / hexadecimal)</li>
-              <li>decimal = 1*DIGIT</li>
-              <li>binary = %x30 (%x42 / %x62) 1*BINDIG</li>
-              <li>octal = %x30 (%x4F / %x6F) 1*OCTDIG</li>
-              <li>hexadecimal = %x30 (%x58 / %x78) 1*HEXDIG</li>
-              <li>DIGIT = %x30-39</li>
-              <li>BINDIG = %x30-31</li>
-              <li>OCTDIG = %x30-37</li>
-              <li>HEXDIG = %x30-39 / %x41-46 / %x61-66</li>
+              <li><sourcecode type="abnf" markers="false">integer = ["+" / "-"] (decimal / binary / octal / hexadecimal)</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">decimal = 1*DIGIT</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">binary = %x30 (%x42 / %x62) 1*BINDIG</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">octal = %x30 (%x4F / %x6F) 1*OCTDIG</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">hexadecimal = %x30 (%x58 / %x78) 1*HEXDIG</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">DIGIT = %x30-39</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">BINDIG = %x30-31</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">OCTDIG = %x30-37</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">HEXDIG = %x30-39 / %x41-46 / %x61-66</sourcecode></li>
             </ul>
 
           </section>
@@ -1110,9 +1110,9 @@
             </t>
 
             <ul empty="true">
-              <li>float = ["+" / "-"] 1*DIGIT [fraction] [exponent]</li>
-              <li>fraction = "." 1*DIGIT</li>
-              <li>exponent = (%x45 / %x65) ["+" / "-"] 1*DIGIT</li>
+              <li><sourcecode type="abnf" markers="false">float = ["+" / "-"] 1*DIGIT [fraction] [exponent]</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">fraction = "." 1*DIGIT</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">exponent = (%x45 / %x65) ["+" / "-"] 1*DIGIT</sourcecode></li>
             </ul>
 
             <t>
@@ -1125,8 +1125,8 @@
             </t>
 
             <ul empty="true">
-              <li>float =/ "NaN"</li>
-              <li>float =/ ["+" / "-"] "Infinity"</li>
+              <li><sourcecode type="abnf" markers="false">float =/ "NaN"</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">float =/ ["+" / "-"] "Infinity"</sourcecode></li>
             </ul>
 
           </section>
@@ -1146,9 +1146,9 @@
             </t>
 
             <ul empty="true">
-              <li>datetime = %x64.74 SQUOTE date-time SQUOTE</li>
-              <li>date-time = &lt;Defined in Section 5.6 of RFC 3339&gt;</li>
-              <li>SQUOTE = %x27</li>
+              <li><sourcecode type="abnf" markers="false">datetime = %x64.74 SQUOTE date-time SQUOTE</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">date-time = &lt;Defined in Section 5.6 of RFC 3339&gt;</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">SQUOTE = %x27</sourcecode></li>
             </ul>
 
           </section>
@@ -1171,10 +1171,10 @@
             </t>
 
             <ul empty="true">
-              <li>bytes = base16 / base32 / base64</li>
-              <li>base16 = (%x68 / %x62.31.36) SQUOTE &lt;Base16 encoded data&gt; SQUOTE</li>
-              <li>base32 = %x62.33.32 SQUOTE &lt;Base32 encoded data&gt; SQUOTE</li>
-              <li>base64 = %x62.36.34 SQUOTE &lt;Base64 encoded data&gt; SQUOTE</li>
+              <li><sourcecode type="abnf" markers="false">bytes = base16 / base32 / base64</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">base16 = (%x68 / %x62.31.36) SQUOTE &lt;Base16 encoded data&gt; SQUOTE</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">base32 = %x62.33.32 SQUOTE &lt;Base32 encoded data&gt; SQUOTE</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">base64 = %x62.36.34 SQUOTE &lt;Base64 encoded data&gt; SQUOTE</sourcecode></li>
             </ul>
 
           </section>
@@ -1195,14 +1195,14 @@
             </t>
 
             <ul empty="true">
-              <li>text = DQUOTE *(char / %x5C escape) DQUOTE</li>
-              <li>char = &lt;Any character except %x22, %x5C, and line terminators&gt;</li>
-              <li>escape = simple-escape / hexadecimal-escape / unicode-escape</li>
-              <li>simple-escape = %x30 / %x62 / %x74 / %x6E / %x76</li>
-              <li>simple-escape =/ %x66 / %x72 / %x22 / %x27 / %x5C</li>
-              <li>hexadecimal-escape = (%x78 / %x58) 2HEXDIG</li>
-              <li>unicode-escape = %x75 4HEXDIG / %x55 8HEXDIG</li>
-              <li>DQUOTE = %x22</li>
+              <li><sourcecode type="abnf" markers="false">text = DQUOTE *(char / %x5C escape) DQUOTE</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">char = &lt;Any character except %x22, %x5C, and line terminators&gt;</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">escape = simple-escape / hexadecimal-escape / unicode-escape</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">simple-escape = %x30 / %x62 / %x74 / %x6E / %x76</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">simple-escape =/ %x66 / %x72 / %x22 / %x27 / %x5C</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">hexadecimal-escape = (%x78 / %x58) 2HEXDIG</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">unicode-escape = %x75 4HEXDIG / %x55 8HEXDIG</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">DQUOTE = %x22</sourcecode></li>
             </ul>
 
             <t>
@@ -1288,7 +1288,7 @@
             </t>
 
             <ul empty="true">
-              <li>null = "null" / "_"</li>
+              <li><sourcecode type="abnf" markers="false">null = "null" / "_"</sourcecode></li>
             </ul>
 
           </section>
@@ -1304,7 +1304,7 @@
           </t>
 
           <ul empty="true">
-            <li>punctuator = "#" / ":" / "*" / "[" / "]" / "{" / "}" / "=" / "-&gt;"</li>
+            <li><sourcecode type="abnf" markers="false">punctuator = "#" / ":" / "*" / "[" / "]" / "{" / "}" / "=" / "-&gt;"</sourcecode></li>
           </ul>
 
         </section>
@@ -1345,8 +1345,8 @@
           </t>
 
           <ul empty="true">
-            <li>document = body</li>
-            <li>body = *(link / form / directive)</li>
+            <li><sourcecode type="abnf" markers="false">document = body</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">body = *(link / form / directive)</sourcecode></li>
           </ul>
 
         </section>
@@ -1362,7 +1362,7 @@
           </t>
 
           <ul empty="true">
-            <li>link = relation-type link-target ["{" body "}"]</li>
+            <li><sourcecode type="abnf" markers="false">link = relation-type link-target ["{" body "}"]</sourcecode></li>
           </ul>
 
           <t>
@@ -1372,7 +1372,7 @@
           </t>
 
           <ul empty="true">
-            <li>relation-type = iriref / simple-name / qualified-name</li>
+            <li><sourcecode type="abnf" markers="false">relation-type = iriref / simple-name / qualified-name</sourcecode></li>
           </ul>
 
           <t>
@@ -1383,7 +1383,7 @@
           </t>
 
           <ul empty="true">
-            <li>simple-name = identifier</li>
+            <li><sourcecode type="abnf" markers="false">simple-name = identifier</sourcecode></li>
           </ul>
 
           <t>
@@ -1396,7 +1396,7 @@
           </t>
 
           <ul empty="true">
-            <li>qualified-name = identifier ":" identifier</li>
+            <li><sourcecode type="abnf" markers="false">qualified-name = identifier ":" identifier</sourcecode></li>
           </ul>
 
           <t>
@@ -1409,7 +1409,7 @@
           </t>
 
           <ul empty="true">
-            <li>link-target = iriref / simple-name / qualified-name / literal</li>
+            <li><sourcecode type="abnf" markers="false">link-target = iriref / simple-name / qualified-name / literal</sourcecode></li>
           </ul>
 
           <t>
@@ -1434,7 +1434,7 @@
           </t>
 
           <ul empty="true">
-            <li>form = operation-type "-&gt;" submission-target ["[" form-body "]"]</li>
+            <li><sourcecode type="abnf" markers="false">form = operation-type "-&gt;" submission-target ["[" form-body "]"]</sourcecode></li>
           </ul>
 
           <t>
@@ -1443,7 +1443,7 @@
           </t>
 
           <ul empty="true">
-            <li>operation-type = iriref / simple-name / qualified-name</li>
+            <li><sourcecode type="abnf" markers="false">operation-type = iriref / simple-name / qualified-name</sourcecode></li>
           </ul>
 
           <t>
@@ -1461,7 +1461,7 @@
           </t>
 
           <ul empty="true">
-            <li>submission-target = iriref / simple-name / qualified-name</li>
+            <li><sourcecode type="abnf" markers="false">submission-target = iriref / simple-name / qualified-name</sourcecode></li>
           </ul>
 
           <t>
@@ -1469,7 +1469,7 @@
           </t>
 
           <ul empty="true">
-            <li>form-body = *form-field</li>
+            <li><sourcecode type="abnf" markers="false">form-body = *form-field</sourcecode></li>
           </ul>
 
           <t>
@@ -1493,7 +1493,7 @@
           </t>
 
           <ul empty="true">
-            <li>form-field = form-field-type form-field-value</li>
+            <li><sourcecode type="abnf" markers="false">form-field = form-field-type form-field-value</sourcecode></li>
           </ul>
 
           <t>
@@ -1502,7 +1502,7 @@
           </t>
 
           <ul empty="true">
-            <li>form-field-type = iriref / simple-name / qualified-name</li>
+            <li><sourcecode type="abnf" markers="false">form-field-type = iriref / simple-name / qualified-name</sourcecode></li>
           </ul>
 
           <t>
@@ -1513,7 +1513,7 @@
           </t>
 
           <ul empty="true">
-            <li>form-field-value = iriref / simple-name / qualified-name / literal</li>
+            <li><sourcecode type="abnf" markers="false">form-field-value = iriref / simple-name / qualified-name / literal</sourcecode></li>
           </ul>
 
         </section>
@@ -1524,7 +1524,7 @@
 
           <t>
             Directives provide the ability to manipulate the environment when
-            processing a sequence of elements. All directives start with a number
+            processing nested elements and form fields. All directives start with a number
             sign ("#") followed by a directive identifier. Directive identifiers
             are case-insensitive and constrained to Unicode characters in the
             Basic Latin block.
@@ -1536,7 +1536,7 @@
           </t>
 
           <ul empty="true">
-            <li>directive = base-directive / using-directive</li>
+            <li><sourcecode type="abnf" markers="false">directive = base-directive / using-directive</sourcecode></li>
           </ul>
 
           <section>
@@ -1549,7 +1549,7 @@
             </t>
 
             <ul empty="true">
-              <li>base-directive = "#" "base" base</li>
+              <li><sourcecode type="abnf" markers="false">base-directive = "#" "base" base</sourcecode></li>
             </ul>
 
             <t>
@@ -1560,7 +1560,7 @@
             </t>
 
             <ul empty="true">
-              <li>base = iriref / simple-name / qualified-name</li>
+              <li><sourcecode type="abnf" markers="false">base = iriref / simple-name / qualified-name</sourcecode></li>
             </ul>
 
             <t>
@@ -1584,7 +1584,7 @@
             </t>
 
             <ul empty="true">
-              <li>using-directive = "#" "using" [identifier "="] iriref</li>
+              <li><sourcecode type="abnf" markers="false">using-directive = "#" "using" [identifier "="] iriref</sourcecode></li>
             </ul>
 
             <t>
@@ -1984,12 +1984,12 @@
           &lt;http://www.iana.org/assignments/relation/&gt;:
         </t>
 
-        <artwork>
-   #using iana = &lt;http://www.iana.org/assignments/relation/&gt;
+<ul empty="true"><li><sourcecode type="coral" markers="false">
+#using iana = &lt;http://www.iana.org/assignments/relation/&gt;
 
-   iana:collection &lt;/items&gt;
-   iana:icon       &lt;/favicon.png&gt;
-        </artwork>
+iana:collection &lt;/items&gt;
+iana:icon       &lt;/favicon.png&gt;
+</sourcecode></li></ul>
 
         <t>
           The convention of appending the relation type name to the prefix
@@ -2018,17 +2018,17 @@
           describe the person or software that made it:
         </t>
 
-        <artwork>
-   #using rdf = &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-   #using foaf = &lt;http://xmlns.com/foaf/0.1/&gt;
+<ul empty="true"><li><sourcecode type="coral" markers="false">
+#using rdf = &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+#using foaf = &lt;http://xmlns.com/foaf/0.1/&gt;
 
-   foaf:maker null {
-      rdf:type        &lt;http://xmlns.com/foaf/0.1/Person&gt;
-      foaf:familyName "Hartke"
-      foaf:givenName  "Klaus"
-      foaf:mbox       &lt;mailto:klaus.hartke@ericsson.com&gt;
-   }
-          </artwork>
+foaf:maker null {
+   rdf:type        &lt;http://xmlns.com/foaf/0.1/Person&gt;
+   foaf:familyName "Hartke"
+   foaf:givenName  "Klaus"
+   foaf:mbox       &lt;mailto:klaus.hartke@ericsson.com&gt;
+}
+</sourcecode></li></ul>
 
       </section>
 
@@ -2045,21 +2045,21 @@
           respectively:
         </t>
 
-        <artwork>
-   #using &lt;http://coreapps.org/base#&gt;
-   #using iana = &lt;http://www.iana.org/assignments/relation/&gt;
+<ul empty="true"><li><sourcecode type="coral" markers="false">
+#using &lt;http://coreapps.org/base#&gt;
+#using iana = &lt;http://www.iana.org/assignments/relation/&gt;
 
-   iana:terms-of-service &lt;/tos&gt; {
-      title "Nutzungsbedingungen" {
-         language "de"
-         direction "ltr"
-      }
-      title "Terms of use" {
-         language "en-US"
-         direction "ltr"
-      }
+iana:terms-of-service &lt;/tos&gt; {
+   title "Nutzungsbedingungen" {
+      language "de"
+      direction "ltr"
    }
-        </artwork>
+   title "Terms of use" {
+      language "en-US"
+      direction "ltr"
+   }
+}
+</sourcecode></li></ul>
 
         <t>
           The link relation types &lt;http://coreapps.org/base#language&gt; and
@@ -2085,18 +2085,18 @@
           of type &lt;http://coreapps.org/base#representation&gt;:
         </t>
 
-        <artwork>
-   #using &lt;http://coreapps.org/base#&gt;
-   #using http = &lt;http://coreapps.org/http#&gt;
-   #using iana = &lt;http://www.iana.org/assignments/relation/&gt;
-   
-   iana:icon &lt;/favicon.gif&gt; {
-      representation
-         b64'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAIAOw==' {
-         http:type "image/gif"
-      }
+<ul empty="true"><li><sourcecode type="coral" markers="false">
+#using &lt;http://coreapps.org/base#&gt;
+#using http = &lt;http://coreapps.org/http#&gt;
+#using iana = &lt;http://www.iana.org/assignments/relation/&gt;
+
+iana:icon &lt;/favicon.gif&gt; {
+   representation
+      b64'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAIAOw==' {
+      http:type "image/gif"
    }
-        </artwork>
+}
+</sourcecode></li></ul>
 
         <t>
           An embedded representation should have a nested link of type
@@ -2127,9 +2127,9 @@
         </t>
 
         <ul empty="true">
-          <li>CoRAL-Document = document</li>
-          <li>CoRAL-Link = link</li>
-          <li>CoRAL-Form = form</li>
+          <li><sourcecode type="cddl" markers="false">CoRAL-Document = document</sourcecode></li>
+          <li><sourcecode type="cddl" markers="false">CoRAL-Link = link</sourcecode></li>
+          <li><sourcecode type="cddl" markers="false">CoRAL-Form = form</sourcecode></li>
         </ul>
 
         <t>
