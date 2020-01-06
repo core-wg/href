@@ -2087,10 +2087,14 @@
 
         <artwork>
    #using &lt;http://coreapps.org/base#&gt;
+   #using http = &lt;http://coreapps.org/http#&gt;
    #using iana = &lt;http://www.iana.org/assignments/relation/&gt;
-
-   iana:icon b64'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAIAOw==' {
-      http:type "image/gif"
+   
+   iana:icon &lt;/favicon.gif&gt; {
+      representation
+         b64'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAIAOw==' {
+         http:type "image/gif"
+      }
    }
         </artwork>
 
