@@ -597,6 +597,52 @@
 
         </section>
 
+        <section>
+
+          <name>Directives</name>
+
+          <t>
+            Directives provide the ability to manipulate the environment when
+            processing nested elements and form fields. There is one type of directives
+            available: the Base directive.
+          </t>
+
+          <ul empty="true">
+            <li><sourcecode type="cddl" markers="false">directive = base-directive</sourcecode></li>
+          </ul>
+
+          <section>
+
+            <name>Base Directives</name>
+
+            <t>
+              A Base directive is encoded as an array that consists of the
+              unsigned integer 1, followed by a base.
+            </t>
+
+            <ul empty="true">
+              <li><sourcecode type="cddl" markers="false">base-directive = [1, base]</sourcecode></li>
+            </ul>
+
+            <t>
+              The base is denoted by a CoRI reference.
+              This CoRI reference MUST be resolved against the current context
+              (not the current base).
+            </t>
+
+            <ul empty="true">
+              <li><sourcecode type="cddl" markers="false">base = CoRI</sourcecode></li>
+            </ul>
+
+            <t>
+              The directive is processed by resolving the CoRI reference against
+              the current context and assigning the result to the current base.
+            </t>
+
+          </section>
+
+        </section>
+
         <section anchor="binary-links">
 
           <name>Links</name>
@@ -733,52 +779,6 @@
           <ul empty="true">
             <li><sourcecode type="cddl" markers="false">form-field-value = CoRI / literal</sourcecode></li>
           </ul>
-
-        </section>
-
-        <section>
-
-          <name>Directives</name>
-
-          <t>
-            Directives provide the ability to manipulate the environment when
-            processing nested elements and form fields. There is one type of directives
-            available: the Base directive.
-          </t>
-
-          <ul empty="true">
-            <li><sourcecode type="cddl" markers="false">directive = base-directive</sourcecode></li>
-          </ul>
-
-          <section>
-
-            <name>Base Directives</name>
-
-            <t>
-              A Base directive is encoded as an array that consists of the
-              unsigned integer 1, followed by a base.
-            </t>
-
-            <ul empty="true">
-              <li><sourcecode type="cddl" markers="false">base-directive = [1, base]</sourcecode></li>
-            </ul>
-
-            <t>
-              The base is denoted by a CoRI reference.
-              This CoRI reference MUST be resolved against the current context
-              (not the current base).
-            </t>
-
-            <ul empty="true">
-              <li><sourcecode type="cddl" markers="false">base = CoRI</sourcecode></li>
-            </ul>
-
-            <t>
-              The directive is processed by resolving the CoRI reference against
-              the current context and assigning the result to the current base.
-            </t>
-
-          </section>
 
         </section>
 
@@ -1351,6 +1351,85 @@
 
         </section>
 
+        <section>
+
+          <name>Directives</name>
+
+          <t>
+            Directives provide the ability to manipulate the environment when
+            processing nested elements and form fields. All directives start with a number
+            sign ("#") followed by a directive identifier. Directive identifiers
+            are case-insensitive and constrained to Unicode characters in the
+            Basic Latin block.
+          </t>
+
+          <t>
+            The following two types of directives are available: the Base
+            directive and the Using directive.
+          </t>
+
+          <ul empty="true">
+            <li><sourcecode type="abnf" markers="false">directive = base-directive / using-directive</sourcecode></li>
+          </ul>
+
+          <section>
+
+            <name>Base Directives</name>
+
+            <t>
+              A Base directive consists of a number sign ("#"), followed by
+              the case-insensitive identifier "base", followed by a base.
+            </t>
+
+            <ul empty="true">
+              <li><sourcecode type="abnf" markers="false">base-directive = "#" "base" base</sourcecode></li>
+            </ul>
+
+            <t>
+              The base is denoted by an IRI reference, simple name,
+              or qualified name.
+              An IRI reference MUST be resolved against the current context
+              (not the current base).
+            </t>
+
+            <ul empty="true">
+              <li><sourcecode type="abnf" markers="false">base = iriref / simple-name / qualified-name</sourcecode></li>
+            </ul>
+
+            <t>
+              The directive is processed by resolving the IRI reference against
+              the current context and assigning the result to the current base.
+            </t>
+
+          </section>
+
+          <section>
+
+            <name>Using Directives</name>
+
+            <t>
+              A Using directive consists of a number sign ("#"), followed by the
+              case-insensitive identifier "using", optionally followed by an
+              identifier and an equals sign ("="), followed finally by an
+              IRI reference. If the identifier is not specified, it is
+              assumed to be the empty string.
+              The IRI reference MUST be resolved against the current base.
+            </t>
+
+            <ul empty="true">
+              <li><sourcecode type="abnf" markers="false">using-directive = "#" "using" [identifier "="] iriref</sourcecode></li>
+            </ul>
+
+            <t>
+              The directive is processed by adding the specified identifier and
+              resolved IRI to the current mapping from identifiers to IRIs. It is an
+              error if the identifier is already present in the mapping.
+            </t>
+
+          </section>
+
+        </section>
+
         <section anchor="textual-links">
 
           <name>Links</name>
@@ -1515,85 +1594,6 @@
           <ul empty="true">
             <li><sourcecode type="abnf" markers="false">form-field-value = iriref / simple-name / qualified-name / literal</sourcecode></li>
           </ul>
-
-        </section>
-
-        <section>
-
-          <name>Directives</name>
-
-          <t>
-            Directives provide the ability to manipulate the environment when
-            processing nested elements and form fields. All directives start with a number
-            sign ("#") followed by a directive identifier. Directive identifiers
-            are case-insensitive and constrained to Unicode characters in the
-            Basic Latin block.
-          </t>
-
-          <t>
-            The following two types of directives are available: the Base
-            directive and the Using directive.
-          </t>
-
-          <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">directive = base-directive / using-directive</sourcecode></li>
-          </ul>
-
-          <section>
-
-            <name>Base Directives</name>
-
-            <t>
-              A Base directive consists of a number sign ("#"), followed by
-              the case-insensitive identifier "base", followed by a base.
-            </t>
-
-            <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">base-directive = "#" "base" base</sourcecode></li>
-            </ul>
-
-            <t>
-              The base is denoted by an IRI reference, simple name,
-              or qualified name.
-              An IRI reference MUST be resolved against the current context
-              (not the current base).
-            </t>
-
-            <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">base = iriref / simple-name / qualified-name</sourcecode></li>
-            </ul>
-
-            <t>
-              The directive is processed by resolving the IRI reference against
-              the current context and assigning the result to the current base.
-            </t>
-
-          </section>
-
-          <section>
-
-            <name>Using Directives</name>
-
-            <t>
-              A Using directive consists of a number sign ("#"), followed by the
-              case-insensitive identifier "using", optionally followed by an
-              identifier and an equals sign ("="), followed finally by an
-              IRI reference. If the identifier is not specified, it is
-              assumed to be the empty string.
-              The IRI reference MUST be resolved against the current base.
-            </t>
-
-            <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">using-directive = "#" "using" [identifier "="] iriref</sourcecode></li>
-            </ul>
-
-            <t>
-              The directive is processed by adding the specified identifier and
-              resolved IRI to the current mapping from identifiers to IRIs. It is an
-              error if the identifier is already present in the mapping.
-            </t>
-
-          </section>
 
         </section>
 
