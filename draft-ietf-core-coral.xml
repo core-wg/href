@@ -1392,14 +1392,13 @@
             </ul>
 
             <t>
-              The base is denoted by an IRI reference, simple name,
-              or qualified name.
-              An IRI reference MUST be resolved against the current context
+              The base is denoted by an IRI reference.
+              The IRI reference MUST be resolved against the current context
               (not the current base).
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">base = iriref / simple-name / qualified-name</sourcecode></li>
+              <li><sourcecode type="abnf" markers="false">base = iriref</sourcecode></li>
             </ul>
 
             <t>
@@ -1417,9 +1416,8 @@
               A Using directive consists of a number sign ("#"), followed by the
               case-insensitive identifier "using", optionally followed by an
               identifier and an equals sign ("="), followed finally by an
-              IRI reference. If the identifier is not specified, it is
+              IRI. If the identifier is not specified, it is
               assumed to be the empty string.
-              The IRI reference MUST be resolved against the current base.
             </t>
 
             <ul empty="true">
@@ -1428,8 +1426,9 @@
 
             <t>
               The directive is processed by adding the specified identifier and
-              resolved IRI to the current mapping from identifiers to IRIs. It is an
-              error if the identifier is already present in the mapping.
+              IRI to the current mapping from identifiers to IRIs. It is an
+              error if the identifier is already present in the mapping or if
+              the IRI is a relative reference.
             </t>
 
           </section>
