@@ -1390,7 +1390,7 @@
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">punctuator = "#" / ":" / "*" / "[" / "]" / "{" / "}" / "=" / "-&gt;"</sourcecode></li>
+            <li><sourcecode type="abnf" markers="false">punctuator = "#" / ":" / "=" / "@" / "[" / "]" / "{" / "}" / "-&gt;"</sourcecode></li>
           </ul>
 
         </section>
