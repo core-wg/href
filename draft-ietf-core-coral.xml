@@ -1742,13 +1742,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td align="left">language</td>
-                  <td align="left">&lt;http://coreapps.org/base#language&gt;</td>
-                </tr>
+                <!-- sorted alphabetically -->
                 <tr>
                   <td align="left">direction</td>
                   <td align="left">&lt;http://coreapps.org/base#direction&gt;</td>
+                </tr>
+                <tr>
+                  <td align="left">language</td>
+                  <td align="left">&lt;http://coreapps.org/base#language&gt;</td>
                 </tr>
               </tbody>
             </table>
