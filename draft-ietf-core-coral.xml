@@ -3319,6 +3319,37 @@ iana:icon &lt;/favicon.gif&gt; {
     <!-- **************************************************************** -->
     <!-- **************************************************************** -->
 
+    <section removeInRFC="true">
+
+      <name>Change Log</name>
+
+      <t>
+        Changes from -01 to -02:
+      </t>
+
+      <ul>
+        <li>Replaced the special construct for embedded representations with links to a byte string.</li>
+        <li>Changed the textual format to allow simple/qualified names wherever IRI references are allowed.</li>
+        <li>Introduced predefined names in the textual format (#39).</li>
+        <li>Minor editorial improvements and bug fixes.</li>
+      </ul>
+
+      <t>
+        Changes from -00 to -01:
+      </t>
+
+      <ul>
+        <li>Added a section on the semantics of CoRAL documents in responses.</li>
+        <li>Minor editorial improvements.</li>
+      </ul>
+
+    </section>
+
+    <!-- **************************************************************** -->
+    <!-- **************************************************************** -->
+    <!-- **************************************************************** -->
+    <!-- **************************************************************** -->
+
     <section numbered="false">
 
       <name>Acknowledgements</name>

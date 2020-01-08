@@ -927,6 +927,34 @@ def _encode_coap_option_nibble(n):
     <!-- **************************************************************** -->
     <!-- **************************************************************** -->
 
+    <section removeInRFC="true">
+
+      <name>Change Log</name>
+
+      <t>
+        Changes from -01 to -02:
+      </t>
+
+      <ul>
+        <li>Changed the syntax of schemes to exclude upper case characters.</li>
+        <li>Minor editorial improvements.</li>
+      </ul>
+
+      <t>
+        Changes from -00 to -01:
+      </t>
+
+      <ul>
+        <li>None.</li>
+      </ul>
+
+    </section>
+
+    <!-- **************************************************************** -->
+    <!-- **************************************************************** -->
+    <!-- **************************************************************** -->
+    <!-- **************************************************************** -->
+
     <section numbered="false" toc="default">
 
       <name>Acknowledgements</name>
