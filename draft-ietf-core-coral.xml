@@ -394,14 +394,6 @@
         </t>
 
         <t>
-          Form fields (detailed in the next section) can be used to provide more
-          detailed instructions to the agent for constructing the request.
-
-          For example, form fields can instruct the agent to include a certain
-          payload or certain header fields in the request.
-        </t>
-
-        <t>
           A form can occur as a top-level element in a document or as a nested
           element within a link. When a form occurs as a top-level element, the
           form context implicitly is the document's retrieval context. When a
@@ -416,16 +408,18 @@
         <name>Form Fields</name>
 
         <t>
-          Form fields provide instructions to agents for constructing the
-          request when submitting a form.
+          Form fields can be used to provide more detailed instructions to
+          agents for constructing the request when submitting a form.
 
-          For example, a form field could identify one or more data items that
-          need to be included in the request payload or reference another
-          resource (such as a schema) that describes the structure of the
-          payload. A form field could also provide other kinds of information,
-          such as acceptable media types for the payload or expected request
-          headers. Form fields can be specific to the Web transfer protocol the
-          is used for submitting the form.
+          For example, form fields can instruct the agent to include a certain
+          payload or certain header fields in the request.
+
+          Form fields might describe a payload by identifying acceptable media
+          types, referencing a schema, or listing a number of data items that
+          need to be included.
+
+          Form fields can be specific to the Web transfer protocol that is used
+          for submitting the form.
         </t>
 
         <t>
