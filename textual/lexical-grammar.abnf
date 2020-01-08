@@ -1,6 +1,8 @@
-; draft-ietf-core-coral-01
+; draft-ietf-core-coral-02
 
-token = identifier / iri / iriref / literal / punctuator
+token = identifier / IRIref / boolean / integer / float
+
+token =/ datetime / bytes / text / null / punctuator
 
 identifier = START *CONTINUE *(MEDIAL 1*CONTINUE)
 
@@ -12,17 +14,9 @@ MEDIAL = "-" / "." / "~" / %x58A / %xF0B
 
 MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB
 
-iri = "<" IRI ">"
-
-iriref = "<" IRI-reference ">"
-
-IRI = <Defined in Section 2.2 of RFC 3987>
+IRIref = "<" IRI-reference ">"
 
 IRI-reference = <Defined in Section 2.2 of RFC 3987>
-
-literal = boolean / integer / float / datetime / bytes / text
-
-literal =/ null
 
 boolean = "true" / "false"
 
@@ -70,7 +64,7 @@ base64 = %x62.36.34 SQUOTE <Base64 encoded data> SQUOTE
 
 text = DQUOTE *(char / %x5C escape) DQUOTE
 
-char = <Any character except %x22, %x5C, and line terminators>
+char = <Any character except DQUOTE, %x5C, and line terminators>
 
 escape = simple-escape / hexadecimal-escape / unicode-escape
 
@@ -86,4 +80,4 @@ DQUOTE = %x22
 
 null = "null" / "_"
 
-punctuator = "#" / ":" / "*" / "[" / "]" / "{" / "}" / "=" / "->"
+punctuator = "#" / ":" / "=" / "@" / "[" / "]" / "{" / "}" / "->"
