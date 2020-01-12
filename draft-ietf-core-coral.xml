@@ -747,6 +747,11 @@
             <li><sourcecode type="cddl" markers="false">directive = base-directive</sourcecode></li>
           </ul>
 
+          <t>
+            It is an error if a document processor encounters any other type of
+            directive.
+          </t>
+
           <section>
 
             <name>Base Directives</name>
@@ -1629,6 +1634,11 @@ DQUOTE = %x22
           <ul empty="true">
             <li><sourcecode type="abnf" markers="false">directive = base-directive / using-directive</sourcecode></li>
           </ul>
+
+          <t>
+            It is an error if a document processor encounters any other type of
+            directive.
+          </t>
 
           <section>
 
