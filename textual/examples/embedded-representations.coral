@@ -1,0 +1,10 @@
+#using <http://coreapps.org/base#>
+#using http = <http://coreapps.org/http#>
+#using iana = <http://www.iana.org/assignments/relation/>
+
+iana:icon </favicon.gif> {
+   representation
+      b64'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAIAOw==' {
+      http:type "image/gif"
+   }
+}

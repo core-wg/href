@@ -1,0 +1,4 @@
+#using iana = <http://www.iana.org/assignments/relation/>
+
+iana:collection </items>
+iana:icon       </favicon.png>

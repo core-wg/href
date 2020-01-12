@@ -2357,12 +2357,13 @@ DQUOTE = %x22
           &lt;http://www.iana.org/assignments/relation/&gt;:
         </t>
 
-<ul empty="true"><li><sourcecode type="coral" markers="false">
-#using iana = &lt;http://www.iana.org/assignments/relation/&gt;
-
-iana:collection &lt;/items&gt;
-iana:icon       &lt;/favicon.png&gt;
-</sourcecode></li></ul>
+        <ul empty="true">
+          <li>
+<sourcecode type="coral" markers="false">
+<xi:include href="./textual/examples/registered-relation-types.coral" parse="text"/>
+</sourcecode>
+          </li>
+        </ul>
 
         <t>
           The convention of appending the relation type name to the prefix
@@ -2392,17 +2393,13 @@ iana:icon       &lt;/favicon.png&gt;
           vocabulary</xref> to describe the person or software that made it:
         </t>
 
-<ul empty="true"><li><sourcecode type="coral" markers="false">
-#using rdf = &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-#using foaf = &lt;http://xmlns.com/foaf/0.1/&gt;
-
-foaf:maker null {
-   rdf:type        &lt;http://xmlns.com/foaf/0.1/Person&gt;
-   foaf:familyName "Hartke"
-   foaf:givenName  "Klaus"
-   foaf:mbox       &lt;mailto:klaus.hartke@ericsson.com&gt;
-}
-</sourcecode></li></ul>
+        <ul empty="true">
+          <li>
+<sourcecode type="coral" markers="false">
+<xi:include href="./textual/examples/simple-rdf-statements.coral" parse="text"/>
+</sourcecode>
+          </li>
+        </ul>
 
       </section>
 
@@ -2419,21 +2416,13 @@ foaf:maker null {
           respectively:
         </t>
 
-<ul empty="true"><li><sourcecode type="coral" markers="false">
-#using &lt;http://coreapps.org/base#&gt;
-#using iana = &lt;http://www.iana.org/assignments/relation/&gt;
-
-iana:terms-of-service &lt;/tos&gt; {
-   title "Nutzungsbedingungen" {
-      language "de"
-      direction "ltr"
-   }
-   title "Terms of use" {
-      language "en-US"
-      direction "ltr"
-   }
-}
-</sourcecode></li></ul>
+        <ul empty="true">
+          <li>
+<sourcecode type="coral" markers="false">
+<xi:include href="./textual/examples/natural-language-texts.coral" parse="text"/>
+</sourcecode>
+          </li>
+        </ul>
 
         <t>
           The link relation types &lt;http://coreapps.org/base#language&gt; and
@@ -2459,18 +2448,13 @@ iana:terms-of-service &lt;/tos&gt; {
           type &lt;http://coreapps.org/base#representation&gt;:
         </t>
 
-<ul empty="true"><li><sourcecode type="coral" markers="false">
-#using &lt;http://coreapps.org/base#&gt;
-#using http = &lt;http://coreapps.org/http#&gt;
-#using iana = &lt;http://www.iana.org/assignments/relation/&gt;
-
-iana:icon &lt;/favicon.gif&gt; {
-   representation
-      b64'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAIAOw==' {
-      http:type "image/gif"
-   }
-}
-</sourcecode></li></ul>
+        <ul empty="true">
+          <li>
+<sourcecode type="coral" markers="false">
+<xi:include href="./textual/examples/embedded-representations.coral" parse="text"/>
+</sourcecode>
+          </li>
+        </ul>
 
         <t>
           An embedded representation should have a nested link of type

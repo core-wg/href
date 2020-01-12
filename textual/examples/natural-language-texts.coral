@@ -1,0 +1,13 @@
+#using <http://coreapps.org/base#>
+#using iana = <http://www.iana.org/assignments/relation/>
+
+iana:terms-of-service </tos> {
+   title "Nutzungsbedingungen" {
+      language "de"
+      direction "ltr"
+   }
+   title "Terms of use" {
+      language "en-US"
+      direction "ltr"
+   }
+}
