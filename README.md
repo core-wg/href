@@ -12,7 +12,6 @@
 ## Companion Material 
 
 * binary/
-    * [examples/](binary/examples/)
     * [python/](binary/python/)
     * [grammar.cddl](binary/grammar.cddl)
 * textual/
