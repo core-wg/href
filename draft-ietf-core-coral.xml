@@ -962,12 +962,16 @@
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="cddl" markers="false">relation-type /= uint</sourcecode></li>
-            <li><sourcecode type="cddl" markers="false">link-target /= #6.TBD6(uint)</sourcecode></li>
-            <li><sourcecode type="cddl" markers="false">operation-type /= uint</sourcecode></li>
-            <li><sourcecode type="cddl" markers="false">submission-target /= #6.TBD6(uint)</sourcecode></li>
-            <li><sourcecode type="cddl" markers="false">form-field-type /= uint</sourcecode></li>
-            <li><sourcecode type="cddl" markers="false">form-field-value /= #6.TBD6(uint)</sourcecode></li>
+            <li>
+<sourcecode type="cddl" markers="false">
+relation-type /= uint
+link-target /= #6.TBD6(uint)
+operation-type /= uint
+submission-target /= #6.TBD6(uint)
+form-field-type /= uint
+form-field-value /= #6.TBD6(uint)
+</sourcecode>
+            </li>
           </ul>
 
           <t>
@@ -1096,8 +1100,11 @@
         </t>
 
         <ul empty="true">
-          <li><sourcecode type="abnf" markers="false">token = identifier / IRIref / boolean / integer / float</sourcecode></li>
-          <li><sourcecode type="abnf" markers="false">token =/ datetime / bytes / text / null / punctuator</sourcecode></li>
+          <li>
+<sourcecode type="abnf" markers="false">
+token = identifier / IRIref / boolean / integer / float
+      / datetime / bytes / text / null / punctuator
+</sourcecode></li>
         </ul>
 
         <t>
@@ -1175,11 +1182,15 @@
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="abnf" markers="false">identifier = START *CONTINUE *(MEDIAL 1*CONTINUE)</sourcecode></li>
-            <li><sourcecode type="abnf" markers="false">START = &lt;Any character with the XID_Start property&gt;</sourcecode></li>
-            <li><sourcecode type="abnf" markers="false">CONTINUE = &lt;Any character with the XID_Continue property&gt;</sourcecode></li>
-            <li><sourcecode type="abnf" markers="false">MEDIAL = "-" / "." / "~" / %x58A / %xF0B</sourcecode></li>
-            <li><sourcecode type="abnf" markers="false">MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB</sourcecode></li>
+            <li>
+<sourcecode type="abnf" markers="false">
+identifier = START *CONTINUE *(MEDIAL 1*CONTINUE)
+START = &lt;Any character with the XID_Start property&gt;
+CONTINUE = &lt;Any character with the XID_Continue property&gt;
+MEDIAL = "-" / "." / "~" / %x58A / %xF0B
+MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB
+</sourcecode>
+            </li>
           </ul>
 
           <t>
@@ -1267,15 +1278,19 @@
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">integer = ["+" / "-"] (decimal / binary / octal / hexadecimal)</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">decimal = 1*DIGIT</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">binary = %x30 (%x42 / %x62) 1*BINDIG</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">octal = %x30 (%x4F / %x6F) 1*OCTDIG</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">hexadecimal = %x30 (%x58 / %x78) 1*HEXDIG</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">DIGIT = %x30-39</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">BINDIG = %x30-31</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">OCTDIG = %x30-37</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">HEXDIG = %x30-39 / %x41-46 / %x61-66</sourcecode></li>
+              <li>
+<sourcecode type="abnf" markers="false">
+integer = ["+" / "-"] (decimal / binary / octal / hexadecimal)
+decimal = 1*DIGIT
+binary = %x30 (%x42 / %x62) 1*BINDIG
+octal = %x30 (%x4F / %x6F) 1*OCTDIG
+hexadecimal = %x30 (%x58 / %x78) 1*HEXDIG
+DIGIT = %x30-39
+BINDIG = %x30-31
+OCTDIG = %x30-37
+HEXDIG = %x30-39 / %x41-46 / %x61-66
+</sourcecode>
+              </li>
             </ul>
 
           </section>
@@ -1308,9 +1323,13 @@
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">float = ["+" / "-"] 1*DIGIT [fraction] [exponent]</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">fraction = "." 1*DIGIT</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">exponent = (%x45 / %x65) ["+" / "-"] 1*DIGIT</sourcecode></li>
+              <li>
+<sourcecode type="abnf" markers="false">
+float = ["+" / "-"] 1*DIGIT [fraction] [exponent]
+fraction = "." 1*DIGIT
+exponent = (%x45 / %x65) ["+" / "-"] 1*DIGIT
+</sourcecode>
+              </li>
             </ul>
 
             <t>
@@ -1326,8 +1345,12 @@
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">float =/ "NaN"</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">float =/ ["+" / "-"] "Infinity"</sourcecode></li>
+              <li>
+<sourcecode type="abnf" markers="false">
+float =/ "NaN"
+       / ["+" / "-"] "Infinity"
+</sourcecode>
+              </li>
             </ul>
 
           </section>
@@ -1347,9 +1370,13 @@
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">datetime = %x64.74 SQUOTE date-time SQUOTE</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">date-time = &lt;Defined in Section 5.6 of RFC 3339&gt;</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">SQUOTE = %x27</sourcecode></li>
+              <li>
+<sourcecode type="abnf" markers="false">
+datetime = %x64.74 SQUOTE date-time SQUOTE
+date-time = &lt;Defined in Section 5.6 of RFC 3339&gt;
+SQUOTE = %x27
+</sourcecode>
+              </li>
             </ul>
 
           </section>
@@ -1373,10 +1400,14 @@
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">bytes = base16 / base32 / base64</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">base16 = (%x68 / %x62.31.36) SQUOTE &lt;Base16 encoded data&gt; SQUOTE</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">base32 = %x62.33.32 SQUOTE &lt;Base32 encoded data&gt; SQUOTE</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">base64 = %x62.36.34 SQUOTE &lt;Base64 encoded data&gt; SQUOTE</sourcecode></li>
+              <li>
+<sourcecode type="abnf" markers="false">
+bytes = base16 / base32 / base64
+base16 = (%x68 / %x62.31.36) SQUOTE &lt;Base16 encoded data&gt; SQUOTE
+base32 = %x62.33.32 SQUOTE &lt;Base32 encoded data&gt; SQUOTE
+base64 = %x62.36.34 SQUOTE &lt;Base64 encoded data&gt; SQUOTE
+</sourcecode>
+              </li>
             </ul>
 
           </section>
@@ -1398,14 +1429,18 @@
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="abnf" markers="false">text = DQUOTE *(char / %x5C escape) DQUOTE</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">char = &lt;Any character except DQUOTE, %x5C, and line terminators&gt;</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">escape = simple-escape / hexadecimal-escape / unicode-escape</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">simple-escape = %x30 / %x62 / %x74 / %x6E / %x76</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">simple-escape =/ %x66 / %x72 / %x22 / %x27 / %x5C</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">hexadecimal-escape = (%x78 / %x58) 2HEXDIG</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">unicode-escape = %x75 4HEXDIG / %x55 8HEXDIG</sourcecode></li>
-              <li><sourcecode type="abnf" markers="false">DQUOTE = %x22</sourcecode></li>
+              <li>
+<sourcecode type="abnf" markers="false">
+text = DQUOTE *(char / %x5C escape) DQUOTE
+char = &lt;Any character except DQUOTE, %x5C, and line terminators&gt;
+escape = simple-escape / hexadecimal-escape / unicode-escape
+simple-escape = %x30 / %x62 / %x74 / %x6E / %x76
+simple-escape =/ %x66 / %x72 / %x22 / %x27 / %x5C
+hexadecimal-escape = (%x78 / %x58) 2HEXDIG
+unicode-escape = %x75 4HEXDIG / %x55 8HEXDIG
+DQUOTE = %x22
+</sourcecode>
+              </li>
             </ul>
 
             <t>
@@ -2458,9 +2493,13 @@ iana:icon &lt;/favicon.gif&gt; {
         </t>
 
         <ul empty="true">
-          <li><sourcecode type="cddl" markers="false">CoRAL-Document = document</sourcecode></li>
-          <li><sourcecode type="cddl" markers="false">CoRAL-Link = link</sourcecode></li>
-          <li><sourcecode type="cddl" markers="false">CoRAL-Form = form</sourcecode></li>
+          <li>
+<sourcecode type="cddl" markers="false">
+CoRAL-Document = document
+CoRAL-Link = link
+CoRAL-Form = form
+</sourcecode>
+          </li>
         </ul>
 
         <t>
