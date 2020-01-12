@@ -2845,6 +2845,10 @@ CoRAL-Form = form
     <!-- **************************************************************** -->
     <!-- **************************************************************** -->
 
+    <displayreference target="I-D.ietf-cbor-7049bis" to="RFC7049bis"/>
+    <displayreference target="I-D.kelly-json-hal" to="HAL"/>
+    <displayreference target="I-D.nottingham-rfc7320bis" to="RFC7320bis"/>
+
     <references>
 
       <name>References</name>
@@ -2885,7 +2889,6 @@ CoRAL-Form = form
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
-            <date/>
           </front>
           <annotation>
           Note that this reference is to the latest version of Unicode, rather
@@ -2900,7 +2903,6 @@ CoRAL-Form = form
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
-            <date/>
           </front>
         </reference>
 
@@ -2910,7 +2912,6 @@ CoRAL-Form = form
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
-            <date/>
           </front>
         </reference>
 
@@ -2933,6 +2934,7 @@ CoRAL-Form = form
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8288.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
 
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.kelly-json-hal.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.nottingham-rfc7320bis.xml"/>
 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/reference.W3C.REC-html52-20171214.xml"/>
@@ -2947,7 +2949,6 @@ CoRAL-Form = form
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
-            <date/>
           </front>
         </reference>
 
@@ -2957,18 +2958,7 @@ CoRAL-Form = form
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
-            <date/>
           </front>
-        </reference>
-
-        <reference anchor="HAL">
-          <front>
-            <title>JSON Hypertext Application Language</title>
-            <author initials="M." surname="Kelly" fullname="Mike Kelly"/>
-            <date month="May" day="12" year="2016"/>
-          </front>
-          <seriesInfo name="Internet-Draft" value="draft-kelly-json-hal-08"/>
-          <format type="TXT" target="http://www.ietf.org/internet-drafts/draft-kelly-json-hal-08.txt"/>
         </reference>
 
         <reference anchor="FOAF" target="http://xmlns.com/foaf/spec/20140114.html">
@@ -3459,8 +3449,8 @@ CoRAL-Form = form
       <name>Acknowledgements</name>
 
       <t>
-        CoRAL is heavily inspired by Mike Kelly's <xref target="HAL">JSON
-        Hypertext Application Language</xref>.
+        CoRAL is heavily inspired by Mike Kelly's <xref
+        target="I-D.kelly-json-hal">JSON Hypertext Application Language</xref>.
       </t>
 
       <t>
