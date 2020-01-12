@@ -663,16 +663,16 @@
         (CBOR)</xref>.
 
         The encoding MUST satisfy the Core Deterministic Encoding Requirements
-        specified in <xref target="I-D.ietf-cbor-7049bis">Section XX of RFC
-        XXXX</xref>.
+        specified in <xref target="I-D.ietf-cbor-7049bis"
+        section="4.2.1">RFC 7049bis</xref>.
       </t>
 
       <t>
         The CBOR structure of a document is presented in the <xref
         target="RFC8610">Concise Data Definition Language (CDDL)</xref>.
 
-        All CDDL rules not defined in this document are defined in Appendix D of
-        <xref target="RFC8610">RFC 8610</xref>.
+        All CDDL rules not defined in this document are defined in
+        <xref target="RFC8610" section="D">RFC 8610</xref>.
       </t>
 
       <t>
@@ -1682,8 +1682,9 @@
             <name>IRI References</name>
 
             <t>
-              An IRI reference is resolved to an IRI as specified in Section 6.5
-              of <xref target="RFC3987">RFC 3987</xref> using the current base.
+              An IRI reference is resolved to an IRI as specified in <xref
+              target="RFC3987" section="6.5">RFC 3987</xref> with the current
+              base as the base URI.
             </t>
 
           </section>
@@ -2264,8 +2265,9 @@
 
         <t>
           To avoid interoperability problems, it is RECOMMENDED that only IRIs
-          are minted that are normalized according to Section 5.3 of RFC 3987.
-          Non-normalized forms that are best avoided include:
+          are minted that are normalized according to <xref target="RFC3987"
+          section="5.3">RFC 3987</xref>. Non-normalized forms that are best
+          avoided include:
         </t>
 
         <ul>
@@ -2320,13 +2322,13 @@ iana:icon       &lt;/favicon.png&gt;
         <t>
           The convention of appending the relation type name to the prefix
           "http://www.iana.org/assignments/relation/" to form IRIs is adopted
-          from <xref target="RFC4287">Atom</xref>; see also Appendix A.2 of
-          <xref target="RFC8288">RFC 8288</xref>.
+          from <xref target="RFC4287">Atom</xref>; see also <xref
+          target="RFC8288" section="A.2">RFC 8288</xref>.
         </t>
 
         <t>
           Note that registered relation type names are required to be lowercase
-          ASCII letters (Section 3.3 of RFC 8288).
+          ASCII letters (<xref target="RFC8288" section="3.3">RFC 8288</xref>).
         </t>
 
       </section>
@@ -2366,7 +2368,7 @@ foaf:maker null {
         <t>
           Text strings that are the target of a link can be associated with a
           <xref target="RFC5646">language tag</xref> and a base text direction
-          (i.e., right-to-left or left-to-right) by nesting links of type
+          (right-to-left or left-to-right) by nesting links of types
           &lt;http://coreapps.org/base#language&gt; and
           &lt;http://coreapps.org/base#direction&gt; under that link,
           respectively:
@@ -2500,31 +2502,31 @@ iana:icon &lt;/favicon.gif&gt; {
 
       <t>
         Implementers of the CoRAL binary format need to consider the security
-        aspects of decoding CBOR. See Section XX of <xref
-        target="I-D.ietf-cbor-7049bis">RFC XXXX</xref> for security
-        considerations relating to CBOR. In particular, different number
-        encodings for the same numeric value are not equivalent in CoRAL (e.g.,
-        a floating-point value of 0.0 is not the same as the integer 0).
+        aspects of decoding CBOR. See <xref target="I-D.ietf-cbor-7049bis"
+        section="10">RFC 7049bis</xref> for security considerations relating to
+        CBOR. In particular, different number encodings for the same numeric
+        value are not equivalent in CoRAL (e.g., a floating-point value of 0.0
+        is not the same as the integer 0).
       </t>
 
       <t>
         Implementers of the CoRAL textual format need to consider the security
         aspects of handling Unicode input. See <xref target="UTR36">Unicode
         Technical Report #36</xref> for security considerations relating to
-        visual spoofing and misuse of character encodings. See Section 10 of
-        <xref target="RFC3629">RFC 3629</xref> for security considerations
-        relating to UTF-8. See <xref target="UTS39">Unicode Technical Standard
-        #39</xref> for security mechanisms that can be used to detect possible
-        security problems relating to Unicode.
+        visual spoofing and misuse of character encodings. See <xref
+        target="RFC3629" section="10">RFC 3629</xref> for security
+        considerations relating to UTF-8. See <xref target="UTS39">Unicode
+        Technical Standard #39</xref> for security mechanisms that can be used
+        to detect possible security problems relating to Unicode.
       </t>
 
       <t>
-        CoRAL makes extensive use of resource identifiers. See Section 7 of
-        <xref target="RFC3986">RFC 3986</xref> for security considerations
-        relating to URIs. See Section 8 of <xref target="RFC3987">RFC
-        3987</xref> for security considerations relating to IRIs. See Section XX
-        of <xref target="I-D.ietf-core-href">RFC XXXX</xref> for security
-        considerations relating to CoRIs.
+        CoRAL makes extensive use of resource identifiers. See <xref
+        target="RFC3986" section="7">RFC 3986</xref> for security considerations
+        relating to URIs. See <xref target="RFC3987" section="8">RFC 3987</xref>
+        for security considerations relating to IRIs. See Section XX of <xref
+        target="I-D.ietf-core-href">RFC XXXX</xref> for security considerations
+        relating to CoRIs.
       </t>
 
       <t>
@@ -2540,10 +2542,10 @@ iana:icon &lt;/favicon.gif&gt; {
 
       <t>
         CoRAL is intended to be used in conjunction with a Web transfer protocol
-        like HTTP or CoAP. See Section 9 of <xref target="RFC7230">RFC
-        7230</xref>, Section 9 of <xref target="RFC7231">RFC 7231</xref>, etc.,
-        for security considerations relating to HTTP. See Section 11 of <xref
-        target="RFC7252">RFC 7252</xref> for security considerations relating to
+        like HTTP or CoAP. See <xref target="RFC7230" section="9">RFC
+        7230</xref>, <xref target="RFC7231" section="9">RFC 7231</xref>, etc.,
+        for security considerations relating to HTTP. See <xref target="RFC7252"
+        section="11">RFC 7252</xref> for security considerations relating to
         CoAP.
       </t>
 
@@ -2558,14 +2560,14 @@ iana:icon &lt;/favicon.gif&gt; {
         CoRAL documents and the structure of a web of resources revealed from
         automatically following links can disclose personal information and
         other sensitive information. Implementations need to prevent the
-        unintentional disclosure of such information. See Section 9 of <xref
-        target="RFC7231">RFC 7231</xref> for additional considerations.
+        unintentional disclosure of such information. See <xref target="RFC7231"
+        section="9">RFC 7231</xref> for additional considerations.
       </t>
 
       <t>
         Applications using CoRAL ought to consider the attack vectors opened by
         automatically following, trusting, or otherwise using links and forms in
-        CoRAL documents. See Section 5 of <xref target="RFC8288">RFC 8288</xref>
+        CoRAL documents. See <xref target="RFC8288" section="5">RFC 8288</xref>
         for related considerations.
       </t>
 
@@ -2575,7 +2577,7 @@ iana:icon &lt;/favicon.gif&gt; {
         necessarily be authoritative for nested elements in the document. In
         this case, unless an application defines specific rules, any link or
         form where the link/form context and the document's retrieval context do
-        not share the same <xref target="RFC6454">Web origin</xref> should be
+        not share the same <xref target="RFC6454">Web Origin</xref> should be
         discarded ("same-origin policy").
       </t>
 
@@ -2753,7 +2755,7 @@ iana:icon &lt;/favicon.gif&gt; {
         <t>
           This document registers a CBOR tag for dictionary references according
           to the procedures of <xref target="I-D.ietf-cbor-7049bis">RFC
-          XXXX</xref>.
+          7049bis</xref>.
         </t>
 
         <ul>
@@ -3002,7 +3004,7 @@ iana:icon &lt;/favicon.gif&gt; {
             </t>
             <t>
               The link target MUST be a text string in the format specified in
-              Section 2.1 of <xref target="RFC5646">RFC 5646</xref>.
+              <xref target="RFC5646" section="2.1">RFC 5646</xref>.
             </t>
           </dd>
           <dt>&lt;http://coreapps.org/base#direction&gt;</dt>
@@ -3096,7 +3098,7 @@ iana:icon &lt;/favicon.gif&gt; {
             <t>
               Indicates that the link's context is a collection and that the
               link's target is a member of that collection, as defined in
-              Section 2.1 of <xref target="RFC6573">RFC 6573</xref>.
+              <xref target="RFC6573" section="2.1">RFC 6573</xref>.
             </t>
           </dd>
           <dt>&lt;http://www.iana.org/assignments/relation/collection&gt;</dt>
@@ -3104,7 +3106,7 @@ iana:icon &lt;/favicon.gif&gt; {
             <t>
               Indicates that the link's target is a collection and that the
               link's context is a member of that collection, as defined in
-              Section 2.2 of <xref target="RFC6573">RFC 6573</xref>.
+              <xref target="RFC6573" section="2.2">RFC 6573</xref>.
             </t>
           </dd>
         </dl>
@@ -3159,7 +3161,7 @@ iana:icon &lt;/favicon.gif&gt; {
             </t>
             <t>
               The form field value MUST be a text string in the format defined
-              in Section 4.1 of <xref target="RFC7231">RFC 7231</xref>. The set
+              in <xref target="RFC7231" section="4.1">RFC 7231</xref>. The set
               of possible values is maintained in the IANA HTTP Method Registry.
             </t>
             <t>
@@ -3178,7 +3180,7 @@ iana:icon &lt;/favicon.gif&gt; {
             </t>
             <t>
               The form field value MUST be a text string in the format defined
-              in Section 3.1.1.1 of <xref target="RFC7231">RFC 7231</xref>. The
+              in <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
               possible set of media types and their parameters are maintained in
               the IANA Media Types Registry.
             </t>
@@ -3197,7 +3199,7 @@ iana:icon &lt;/favicon.gif&gt; {
             </t>
             <t>
               The link target MUST be a text string in the format defined in
-              Section 3.1.1.1 of <xref target="RFC7231">RFC 7231</xref>. The
+              <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
               possible set of media types and their parameters are maintained in
               the IANA Media Types Registry.
             </t>
