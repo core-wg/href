@@ -971,10 +971,10 @@
           </ul>
 
           <t>
-            A dictionary reference MUST NOT refer to a dictionary value that is
-            otherwise not allowed. For example, a dictionary reference that is
-            used in place of a link relation type is not allowed to refer to a
-            Boolean value.
+            A dictionary reference MUST NOT refer to a dictionary value that
+            would otherwise not be syntactically allowed in that position. For
+            example, a dictionary reference in the position of a link relation
+            type cannot refer to a Boolean value.
           </t>
 
         </section>
