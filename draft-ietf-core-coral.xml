@@ -1695,12 +1695,12 @@ DQUOTE = %x22
 
           <t>
             IRIs in links and forms can be either denoted by an IRI reference or
-            looked up from a mapping from identifiers to IRIs using names.
+            looked up in a mapping from identifiers to IRIs.
 
-            There are three kinds of names:
-                simple names,
-                qualified names, and
-                predefined names.
+            Lookups can be done in three ways: using
+                a simple name,
+                a qualified name, or
+                a predefined name.
           </t>
 
           <ul empty="true">
@@ -1708,7 +1708,7 @@ DQUOTE = %x22
           </ul>
 
           <t>
-            Both IRI references and names are processed by resolving them to an
+            All IRI references and names are processed by resolving them to an
             IRI, as described in the following sub-sections.
           </t>
 
