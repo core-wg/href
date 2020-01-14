@@ -240,7 +240,7 @@
           The URI that was used to retrieve such a document is called the
           document's <em>retrieval context</em>.
 
-          That URI is also considered the base URI for relative URI references
+          This URI is also considered the base URI for relative URI references
           in the document.
         </t>
 
@@ -716,6 +716,7 @@
 
           <t>
             The elements are processed in the order they appear in the document.
+
             Document processors need to maintain an <em>environment</em> while
             iterating an array of elements.
 
@@ -723,7 +724,7 @@
                 the <em>current context</em> and
                 the <em>current base</em>.
 
-            Both the current context and the current base are initially set to
+            The current context and the current base are both initially set to
             the document's retrieval context.
           </t>
 
@@ -841,10 +842,14 @@
           </ul>
 
           <t>
-            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a fresh
-            environment. Both the current context and current base in this
-            environment are initially set to the link target of the enclosing
-            link.
+            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a
+            fresh environment.
+
+            The current context is set to the link target of the enclosing link.
+
+            The current base is initially set to the link target, if the link
+            target is an IRI; otherwise, it is set to the current base of the
+            current environment.
           </t>
 
         </section>
@@ -889,10 +894,14 @@
           </t>
 
           <t>
-            <!-- FIXME -->
-            The form fields, if any, <bcp14>MUST</bcp14> be processed in a fresh environment.
-            Both the current context and the current base in this environment
-            are initially set to the submission target of the enclosing form.
+            The form fields, if any, <bcp14>MUST</bcp14> be processed in a fresh
+            environment.
+
+            The current context is set to an unspecified URI that represents the
+            enclosing form.
+
+            The current base is initially set to the submission target of the
+            enclosing form.
           </t>
 
         </section>
@@ -929,10 +938,15 @@
           </ul>
 
           <t>
-            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a fresh
-            environment. Both the current context and current base in this
-            environment are initially set to the form field value of the enclosing
+            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a
+            fresh environment.
+
+            The current context is set to the form field value of the enclosing
             form field.
+
+            The current base is initially set to the form field value, if the
+            form field value is an IRI; otherwise, it is set to the current base
+            of the current environment.
           </t>
 
         </section>
@@ -1627,6 +1641,7 @@ DQUOTE = %x22
 
           <t>
             The elements are processed in the order they appear in the document.
+
             Document processors need to maintain an <em>environment</em> while
             iterating a sequence of elements.
 
@@ -1635,7 +1650,7 @@ DQUOTE = %x22
                 the <em>current base</em>, and
                 the <em>current mapping from identifiers to IRIs</em>.
 
-            Both the current context and the current base are initially set to
+            The current context and the current base are both initially set to
             the document's retrieval context.
 
             The current mapping from identifiers to IRIs is initially empty.
@@ -1891,12 +1906,17 @@ DQUOTE = %x22
           </ul>
 
           <t>
-            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a fresh
-            environment. Both the current context and current base in this
-            environment are initially set to the link target of the enclosing
-            link. The mapping from identifiers to IRIs is initially set to a
-            copy of the mapping from identifiers to IRIs in the current
-            environment.
+            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a
+            fresh environment.
+
+            The current context is set to the link target of the enclosing link.
+
+            The current base is initially set to the link target, if the link
+            target is an IRI; otherwise, it is set to the current base of the
+            current environment.
+
+            The mapping from identifiers to IRIs is initially set to a copy of
+            the mapping from identifiers to IRIs in the current environment.
           </t>
 
         </section>
@@ -1940,9 +1960,15 @@ DQUOTE = %x22
           </t>
 
           <t>
-            The form fields, if any, <bcp14>MUST</bcp14> be processed in a fresh environment.
-            Both the current context and the current base in this environment
-            are initially set to the submission target of the enclosing form.
+            The form fields, if any, <bcp14>MUST</bcp14> be processed in a fresh
+            environment.
+
+            The current context is set to an unspecified URI that represents the
+            enclosing form.
+
+            The current base is initially set to the submission target of the
+            enclosing form.
+
             The mapping from identifiers to IRIs is initially set to a copy of
             the mapping from identifiers to IRIs in the current environment.
           </t>
@@ -1980,12 +2006,18 @@ DQUOTE = %x22
           </ul>
 
           <t>
-            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a fresh
-            environment. Both the current context and current base in this
-            environment are initially set to the form field value of the enclosing
-            form field. The mapping from identifiers to IRIs is initially set to a
-            copy of the mapping from identifiers to IRIs in the current
-            environment.
+            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a
+            fresh environment.
+
+            The current context is set to the form field value of the enclosing
+            form field.
+
+            The current base is initially set to the form field value, if the
+            form field value is an IRI; otherwise, it is set to the current base
+            of the current environment.
+
+            The mapping from identifiers to IRIs is initially set to a copy of
+            the mapping from identifiers to IRIs in the current environment.
           </t>
 
         </section>
@@ -3435,6 +3467,7 @@ CoRAL-Form = form
       </t>
 
       <ul>
+        <li>Clarified the current context and current base for nested elements and form fields (#53).</li>
         <li>Minor editorial improvements.</li>
       </ul>
 
