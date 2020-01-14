@@ -1508,60 +1508,49 @@ DQUOTE = %x22
               <thead>
                 <tr>
                   <th align="center">Escape Sequence</th>
-                  <th align="center">Code Point</th>
-                  <th align="left">Character Name</th>
+                  <th align="left">Code Point</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td align="center">\0</td>
-                  <td align="center">U+0000</td>
-                  <td align="left">Null</td>
+                  <td align="left">U+0000 NULL</td>
                 </tr>
                 <tr>
                   <td align="center">\b</td>
-                  <td align="center">U+0008</td>
-                  <td align="left">Backspace</td>
+                  <td align="left">U+0008 BACKSPACE</td>
                 </tr>
                 <tr>
                   <td align="center">\t</td>
-                  <td align="center">U+0009</td>
-                  <td align="left">Character Tabulation</td>
+                  <td align="left">U+0009 HORIZONTAL TABULATION</td>
                 </tr>
                 <tr>
                   <td align="center">\n</td>
-                  <td align="center">U+000A</td>
-                  <td align="left">Line Feed</td>
+                  <td align="left">U+000A LINE FEED</td>
                 </tr>
                 <tr>
                   <td align="center">\v</td>
-                  <td align="center">U+000B</td>
-                  <td align="left">Line Tabulation</td>
+                  <td align="left">U+000B VERTICAL TABULATION</td>
                 </tr>
                 <tr>
                   <td align="center">\f</td>
-                  <td align="center">U+000C</td>
-                  <td align="left">Form Feed</td>
+                  <td align="left">U+000C FORM FEED</td>
                 </tr>
                 <tr>
                   <td align="center">\r</td>
-                  <td align="center">U+000D</td>
-                  <td align="left">Carriage Return</td>
+                  <td align="left">U+000D CARRIAGE RETURN</td>
                 </tr>
                 <tr>
                   <td align="center">\"</td>
-                  <td align="center">U+0022</td>
-                  <td align="left">Quotation Mark</td>
+                  <td align="left">U+0022 QUOTATION MARK</td>
                 </tr>
                 <tr>
                   <td align="center">\'</td>
-                  <td align="center">U+0027</td>
-                  <td align="left">Apostrophe</td>
+                  <td align="left">U+0027 APOSTROPHE</td>
                 </tr>
                 <tr>
                   <td align="center">\\</td>
-                  <td align="center">U+005C</td>
-                  <td align="left">Reverse Solidus</td>
+                  <td align="left">U+005C REVERSE SOLIDUS</td>
                 </tr>
               </tbody>
             </table>
