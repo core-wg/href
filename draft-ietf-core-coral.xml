@@ -3233,11 +3233,6 @@ CoRAL-Form = form
               possible set of media types and their parameters is maintained in
               the Media Types Registry.
             </t>
-            <t>
-              A link of this type <bcp14>MUST NOT</bcp14> occur more than once for the link
-              context. If absent, its value defaults to the content type
-              "application/octet-stream".
-            </t>
           </dd>
         </dl>
 
@@ -3299,11 +3294,6 @@ CoRAL-Form = form
               format (e.g., the integer 42 for the content type
               <tt>application/octet-stream</tt> without a content coding). The possible
               set of values is maintained in the CoAP Content Formats Registry.
-            </t>
-            <t>
-              <!-- FIXME -->
-              A link of this type <bcp14>MUST NOT</bcp14> occur more than once for the link
-              context. If absent, it defaults to content format 42.
             </t>
           </dd>
         </dl>
