@@ -981,7 +981,7 @@ form-field-value /= #6.TBD6(uint)
 
           <t>
             A dictionary reference MUST NOT refer to a dictionary value that
-            would otherwise not be syntactically allowed in that position. For
+            would otherwise not be allowed syntactically in that position. For
             example, a dictionary reference in the position of a link relation
             type cannot refer to a Boolean value.
           </t>
@@ -1021,7 +1021,9 @@ form-field-value /= #6.TBD6(uint)
             For simplicity, a CoRAL document can reference values only from one
             dictionary; the value of the "dictionary" parameter MUST be a single
             URI.
+          </t>
 
+          <t>
             The "dictionary" parameter is OPTIONAL. If it is absent, the default
             dictionary specified in <xref target="default-dictionary"/> of this
             document is assumed.
@@ -1035,12 +1037,13 @@ form-field-value /= #6.TBD6(uint)
 
           <t>
             In <xref target="RFC7252">CoAP</xref>, media types (including
-            specific values for their parameters) are encoded as an unsigned
-            integer called the "content format" of a representation.
+            specific values for their parameters, plus an optional content
+            coding) are encoded as an unsigned integer called the "content
+            format" of a representation.
 
             For use with CoAP, each new CoRAL dictionary therefore needs to have
-            a new content format registered with IANA in the CoAP
-            Content-Formats Registry.
+            a new content format registered in the CoAP Content Formats
+            Registry.
           </t>
 
         </section>
@@ -3184,8 +3187,8 @@ CoRAL-Form = form
             </t>
             <t>
               The form field value MUST be a text string in the format defined
-              in <xref target="RFC7231" section="4.1">RFC 7231</xref>. The set
-              of possible values is maintained in the IANA HTTP Method Registry.
+              in <xref target="RFC7231" section="4.1">RFC 7231</xref>. The
+              possible set of values is maintained in the HTTP Method Registry.
             </t>
             <t>
               A form field of this type MUST NOT occur more than once in a form.
@@ -3204,8 +3207,8 @@ CoRAL-Form = form
             <t>
               The form field value MUST be a text string in the format defined
               in <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
-              possible set of media types and their parameters are maintained in
-              the IANA Media Types Registry.
+              possible set of media types and their parameters is maintained in
+              the Media Types Registry.
             </t>
           </dd>
         </dl>
@@ -3223,8 +3226,8 @@ CoRAL-Form = form
             <t>
               The link target MUST be a text string in the format defined in
               <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
-              possible set of media types and their parameters are maintained in
-              the IANA Media Types Registry.
+              possible set of media types and their parameters is maintained in
+              the Media Types Registry.
             </t>
             <t>
               A link of this type MUST NOT occur more than once for the link
@@ -3251,9 +3254,9 @@ CoRAL-Form = form
               Specifies the CoAP method for the request.
             </t>
             <t>
-              The form field value MUST be an integer identifying one of the
-              CoAP request methods maintained in the IANA CoAP Method Codes
-              Registry (e.g., the integer 2 for the POST method).
+              The form field value MUST be an integer identifying a CoAP method
+              (e.g., the integer 2 for the POST method). The possible set of
+              values is maintained in the CoAP Method Codes Registry.
             </t>
             <t>
               A form field of this type MUST NOT occur more than once in a form.
@@ -3270,9 +3273,9 @@ CoRAL-Form = form
               or no request payload, depending on the operation type.
             </t>
             <t>
-              The form field value MUST be an integer identifying one of the
-              content formats maintained in the IANA CoAP Content-Formats
-              Registry.
+              The form field value MUST be an integer identifying a CoAP content
+              format. The possible set of values is maintained in the CoAP
+              Content Formats Registry.
             </t>
           </dd>
         </dl>
@@ -3288,13 +3291,15 @@ CoRAL-Form = form
               Specifies the CoAP content format of the link context.
             </t>
             <t>
-              The link target MUST be an integer identifying one of the content
-              formats maintained in the IANA CoAP Content-Formats Registry.
+              The link target MUST be an integer identifying a CoAP content
+              format (e.g., the integer 42 for the content type
+              "application/octet-stream" without a content coding). The possible
+              set of values is maintained in the CoAP Content Formats Registry.
             </t>
             <t>
+              <!-- FIXME -->
               A link of this type MUST NOT occur more than once for the link
-              context. If absent, it defaults to content format 42 (i.e., the
-              content type "application/octet-stream" without a content coding).
+              context. If absent, it defaults to content format 42.
             </t>
           </dd>
         </dl>
