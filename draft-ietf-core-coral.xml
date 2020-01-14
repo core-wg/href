@@ -56,12 +56,12 @@
 
       <t>
         The issues list for this Internet-Draft can be found at
-        &lt;https://github.com/core-wg/coral/labels/coral&gt;.
+        &lt;<eref target="https://github.com/core-wg/coral/labels/coral"/>&gt;.
       </t>
 
       <t>
         Companion material for this Internet-Draft can be found at
-        &lt;https://github.com/core-wg/coral&gt;.
+        &lt;<eref target="https://github.com/core-wg/coral"/>&gt;.
       </t>
 
     </note>
