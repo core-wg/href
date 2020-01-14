@@ -1046,8 +1046,8 @@ application/coral+cbor;dictionary="http://example.com/dictionary"
             format" of a representation.
 
             For use with CoAP, each new CoRAL dictionary therefore needs to have
-            a new content format registered in the CoAP Content Formats
-            Registry.
+            a new content format registered in the <xref target="CORE-PARAMETERS">CoAP Content Formats
+            Registry</xref>.
           </t>
 
         </section>
@@ -2357,7 +2357,7 @@ DQUOTE = %x22
         <name>Expressing Registered Link Relation Types</name>
 
         <t>
-          Link relation types registered in the IANA Link Relations Registry,
+          Link relation types registered in the <xref target="LINK-RELATIONS">Link Relations Registry</xref>,
           such as <tt>collection</tt> <xref target="RFC6573"/> or <tt>icon</tt>
           <xref target="W3C.REC-html52-20171214"/>, can be used in CoRAL
           by appending the registered name to the IRI
@@ -2934,6 +2934,11 @@ CoRAL-Form = form
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/reference.W3C.REC-turtle-20140225.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/reference.W3C.REC-webarch-20041215.xml"/>
 
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml8/reference.IANA.core-parameters.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml8/reference.IANA.http-methods.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml8/reference.IANA.link-relations.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml8/reference.IANA.media-types.xml"/>
+
         <reference anchor="UTR36" target="http://unicode.org/reports/tr36/">
           <front>
             <title>Unicode Technical Report #36: Unicode Security Considerations</title>
@@ -3192,7 +3197,7 @@ CoRAL-Form = form
             <t>
               The form field value <bcp14>MUST</bcp14> be a text string in the format defined
               in <xref target="RFC7231" section="4.1">RFC 7231</xref>. The
-              possible set of values is maintained in the HTTP Method Registry.
+              possible set of values is maintained in the <xref target="HTTP-METHODS">HTTP Methods Registry</xref>.
             </t>
             <t>
               A form field of this type <bcp14>MUST NOT</bcp14> occur more than once in a form.
@@ -3212,7 +3217,7 @@ CoRAL-Form = form
               The form field value <bcp14>MUST</bcp14> be a text string in the format defined
               in <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
               possible set of media types and their parameters is maintained in
-              the Media Types Registry.
+              the <xref target="MEDIA-TYPES">Media Types Registry</xref>.
             </t>
           </dd>
         </dl>
@@ -3231,7 +3236,7 @@ CoRAL-Form = form
               The link target <bcp14>MUST</bcp14> be a text string in the format defined in
               <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
               possible set of media types and their parameters is maintained in
-              the Media Types Registry.
+              the <xref target="MEDIA-TYPES">Media Types Registry</xref>.
             </t>
           </dd>
         </dl>
@@ -3255,7 +3260,7 @@ CoRAL-Form = form
             <t>
               The form field value <bcp14>MUST</bcp14> be an integer identifying a CoAP method
               (e.g., the integer 2 for the POST method). The possible set of
-              values is maintained in the CoAP Method Codes Registry.
+              values is maintained in the <xref target="CORE-PARAMETERS">CoAP Method Codes Registry</xref>.
             </t>
             <t>
               A form field of this type <bcp14>MUST NOT</bcp14> occur more than once in a form.
@@ -3274,7 +3279,7 @@ CoRAL-Form = form
             <t>
               The form field value <bcp14>MUST</bcp14> be an integer identifying a CoAP content
               format. The possible set of values is maintained in the CoAP
-              Content Formats Registry.
+              <xref target="CORE-PARAMETERS">Content Formats Registry</xref>.
             </t>
           </dd>
         </dl>
@@ -3293,7 +3298,7 @@ CoRAL-Form = form
               The link target <bcp14>MUST</bcp14> be an integer identifying a CoAP content
               format (e.g., the integer 42 for the content type
               <tt>application/octet-stream</tt> without a content coding). The possible
-              set of values is maintained in the CoAP Content Formats Registry.
+              set of values is maintained in the <xref target="CORE-PARAMETERS">CoAP Content Formats Registry</xref>.
             </t>
           </dd>
         </dl>
