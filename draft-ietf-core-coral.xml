@@ -392,7 +392,7 @@
           To perform the operation, an agent needs to construct a request with
           the specified method as the request method and the specified
           submission target as the request URI. Usually, the submission target
-          is the same resource as the form context, but can be a different
+          is the same resource as the form context, but may be a different
           resource.
 
           Constructing and sending the request is called <em>submitting the
@@ -489,9 +489,9 @@
               relation types and operation types it understands.
             </t>
             <t>
-              An agent MAY follow a link without understanding the link relation
+              An agent may follow a link without understanding the link relation
               type, e.g., for the sake of pre-fetching or building a search
-              index. However, an agent MUST NOT submit a form without
+              index. However, an agent <bcp14>MUST NOT</bcp14> submit a form without
               understanding the operation type.
             </t>
           </li>
@@ -524,11 +524,11 @@
               The agent obtains the <em>request URI</em> from the link target or
               submission target.
 
-              Link targets and submission targets may be denoted by relative URI
+              Link targets and submission targets can be denoted by relative URI
               references, which need to be resolved against a base URI to obtain
               the request URI.
 
-              Fragment identifiers are not part of the request URI and MUST be
+              Fragment identifiers are not part of the request URI and <bcp14>MUST</bcp14> be
               separated from the rest of the URI prior to the next step.
             </t>
           </li>
@@ -536,10 +536,10 @@
             <t>
               The agent constructs a new request with the request URI.
 
-              If the agent is following a link, then the request method MUST be
+              If the agent is following a link, then the request method <bcp14>MUST</bcp14> be
               GET.
 
-              If the agent is submitting a form, then the request method MUST be
+              If the agent is submitting a form, then the request method <bcp14>MUST</bcp14> be
               the one supplied by the form.
 
               An IRI may need to be converted to a URI (see <xref
@@ -547,7 +547,7 @@
               do not support IRIs.
             </t>
             <t>
-              The agent SHOULD set HTTP header fields and CoAP request options
+              The agent <bcp14>SHOULD</bcp14> set HTTP header fields and CoAP request options
               according to the metadata (e.g., set the HTTP Accept header field
               or the CoAP Accept option when a media type for the target
               resource is provided).
@@ -629,14 +629,14 @@
         </t>
 
         <t>
-          Traversing the history SHOULD take advantage of caches to avoid new
+          Traversing the history <bcp14>SHOULD</bcp14> take advantage of caches to avoid new
           requests.
 
-          An agent MAY reissue a safe request (e.g., a GET request) when it does
+          An agent may reissue a safe request (e.g., a GET) when it does
           not have a fresh representation in its cache.
 
-          An agent MUST NOT reissue an unsafe request (e.g., a PUT or a POST
-          request) unless it actually intends to perform that operation again.
+          An agent <bcp14>MUST NOT</bcp14> reissue an unsafe request (e.g., a PUT or
+          POST) unless it actually intends to perform that operation again.
         </t>
 
       </section>
@@ -662,7 +662,7 @@
         target="I-D.ietf-cbor-7049bis">Concise Binary Object Representation
         (CBOR)</xref>.
 
-        The encoding MUST satisfy the Core Deterministic Encoding Requirements
+        The encoding <bcp14>MUST</bcp14> satisfy the Core Deterministic Encoding Requirements
         specified in <xref target="I-D.ietf-cbor-7049bis"
         section="4.2.1">RFC 7049bis</xref>.
       </t>
@@ -770,7 +770,7 @@
               target="I-D.ietf-core-href">Constrained Resource Identifier (CoRI)
               reference</xref>.
 
-              The CoRI reference MUST be resolved against the current context
+              The CoRI reference <bcp14>MUST</bcp14> be resolved against the current context
               (not the current base).
             </t>
 
@@ -841,7 +841,7 @@
           </ul>
 
           <t>
-            The nested elements, if any, MUST be processed in a fresh
+            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a fresh
             environment. Both the current context and current base in this
             environment are initially set to the link target of the enclosing
             link.
@@ -883,14 +883,14 @@
           <t>
             The request method is either implied by the operation type or
             encoded as a form field. If both are given, the form field takes
-            precedence over the operation type. Either way, the method MUST be
+            precedence over the operation type. Either way, the method <bcp14>MUST</bcp14> be
             applicable to the Web transfer protocol identified by the scheme of
             the submission target.
           </t>
 
           <t>
             <!-- FIXME -->
-            The form fields, if any, MUST be processed in a fresh environment.
+            The form fields, if any, <bcp14>MUST</bcp14> be processed in a fresh environment.
             Both the current context and the current base in this environment
             are initially set to the submission target of the enclosing form.
           </t>
@@ -929,7 +929,7 @@
           </ul>
 
           <t>
-            The nested elements, if any, MUST be processed in a fresh
+            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a fresh
             environment. Both the current context and current base in this
             environment are initially set to the form field value of the enclosing
             form field.
@@ -944,8 +944,8 @@
         <name>Dictionary Compression</name>
 
         <t>
-          A document in the binary format can reference values from an external
-          dictionary to reduce representation size and processing cost.
+          A document in the binary format <bcp14>MAY</bcp14> reference values from an external
+          dictionary. This helps to reduce representation size and processing cost.
 
           Dictionary references can be used in place of
               link relation types,
@@ -980,7 +980,7 @@ form-field-value /= #6.TBD6(uint)
           </ul>
 
           <t>
-            A dictionary reference MUST NOT refer to a dictionary value that
+            A dictionary reference <bcp14>MUST NOT</bcp14> refer to a dictionary value that
             would otherwise not be allowed syntactically in that position. For
             example, a dictionary reference in the position of a link relation
             type cannot refer to a Boolean value.
@@ -999,7 +999,7 @@ form-field-value /= #6.TBD6(uint)
             target="RFC3986">URI</xref>.
 
             For example, a CoRAL document that uses the dictionary identified by
-            the URI &lt;http://example.com/dictionary&gt; can use the following
+            the URI &lt;http://example.com/dictionary&gt; would have the following
             content type:
           </t>
 
@@ -1019,7 +1019,7 @@ form-field-value /= #6.TBD6(uint)
 
           <t>
             For simplicity, a CoRAL document can reference values only from one
-            dictionary; the value of the "dictionary" parameter MUST be a single
+            dictionary; the value of the "dictionary" parameter <bcp14>MUST</bcp14> be a single
             URI.
           </t>
 
@@ -1030,7 +1030,7 @@ form-field-value /= #6.TBD6(uint)
           </t>
 
           <t>
-            Once a dictionary has made an assignment, the assignment MUST NOT be
+            Once a dictionary has made an assignment, the assignment <bcp14>MUST NOT</bcp14> be
             changed or removed. A dictionary, however, may contain additional
             information about an assignment, which may change over time.
           </t>
@@ -1084,7 +1084,7 @@ form-field-value /= #6.TBD6(uint)
         document in the form of an OPTIONAL Byte Order Mark (BOM).
 
         The use of the <xref target="RFC3629">UTF-8 encoding scheme</xref>
-        without a BOM is RECOMMENDED.
+        without a BOM is <bcp14>RECOMMENDED</bcp14>.
       </t>
 
       <section>
@@ -1202,7 +1202,7 @@ MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB
           </ul>
 
           <t>
-            All identifiers MUST be converted into Unicode Normalization Form C
+            All identifiers <bcp14>MUST</bcp14> be converted into Unicode Normalization Form C
             (NFC), which is defined in <xref target="UAX15">Unicode Standard
             Annex #15</xref>.
 
@@ -1658,7 +1658,7 @@ DQUOTE = %x22
 
             <t>
               The base IRI is denoted by an IRI reference. The IRI reference
-              MUST be resolved against the current context (not the current
+              <bcp14>MUST</bcp14> be resolved against the current context (not the current
               base).
             </t>
 
@@ -1861,7 +1861,7 @@ DQUOTE = %x22
           </ul>
 
           <t>
-            The nested elements, if any, MUST be processed in a fresh
+            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a fresh
             environment. Both the current context and current base in this
             environment are initially set to the link target of the enclosing
             link. The mapping from identifiers to IRIs is initially set to a
@@ -1904,13 +1904,13 @@ DQUOTE = %x22
           <t>
             The request method is either implied by the operation type or
             encoded as a form field. If both are given, the form field takes
-            precedence over the operation type. Either way, the method MUST be
+            precedence over the operation type. Either way, the method <bcp14>MUST</bcp14> be
             applicable to the Web transfer protocol identified by the scheme of
             the submission target.
           </t>
 
           <t>
-            The form fields, if any, MUST be processed in a fresh environment.
+            The form fields, if any, <bcp14>MUST</bcp14> be processed in a fresh environment.
             Both the current context and the current base in this environment
             are initially set to the submission target of the enclosing form.
             The mapping from identifiers to IRIs is initially set to a copy of
@@ -1950,7 +1950,7 @@ DQUOTE = %x22
           </ul>
 
           <t>
-            The nested elements, if any, MUST be processed in a fresh
+            The nested elements, if any, <bcp14>MUST</bcp14> be processed in a fresh
             environment. Both the current context and current base in this
             environment are initially set to the form field value of the enclosing
             form field. The mapping from identifiers to IRIs is initially set to a
@@ -2000,12 +2000,12 @@ DQUOTE = %x22
           </t>
 
           <t>
-            An origin server SHOULD verify that a submitted CoRAL document is
+            An origin server <bcp14>SHOULD</bcp14> verify that a submitted CoRAL document is
             consistent with any constraints the server has for the target
             resource.
 
             When a document is inconsistent with the target resource, the origin
-            server SHOULD either make it consistent (e.g., by removing
+            server <bcp14>SHOULD</bcp14> either make it consistent (e.g., by removing
             inconsistent elements) or respond with an appropriate error message
             containing sufficient information to explain why the document is
             unsuitable.
@@ -2030,7 +2030,7 @@ DQUOTE = %x22
 
           <t>
             The retrieval context of a CoRAL document in a POST is defined by
-            the target resource's processing semantics; it can be an unspecified
+            the target resource's processing semantics; it may be an unspecified
             URI. The base URI of the document is the request URI of the request.
           </t>
 
@@ -2244,7 +2244,7 @@ DQUOTE = %x22
           <t>
             In CoRAL-based applications, resource names are therefore not part
             of the application specification -- they are an implementation
-            detail. The specification of a CoRAL-based application MUST NOT
+            detail. The specification of a CoRAL-based application <bcp14>MUST NOT</bcp14>
             mandate any particular form of resource name structure.
           </t>
 
@@ -2305,14 +2305,14 @@ DQUOTE = %x22
           minted by defining an <xref target="RFC3987">IRI</xref> that uniquely
           identifies the item.
 
-          Although the IRI can point to a resource that contains a definition of
-          the semantics, clients SHOULD NOT automatically access that resource
-          to avoid overburdening its server. The IRI SHOULD be under the control
+          Although the IRI may point to a resource that contains a definition of
+          the semantics, clients <bcp14>SHOULD NOT</bcp14> automatically access that resource
+          to avoid overburdening its server. The IRI <bcp14>SHOULD</bcp14> be under the control
           of the person or party defining it, or be delegated to them.
         </t>
 
         <t>
-          To avoid interoperability problems, it is RECOMMENDED that only IRIs
+          To avoid interoperability problems, it is <bcp14>RECOMMENDED</bcp14> that only IRIs
           are minted that are normalized according to <xref target="RFC3987"
           section="5.3">RFC 3987</xref>. Non-normalized forms that are best
           avoided include:
@@ -2460,7 +2460,7 @@ DQUOTE = %x22
         </ul>
 
         <t>
-          An embedded representation should have a nested link of type
+          An embedded representation <bcp14>SHOULD</bcp14> have a nested link of type
           &lt;http://coreapps.org/http#type&gt; or
           &lt;http://coreapps.org/coap#type&gt; that indicates the content type
           of the representation.
@@ -2485,7 +2485,7 @@ DQUOTE = %x22
           embedded in other <xref target="I-D.ietf-cbor-7049bis">CBOR
           structures</xref>.
 
-          Specifications using <xref target="RFC8610">CDDL</xref> can reference
+          Specifications using <xref target="RFC8610">CDDL</xref> should reference
           the following CDDL definitions for this purpose:
         </t>
 
@@ -2777,7 +2777,7 @@ CoRAL-Form = form
         </t>
 
         <t>
-          [[NOTE TO IMPLEMENTERS: Experimental implementations can use content
+          [[NOTE TO IMPLEMENTERS: Experimental implementations may use content
           format ID 65087 for "application/coral+cbor" and content format ID
           65343 for "text/coral" until IANA has assigned code points.]]
         </t>
@@ -3015,7 +3015,7 @@ CoRAL-Form = form
               menu entry).
             </t>
             <t>
-              The link target MUST be a text string. The text string SHOULD be
+              The link target <bcp14>MUST</bcp14> be a text string. The text string <bcp14>SHOULD</bcp14> be
               annotated with a language and text direction using nested links of
               type &lt;http://coreapps.org/base#language&gt; and
               &lt;http://coreapps.org/base#direction&gt;, respectively.
@@ -3029,7 +3029,7 @@ CoRAL-Form = form
               of the link context.
             </t>
             <t>
-              The link target MUST be a text string in the format specified in
+              The link target <bcp14>MUST</bcp14> be a text string in the format specified in
               <xref target="RFC5646" section="2.1">RFC 5646</xref>.
             </t>
           </dd>
@@ -3041,7 +3041,7 @@ CoRAL-Form = form
               directionality of the link context.
             </t>
             <t>
-              The link target MUST be either the text string "rtl" or the text
+              The link target <bcp14>MUST</bcp14> be either the text string "rtl" or the text
               string "ltr".
             </t>
           </dd>
@@ -3052,7 +3052,7 @@ CoRAL-Form = form
               context.
             </t>
             <t>
-              The link target MUST be a byte string.
+              The link target <bcp14>MUST</bcp14> be a byte string.
             </t>
             <t>
               The representation may be a full, partial, or inconsistent version
@@ -3186,12 +3186,12 @@ CoRAL-Form = form
               Specifies the HTTP method for the request.
             </t>
             <t>
-              The form field value MUST be a text string in the format defined
+              The form field value <bcp14>MUST</bcp14> be a text string in the format defined
               in <xref target="RFC7231" section="4.1">RFC 7231</xref>. The
               possible set of values is maintained in the HTTP Method Registry.
             </t>
             <t>
-              A form field of this type MUST NOT occur more than once in a form.
+              A form field of this type <bcp14>MUST NOT</bcp14> occur more than once in a form.
               If absent, it defaults to the request method implied by the form's
               operation type.
             </t>
@@ -3205,7 +3205,7 @@ CoRAL-Form = form
               request payload, depending on the operation type.
             </t>
             <t>
-              The form field value MUST be a text string in the format defined
+              The form field value <bcp14>MUST</bcp14> be a text string in the format defined
               in <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
               possible set of media types and their parameters is maintained in
               the Media Types Registry.
@@ -3224,13 +3224,13 @@ CoRAL-Form = form
               Specifies the HTTP content type of the link context.
             </t>
             <t>
-              The link target MUST be a text string in the format defined in
+              The link target <bcp14>MUST</bcp14> be a text string in the format defined in
               <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
               possible set of media types and their parameters is maintained in
               the Media Types Registry.
             </t>
             <t>
-              A link of this type MUST NOT occur more than once for the link
+              A link of this type <bcp14>MUST NOT</bcp14> occur more than once for the link
               context. If absent, its value defaults to the content type
               "application/octet-stream".
             </t>
@@ -3254,12 +3254,12 @@ CoRAL-Form = form
               Specifies the CoAP method for the request.
             </t>
             <t>
-              The form field value MUST be an integer identifying a CoAP method
+              The form field value <bcp14>MUST</bcp14> be an integer identifying a CoAP method
               (e.g., the integer 2 for the POST method). The possible set of
               values is maintained in the CoAP Method Codes Registry.
             </t>
             <t>
-              A form field of this type MUST NOT occur more than once in a form.
+              A form field of this type <bcp14>MUST NOT</bcp14> occur more than once in a form.
               If absent, it defaults to the request method implied by the form's
               operation type.
             </t>
@@ -3273,7 +3273,7 @@ CoRAL-Form = form
               or no request payload, depending on the operation type.
             </t>
             <t>
-              The form field value MUST be an integer identifying a CoAP content
+              The form field value <bcp14>MUST</bcp14> be an integer identifying a CoAP content
               format. The possible set of values is maintained in the CoAP
               Content Formats Registry.
             </t>
@@ -3291,14 +3291,14 @@ CoRAL-Form = form
               Specifies the CoAP content format of the link context.
             </t>
             <t>
-              The link target MUST be an integer identifying a CoAP content
+              The link target <bcp14>MUST</bcp14> be an integer identifying a CoAP content
               format (e.g., the integer 42 for the content type
               "application/octet-stream" without a content coding). The possible
               set of values is maintained in the CoAP Content Formats Registry.
             </t>
             <t>
               <!-- FIXME -->
-              A link of this type MUST NOT occur more than once for the link
+              A link of this type <bcp14>MUST NOT</bcp14> occur more than once for the link
               context. If absent, it defaults to content format 42.
             </t>
           </dd>
