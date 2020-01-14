@@ -695,7 +695,7 @@
           more efficiently.
         </t>
 
-        <section anchor="binary-body">
+        <section>
 
           <name>Documents</name>
 
@@ -939,7 +939,7 @@
 
       </section>
 
-      <section anchor="dictionaries">
+      <section anchor="dictionary-compression">
 
         <name>Dictionary Compression</name>
 
@@ -1204,7 +1204,7 @@ MEDIAL = &lt;Any character from Table XX&gt;
             </li>
           </ul>
 
-          <table anchor="medial" align="center">
+          <table anchor="medial-characters" align="center">
             <name>Medial Characters</name>
             <thead>
               <tr>
@@ -1500,10 +1500,10 @@ DQUOTE = %x22
               <tt>\u</tt>, or <tt>\U</tt> prefix.
 
               Simple escape sequences indicate the code points listed in <xref
-              target="escape"/>.
+              target="simple-escape-sequences"/>.
             </t>
 
-            <table anchor="escape" align="center">
+            <table anchor="simple-escape-sequences" align="center">
               <name>Simple Escape Sequences</name>
               <thead>
                 <tr>
@@ -2372,7 +2372,7 @@ DQUOTE = %x22
 
           Therefore, CoRAL alternatively allows the use of unsigned integers to
           reference CBOR data items from a dictionary, as specified in <xref
-          target="dictionaries"/>. These impose a much smaller overhead but
+          target="dictionary-compression"/>. These impose a much smaller overhead but
           instead need to be assigned by an authority to avoid collisions.
         </t>
 
@@ -2675,7 +2675,7 @@ CoRAL-Form = form
           <dt>Required parameters:</dt>
           <dd>N/A</dd>
           <dt>Optional parameters:</dt>
-          <dd>dictionary - See <xref target="dictionaries"/> of [I-D.ietf-core-coral].</dd>
+          <dd>dictionary - See <xref target="dictionary-compression"/> of [I-D.ietf-core-coral].</dd>
           <dt>Encoding considerations:</dt>
           <dd>binary - See <xref target="binary"/> of [I-D.ietf-core-coral].</dd>
           <dt>Security considerations:</dt>
@@ -3348,7 +3348,7 @@ CoRAL-Form = form
         parameter.
       </t>
 
-      <table anchor="dict" align="center">
+      <table anchor="default-dictionary-entries" align="center">
         <name>Default Dictionary</name>
         <thead>
           <tr>
