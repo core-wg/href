@@ -932,8 +932,8 @@ def _encode_coap_option_nibble(n):
       </t>
 
       <ul>
-        <li>Changed the syntax of schemes to exclude upper case characters.</li>
-        <li>Minor editorial improvements.</li>
+        <li>Changed the syntax of schemes to exclude upper case characters (#13).</li>
+        <li>Minor editorial improvements (#34 #37).</li>
       </ul>
 
       <t>

@@ -3468,7 +3468,7 @@ CoRAL-Form = form
 
       <ul>
         <li>Clarified the current context and current base for nested elements and form fields (#53).</li>
-        <li>Minor editorial improvements.</li>
+        <li>Minor editorial improvements (#27).</li>
       </ul>
 
       <t>
@@ -3480,7 +3480,7 @@ CoRAL-Form = form
         <li>Replaced the special construct for embedded representations with links.</li>
         <li>Changed the textual format to allow simple/qualified names wherever IRI references are allowed.</li>
         <li>Introduced predefined names in the textual format (#39).</li>
-        <li>Minor editorial improvements and bug fixes.</li>
+        <li>Minor editorial improvements and bug fixes (#16 #28 #31 #37 #39).</li>
       </ul>
 
       <t>
