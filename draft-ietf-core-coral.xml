@@ -2265,9 +2265,9 @@ DQUOTE = %x22
             CoRAL document or the depth of nested elements.
 
             Applications using CoRAL (in particular those running in constrained
-            environments) may limit these numbers and give specific
-            implementation limits that an application implementation must at
-            least support to be interoperable.
+            environments) may limit these numbers and define specific
+            implementation limits that an implementation must support at
+            least to be interoperable.
           </t>
 
           <t>
@@ -2389,7 +2389,7 @@ DQUOTE = %x22
         <t>
           An <xref target="W3C.REC-rdf11-concepts-20140225">RDF statement</xref>
           says that some relationship, indicated by a predicate, holds between
-          two resources. Existing RDF vocabularies can therefore be good source
+          two resources. Existing RDF vocabularies can therefore be a good source
           for link relation types that describe resource metadata.
 
           For example, a CoRAL document could use the <xref target="FOAF">FOAF
@@ -2411,11 +2411,11 @@ DQUOTE = %x22
         <name>Expressing Natural Language Texts</name>
 
         <t>
-          Text strings that are the target of a link can be associated with a
+          Text strings can be associated with a
           <xref target="RFC5646">language tag</xref> and a base text direction
           (right-to-left or left-to-right) by nesting links of types
           &lt;http://coreapps.org/base#language&gt; and
-          &lt;http://coreapps.org/base#direction&gt; under that link,
+          &lt;http://coreapps.org/base#direction&gt;,
           respectively:
         </t>
 
@@ -3059,7 +3059,7 @@ CoRAL-Form = form
               of the representation served from the URI of the resource.
             </t>
             <t>
-              A link with link relation type can occur as a top-level element in
+              A link with this link relation type can occur as a top-level element in
               a document or as a nested element within a link. When it occurs as
               a top-level element, it provides an alternate representation of
               the document's retrieval context. When it occurs nested within a
