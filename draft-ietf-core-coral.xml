@@ -289,7 +289,7 @@
           A link relation type identifies the semantics of a link.
 
           In HTML and RFC 8288, link relation types are typically denoted by an
-          IANA-registered name, such as "stylesheet" or "type". In CoRAL, all
+          IANA-registered name, such as <tt>stylesheet</tt> or <tt>type</tt>. In CoRAL, all
           link relation types are denoted by an <xref
           target="RFC3987">Internationalized Resource Identifier (IRI)</xref>,
           such as &lt;http://www.iana.org/assignments/relation/stylesheet&gt; or
@@ -677,7 +677,7 @@
 
       <t>
         The media type of documents in the binary format is
-        "application/coral+cbor".
+        <tt>application/coral+cbor</tt>.
       </t>
 
       <section>
@@ -993,8 +993,8 @@ form-field-value /= #6.TBD6(uint)
           <name>Media Type Parameter</name>
 
           <t>
-            The "application/coral+cbor" media type for documents in the binary
-            format is defined to have a "dictionary" parameter that specifies
+            The <tt>application/coral+cbor</tt> media type for documents in the binary
+            format is defined to have a <tt>dictionary</tt> parameter that specifies
             the dictionary in use. The dictionary is identified by a <xref
             target="RFC3986">URI</xref>.
 
@@ -1004,7 +1004,11 @@ form-field-value /= #6.TBD6(uint)
           </t>
 
           <ul empty="true">
-            <li>application/coral+cbor;dictionary="http://example.com/dictionary"</li>
+            <li>
+<sourcecode markers="false">
+application/coral+cbor;dictionary="http://example.com/dictionary"
+</sourcecode>
+            </li>
           </ul>
 
           <t>
@@ -1019,12 +1023,12 @@ form-field-value /= #6.TBD6(uint)
 
           <t>
             For simplicity, a CoRAL document can reference values only from one
-            dictionary; the value of the "dictionary" parameter <bcp14>MUST</bcp14> be a single
+            dictionary; the value of the <tt>dictionary</tt> parameter <bcp14>MUST</bcp14> be a single
             URI.
           </t>
 
           <t>
-            The "dictionary" parameter is OPTIONAL. If it is absent, the default
+            The <tt>dictionary</tt> parameter is <bcp14>OPTIONAL</bcp14>. If it is absent, the default
             dictionary specified in <xref target="default-dictionary"/> of this
             document is assumed.
           </t>
@@ -1078,10 +1082,10 @@ form-field-value /= #6.TBD6(uint)
         A document in the textual format is a Unicode string in a Unicode
         encoding form <xref target="UNICODE"/>.
 
-        The media type for such documents is "text/coral". The <xref
-        target="RFC6657">"charset" parameter of textual media types</xref> is
+        The media type for such documents is <tt>text/coral</tt>. The
+        <tt>charset</tt> parameter of textual media types <xref target="RFC6657"/> is
         not used; instead, charset information is transported inside the
-        document in the form of an OPTIONAL Byte Order Mark (BOM).
+        document in the form of an <bcp14>OPTIONAL</bcp14> Byte Order Mark (BOM).
 
         The use of the <xref target="RFC3629">UTF-8 encoding scheme</xref>
         without a BOM is <bcp14>RECOMMENDED</bcp14>.
@@ -1161,18 +1165,18 @@ token = identifier / IRIref / boolean / integer / float
             Comments are sequences of characters that are ignored when parsing
             text into tokens.
 
-            Single-line comments begin with the characters "//" and extend to
+            Single-line comments begin with the characters <tt>//</tt> and extend to
             the end of the line.
 
-            Delimited comments begin with the characters "/*" and end with the
-            characters "*/". Delimited comments can occupy a portion of a line,
+            Delimited comments begin with the characters <tt>/*</tt> and end with the
+            characters <tt>*/</tt>. Delimited comments can occupy a portion of a line,
             a single line, or multiple lines.
           </t>
 
           <t>
-            Comments do not nest. The character sequences "/*" and "*/" have no
+            Comments do not nest. The character sequences <tt>/*</tt> and <tt>*/</tt> have no
             special meaning within a single-line comment; the character
-            sequences "//" and "/*" have no special meaning within a delimited
+            sequences <tt>//</tt> and <tt>/*</tt> have no special meaning within a delimited
             comment.
           </t>
 
@@ -1235,7 +1239,7 @@ MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB
 
               An IRI reference is either an IRI or a relative reference.
 
-              IRI references are enclosed in angle brackets ("&lt;" and "&gt;").
+              IRI references are enclosed in angle brackets (<tt>&lt;</tt> and <tt>&gt;</tt>).
             </t>
 
             <ul empty="true">
@@ -1250,7 +1254,7 @@ MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB
             <name>Boolean Literals</name>
 
             <t>
-              The case-insensitive tokens "true" and "false" denote the Boolean
+              The case-insensitive tokens <tt>true</tt> and <tt>false</tt> denote the Boolean
               values true and false, respectively.
             </t>
 
@@ -1270,19 +1274,19 @@ MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB
 
               By default, integer literals are expressed in decimal, but they
               can also be specified in an alternate base using a prefix: Binary
-              literals begin with "0b", octal literals begin with "0o", and
-              hexadecimal literals begin with "0x".
+              literals begin with <tt>0b</tt>, octal literals begin with <tt>0o</tt>, and
+              hexadecimal literals begin with <tt>0x</tt>.
             </t>
 
             <t>
-              Decimal literals contain the digits "0" through "9". Binary
-              literals contain "0" and "1", octal literals contain "0" through
-              "7", and hexadecimal literals contain "0" through "9" as well as
-              "A" through "F" in upper- or lowercase.
+              Decimal literals contain the digits <tt>0</tt> through <tt>9</tt>. Binary
+              literals contain <tt>0</tt> and <tt>1</tt>, octal literals contain <tt>0</tt> through
+              <tt>7</tt>, and hexadecimal literals contain <tt>0</tt> through <tt>9</tt> as well as
+              <tt>A</tt> through <tt>F</tt> in upper- or lowercase.
             </t>
 
             <t>
-              Negative integers are expressed by prepending a minus sign ("-").
+              Negative integers are expressed by prepending a minus sign (<tt>-</tt>).
             </t>
 
             <ul empty="true">
@@ -1316,18 +1320,18 @@ HEXDIG = %x30-39 / %x41-46 / %x61-66
               Floating-point literals consist of a sequence of decimal digits
               followed by a fraction, an exponent, or both.
 
-              The fraction consists of a decimal point (".") followed by a
+              The fraction consists of a decimal point (<tt>.</tt>) followed by a
               sequence of decimal digits.
 
-              The exponent consists of the letter "e" in upper- or lowercase,
+              The exponent consists of the letter <tt>e</tt> in upper- or lowercase,
               followed by an optional sign and a sequence of decimal digits that
-              indicate a power of 10 by which the value preceding the "e" is
+              indicate a power of 10 by which the value preceding the <tt>e</tt> is
               multiplied.
             </t>
 
             <t>
               Negative floating-point values are expressed by prepending a minus
-              sign ("-").
+              sign (<tt>-</tt>).
             </t>
 
             <ul empty="true">
@@ -1346,10 +1350,10 @@ exponent = (%x45 / %x65) ["+" / "-"] 1*DIGIT
                   positive infinity, or
                   negative infinity.
 
-              The NaN value is produced by the case-insensitive token "NaN".
+              The NaN value is produced by the case-insensitive token <tt>NaN</tt>.
 
               The two infinite values are produced by the case-insensitive
-              tokens "+Infinity" (or simply "Infinity") and "-Infinity".
+              tokens <tt>+Infinity</tt> (or simply <tt>Infinity</tt>) and <tt>-Infinity</tt>.
             </t>
 
             <ul empty="true">
@@ -1372,7 +1376,7 @@ float =/ "NaN"
             </t>
 
             <t>
-              A date/time literal consists of the prefix "dt" and a sequence of
+              A date/time literal consists of the prefix <tt>dt</tt> and a sequence of
               Unicode characters in <xref target="RFC3339">Internet Date/Time
               Format</xref>, enclosed in single quotes.
             </t>
@@ -1402,9 +1406,9 @@ SQUOTE = %x27
               encoded in <xref target="RFC4648">Base16, Base32, or
               Base64</xref>, enclosed in single quotes.
 
-              Byte string literals encoded in Base16 begin with "h" or "b16",
-              byte string literals encoded in Base32 begin with "b32", and
-              byte string literals encoded in Base64 begin with "b64".
+              Byte string literals encoded in Base16 begin with <tt>h</tt> or <tt>b16</tt>,
+              byte string literals encoded in Base32 begin with <tt>b32</tt>, and
+              byte string literals encoded in Base64 begin with <tt>b64</tt>.
             </t>
 
             <ul empty="true">
@@ -1455,8 +1459,8 @@ DQUOTE = %x22
               An escape sequence denotes a single Unicode code point.
 
               For hexadecimal and Unicode escape sequences, the code point is
-              expressed by the hexadecimal number following the "\x", "\X",
-              "\u", or "\U" prefix.
+              expressed by the hexadecimal number following the <tt>\x</tt>, <tt>\X</tt>,
+              <tt>\u</tt>, or <tt>\U</tt> prefix.
 
               Simple escape sequences indicate the code points listed in <xref
               target="escape"/>.
@@ -1532,7 +1536,7 @@ DQUOTE = %x22
             <name>Null Literal</name>
 
             <t>
-              The case-insensitive tokens "null" and "_" denote the intentional
+              The case-insensitive tokens <tt>null</tt> and <tt>_</tt> denote the intentional
               absence of any value.
             </t>
 
@@ -1623,7 +1627,7 @@ DQUOTE = %x22
           </t>
 
           <t>
-            All directives start with a number sign ("#") followed by an
+            All directives start with a number sign (<tt>#</tt>) followed by an
             identifier. The identifier is case-insensitive and restricted to
             Unicode characters in the Basic Latin block.
           </t>
@@ -1648,8 +1652,8 @@ DQUOTE = %x22
             <name>Base Directives</name>
 
             <t>
-              A Base directive consists of a number sign ("#"), followed by the
-              case-insensitive token "base", followed by a base IRI.
+              A Base directive consists of a number sign (<tt>#</tt>), followed by the
+              case-insensitive token <tt>base</tt>, followed by a base IRI.
             </t>
 
             <ul empty="true">
@@ -1678,9 +1682,9 @@ DQUOTE = %x22
             <name>Using Directives</name>
 
             <t>
-              A Using directive consists of a number sign ("#"), followed by the
-              case-insensitive token "using", optionally followed by an
-              identifier and an equals sign ("="), finally followed by an IRI.
+              A Using directive consists of a number sign (<tt>#</tt>), followed by the
+              case-insensitive token <tt>using</tt>, optionally followed by an
+              identifier and an equals sign (<tt>=</tt>), finally followed by an IRI.
 
               If the identifier is not specified, it is assumed to be the empty
               string.
@@ -1765,7 +1769,7 @@ DQUOTE = %x22
 
             <t>
               A qualified name consists of two identifiers separated by a colon
-              (":").
+              (<tt>:</tt>).
             </t>
 
             <ul empty="true">
@@ -1789,7 +1793,7 @@ DQUOTE = %x22
             <name>Predefined Names</name>
 
             <t>
-              A predefined name consists of a commercial at sign ("@") followed
+              A predefined name consists of a commercial at sign (<tt>@</tt>) followed
               by an identifier. The identifier is case-insensitive and
               restricted to Unicode characters in the Basic Latin block.
             </t>
@@ -1836,7 +1840,7 @@ DQUOTE = %x22
           <t>
             A link consists of the link relation type, followed by the link
             target, optionally followed by a sequence of zero or more nested
-            elements enclosed in curly brackets ("{" and "}").
+            elements enclosed in curly brackets (<tt>{</tt> and <tt>}</tt>).
           </t>
 
           <ul empty="true">
@@ -1876,9 +1880,9 @@ DQUOTE = %x22
           <name>Forms</name>
 
           <t>
-            A form consists of the operation type, followed by a "-&gt;" token
+            A form consists of the operation type, followed by a <tt>-&gt;</tt> token
             and the submission target, optionally followed by a sequence of zero
-            or more form fields enclosed in square brackets ("[" and "]").
+            or more form fields enclosed in square brackets (<tt>[</tt> and <tt>]</tt>).
           </t>
 
           <ul empty="true">
@@ -1926,7 +1930,7 @@ DQUOTE = %x22
           <t>
             A form field consists of a form field type, followed by a form field
             value, optionally followed by a sequence of zero or more nested
-            elements enclosed in curly brackets ("{" and "}").
+            elements enclosed in curly brackets (<tt>{</tt> and <tt>}</tt>).
           </t>
 
           <ul empty="true">
@@ -2323,8 +2327,8 @@ DQUOTE = %x22
           <li>Percent-encoding of characters where it is not required by the IRI syntax</li>
           <li>Explicitly stated HTTP default port (e.g., &lt;http://example.com/&gt; is preferable over &lt;http://example.com:80/&gt;)</li>
           <li>Completely empty path in HTTP IRIs (e.g., &lt;http://example.com/&gt; is preferable over &lt;http://example.com&gt;)</li>
-          <li>Dot segments ("/./" or "/../") in the path component of an IRI</li>
-          <li>Lowercase hexadecimal letters within percent-encoding triplets (e.g., "%3F" is preferable over "%3f")</li>
+          <li>Dot segments (<tt>/./</tt> or <tt>/../</tt>) in the path component of an IRI</li>
+          <li>Lowercase hexadecimal letters within percent-encoding triplets (e.g., <tt>%3F</tt> is preferable over <tt>%3f</tt>)</li>
           <li>Punycode-encoding of Internationalized Domain Names in IRIs</li>
           <li>IRIs that are not in <xref target="UAX15">Unicode Normalization Form C</xref></li>
         </ul>
@@ -2354,8 +2358,8 @@ DQUOTE = %x22
 
         <t>
           Link relation types registered in the IANA Link Relations Registry,
-          such as <xref target="RFC6573">"collection"</xref> or <xref
-          target="W3C.REC-html52-20171214">"icon"</xref>, can be used in CoRAL
+          such as <tt>collection</tt> <xref target="RFC6573"/> or <tt>icon</tt>
+          <xref target="W3C.REC-html52-20171214"/>, can be used in CoRAL
           by appending the registered name to the IRI
           &lt;http://www.iana.org/assignments/relation/&gt;:
         </t>
@@ -2370,7 +2374,7 @@ DQUOTE = %x22
 
         <t>
           The convention of appending the relation type name to the prefix
-          "http://www.iana.org/assignments/relation/" to form IRIs is adopted
+          &lt;http://www.iana.org/assignments/relation/&gt; to form IRIs is adopted
           from <xref target="RFC4287">Atom</xref>; see also <xref
           target="RFC8288" section="A.2">RFC 8288</xref>.
         </t>
@@ -2633,7 +2637,7 @@ CoRAL-Form = form
         <name>Media Type "application/coral+cbor"</name>
 
         <t>
-          This document registers the media type "application/coral+cbor"
+          This document registers the media type <tt>application/coral+cbor</tt>
           according to the procedures of <xref target="RFC6838">BCP 13</xref>.
         </t>
 
@@ -2657,7 +2661,7 @@ CoRAL-Form = form
           <dt>Applications that use this media type:</dt>
           <dd>See <xref target="introduction"/> of [I-D.ietf-core-coral].</dd>
           <dt>Fragment identifier considerations:</dt>
-          <dd>As specified for "application/cbor".</dd>
+          <dd>As specified for <tt>application/cbor</tt>.</dd>
           <dt>Additional information:</dt>
           <dd>
             <t>Deprecated alias names for this type: N/A</t>
@@ -2685,7 +2689,7 @@ CoRAL-Form = form
         <name>Media Type "text/coral"</name>
 
         <t>
-          This document registers the media type "text/coral" according to the
+          This document registers the media type <tt>text/coral</tt> according to the
           procedures of <xref target="RFC6838">BCP 13</xref> and guidelines of
           <xref target="RFC6657">RFC 6657</xref>.
         </t>
@@ -2740,7 +2744,7 @@ CoRAL-Form = form
 
         <t>
           This document registers CoAP content formats for the content types
-          "application/coral+cbor" and "text/coral" according to the procedures
+          <tt>application/coral+cbor</tt> and <tt>text/coral</tt> according to the procedures
           of <xref target="RFC7252">RFC 7252</xref>.
         </t>
 
@@ -2772,14 +2776,14 @@ CoRAL-Form = form
         </ul>
 
         <t>
-          [[NOTE TO RFC EDITOR: Please replace all occurrences of "TBD3" and
-          "TBD4" in this document with the code points assigned by IANA.]]
+          [[NOTE TO RFC EDITOR: Please replace all occurrences of TBD3 and
+          TBD4 in this document with the code points assigned by IANA.]]
         </t>
 
         <t>
           [[NOTE TO IMPLEMENTERS: Experimental implementations may use content
-          format ID 65087 for "application/coral+cbor" and content format ID
-          65343 for "text/coral" until IANA has assigned code points.]]
+          format ID 65087 for <tt>application/coral+cbor</tt> and content format ID
+          65343 for <tt>text/coral</tt> until IANA has assigned code points.]]
         </t>
 
       </section>
@@ -2810,7 +2814,7 @@ CoRAL-Form = form
         </ul>
 
         <t>
-          [[NOTE TO RFC EDITOR: Please replace all occurrences of "TBD6" in this
+          [[NOTE TO RFC EDITOR: Please replace all occurrences of TBD6 in this
           document with the code point assigned by IANA.]]
         </t>
 
@@ -3293,7 +3297,7 @@ CoRAL-Form = form
             <t>
               The link target <bcp14>MUST</bcp14> be an integer identifying a CoAP content
               format (e.g., the integer 42 for the content type
-              "application/octet-stream" without a content coding). The possible
+              <tt>application/octet-stream</tt> without a content coding). The possible
               set of values is maintained in the CoAP Content Formats Registry.
             </t>
             <t>
@@ -3319,7 +3323,7 @@ CoRAL-Form = form
 
       <t>
         This section defines a default dictionary that is assumed when the
-        "application/coral+cbor" media type is used without a "dictionary"
+        <tt>application/coral+cbor</tt> media type is used without a <tt>dictionary</tt>
         parameter.
       </t>
 
