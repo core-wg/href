@@ -1187,9 +1187,9 @@ token = identifier / IRIref / boolean / integer / float
           <name>Identifiers</name>
 
           <t>
-            An identifier token is a user-defined symbolic name. The rules for
-            identifiers correspond to those recommended by the <xref
-            target="UAX31">Unicode Standard Annex #31</xref> with the following
+            An identifier token is a user-defined symbolic name. The syntax for
+            identifiers corresponds to the Default Identifier Syntax in <xref
+            target="UAX31">Unicode Standard Annex #31</xref> using the following
             profile:
           </t>
 
@@ -1199,11 +1199,48 @@ token = identifier / IRIref / boolean / integer / float
 identifier = START *CONTINUE *(MEDIAL 1*CONTINUE)
 START = &lt;Any character with the XID_Start property&gt;
 CONTINUE = &lt;Any character with the XID_Continue property&gt;
-MEDIAL = "-" / "." / "~" / %x58A / %xF0B
-MEDIAL =/ %x2010 / %x2027 / %x30A0 / %x30FB
+MEDIAL = &lt;Any character from Table XX&gt;
 </sourcecode>
             </li>
           </ul>
+
+          <table anchor="medial" align="center">
+            <name>Medial Characters</name>
+            <thead>
+              <tr>
+                <th align="left">Code Point</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left">U+002D HYPHEN-MINUS</td>
+              </tr>
+              <tr>
+                <td align="left">U+002E FULL STOP</td>
+              </tr>
+              <tr>
+                <td align="left">U+007E TILDE</td>
+              </tr>
+              <tr>
+                <td align="left">U+058A ARMENIAN HYPHEN</td>
+              </tr>
+              <tr>
+                <td align="left">U+0F0B TIBETAN MARK INTERSYLLABIC TSHEG</td>
+              </tr>
+              <tr>
+                <td align="left">U+2010 HYPHEN</td>
+              </tr>
+              <tr>
+                <td align="left">U+2027 HYPHENATION POINT</td>
+              </tr>
+              <tr>
+                <td align="left">U+30A0 KATAKANA-HIRAGANA DOUBLE HYPHEN</td>
+              </tr>
+              <tr>
+                <td align="left">U+30FB KATAKANA MIDDLE DOT</td>
+              </tr>
+            </tbody>
+          </table>
 
           <t>
             All identifiers <bcp14>MUST</bcp14> be converted into Unicode Normalization Form C
