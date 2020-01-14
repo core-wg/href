@@ -1,0 +1,29 @@
+# coral-punctuators-12.1.0.txt
+# Date: 2020-01-14, 16:21:02 GMT
+# © 2020 Unicode®, Inc.
+# Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
+# For terms of use, see http://www.unicode.org/terms_of_use.html
+#
+# Unicode Character Database
+# For documentation, see http://www.unicode.org/reports/tr44/
+#
+# This file is an extract from the
+# Unicode Character Database.
+#
+# This file lists all code points allowed as punctuators in CoRAL
+# documents, as per draft-ietf-core-coral-02.
+#
+# ================================================
+
+0023          # Po         NUMBER SIGN
+003A          # Po         COLON
+003D          # Sm         EQUALS SIGN
+0040          # Po         COMMERCIAL AT
+005B          # Ps         LEFT SQUARE BRACKET
+005D          # Pe         RIGHT SQUARE BRACKET
+007B          # Ps         LEFT CURLY BRACKET
+007D          # Pe         RIGHT CURLY BRACKET
+
+# Total code points: 8
+
+# EOF
