@@ -231,20 +231,20 @@
               <dd>absolute-path</dd>
               <dt>1</dt>
               <dd>append-path</dd>
-              <dt>3</dt>
+              <dt>2</dt>
               <dd>relative-path</dd>
-              <dt>4</dt>
+              <dt>3</dt>
               <dd>relative-path-1up</dd>
-              <dt>5</dt>
+              <dt>4</dt>
               <dd>relative-path-2up</dd>
-              <dt>6</dt>
+              <dt>5</dt>
               <dd>relative-path-3up</dd>
-              <dt>7</dt>
+              <dt>6</dt>
               <dd>relative-path-4up</dd>
               <dt></dt>
               <dd>...</dd>
               <dt>127</dt>
-              <dd>relative-path-124up</dd>
+              <dd>relative-path-125up</dd>
             </dl>
           </dd>
           <dt>path</dt>
@@ -512,12 +512,12 @@ class Option(enum.IntEnum):
 
 class PathType(enum.IntEnum):
   ABSOLUTE_PATH = 0
-  APPEND_PATH = 2
-  RELATIVE_PATH = 3
-  RELATIVE_PATH_1UP = 4
-  RELATIVE_PATH_2UP = 5
-  RELATIVE_PATH_3UP = 6
-  RELATIVE_PATH_4UP = 7
+  APPEND_PATH = 1
+  RELATIVE_PATH = 2
+  RELATIVE_PATH_1UP = 3
+  RELATIVE_PATH_2UP = 4
+  RELATIVE_PATH_3UP = 5
+  RELATIVE_PATH_4UP = 6
 
 _TRANSITIONS = ([Option.SCHEME, Option.HOST_NAME, Option.HOST_IP,
     Option.PORT, Option.PATH_TYPE, Option.PATH, Option.QUERY,
