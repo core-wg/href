@@ -46,7 +46,7 @@ class TestCiri(unittest.TestCase):
   def test_resolve(self):
     for (b, i, e) in testvectors.RESOLVED:
       with self.subTest(base=b, href=i, expected=e):
-        self.assertEqual(e, ciri.resolve(b, i, 9000))
+        self.assertEqual(e, ciri.resolve(b, i))
 
   def test_recompose(self):
     for i in testvectors.ABSOLUTE:

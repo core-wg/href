@@ -23,7 +23,6 @@ class Option(enum.IntEnum):
 
 class PathType(enum.IntEnum):
   ABSOLUTE_PATH = 0
-  APPEND_RELATION = 1
   APPEND_PATH = 2
   RELATIVE_PATH = 3
   RELATIVE_PATH_1UP = 4
@@ -61,7 +60,7 @@ def is_relative(href):
   return is_well_formed(href) and \
     (len(href) == 0 or href[0][0] != Option.SCHEME)
 
-def resolve(base, href, relation=0):
+def resolve(base, href):
   if not is_absolute(base) or not is_well_formed(href):
     return None
   result = []
@@ -80,8 +79,6 @@ def resolve(base, href, relation=0):
     _copy_until(base, result, option)
   else:
     _copy_until(base, result, Option.QUERY)
-    if type == PathType.APPEND_RELATION:
-      _append_and_normalize(result, Option.PATH, str(relation))
     while type > PathType.APPEND_PATH:
       if len(result) == 0 or result[-1][0] != Option.PATH:
         break
