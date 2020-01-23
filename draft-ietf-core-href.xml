@@ -923,6 +923,15 @@ def _encode_coap_option_nibble(n):
       <name>Change Log</name>
 
       <t>
+        Changes from -02 to -03:
+      </t>
+
+      <ul>
+        <li>Removed the 'append-relation' path type (#41).</li>
+        <li>Renumbered the remaining path types.</li>
+      </ul>
+
+      <t>
         Changes from -01 to -02:
       </t>
 
