@@ -2568,6 +2568,56 @@ DQUOTE = %x22
 
       </section>
 
+      <section>
+
+        <name>Negotiating Content</name>
+
+        <t>
+          An origin server often has different ways of representing resources.
+          Likewise, agents might have differing capabilities or preferences that
+          could influence which representation, among those available, would be
+          best to deliver. CoRAL can be used to aid in content negotiation
+          (<xref target="RFC7231" section="3.4">RFC 7231</xref>).
+        </t>
+
+        <t>
+          In CoRAL-based content negotiation, the server provides a list of
+          alternative representations for the agent to choose from. The agent
+          selects one or more of the alternatives based on the resource metadata
+          included in the list and its own capabilities or preferences.
+        </t>
+
+        <t>
+          Resource metadata can be expressed by nesting links under a link to a
+          resource with different representations, such as nested links of type
+          &lt;http://coreapps.org/http#type&gt; or
+          &lt;http://coreapps.org/coap#type&gt;:
+        </t>
+
+        <ul empty="true">
+          <li>
+<sourcecode type="coral" markers="false">
+<xi:include href="./textual/examples/content-negotiation.coral" parse="text"/>
+</sourcecode>
+          </li>
+        </ul>
+
+        <t>
+          The link relation types
+          &lt;http://coreapps.org/http#type&gt; and
+          &lt;http://coreapps.org/coap#type&gt; are defined in <xref
+          target="core-vocabulary"/>.
+        </t>
+
+        <t>
+          Elements in a CoRAL document form an ordered sequence. A server
+          <bcp14>MAY</bcp14> provide links in order of decreasing preference.
+          This can help an agent to accurately determine what might be "best"
+          representation.
+        </t>
+
+      </section>
+
     </section>
 
     <!-- **************************************************************** -->
