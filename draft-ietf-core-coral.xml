@@ -1068,6 +1068,36 @@ application/coral+cbor;dictionary="http://example.com/dictionary"
 
       </section>
 
+      <section>
+
+        <name>Export Interface</name>
+
+        <t>
+          Documents, links, and forms in the CoRAL binary format can be embedded
+          in other <xref target="I-D.ietf-cbor-7049bis">CBOR structures</xref>.
+
+          Specifications using <xref target="RFC8610">CDDL</xref> should
+          reference the following CDDL definitions for this purpose:
+        </t>
+
+        <ul empty="true">
+          <li>
+<sourcecode type="cddl" markers="false">
+CoRAL-Document = document
+CoRAL-Link = link
+CoRAL-Form = form
+</sourcecode>
+          </li>
+        </ul>
+
+        <t>
+          For each embedded document, link, and form, the embedding CBOR
+          structure needs to specify the document retrieval context, the link
+          context, or the form context, respectively.
+        </t>
+
+      </section>
+
     </section>
 
     <!-- **************************************************************** -->
@@ -2534,37 +2564,6 @@ DQUOTE = %x22
           &lt;http://coreapps.org/http#type&gt;, and
           &lt;http://coreapps.org/coap#type&gt; are defined in <xref
           target="core-vocabulary"/>.
-        </t>
-
-      </section>
-
-      <section>
-
-        <name>Embedding CoRAL in CBOR Representations</name>
-
-        <t>
-          Data items in the CoRAL binary format (<xref target="binary"/>) may be
-          embedded in other <xref target="I-D.ietf-cbor-7049bis">CBOR
-          structures</xref>.
-
-          Specifications using <xref target="RFC8610">CDDL</xref> should reference
-          the following CDDL definitions for this purpose:
-        </t>
-
-        <ul empty="true">
-          <li>
-<sourcecode type="cddl" markers="false">
-CoRAL-Document = document
-CoRAL-Link = link
-CoRAL-Form = form
-</sourcecode>
-          </li>
-        </ul>
-
-        <t>
-          For each embedded document, link, and form, the specification for the
-          embedding CBOR structure needs to specify the document retrieval
-          context, the link context, and the form context, respectively.
         </t>
 
       </section>
