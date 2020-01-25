@@ -565,14 +565,14 @@
           <li>
             <t>
               If a fragment identifier was separated from the request URI, the
-              agent dereferences the fragment indicated by the fragment
+              agent selects the fragment indicated by the fragment
               identifier within the received representation according to the
               semantics of its media type.
             </t>
           </li>
           <li>
             <t>
-              The agent updates the browsing context by making the (dereferenced
+              The agent updates the browsing context by making the (selected
               fragment of the) received representation the active
               representation.
             </t>
@@ -995,9 +995,9 @@ form-field-value /= #6.TBD6(uint)
 
           <t>
             A dictionary reference <bcp14>MUST NOT</bcp14> refer to a dictionary value that
-            would otherwise not be allowed syntactically in that position. For
+            would otherwise not be syntactically allowed in that position. For
             example, a dictionary reference in the position of a link relation
-            type cannot refer to a Boolean value.
+            type cannot refer to a Boolean value; it can only refer to a text string.
           </t>
 
         </section>
@@ -1073,11 +1073,11 @@ application/coral+cbor;dictionary="http://example.com/dictionary"
         <name>Export Interface</name>
 
         <t>
-          Documents, links, and forms in the CoRAL binary format can be embedded
-          in other <xref target="I-D.ietf-cbor-7049bis">CBOR structures</xref>.
+          The definition of documents, links, and forms in the CoRAL binary format can be reused
+          in other <xref target="I-D.ietf-cbor-7049bis">CBOR-based protocols</xref>.
 
           Specifications using <xref target="RFC8610">CDDL</xref> should
-          reference the following CDDL definitions for this purpose:
+          reference the following rules for this purpose:
         </t>
 
         <ul empty="true">
@@ -1091,9 +1091,9 @@ CoRAL-Form = form
         </ul>
 
         <t>
-          For each embedded document, link, and form, the embedding CBOR
-          structure needs to specify the document retrieval context, the link
-          context, or the form context, respectively.
+          For each embedded document, link, and form, the CBOR-based protocol
+          needs to specify the document retrieval context, link context, and
+          form context, respectively.
         </t>
 
       </section>
@@ -1806,7 +1806,7 @@ DQUOTE = %x22
 
             <t>
               An IRI reference is resolved to an IRI as specified in <xref
-              target="RFC3987" section="6.5">RFC 3987</xref> with the current
+              target="RFC3987" section="6.5">RFC 3987</xref> using the current
               base as the base URI.
             </t>
 
