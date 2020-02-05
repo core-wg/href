@@ -4,44 +4,39 @@ def resolve(base, href):
   if not is_absolute(base) or not is_well_formed(href):
     return None
   result = []
-  option = Option.FRAGMENT
-  if len(href) != 0:
-    option = href[0][0]
-  if option == Option.HOST_IP:
-    option = Option.HOST_NAME
-  elif option == Option.PATH_TYPE:
+  type = PathType.APPEND_PATH
+  end = href[0][0] if len(href) != 0 else Option.FRAGMENT
+  if end == Option.HOST_IP:
+    end = Option.HOST_NAME
+  elif end == Option.PATH_TYPE:
     type = href[0][1]
     href = href[1:]
-  elif option == Option.PATH:
+    end = Option.QUERY if type > PathType.ABSOLUTE_PATH else Option.PATH
+  elif end == Option.PATH:
     type = PathType.RELATIVE_PATH
-    option = Option.PATH_TYPE
-  if option != Option.PATH_TYPE or type == PathType.ABSOLUTE_PATH:
-    _copy_until(base, result, option)
-  else:
-    _copy_until(base, result, Option.QUERY)
-    while type > PathType.APPEND_PATH:
-      if len(result) == 0 or result[-1][0] != Option.PATH:
-        break
-      del result[-1]
-      type -= 1
+    end = Option.QUERY
+  _copy_until(base, result, end)
+  while type > PathType.APPEND_PATH:
+    if len(result) == 0 or result[-1][0] != Option.PATH:
+      break
+    del result[-1]
+    type -= 1
   _copy_until(href, result, Option._END)
-  _append_and_normalize(result, Option._END, None)
+  _normalize_empty_path(result)
   return result
 
-def _copy_until(input, output, end):
-  for option, value in input:
+def _copy_until(source, result, end):
+  for option, value in source:
     if option >= end:
       break
-    _append_and_normalize(output, option, value)
+    if option > Option.PATH:
+      _normalize_empty_path(result)
+    result.append((option, value))
 
-def _append_and_normalize(output, option, value):
-  if option > Option.PATH:
-    if len(output) >= 2 and \
-        output[-1] == (Option.PATH, '') and (
-        output[-2][0] < Option.PATH_TYPE or (
-        output[-2][0] == Option.PATH_TYPE and
-        output[-2][1] == PathType.ABSOLUTE_PATH)):
-      del output[-1]
-    if option > Option.FRAGMENT:
-      return
-  output.append((option, value))
+def _normalize_empty_path(result):
+  if len(result) >= 2 and \
+      result[-1] == (Option.PATH, '') and (
+      result[-2][0] < Option.PATH_TYPE or (
+      result[-2][0] == Option.PATH_TYPE and
+      result[-2][1] == PathType.ABSOLUTE_PATH)):
+    del result[-1]
