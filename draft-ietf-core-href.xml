@@ -583,8 +583,8 @@ CoRI = [?(scheme:    1, text .regexp "[a-z][a-z0-9+.-]*"),
 
       <t>
         Parsers must operate on input that is
-        assumed to be untrusted. This means that parsers MUST fail gracefully in
-        the face of malicious inputs. Additionally, parsers MUST be prepared to
+        assumed to be untrusted. This means that parsers <bcp14>MUST</bcp14> fail gracefully in
+        the face of malicious inputs. Additionally, parsers <bcp14>MUST</bcp14> be prepared to
         deal with resource exhaustion (e.g., resulting from the allocation of
         big data items) or exhaustion of the call stack (stack overflow). See
         Section 8 of <xref target="RFC7049">RFC 7049</xref> for security
