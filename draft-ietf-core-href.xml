@@ -708,8 +708,9 @@ CoRI = [?(scheme:    1, text .regexp "[a-z][a-z0-9+.-]*"),
       <t>
         Thanks to
         Christian Amsüss,
+        Carsten Bormann,
         Ari Keranen,
-        Jim Schaad, and
+        Jim Schaad and
         Dave Thaler
         for helpful comments and discussions that have shaped the
         document.
