@@ -3,7 +3,7 @@ import ciri, unittest, testvectors
 class TestCiri(unittest.TestCase):
 
   def test_is_well_formed(self):
-    for i in testvectors. ABSOLUTE:
+    for i in testvectors.ABSOLUTE:
       with self.subTest(input=i):
         self.assertTrue(ciri.is_well_formed(i))
     for i in testvectors.RELATIVE:
@@ -58,5 +58,5 @@ class TestCiri(unittest.TestCase):
       with self.subTest(input=i):
         self.assertIsNotNone(ciri.coap(i))
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   unittest.main()
