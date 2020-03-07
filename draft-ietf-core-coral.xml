@@ -769,20 +769,20 @@
 
             <t>
               The base URI is denoted by a <xref
-              target="I-D.ietf-core-href">Constrained Resource Identifier (CoRI)
+              target="I-D.ietf-core-href">Constrained Resource Identifier (CRI)
               reference</xref>.
 
-              The CoRI reference <bcp14>MUST</bcp14> be resolved against the current context
+              The CRI reference <bcp14>MUST</bcp14> be resolved against the current context
               (not the current base).
             </t>
 
             <ul empty="true">
-              <li><sourcecode type="cddl" markers="false">baseURI = CoRI</sourcecode></li>
-              <li><sourcecode type="cddl" markers="false">CoRI = &lt;Defined in Section XX of RFC XXXX&gt;</sourcecode></li>
+              <li><sourcecode type="cddl" markers="false">baseURI = CRI-Reference</sourcecode></li>
+              <li><sourcecode type="cddl" markers="false">CRI-Reference = &lt;Defined in Section XX of RFC XXXX&gt;</sourcecode></li>
             </ul>
 
             <t>
-              The directive is processed by resolving the CoRI reference against
+              The directive is processed by resolving the CRI reference against
               the current context and assigning the result to the current base.
             </t>
 
@@ -795,15 +795,15 @@
           <name>IRIs</name>
 
           <t>
-            IRIs in links and forms are encoded as CoRI references.
+            IRIs in links and forms are encoded as CRI references.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="cddl" markers="false">IRI = CoRI</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">IRI = CRI-Reference</sourcecode></li>
           </ul>
 
           <t>
-            A CoRI reference is processed by resolving it to an IRI as specified
+            A CRI reference is processed by resolving it to an IRI as specified
             in Section XX of <xref target="I-D.ietf-core-href">RFC XXXX</xref>
             using the current base.
           </t>
@@ -2380,7 +2380,7 @@ DQUOTE = %x22
               vocabulary.
             </li>
             <li>
-              Use of URI references and CoRI references only up to a specific
+              Use of URI references and CRI references only up to a specific
               length.
             </li>
           </ul>
@@ -2674,7 +2674,7 @@ DQUOTE = %x22
         relating to URIs. See <xref target="RFC3987" section="8">RFC 3987</xref>
         for security considerations relating to IRIs. See Section XX of <xref
         target="I-D.ietf-core-href">RFC XXXX</xref> for security considerations
-        relating to CoRIs.
+        relating to CRIs.
       </t>
 
       <t>
