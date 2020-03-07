@@ -825,12 +825,11 @@
           </ul>
 
           <t>
-            The link relation type is encoded as a text string that conforms to
-            the syntax of an <xref target="RFC3987">IRI</xref>.
+            The link relation type is an IRI.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="cddl" markers="false">relation-type = text</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">relation-type = IRI</sourcecode></li>
           </ul>
 
           <t>
@@ -870,12 +869,11 @@
           </ul>
 
           <t>
-            The operation type is encoded as a text string that conforms to the
-            syntax of an <xref target="RFC3987">IRI</xref>.
+            The operation type is an IRI.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="cddl" markers="false">operation-type = text</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">operation-type = IRI</sourcecode></li>
           </ul>
 
           <t>
@@ -922,12 +920,11 @@
           </ul>
 
           <t>
-            The form field type is encoded as a text string that conforms to the
-            syntax of an <xref target="RFC3987">IRI</xref>.
+            The form field type is an IRI.
           </t>
 
           <ul empty="true">
-            <li><sourcecode type="cddl" markers="false">form-field-type = text</sourcecode></li>
+            <li><sourcecode type="cddl" markers="false">form-field-type = IRI</sourcecode></li>
           </ul>
 
           <t>
@@ -3517,6 +3514,7 @@ DQUOTE = %x22
       </t>
 
       <ul>
+        <li>Changed the binary format to express relation types, operation types and form field types using <xref target="I-D.ietf-core-href"/> (#2).</li>
         <li>Clarified the current context and current base for nested elements and form fields (#53).</li>
         <li>Minor editorial improvements (#27).</li>
       </ul>
