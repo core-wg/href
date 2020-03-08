@@ -449,6 +449,17 @@ fragment  = (7, text)
         </ul>
 
         <t>
+          The options correspond to the (sub-)components of a CRI, as described
+          in <xref target="constraints"/>, with the addition of the
+          <tt>path.type</tt> option. The <tt>path.type</tt> option can be used
+          to express path prefixes like "/", "./", "../", "../../", etc. The
+          exact semantics of the option values are defined by <xref
+          target="reference-resolution"/>. A sequence of options that is empty
+          or starts with a <tt>path</tt> option is equivalent the same sequence
+          prefixed by a <tt>path.type</tt> option with value 2.
+        </t>
+
+        <t>
           Examples:
         </t>
 
@@ -931,6 +942,7 @@ fragment  = (7, text)
       <ul>
         <li>Expanded the set of supported schemes (#3).</li>
         <li>Specified creation, normalization and comparison (#9).</li>
+        <li>Clarified the default value of the <tt>path.type</tt> option (#33).</li>
         <li>Removed the 'append-relation' path type (#41).</li>
         <li>Renumbered the remaining path types.</li>
         <li>Renumbered the option numbers.</li>
