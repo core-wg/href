@@ -2954,10 +2954,10 @@ DQUOTE = %x22
           <front>
             <title>Constrained Resource Identifiers</title>
             <author initials="K." surname="Hartke" fullname="Klaus Hartke"/>
-            <date month="January" day="8" year="2020" />
+            <date month="March" day="9" year="2020" />
           </front>
-          <seriesInfo name="Internet-Draft" value="draft-ietf-core-href-02" />
-          <format type="TXT" target="http://www.ietf.org/internet-drafts/draft-ietf-core-href-02.txt" />
+          <seriesInfo name="Internet-Draft" value="draft-ietf-core-href-03" />
+          <format type="TXT" target="http://www.ietf.org/internet-drafts/draft-ietf-core-href-03.txt" />
         </reference>
 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
