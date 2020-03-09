@@ -126,7 +126,7 @@
         </t>
 
         <t>
-          The interaction model derives from he processing model of <xref
+          The interaction model derives from the processing model of <xref
           target="W3C.REC-html52-20171214">HTML</xref> and specifies how an
           automated software agent can change the application state by
           navigating between resources following links and performing operations
@@ -148,8 +148,8 @@
           constraints on power, memory, and processing resources</xref> and
           shares many similarities with the message format of CoAP:
 
-          Small numeric identifiers are used in place of verbose strings for
-          link relation types and operation types, and <xref
+          In place of verbose strings, small numeric identifiers are used to encode
+          link relation types and operation types. <xref
           target="RFC3986">Uniform Resource Identifiers (URIs)</xref> are
           pre-parsed into (what CoAP considers to be) their components, which
           considerably simplifies URI processing for constrained nodes that
@@ -167,8 +167,9 @@
 
           The format is loosely inspired by the syntax of <xref
           target="W3C.REC-turtle-20140225">Turtle</xref> and is mainly intended
-          for giving examples in documentations and specifications with precise
-          semantics. </t>
+          for giving examples in documentation and specifications with precise
+          semantics.
+        </t>
 
       </section>
 
@@ -268,10 +269,10 @@
               a <em>link relation type</em>, and
               a <em>link target</em>.
 
-          However, a link in CoRAL does not have target attributes; instead, a
+          However, a link in CoRAL does not have target attributes. Instead, a
           link may have a list of zero or more nested elements. These enable
-          both the description of resource metadata and the chaining of links
-          which is done in RFC 8288 by setting the anchor of one link to the
+          both the description of resource metadata and the chaining of links,
+          which is done in <xref target="RFC8288"/> by setting the anchor of one link to the
           target of another.
         </t>
 
@@ -288,9 +289,9 @@
         <t>
           A link relation type identifies the semantics of a link.
 
-          In HTML and RFC 8288, link relation types are typically denoted by an
+          In HTML and in <xref target="RFC8288"/>, link relation types are typically denoted by an
           IANA-registered name, such as <tt>stylesheet</tt> or <tt>type</tt>. In CoRAL, all
-          link relation types are denoted by an <xref
+          link relation types are in contrast denoted by an <xref
           target="RFC3987">Internationalized Resource Identifier (IRI)</xref>,
           such as &lt;http://www.iana.org/assignments/relation/stylesheet&gt; or
           &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;.
@@ -420,7 +421,7 @@
           For example, a form field could instruct an agent to include a certain
           payload or header field in the request.
 
-          A payload could for instance be described by form fields providing
+          A payload could, for instance, be described by form fields providing
           acceptable media types, a reference to schema information, or a number
           of individual data items that the agents needs to supply.
 
@@ -1229,7 +1230,7 @@ token = identifier / IRIref / boolean / integer / float
           <t>
             An identifier token is a user-defined symbolic name. The syntax for
             identifiers corresponds to the Default Identifier Syntax in <xref
-            target="UAX31">Unicode Standard Annex #31</xref> using the following
+            target="UAX31">Unicode Standard Annex #31</xref> with the following
             profile:
           </t>
 
