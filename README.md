@@ -4,9 +4,9 @@
 ## Specifications
 
 * Constrained RESTful Application Language
-    * [draft-ietf-core-coral-02](https://www.ietf.org/id/draft-ietf-core-coral-02.html) ([datatracker](https://datatracker.ietf.org/doc/draft-ietf-core-coral/))
+    * [draft-ietf-core-coral-03](https://www.ietf.org/id/draft-ietf-core-coral-03.html) ([datatracker](https://datatracker.ietf.org/doc/draft-ietf-core-coral/))
 * Constrained Resource Identifiers
-    * [draft-ietf-core-href-02](https://www.ietf.org/id/draft-ietf-core-href-02.html) ([datatracker](https://datatracker.ietf.org/doc/draft-ietf-core-href/))
+    * [draft-ietf-core-href-03](https://www.ietf.org/id/draft-ietf-core-href-03.html) ([datatracker](https://datatracker.ietf.org/doc/draft-ietf-core-href/))
 
 
 ## Companion Material 
