@@ -146,8 +146,8 @@
 
           This format is intended for <xref target="RFC7228">environments with
           constraints on power, memory, and processing resources</xref> and
-          shares many similarities with <xref target="RFC7252">the message of
-          CoAP format</xref>:
+          shares many similarities with <xref target="RFC7252">the message format of
+          CoAP</xref>:
 
           Small numeric identifiers are used in place of verbose strings for
           link relation types and operation types, and <xref
