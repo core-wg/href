@@ -2564,6 +2564,7 @@ DQUOTE = %x22
 
       </section>
 
+      <!--
       <section>
 
         <name>Negotiating Content</name>
@@ -2613,6 +2614,7 @@ DQUOTE = %x22
         </t>
 
       </section>
+      -->
 
     </section>
 
