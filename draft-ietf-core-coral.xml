@@ -108,7 +108,7 @@
 
         <t>
           The data model derives from the Web Linking model of <xref
-          target="RFC8288">RFC 8288</xref> and consists primarily of two
+          target="RFC8288"/> and consists primarily of two
           elements: "links" that describe the relationship between two resources
           and the type of that relationship; and "forms" that describe a
           possible operation on a resource and the type of that operation.
@@ -146,8 +146,7 @@
 
           This format is intended for <xref target="RFC7228">environments with
           constraints on power, memory, and processing resources</xref> and
-          shares many similarities with <xref target="RFC7252">the message format of
-          CoAP</xref>:
+          shares many similarities with the message format of CoAP:
 
           Small numeric identifiers are used in place of verbose strings for
           link relation types and operation types, and <xref
@@ -181,7 +180,7 @@
           The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
           "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
           "OPTIONAL" in this document are to be interpreted as described in
-          <xref target="RFC2119">BCP 14</xref> <xref target="RFC8174"/> when,
+          BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when,
           and only when, they appear in all capitals, as shown here.
         </t>
 
@@ -264,7 +263,7 @@
           A <em>link</em> describes a relationship between two resources on the
           Web.
 
-          As in <xref target="RFC8288">RFC 8288</xref>, a link in CoRAL has
+          As in <xref target="RFC8288"/>, a link in CoRAL has
               a <em>link context</em>,
               a <em>link relation type</em>, and
               a <em>link target</em>.
@@ -303,7 +302,7 @@
 
           In CoRAL documents, these IRIs are only used as identity tokens,
           though, and are compared with Simple String Comparison as specified in
-          <xref target="RFC3987" section="5.3.1">RFC 3987</xref>.
+          <xref target="RFC3987" section="5.3.1"/>.
         </t>
 
         <t>
@@ -544,7 +543,7 @@
               the one supplied by the form.
 
               An IRI may need to be converted to a URI (see <xref
-              target="RFC3987" section="3.1">RFC 3987</xref>) for protocols that
+              target="RFC3987" section="3.1"/>) for protocols that
               do not support IRIs.
             </t>
             <t>
@@ -665,7 +664,7 @@
 
         The encoding <bcp14>MUST</bcp14> satisfy the Core Deterministic Encoding Requirements
         specified in <xref target="I-D.ietf-cbor-7049bis"
-        section="4.2.1">RFC 7049bis</xref>.
+        section="4.2.1"/>.
       </t>
 
       <t>
@@ -673,7 +672,7 @@
         target="RFC8610">Concise Data Definition Language (CDDL)</xref>.
 
         All CDDL rules not defined in this document are defined in
-        <xref target="RFC8610" section="D">RFC 8610</xref>.
+        <xref target="RFC8610" section="D"/>.
       </t>
 
       <t>
@@ -804,7 +803,7 @@
 
           <t>
             A CRI reference is processed by resolving it to an IRI as specified
-            in Section XX of <xref target="I-D.ietf-core-href">RFC XXXX</xref>
+            in <xref target="I-D.ietf-core-href" section="5.2"/>
             using the current base.
           </t>
 
@@ -1007,8 +1006,7 @@ form-field-value /= #6.TBD6(uint)
           <t>
             The <tt>application/coral+cbor</tt> media type for documents in the binary
             format is defined to have a <tt>dictionary</tt> parameter that specifies
-            the dictionary in use. The dictionary is identified by a <xref
-            target="RFC3986">URI</xref>.
+            the dictionary in use. The dictionary is identified by a URI.
 
             For example, a CoRAL document that uses the dictionary identified by
             the URI &lt;http://example.com/dictionary&gt; would have the following
@@ -1052,7 +1050,7 @@ application/coral+cbor;dictionary="http://example.com/dictionary"
           </t>
 
           <t>
-            In <xref target="RFC7252">CoAP</xref>, media types (including
+            In CoAP, media types (including
             specific values for their parameters, plus an optional content
             coding) are encoded as an unsigned integer called the "content
             format" of a representation.
@@ -1072,9 +1070,9 @@ application/coral+cbor;dictionary="http://example.com/dictionary"
 
         <t>
           The definition of documents, links, and forms in the CoRAL binary format can be reused
-          in other <xref target="I-D.ietf-cbor-7049bis">CBOR-based protocols</xref>.
+          in other CBOR-based protocols.
 
-          Specifications using <xref target="RFC8610">CDDL</xref> should
+          Specifications using CDDL should
           reference the following rules for this purpose:
         </t>
 
@@ -1312,8 +1310,7 @@ MEDIAL = &lt;Any character from Table XX&gt;
 
             <t>
               An IRI reference literal consists of a Unicode string that
-              conforms to the syntax defined in <xref target="RFC3987">RFC
-              3987</xref>.
+              conforms to the syntax defined in <xref target="RFC3987"/>.
 
               An IRI reference is either an IRI or a relative reference.
 
@@ -1802,7 +1799,7 @@ DQUOTE = %x22
 
             <t>
               An IRI reference is resolved to an IRI as specified in <xref
-              target="RFC3987" section="6.5">RFC 3987</xref> using the current
+              target="RFC3987" section="6.5"/> using the current
               base as the base URI.
             </t>
 
@@ -2312,7 +2309,7 @@ DQUOTE = %x22
           <name>Resource Identifiers</name>
 
           <t>
-            <xref target="RFC3986">URIs</xref> are a cornerstone of Web-based
+            URIs are a cornerstone of Web-based
             applications. They enable the uniform identification of resources
             and are used every time a client interacts with a server or a
             resource representation needs to refer to another resource.
@@ -2324,9 +2321,9 @@ DQUOTE = %x22
             is a common practice in HTTP-based application programming
             interfaces (APIs) to make this part of the application
             specification, i.e., to prescribe fixed URI templates that are
-            hard-coded in implementations. However, there are <xref
-            target="I-D.nottingham-rfc7320bis">a number of problems with this
-            practice</xref>.
+            hard-coded in implementations. However, there are
+            a number of problems with this
+            practice <xref target="I-D.nottingham-rfc7320bis"/>.
           </t>
 
           <t>
@@ -2337,7 +2334,7 @@ DQUOTE = %x22
           </t>
 
           <t>
-            <xref target="I-D.nottingham-rfc7320bis">BCP 190</xref> describes
+            <xref target="I-D.nottingham-rfc7320bis"/> describes
             the problematic practice of fixed URI structures in more detail and
             provides some acceptable alternatives.
           </t>
@@ -2390,7 +2387,7 @@ DQUOTE = %x22
 
         <t>
           New link relation types, operation types, and form field types can be
-          minted by defining an <xref target="RFC3987">IRI</xref> that uniquely
+          minted by defining an IRI that uniquely
           identifies the item.
 
           Although the IRI may point to a resource that contains a definition of
@@ -2402,7 +2399,7 @@ DQUOTE = %x22
         <t>
           To avoid interoperability problems, it is <bcp14>RECOMMENDED</bcp14> that only IRIs
           are minted that are normalized according to <xref target="RFC3987"
-          section="5.3">RFC 3987</xref>. Non-normalized forms that are best
+          section="5.3"/>. Non-normalized forms that are best
           avoided include:
         </t>
 
@@ -2459,13 +2456,13 @@ DQUOTE = %x22
         <t>
           The convention of appending the relation type name to the prefix
           &lt;http://www.iana.org/assignments/relation/&gt; to form IRIs is adopted
-          from <xref target="RFC4287">Atom</xref>; see also <xref
-          target="RFC8288" section="A.2">RFC 8288</xref>.
+          from the <xref target="RFC4287">Atom Syndication Format</xref>; see also <xref
+          target="RFC8288" section="A.2"/>.
         </t>
 
         <t>
           Note that registered relation type names are required to be lowercase
-          ASCII letters (<xref target="RFC8288" section="3.3">RFC 8288</xref>).
+          ASCII letters (see <xref target="RFC8288" section="3.3"/>).
         </t>
 
       </section>
@@ -2475,7 +2472,7 @@ DQUOTE = %x22
         <name>Expressing Simple RDF Statements</name>
 
         <t>
-          An <xref target="W3C.REC-rdf11-concepts-20140225">RDF statement</xref>
+          In <xref target="W3C.REC-rdf11-concepts-20140225">RDF</xref>, a statement
           says that some relationship, indicated by a predicate, holds between
           two resources. Existing RDF vocabularies can therefore be a good source
           for link relation types that describe resource metadata.
@@ -2500,7 +2497,7 @@ DQUOTE = %x22
 
         <t>
           Text strings can be associated with a
-          <xref target="RFC5646">language tag</xref> and a base text direction
+          <xref target="RFC5646">Language Tag</xref> and a base text direction
           (right-to-left or left-to-right) by nesting links of types
           &lt;http://coreapps.org/base#language&gt; and
           &lt;http://coreapps.org/base#direction&gt;,
@@ -2574,7 +2571,7 @@ DQUOTE = %x22
           Likewise, agents might have differing capabilities or preferences that
           could influence which representation, among those available, would be
           best to deliver. CoRAL can be used to aid in content negotiation
-          (<xref target="RFC7231" section="3.4">RFC 7231</xref>).
+          (<xref target="RFC7231" section="3.4"/>).
         </t>
 
         <t>
@@ -2648,7 +2645,7 @@ DQUOTE = %x22
       <t>
         Implementers of the CoRAL binary format need to consider the security
         aspects of decoding CBOR. See <xref target="I-D.ietf-cbor-7049bis"
-        section="10">RFC 7049bis</xref> for security considerations relating to
+        section="10"/> for security considerations relating to
         CBOR. In particular, different number encodings for the same numeric
         value are not equivalent in CoRAL (e.g., a floating-point value of 0.0
         is not the same as the integer 0).
@@ -2659,7 +2656,7 @@ DQUOTE = %x22
         aspects of handling Unicode input. See <xref target="UTR36">Unicode
         Technical Report #36</xref> for security considerations relating to
         visual spoofing and misuse of character encodings. See <xref
-        target="RFC3629" section="10">RFC 3629</xref> for security
+        target="RFC3629" section="10"/> for security
         considerations relating to UTF-8. See <xref target="UTS39">Unicode
         Technical Standard #39</xref> for security mechanisms that can be used
         to detect possible security problems relating to Unicode.
@@ -2667,10 +2664,10 @@ DQUOTE = %x22
 
       <t>
         CoRAL makes extensive use of resource identifiers. See <xref
-        target="RFC3986" section="7">RFC 3986</xref> for security considerations
-        relating to URIs. See <xref target="RFC3987" section="8">RFC 3987</xref>
-        for security considerations relating to IRIs. See Section XX of <xref
-        target="I-D.ietf-core-href">RFC XXXX</xref> for security considerations
+        target="RFC3986" section="7"/> for security considerations
+        relating to URIs. See <xref target="RFC3987" section="8"/>
+        for security considerations relating to IRIs. See <xref
+        target="I-D.ietf-core-href" section="7"/> for security considerations
         relating to CRIs.
       </t>
 
@@ -2681,16 +2678,16 @@ DQUOTE = %x22
         decisions, and the security of an application could be compromised if an
         entity providing a given string is connected to the wrong account or
         online resource based on different interpretations of the string. See
-        <xref target="RFC6943">RFC 6943</xref> for security considerations
+        <xref target="RFC6943"/> for security considerations
         relating to identifiers in IRIs and other strings.
       </t>
 
       <t>
         CoRAL is intended to be used in conjunction with a Web transfer protocol
-        like HTTP or CoAP. See <xref target="RFC7230" section="9">RFC
-        7230</xref>, <xref target="RFC7231" section="9">RFC 7231</xref>, etc.,
+        like HTTP or CoAP. See <xref target="RFC7230" section="9"/>,
+        <xref target="RFC7231" section="9"/>, etc.,
         for security considerations relating to HTTP. See <xref target="RFC7252"
-        section="11">RFC 7252</xref> for security considerations relating to
+        section="11"/> for security considerations relating to
         CoAP.
       </t>
 
@@ -2706,13 +2703,13 @@ DQUOTE = %x22
         automatically following links can disclose personal information and
         other sensitive information. Implementations need to prevent the
         unintentional disclosure of such information. See <xref target="RFC7231"
-        section="9">RFC 7231</xref> for additional considerations.
+        section="9"/> for additional considerations.
       </t>
 
       <t>
         Applications using CoRAL ought to consider the attack vectors opened by
         automatically following, trusting, or otherwise using links and forms in
-        CoRAL documents. See <xref target="RFC8288" section="5">RFC 8288</xref>
+        CoRAL documents. See <xref target="RFC8288" section="5"/>
         for related considerations.
       </t>
 
@@ -2743,7 +2740,7 @@ DQUOTE = %x22
 
         <t>
           This document registers the media type <tt>application/coral+cbor</tt>
-          according to the procedures of <xref target="RFC6838">BCP 13</xref>.
+          according to the procedures of <xref target="RFC6838"/>.
         </t>
 
         <dl newline="true">
@@ -2795,8 +2792,8 @@ DQUOTE = %x22
 
         <t>
           This document registers the media type <tt>text/coral</tt> according to the
-          procedures of <xref target="RFC6838">BCP 13</xref> and guidelines of
-          <xref target="RFC6657">RFC 6657</xref>.
+          procedures of <xref target="RFC6838"/> and guidelines of
+          <xref target="RFC6657"/>.
         </t>
 
         <dl newline="true">
@@ -2850,7 +2847,7 @@ DQUOTE = %x22
         <t>
           This document registers CoAP content formats for the content types
           <tt>application/coral+cbor</tt> and <tt>text/coral</tt> according to the procedures
-          of <xref target="RFC7252">RFC 7252</xref>.
+          of <xref target="RFC7252"/>.
         </t>
 
         <ul>
@@ -2899,8 +2896,7 @@ DQUOTE = %x22
 
         <t>
           This document registers a CBOR tag for dictionary references according
-          to the procedures of <xref target="I-D.ietf-cbor-7049bis">RFC
-          7049bis</xref>.
+          to the procedures of <xref target="I-D.ietf-cbor-7049bis"/>.
         </t>
 
         <ul>
@@ -3133,12 +3129,12 @@ DQUOTE = %x22
           <dd>
             <t>
               Indicates that the link target is a <xref
-              target="RFC5646">language tag</xref> that specifies the language
+              target="RFC5646">Language Tag</xref> that specifies the language
               of the link context.
             </t>
             <t>
               The link target <bcp14>MUST</bcp14> be a text string in the format specified in
-              <xref target="RFC5646" section="2.1">RFC 5646</xref>.
+              <xref target="RFC5646" section="2.1"/>.
             </t>
           </dd>
           <dt>&lt;http://coreapps.org/base#direction&gt;</dt>
@@ -3232,7 +3228,7 @@ DQUOTE = %x22
             <t>
               Indicates that the link's context is a collection and that the
               link's target is a member of that collection, as defined in
-              <xref target="RFC6573" section="2.1">RFC 6573</xref>.
+              <xref target="RFC6573" section="2.1"/>.
             </t>
           </dd>
           <dt>&lt;http://www.iana.org/assignments/relation/collection&gt;</dt>
@@ -3240,7 +3236,7 @@ DQUOTE = %x22
             <t>
               Indicates that the link's target is a collection and that the
               link's context is a member of that collection, as defined in
-              <xref target="RFC6573" section="2.2">RFC 6573</xref>.
+              <xref target="RFC6573" section="2.2"/>.
             </t>
           </dd>
         </dl>
@@ -3295,7 +3291,7 @@ DQUOTE = %x22
             </t>
             <t>
               The form field value <bcp14>MUST</bcp14> be a text string in the format defined
-              in <xref target="RFC7231" section="4.1">RFC 7231</xref>. The
+              in <xref target="RFC7231" section="4.1"/>. The
               possible set of values is maintained in the <xref target="HTTP-METHODS">HTTP Methods Registry</xref>.
             </t>
             <t>
@@ -3314,7 +3310,7 @@ DQUOTE = %x22
             </t>
             <t>
               The form field value <bcp14>MUST</bcp14> be a text string in the format defined
-              in <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
+              in <xref target="RFC7231" section="3.1.1.1"/>. The
               possible set of media types and their parameters is maintained in
               the <xref target="MEDIA-TYPES">Media Types Registry</xref>.
             </t>
@@ -3333,7 +3329,7 @@ DQUOTE = %x22
             </t>
             <t>
               The link target <bcp14>MUST</bcp14> be a text string in the format defined in
-              <xref target="RFC7231" section="3.1.1.1">RFC 7231</xref>. The
+              <xref target="RFC7231" section="3.1.1.1"/>. The
               possible set of media types and their parameters is maintained in
               the <xref target="MEDIA-TYPES">Media Types Registry</xref>.
             </t>
