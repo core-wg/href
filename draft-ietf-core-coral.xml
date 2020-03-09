@@ -1122,7 +1122,7 @@ CoRAL-Form = form
 
       <t>
         A document in the textual format is a Unicode string in a Unicode
-        encoding form <xref target="UNICODE"/>.
+        encoding form <xref target="Unicode"/>.
 
         The media type for such documents is <tt>text/coral</tt>. The
         <tt>charset</tt> parameter of textual media types <xref target="RFC6657"/> is
@@ -1285,9 +1285,8 @@ MEDIAL = &lt;Any character from Table XX&gt;
           </table>
 
           <t>
-            All identifiers <bcp14>MUST</bcp14> be converted into Unicode Normalization Form C
-            (NFC), which is defined in <xref target="UAX15">Unicode Standard
-            Annex #15</xref>.
+            All identifiers <bcp14>MUST</bcp14> be converted into <xref
+            target="Unicode">Unicode Normalization Form C (NFC)</xref>.
 
             Comparison of identifiers is based on NFC and case-sensitive (unless
             otherwise noted).
@@ -2416,7 +2415,7 @@ DQUOTE = %x22
           <li>Dot segments (<tt>/./</tt> or <tt>/../</tt>) in the path component of an IRI</li>
           <li>Lowercase hexadecimal letters within percent-encoding triplets (e.g., <tt>%3F</tt> is preferable over <tt>%3f</tt>)</li>
           <li>Punycode-encoding of Internationalized Domain Names in IRIs</li>
-          <li>IRIs that are not in <xref target="UAX15">Unicode Normalization Form C</xref></li>
+          <li>IRIs that are not in Unicode Normalization Form C</li>
         </ul>
 
         <t>
@@ -2979,36 +2978,15 @@ DQUOTE = %x22
 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-cbor-7049bis.xml"/>
 
-        <reference anchor="UNICODE" target="http://www.unicode.org/versions/latest/">
+        <reference anchor="Unicode" target="http://www.unicode.org/versions/Unicode12.1.0/">
           <front>
-            <title>The Unicode Standard</title>
+            <title>The Unicode Standard, Version 12.1.0</title>
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
+            <date month="May" year="2019" />
           </front>
-          <annotation>
-          Note that this reference is to the latest version of Unicode, rather
-          than to a specific release. It is not expected that future changes in
-          the Unicode specification will have any impact on this document.
-          </annotation>
-        </reference>
-
-        <reference anchor="UAX15" target="http://unicode.org/reports/tr15/">
-          <front>
-            <title>Unicode Standard Annex #15: Unicode Normalization Forms</title>
-            <author>
-              <organization>The Unicode Consortium</organization>
-            </author>
-          </front>
-        </reference>
-
-        <reference anchor="UAX31" target="http://unicode.org/reports/tr31/">
-          <front>
-            <title>Unicode Standard Annex #31: Unicode Identifier and Pattern Syntax</title>
-            <author>
-              <organization>The Unicode Consortium</organization>
-            </author>
-          </front>
+          <seriesInfo name="ISBN" value="978-1-936213-25-2" />
         </reference>
 
       </references>
@@ -3044,22 +3022,37 @@ DQUOTE = %x22
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml8/reference.IANA.link-relations.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml8/reference.IANA.media-types.xml"/>
 
-        <reference anchor="UTR36" target="http://unicode.org/reports/tr36/">
+        <reference anchor="UAX31" target="http://www.unicode.org/reports/tr31/tr31-31.html">
+          <front>
+            <title>Unicode Standard Annex #31: Unicode Identifier and Pattern Syntax</title>
+            <author>
+              <organization>The Unicode Consortium</organization>
+            </author>
+            <date month="February" year="2019"/>
+          </front>
+          <seriesInfo name="Revision" value="31"/>
+        </reference>
+
+        <reference anchor="UTR36" target="http://www.unicode.org/reports/tr36/tr36-15.html">
           <front>
             <title>Unicode Technical Report #36: Unicode Security Considerations</title>
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
+            <date month="September" year="2014"/>
           </front>
+          <seriesInfo name="Revision" value="15"/>
         </reference>
 
-        <reference anchor="UTS39" target="http://unicode.org/reports/tr39/">
+        <reference anchor="UTS39" target="http://www.unicode.org/reports/tr39/tr39-20.html">
           <front>
             <title>Unicode Technical Standard #39: Unicode Security Mechanisms</title>
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
+            <date month="May" year="2019"/>
           </front>
+          <seriesInfo name="Revision" value="20"/>
         </reference>
 
         <reference anchor="FOAF" target="http://xmlns.com/foaf/spec/20140114.html">
