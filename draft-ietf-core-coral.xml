@@ -995,7 +995,7 @@ form-field-value /= #6.TBD6(uint)
             A dictionary reference <bcp14>MUST NOT</bcp14> refer to a dictionary value that
             would otherwise not be syntactically allowed in that position. For
             example, a dictionary reference in the position of a link relation
-            type cannot refer to a Boolean value; it can only refer to a text string.
+            type cannot refer to a Boolean value; it can only refer to an IRI.
           </t>
 
         </section>
