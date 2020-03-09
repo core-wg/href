@@ -1,4 +1,4 @@
-; draft-ietf-core-coral-02
+; draft-ietf-core-coral-03
 
 document = [*element]
 
@@ -8,13 +8,13 @@ directive = base-directive
 
 base-directive = [1, baseURI]
 
-baseURI = CoRI
+baseURI = CRI-Reference
 
-IRI = CoRI
+IRI = CRI-Reference
 
 link = [2, relation-type, link-target, ?[*element]]
 
-relation-type = text
+relation-type = IRI
 
 link-target = IRI / literal / null
 
@@ -22,33 +22,39 @@ literal = bool / int / float / time / bytes / text
 
 form = [3, operation-type, submission-target, ?[*form-field]]
 
-operation-type = text
+operation-type = IRI
 
 submission-target = IRI
 
 form-field = (form-field-type, form-field-value, ?[*element])
 
-form-field-type = text
+form-field-type = IRI
 
 form-field-value = IRI / literal / null
 
 relation-type /= uint
-
 link-target /= #6.6(uint)
-
 operation-type /= uint
-
 submission-target /= #6.6(uint)
-
 form-field-type /= uint
-
 form-field-value /= #6.6(uint)
 
-CoRI = [?(scheme:    1, text .regexp "[a-z][a-z0-9+.-]*"),
-        ?(host.name: 2, text //
-          host.ip:   3, bytes .size 4 / bytes .size 16),
-        ?(port:      4, 0..65535),
-        ?(path.type: 5, 0..127),
-        *(path:      6, text),
-        *(query:     7, text),
-        ?(fragment:  8, text)]
+CoRAL-Document = document
+CoRAL-Link = link
+CoRAL-Form = form
+
+CRI-Reference = [
+  (?scheme, ?((host.name // host.ip), ?port) // path.type),
+  *path,
+  *query,
+  ?fragment
+]
+
+scheme    = (0, text .regexp "[a-z][a-z0-9+.-]*")
+host.name = (1, text)
+host.ip   = (2, bytes .size 4 / bytes .size 16)
+port      = (3, 0..65535)
+path.type = (4, 0..127)
+path      = (5, text)
+query     = (6, text)
+fragment  = (7, text)
