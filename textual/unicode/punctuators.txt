@@ -1,5 +1,5 @@
-# coral-punctuators-12.1.0.txt
-# Date: 2020-01-14, 16:21:02 GMT
+# coral-punctuators-13.0.0.txt
+# Date: 2020-03-11, 11:28:05 GMT
 # © 2020 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see http://www.unicode.org/terms_of_use.html
@@ -11,7 +11,7 @@
 # Unicode Character Database.
 #
 # This file lists all code points allowed as punctuators in CoRAL
-# documents, as per draft-ietf-core-coral-02.
+# documents, as per draft-ietf-core-coral-03.
 #
 # ================================================
 

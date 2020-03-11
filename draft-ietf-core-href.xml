@@ -898,15 +898,15 @@ fragment  = (7, text)
 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-cbor-7049bis.xml"/>
 
-        <reference anchor="Unicode" target="http://www.unicode.org/versions/Unicode12.1.0/">
+        <reference anchor="Unicode" target="https://www.unicode.org/versions/Unicode13.0.0/">
           <front>
-            <title>The Unicode Standard, Version 12.1.0</title>
+            <title>The Unicode Standard, Version 13.0.0</title>
             <author>
               <organization>The Unicode Consortium</organization>
             </author>
-            <date month="May" year="2019" />
+            <date month="March" year="2020" />
           </front>
-          <seriesInfo name="ISBN" value="978-1-936213-25-2" />
+          <seriesInfo name="ISBN" value="978-1-936213-26-9" />
         </reference>
 
       </references>
