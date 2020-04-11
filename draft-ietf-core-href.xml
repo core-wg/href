@@ -85,7 +85,7 @@
         The <xref target="RFC3986">Uniform Resource Identifier (URI)</xref> and
         its most common usage, the URI reference, are the Internet standard for
         linking to resources in hypertext formats such as <xref
-        target="W3C.REC-html52-20171214">HTML</xref> and the <xref
+        target="W3C.REC-html52-20171214">HTML</xref> or the <xref
         target="RFC8288">HTTP "Link" header field</xref>.
       </t>
 
@@ -94,8 +94,8 @@
         of US-ASCII characters.
 
         The individual components of a URI reference are delimited by a number
-        of reserved characters, which necessitates the use of an escape
-        mechanism ("percent-encoding") when these reserved characters are used
+        of reserved characters, which necessitates the use of a character escape
+        mechanism called "percent-encoding" when these reserved characters are used
         in a non-delimiting function.
 
         The resolution of URI references involves parsing a character sequence
@@ -105,10 +105,10 @@
       </t>
 
       <t>
-        Overall, the proper handling of URI references is relatively intricate.
+        Overall, the proper handling of URI references is quite intricate.
 
-        This can be a problem, especially in <xref target="RFC7228">constrained
-        environments</xref> where nodes often have severe code size and memory
+        This can be a problem especially in <xref target="RFC7228">constrained
+        environments</xref>, where nodes often have severe code size and memory
         size limitations.
 
         As a result, many implementations in such environments support only an
@@ -123,8 +123,8 @@
         Representation (CBOR)</xref> instead of a sequence of characters.
 
         This allows typical operations on URI references such as parsing,
-        comparison and reference resolution to be implemented (including all
-        corner cases) in a comparatively small amount of code.
+        comparison and reference resolution (including all corner cases) to be
+        implemented in a comparatively small amount of code.
       </t>
 
       <t>
@@ -134,8 +134,9 @@
 
         The supported subset includes all URIs of the <xref
         target="RFC7252">Constrained Application Protocol (CoAP)</xref>, most
-        URIs of the <xref target="RFC7230"> Hypertext Transfer Protocol
-        (HTTP)</xref>, and other URIs that are similar.
+        URIs of the <xref target="RFC7230">Hypertext Transfer Protocol
+        (HTTP)</xref>, <xref target="RFC8141">Uniform Resource Names
+        (URNs)</xref>, and many similar other URIs.
 
         The exact constraints are defined in <xref target="constraints"/>.
       </t>
@@ -181,8 +182,8 @@
       <ol type="C%d.">
         <li anchor="c-scheme">
           The scheme name can be any Unicode string (see Definition D80 in <xref
-          target="Unicode"/>) that matches the syntax defined in <xref
-          target="RFC3986" section="3.1"/> and is lowercase (see Definition D139
+          target="Unicode"/>) that matches the syntax of a URI scheme (see <xref
+          target="RFC3986" section="3.1"/>) and is lowercase (see Definition D139
           in <xref target="Unicode"/>).
         </li>
         <li anchor="c-authority">
@@ -217,10 +218,10 @@
           to a path of zero path segments.
         </li>
         <li anchor="c-path-segment">
-          A path segment can be any Unicode string that is in NFC (including the
-          zero-length string) with the exception of the special "." and ".."
-          complete path segments. No special constraints are placed on the first
-          path segment.
+          A path segment can be any Unicode string that is in NFC, with the
+          exception of the special "." and ".." complete path segments. It can
+          be the zero-length string. No special constraints are placed on the
+          first path segment.
         </li>
         <li anchor="c-query">
           A query always consists of one or more query parameters. A query
@@ -228,7 +229,8 @@
           form of a "key=value" pair. When converting a CRI to a URI, query
           parameters are separated by an ampersand ("&amp;") character.
 
-          (This matches the structure and encoding of the query in CoAP URIs.)
+          (This matches the structure and encoding of the target URI in CoAP
+          requests.)
         </li>
         <li anchor="c-fragment">
           A fragment identifier can be any Unicode string that is in NFC.
@@ -242,9 +244,10 @@
         <li anchor="c-mapping">
           When converting a CRI to a URI, any character that is outside the
           allowed character range or a delimiter in the URI syntax is
-          percent-encoded. Percent-encoding always uses the UTF-8 encoding form
+          percent-encoded. For CRIs, percent-encoding always uses the UTF-8 encoding form
           (see Definition D92 in <xref target="Unicode"/>) to convert the
-          character to a sequence of one or more octets.
+          character to a sequence of octets (that is then converted to a
+          sequence of %HH triplets).
         </li>
       </ol>
 
@@ -260,7 +263,7 @@
       <name>Creation and Normalization</name>
 
       <t>
-        Resource identifiers are generally created on the initial creation of a
+        In general, resource identifiers are created on the initial creation of a
         resource with a certain resource identifier, or the initial exposition
         of a resource under a particular resource identifier.
       </t>
@@ -273,14 +276,14 @@
       </t>
 
       <t>
-        The creator <bcp14>MUST</bcp14> ensure that any CRI created satisfies
+        The naming authority <bcp14>MUST</bcp14> ensure that any CRI created satisfies
         the constraints defined in <xref target="constraints"/>. The creation of
         a CRI fails if the CRI cannot be validated to satisfy all of the
         constraints.
       </t>
 
       <t>
-        If a creator creates a CRI from user input, it <bcp14>MAY</bcp14> apply
+        If a naming authority creates a CRI from user input, it <bcp14>MAY</bcp14> apply
         the following (and only the following) normalizations to get the CRI
         more likely to validate:
 
@@ -347,8 +350,8 @@
         not comprise protocol-based normalizations that require accessing the
         resources or detailed knowledge of the scheme's dereference algorithm.
 
-        False negatives can be caused by resource aliases and CRIs that do not
-        fully satisfy the constraints.
+        False negatives can be caused, for example, by CRIs that are not
+        appropriately pre-normalized and by resource aliases.
       </t>
 
       <t>
@@ -380,9 +383,10 @@
         (CBOR)</xref>.
 
         To reduce representation size, CRIs are not serialized directly.
-        Instead, CRIs are indirectly referenced through <em>CRI references</em>
-        that take advantage of hierarchical locality. The CBOR serialization of
-        CRI references is specified in <xref target="cbor-serialization"/>.
+        Instead, CRIs are indirectly referenced through <em>CRI references</em>.
+        These take advantage of hierarchical locality and provide a very compact
+        encoding. The CBOR serialization of CRI references is specified in <xref
+        target="cbor-serialization"/>.
       </t>
 
       <t>
@@ -390,8 +394,8 @@
         resolution</em>: the act of transforming a CRI reference into a CRI.
 
         An application <bcp14>MUST</bcp14> implement this operation by applying
-        the algorithm specified in <xref target="reference-resolution"/> or any
-        algorithm that is functionally equivalent to it.
+        the algorithm specified in <xref target="reference-resolution"/> (or any
+        algorithm that is functionally equivalent to it).
       </t>
 
       <t>
@@ -484,14 +488,19 @@ fragment  = (7, text)
         </ul>
 
         <t>
-          A CRI reference is considered <em>absolute</em> if the sequence of
-          options starts with a <tt>scheme</tt> option.
+          A CRI reference is considered <em>well-formed</em> if the sequence
+          of options is in the correct order as defined by the CDDL structure.
         </t>
 
         <t>
-          A CRI reference is considered <em>relative</em> if the sequence of
-          options is empty or starts with an option other than a <tt>scheme</tt>
-          option.
+          A CRI reference is considered <em>absolute</em> if it is well-formed
+          and the sequence of options starts with a <tt>scheme</tt> option.
+        </t>
+
+        <t>
+          A CRI reference is considered <em>relative</em> if it is well-formed
+          and the sequence of options is empty or starts with an option other
+          than a <tt>scheme</tt> option.
         </t>
 
       </section>
@@ -517,8 +526,8 @@ fragment  = (7, text)
             Establish the base CRI of the CRI reference and express it in the
             form of an absolute CRI reference.
 
-            The base CRI can be established in a number of ways; see <xref
-            target="RFC3986" section="5.1"/>.
+            (The base CRI can be established in a number of ways; see <xref
+            target="RFC3986" section="5.1"/>.)
           </li>
           <li>
             Determine the values of two variables, T and E, depending on the
@@ -599,12 +608,12 @@ fragment  = (7, text)
             for any <tt>path.type</tt> option.
           </li>
           <li>
-            If the buffer contains a single <tt>path</tt> option and the value
-            of that option is the zero-length string, remove that option from
-            the buffer.
+            If the number of <tt>path</tt> options in the buffer is one and the
+            value of that option is the zero-length string, remove the option
+            from the buffer.
           </li>
           <li>
-            Return the sequence of options in the buffer.
+            Return the sequence of options in the buffer as the resolved CRI.
           </li>
         </ol>
 
@@ -659,9 +668,9 @@ fragment  = (7, text)
           CRI to IRI
         </dt>
         <dd>
-          A CRI can be converted to an IRI by first converting it to a URI, and
-          then converting the URI to an IRI as described in <xref
-          target="RFC3987" section="3.2"/>.
+          A CRI can be converted to an IRI by first converting it to a URI as
+          specified in <xref target="cri-to-uri"/>, and then converting the URI
+          to an IRI as described in <xref target="RFC3987" section="3.2"/>.
         </dd>
         <dt>
           IRI to CRI
@@ -669,7 +678,7 @@ fragment  = (7, text)
         <dd>
           An IRI can be converted to a CRI by first converting it to a URI as
           described in <xref target="RFC3987" section="3.1"/>, and then
-          converting the URI to a CRI.
+          converting the URI to a CRI as described above.
         </dd>
       </dl>
 
@@ -705,9 +714,9 @@ fragment  = (7, text)
           <dd>
             <t>
               If the CRI reference contains a <tt>host.name</tt> or
-              <tt>host.ip</tt> option, the authority component consists of the
+              <tt>host.ip</tt> option, the authority component of the URI reference consists of a
               host subcomponent, optionally followed by a colon (":") character
-              and the port subcomponent.
+              and a port subcomponent.
 
               Otherwise, the authority component is undefined.
             </t>
@@ -918,6 +927,7 @@ fragment  = (7, text)
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7228.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7230.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7252.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8141.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8288.xml"/>
 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/reference.W3C.REC-html52-20171214.xml"/>
@@ -934,6 +944,14 @@ fragment  = (7, text)
     <section removeInRFC="true">
 
       <name>Change Log</name>
+
+      <t>
+        Changes from -03 to -04:
+      </t>
+
+      <ul>
+        <li>Minor editorial improvements.</li>
+      </ul>
 
       <t>
         Changes from -02 to -03:
