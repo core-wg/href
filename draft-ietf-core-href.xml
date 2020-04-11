@@ -136,7 +136,7 @@
         target="RFC7252">Constrained Application Protocol (CoAP)</xref>, most
         URIs of the <xref target="RFC7230">Hypertext Transfer Protocol
         (HTTP)</xref>, <xref target="RFC8141">Uniform Resource Names
-        (URNs)</xref>, and many similar other URIs.
+        (URNs)</xref>, and other similar URIs.
 
         The exact constraints are defined in <xref target="constraints"/>.
       </t>
