@@ -402,6 +402,10 @@
         The method of transforming a CRI into a CRI reference is unspecified;
         implementations are free to use any algorithm as long as reference
         resolution of the resulting CRI reference yields the original CRI.
+
+        Notably, a CRI reference is not required to satisfy all of the
+        constraints of a CRI; the only requirement on a CRI reference is that
+        reference resolution <bcp14>MUST</bcp14> yield the original CRI.
       </t>
 
       <t>
@@ -516,7 +520,7 @@ fragment  = (7, text)
         </t>
 
         <t>
-          The following steps define the process of resolving any CRI reference
+          The following steps define the process of resolving any well-formed CRI reference
           against a base CRI so that the result is a CRI in the form of an
           absolute CRI reference:
         </t>
