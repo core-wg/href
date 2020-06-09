@@ -291,13 +291,13 @@
 
           In HTML and in <xref target="RFC8288"/>, link relation types are typically denoted by an
           IANA-registered name, such as <tt>stylesheet</tt> or <tt>type</tt>. In CoRAL, all
-          link relation types are in contrast denoted by an <xref
+          link relation types are, in contrast, denoted by an <xref
           target="RFC3987">Internationalized Resource Identifier (IRI)</xref>,
           such as &lt;http://www.iana.org/assignments/relation/stylesheet&gt; or
           &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;.
 
           This allows for the decentralized creation of new link relation types
-          without the risk of collisions when from different organizations or
+          without the risk of collisions when they come from different organizations or
           domains of knowledge. IRIs can also lead to documentation, schema, and
           other information about a link relation type.
 
@@ -325,7 +325,7 @@
               a byte string, or
               a text string.
 
-          An anonymous resource is a resource that is neither identified by a
+          An anonymous resource is a resource that is identified by neither a
           URI nor a literal representation.
         </t>
 
@@ -1351,7 +1351,7 @@ MEDIAL = &lt;Any character from Table XX&gt;
               By default, integer literals are expressed in decimal, but they
               can also be specified in an alternate base using a prefix: Binary
               literals begin with <tt>0b</tt>, octal literals begin with <tt>0o</tt>, and
-              hexadecimal literals begin with <tt>0x</tt>.
+              hexadecimal literals begin with <tt>0x</tt> (in upper- or lowercase).
             </t>
 
             <t>
