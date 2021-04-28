@@ -399,7 +399,7 @@
       </t>
 
       <t>
-        The method of transforming a CRI into a CRI reference is unspecified;
+        The reverse operation of transforming a CRI into a CRI reference is unspecified;
         implementations are free to use any algorithm as long as reference
         resolution of the resulting CRI reference yields the original CRI.
 
@@ -532,9 +532,9 @@ fragment  = (7, text)
             target="RFC3986" section="5.1"/>.)
           </li>
           <li>
-            Determine the values of two variables, T and E, depending on the
-            first option of the CRI reference to be resolved, according to <xref
-            target="resolution-variables"/>.
+            Determine the values of two variables, T and E, based on the first
+            option in the sequence of options of the CRI reference to be
+            resolved, according to <xref target="resolution-variables"/>.
           </li>
         </ol>
 
@@ -611,7 +611,7 @@ fragment  = (7, text)
           </li>
           <li>
             If the number of <tt>path</tt> options in the buffer is one and the
-            value of that option is the zero-length string, remove the option
+            value of that option is the zero-length string, remove that option
             from the buffer.
           </li>
           <li>
@@ -760,7 +760,7 @@ fragment  = (7, text)
               value is not 0, the path component of the URI reference is
               prefixed by a slash ("/") character.
 
-              Otherwise, the path component is prefixed by the empty string.
+              Otherwise, the path component is prefixed by the zero-length string.
             </t>
             <t>
               If the CRI reference contains one or more <tt>path</tt> options,
