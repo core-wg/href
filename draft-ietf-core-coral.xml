@@ -141,7 +141,7 @@
 
         <t>
           The primary serialization format is a compact, binary encoding of
-          links and forms in <xref target="I-D.ietf-cbor-7049bis">Concise Binary
+          links and forms in <xref target="RFC8949">Concise Binary
           Object Representation (CBOR)</xref>.
 
           This format is intended for <xref target="RFC7228">environments with
@@ -660,11 +660,11 @@
 
       <t>
         A document in the binary format is encoded in <xref
-        target="I-D.ietf-cbor-7049bis">Concise Binary Object Representation
+        target="RFC8949">Concise Binary Object Representation
         (CBOR)</xref>.
 
         The encoding <bcp14>MUST</bcp14> satisfy the Core Deterministic Encoding Requirements
-        specified in <xref target="I-D.ietf-cbor-7049bis"
+        specified in <xref target="RFC8949"
         section="4.2.1"/>.
       </t>
 
@@ -2324,7 +2324,7 @@ DQUOTE = %x22
             specification, i.e., to prescribe fixed URI templates that are
             hard-coded in implementations. However, there are
             a number of problems with this
-            practice <xref target="I-D.nottingham-rfc7320bis"/>.
+            practice <xref target="RFC8820"/>.
           </t>
 
           <t>
@@ -2335,7 +2335,7 @@ DQUOTE = %x22
           </t>
 
           <t>
-            <xref target="I-D.nottingham-rfc7320bis"/> describes
+            <xref target="RFC8820"/> describes
             the problematic practice of fixed URI structures in more detail and
             provides some acceptable alternatives.
           </t>
@@ -2645,7 +2645,7 @@ DQUOTE = %x22
 
       <t>
         Implementers of the CoRAL binary format need to consider the security
-        aspects of decoding CBOR. See <xref target="I-D.ietf-cbor-7049bis"
+        aspects of decoding CBOR. See <xref target="RFC8949"
         section="10"/> for security considerations relating to
         CBOR. In particular, different number encodings for the same numeric
         value are not equivalent in CoRAL (e.g., a floating-point value of 0.0
@@ -2897,7 +2897,7 @@ DQUOTE = %x22
 
         <t>
           This document registers a CBOR tag for dictionary references according
-          to the procedures of <xref target="I-D.ietf-cbor-7049bis"/>.
+          to the procedures of <xref target="RFC8949"/>.
         </t>
 
         <ul>
@@ -2938,9 +2938,7 @@ DQUOTE = %x22
     <!-- **************************************************************** -->
     <!-- **************************************************************** -->
 
-    <displayreference target="I-D.ietf-cbor-7049bis" to="RFC7049bis"/>
     <displayreference target="I-D.kelly-json-hal" to="HAL"/>
-    <displayreference target="I-D.nottingham-rfc7320bis" to="RFC7320bis"/>
 
     <references>
 
@@ -2973,8 +2971,7 @@ DQUOTE = %x22
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6838.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8610.xml"/>
-
-        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-cbor-7049bis.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8949.xml"/>
 
         <reference anchor="Unicode" target="https://www.unicode.org/versions/Unicode13.0.0/">
           <front>
@@ -3005,9 +3002,9 @@ DQUOTE = %x22
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8132.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8288.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8820.xml"/>
 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.kelly-json-hal.xml"/>
-        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.nottingham-rfc7320bis.xml"/>
 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/reference.W3C.REC-html52-20171214.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml4/reference.W3C.REC-rdf11-concepts-20140225.xml"/>

@@ -119,7 +119,7 @@
       <t>
         This document defines the Constrained Resource Identifier (CRI) by
         constraining URIs to a simplified subset and serializing their
-        components in <xref target="I-D.ietf-cbor-7049bis">Concise Binary Object
+        components in <xref target="RFC8949">Concise Binary Object
         Representation (CBOR)</xref> instead of a sequence of characters.
 
         This allows typical operations on URI references such as parsing,
@@ -379,7 +379,7 @@
 
       <t>
         This section defines the serialization of CRIs in <xref
-        target="I-D.ietf-cbor-7049bis">Concise Binary Object Representation
+        target="RFC8949">Concise Binary Object Representation
         (CBOR)</xref>.
 
         To reduce representation size, CRIs are not serialized directly.
@@ -420,7 +420,7 @@
 
         <t>
           A CRI reference is encoded as a CBOR array <xref
-          target="I-D.ietf-cbor-7049bis"/> that contains a sequence of zero or
+          target="RFC8949"/> that contains a sequence of zero or
           more options. Each option consists of an option number followed by an
           option value, holding one component or sub-component of the CRI
           reference. To reduce size, both option numbers and option values are
@@ -850,7 +850,7 @@ fragment  = (7, text)
         resource exhaustion (e.g., resulting from the allocation of big data
         items) or exhaustion of the call stack (stack overflow).
 
-        See <xref target="I-D.ietf-cbor-7049bis" section="10"/> for additional
+        See <xref target="RFC8949" section="10"/> for additional
         security considerations relating to CBOR.
       </t>
 
@@ -891,8 +891,6 @@ fragment  = (7, text)
     <!-- **************************************************************** -->
     <!-- **************************************************************** -->
 
-    <displayreference target="I-D.ietf-cbor-7049bis" to="RFC7049bis"/>
-
     <references>
 
       <name>References</name>
@@ -906,8 +904,7 @@ fragment  = (7, text)
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.3987.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8610.xml"/>
-
-        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-cbor-7049bis.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8949.xml"/>
 
         <reference anchor="Unicode" target="https://www.unicode.org/versions/Unicode13.0.0/">
           <front>
