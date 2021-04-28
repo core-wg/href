@@ -438,7 +438,7 @@
           <li>
 <sourcecode type="cddl" markers="false">
 CRI-Reference = [
-  (?scheme, ?((host.name // host.ip), ?port) // path.type),
+  (?scheme, ?((host.name // host.ip), ?port) // base-path),
   *path,
   *query,
   ?fragment
@@ -448,7 +448,7 @@ scheme    = (0, text .regexp "[a-z][a-z0-9+.-]*")
 host.name = (1, text)
 host.ip   = (2, bytes .size 4 / bytes .size 16)
 port      = (3, 0..65535)
-path.type = (4, 0..127)
+base-path = (4, 0..127)
 path      = (5, text)
 query     = (6, text)
 fragment  = (7, text)
@@ -459,12 +459,10 @@ fragment  = (7, text)
         <t>
           The options correspond to the (sub-)components of a CRI, as described
           in <xref target="constraints"/>, with the addition of the
-          <tt>path.type</tt> option. The <tt>path.type</tt> option can be used
-          to express path prefixes like "/", "./", "../", "../../", etc. The
-          exact semantics of the option values are defined by <xref
-          target="reference-resolution"/>. A sequence of options that is empty
-          or starts with a <tt>path</tt> option is equivalent the same sequence
-          prefixed by a <tt>path.type</tt> option with value 2.
+          <tt>base-path</tt> option. The <tt>base-path</tt> option can be used
+          to express path prefixes roughly like "/", "./", "../", "../../", etc.
+          The exact semantics of the option values of the <tt>base-path</tt>
+          option are defined in <xref target="reference-resolution"/>.
         </t>
 
         <t>
@@ -570,13 +568,13 @@ fragment  = (7, text)
               <td align="left" colspan="2">(invalid sequence of options)</td>
             </tr>
             <tr>
-              <td align="left">4 (path.type)</td>
-              <td align="left">option value - 1</td>
-              <td align="left">if T &lt; 0 then 5 else 6</td>
+              <td align="left">4 (base-path)</td>
+              <td align="left">the option value</td>
+              <td align="left">if T &gt; 0 then 6 else 5</td>
             </tr>
             <tr>
               <td align="left">5 (path)</td>
-              <td align="left">1</td>
+              <td align="left">0</td>
               <td align="left">6</td>
             </tr>
             <tr>
@@ -608,8 +606,8 @@ fragment  = (7, text)
             <tt>path</tt> options in the buffer).
           </li>
           <li>
-            Append all the options from the CRI reference to the buffer, except
-            for any <tt>path.type</tt> option.
+            Append all the options from the CRI reference to the buffer,
+            excluding any <tt>base-path</tt> option.
           </li>
           <li>
             If the number of <tt>path</tt> options in the buffer is one and the
@@ -753,12 +751,12 @@ fragment  = (7, text)
             <t>
               If the CRI reference is an empty sequence of options or starts
               with a <tt>port</tt> option, a <tt>path</tt> option, or a
-              <tt>path.type</tt> option where the value is not 0, the conversion
+              <tt>base-path</tt> option where the value is not 0, the conversion
               fails.
             </t>
             <t>
               If the CRI reference contains a <tt>host.name</tt> option, a
-              <tt>host.ip</tt> option or a <tt>path.type</tt> option where the
+              <tt>host.ip</tt> option or a <tt>base-path</tt> option where the
               value is not 0, the path component of the URI reference is
               prefixed by a slash ("/") character.
 
@@ -954,6 +952,7 @@ fragment  = (7, text)
       </t>
 
       <ul>
+        <li>Removed the redundant <tt>path.type</tt> option value, renumbered the remaining option values, and changed the option name to <tt>base-path</tt>.</li>
         <li>Minor editorial improvements.</li>
       </ul>
 

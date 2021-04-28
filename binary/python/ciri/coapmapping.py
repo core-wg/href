@@ -3,48 +3,51 @@ from . import *
 def coap(href, to_proxy=False):
   if not is_absolute(href):
     return None
+
   result = b''
   previous = 0
+
   for option, value in href:
     if option == Option.SCHEME:
-      pass
+      continue
     elif option == Option.HOST_NAME:
       opt = 3  # Uri-Host
       val = value.encode('utf-8')
-      result += _encode_coap_option(opt - previous, val)
-      previous = opt
     elif option == Option.HOST_IP:
       opt = 3  # Uri-Host
-      if len(value) == 4:
-        val = '.'.join(str(c) for c in value).encode('utf-8')
-      elif len(value) == 16:
-        val = ('[' + rfc5952str(b) + ']').encode('utf-8')
-      result += _encode_coap_option(opt - previous, val)
-      previous = opt
+      val = _encode_ip_address(value).encode('utf-8')
     elif option == Option.PORT:
       opt = 7  # Uri-Port
       val = value.to_bytes((value.bit_length() + 7) // 8, 'big')
-      result += _encode_coap_option(opt - previous, val)
-      previous = opt
+    elif option == Option.BASE_PATH:
+      return None
     elif option == Option.PATH:
       opt = 11  # Uri-Path
       val = value.encode('utf-8')
-      result += _encode_coap_option(opt - previous, val)
-      previous = opt
     elif option == Option.QUERY:
       opt = 15  # Uri-Query
       val = value.encode('utf-8')
-      result += _encode_coap_option(opt - previous, val)
-      previous = opt
     elif option == Option.FRAGMENT:
-      pass
+      continue
+    result += _encode_coap_option(opt - previous, val)
+    previous = opt
+
   if to_proxy:
     (option, value) = href[0]
     opt = 39  # Proxy-Scheme
     val = value.encode('utf-8')
     result += _encode_coap_option(opt - previous, val)
     previous = opt
+
   return result
+
+
+def _encode_ip_address(b):
+  if len(b) == 4:
+    return '.'.join(str(c) for c in b)
+  elif len(b) == 16:
+    return '[' + rfc5952str(b) + ']'
+
 
 def _encode_coap_option(delta, value):
   length = len(value)
@@ -65,6 +68,7 @@ def _encode_coap_option(delta, value):
     result += bytes([length >> 8, length & 255])
   result += value
   return result
+
 
 def _encode_coap_option_nibble(n):
   if n < 13:
