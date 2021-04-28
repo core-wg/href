@@ -279,42 +279,36 @@ resolved to their respective CRI before comparison.
 
 ## CBOR Serialization {#cbor-serialization}
 
-A CRI reference is encoded as a CBOR array {{RFC8949}} that contains a
-sequence of zero or more options. Each option consists of an option
-number followed by an option value, holding one component or
-sub-component of the CRI reference. To reduce size, both option
-numbers and option values are immediate elements of the CBOR array and
-appear in alternating order.
+A CRI reference is encoded as a CBOR array {{RFC8949}}, with the
+structure as described in the [Concise Data Definition Language
+(CDDL)](#RFC8610) as follows:
 
-Not all possible sequences of options denote a well-formed CRI
-reference. The structure can be described in the [Concise Data
-Definition Language (CDDL)](#RFC8610) as follows:
+~~~~ cddl
+CRI-Reference = [
+  (authority // path-type),
+  *path,
+  ? (([], fragment)              ; include array only if
+     //([+query], ?fragment))    ; at least one query and/or fragment
+]
 
-{: empty="true"}
-*  
+authority = (?scheme, ?(host, ?port))
+scheme    = ((false, text .regexp "[a-z][a-z0-9+.-]*")
+              // COAP // COAPS // HTTP // HTTPS)
+COAP = -1 COAPS = -2 HTTP = -3 HTTPS = -4
+host      = ((true, text) // bytes .size 4 // bytes .size 16)
+port      = 0..65535
+path-type = 0..127
 
-  ~~~~ cddl
-  CRI-Reference = [
-    (?scheme, ?((host.name // host.ip), ?port) // path.type),
-    *path,
-    *query,
-    ?fragment
-  ]
+path      = text
+query     = text
+fragment  = text
 
-  scheme    = (0, text .regexp "[a-z][a-z0-9+.-]*")
-  host.name = (1, text)
-  host.ip   = (2, bytes .size 4 / bytes .size 16)
-  port      = (3, 0..65535)
-  path.type = (4, 0..127)
-  path      = (5, text)
-  query     = (6, text)
-  fragment  = (7, text)
-  ~~~~
+~~~~
 
-
-The options correspond to the (sub-)components of a CRI, as described in
+The rules `scheme`, `host`, `port`, `path`, `query`, `fragment`
+correspond to the (sub-)components of a CRI, as described in
 {{constraints}}, with the addition of the `path.type` option.
-The `path.type` option can be used to express path prefixes like "/",
+The `path.type` option can be used to express path prefixes such as "/",
 "./", "../", "../../", etc.
 The exact semantics of the option values are defined by
 {{reference-resolution}}.
@@ -326,18 +320,18 @@ Examples:
 :  
 
 : ~~~~ cbor
-  [0, "coap",
-   2, h'C6336401',
-   3, 61616,
-   5, ".well-known",
-   5, "core"]
+  [false, "coap",    / scheme /
+   h'C6336401',      / host /
+   61616,            / port /
+   ".well-known",    / path /
+   "core"]           / path /
   ~~~~
 
 : ~~~~ cbor
-  [4, 0,
-   5, ".well-known",
-   5, "core",
-   6, "rt=temperature-c"]
+  [0,                / path-type /
+   ".well-known",    / path /
+   "core",           / path /
+   ["rt=temperature-c"]]  / query /
   ~~~~
 
 
