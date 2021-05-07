@@ -1,5 +1,3 @@
-.DEFAULT_GOAL := all
-
 SRC := draft-ietf-core-href.md
 
 DIAGS := $(wildcard example/*.diag)
@@ -17,14 +15,15 @@ TEXT := $(SRC:.md=.txt)
 
 CLEANFILES += $(TEXT)
 
-.PHONY: check
-check: $(CBORS)
+XML := $(SRC:.md=.xml)
+
+CLEANFILES += $(XML)
+
+$(HTML) $(XML) $(TXT): $(SRC) $(CBORS)
 	for f in $(CBORS) ; do cddl cddl/cri.cddl v $$f ; done
-
-all: $(HTML)
-
-$(TEXT) $(HTML): $(SRC) check
 	kdrfc -3 -h -i $<
 
 .PHONY: clean
 clean: ; $(RM) $(CLEANFILES)
+
+.DEFAULT_GOAL := $(HTML)
