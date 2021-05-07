@@ -629,7 +629,6 @@ Changes from -00 to -01:
 
 Thanks to
 {{{Christian Amsüss}}},
-{{{Carsten Bormann}}},
 {{{Ari Keränen}}},
 {{{Jim Schaad}}} and
 {{{Dave Thaler}}}
@@ -638,6 +637,6 @@ document.
 
 
 <!--  LocalWords:  CRI normalizations dereferencing dereference CRIs
-<!--  LocalWords:  untrusted subcomponent
  -->
+<!--  LocalWords:  untrusted subcomponent
  -->
