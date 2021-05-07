@@ -290,7 +290,8 @@ An application MUST implement this operation by applying
 the algorithm specified in {{reference-resolution}} (or any algorithm
 that is functionally equivalent to it).
 
-The method of transforming a CRI into a CRI reference is unspecified;
+The reverse operation of transforming a CRI into a CRI reference is
+unspecified;
 implementations are free to use any algorithm as long as reference
 resolution of the resulting CRI reference yields the original CRI.
 Notably, a CRI reference is not required to satisfy all of the
@@ -390,9 +391,9 @@ an absolute CRI reference:
   Assign each element an element number according to the number E for
   that element in {{resolution-variables}}.
 
-1. Determine the values of two variables, T and E, depending on the
-  first element of the CRI reference to be resolved, according to
-  {{resolution-variables}}.
+1. Determine the values of two variables, T and E, based on the first
+   element in the sequence of elements of the CRI reference to be
+   resolved, according to {{resolution-variables}}.
 
 1. Initialize a buffer with all the elements from the base CRI where
    the element number is less than the value of E.
@@ -405,7 +406,7 @@ an absolute CRI reference:
   for any `discard` element.
 
 1. If the number of `path` elements in the buffer is one and the
-  value of that element is the zero-length string, remove the element
+  value of that element is the zero-length string, remove that element
   from the buffer.
 
 1. Return the sequence of elements in the buffer as the resolved CRI.
@@ -505,8 +506,8 @@ path
   If the CRI reference contains a `host-name` element, a `host-ip`
   element or a `discard` element, the path
   component of the URI reference is prefixed by a slash ("/")
-  character.  Otherwise, the path component is prefixed by the empty
-  string.
+  character.  Otherwise, the path component is prefixed by the
+  zero-length string.
 
   If the CRI reference contains one or more `path` elements,
   the prefix is followed by the value of each element, separated by a
