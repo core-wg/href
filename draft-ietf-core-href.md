@@ -23,12 +23,25 @@ author:
   code: '16483'
   country: Sweden
   email: klaus.hartke@ericsson.com
+-
+  ins: C. Bormann
+  name: Carsten Bormann
+  org: Universitaet Bremen TZI
+  street: Postfach 330440
+  city: Bremen
+  code: D-28359
+  country: Germany
+  phone: +49-421-218-63921
+  email: cabo@tzi.org
+  role: editor
+
 informative:
   RFC7228:
   RFC7230:
   RFC7252:
   RFC8141:
   RFC8288:
+  RFC8820:
   W3C.REC-html52-20171214:
 normative:
   RFC3986:
@@ -108,7 +121,10 @@ The exact constraints are defined in {{constraints}}.
 
 ## Notational Conventions
 
-{::boilerplate bcp14}
+{::boilerplate bcp14-tagged}
+
+In this specification, the term "byte" is used in its now customary
+sense as a synonym for "octet".
 
 Terms defined in this document appear in *cursive* where they
 are introduced (rendered in plain text as the new term surrounded by
@@ -164,8 +180,14 @@ The components are subject to the following constraints:
    ampersand ("&") character.
    (This matches the structure and encoding of the target URI in CoAP
    requests.)
+   Queries are optional; there is a difference between an absent query
+   and a single query parameter that is the empty string.
 
-1. {:#c-fragment} A fragment identifier can be any Unicode string that is in NFC.
+1. {:#c-fragment} A fragment identifier can be any Unicode string that
+   is in NFC.
+   Fragment identifiers are optional; there is a difference between an
+   absent fragment identifier and a fragment identifier that is the
+   empty string.
 
 1. {:#c-escaping} The syntax of registered names, path segments, query
    parameters, and fragment identifiers may be further restricted and
@@ -174,11 +196,11 @@ The components are subject to the following constraints:
    that are not intended to be used in a delimiting function.
 
 1. {:#c-mapping} When converting a CRI to a URI, any character that is
-   outside the allowed character range or a delimiter in the URI syntax
+   outside the allowed character range or is a delimiter in the URI syntax
    is percent-encoded.
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
    Definition D92 in {{Unicode}}) to convert the character to a sequence
-   of octets (that is then converted to a sequence of %HH triplets).
+   of bytes (that is then converted to a sequence of %HH triplets).
 
 
 # Creation and Normalization
@@ -187,32 +209,34 @@ In general, resource identifiers are created on the initial creation of a
 resource with a certain resource identifier, or the initial exposition
 of a resource under a particular resource identifier.
 
-A Constrained Resource Identifier <bcp14>SHOULD</bcp14> be created by
+A Constrained Resource Identifier SHOULD be created by
 the naming authority that governs the namespace of the resource
-identifier. For example, for the resources of an HTTP origin server,
+identifier (see also {{RFC8820}}).
+For example, for the resources of an HTTP origin server,
 that server is responsible for creating the CRIs for those resources.
 
-The naming authority <bcp14>MUST</bcp14> ensure that any CRI created
+The naming authority MUST ensure that any CRI created
 satisfies the constraints defined in {{constraints}}. The creation of a
 CRI fails if the CRI cannot be validated to satisfy all of the
 constraints.
 
 {:ctr: format="counter"}
 
-If a naming authority creates a CRI from user input, it <bcp14>MAY</bcp14> apply
+If a naming authority creates a CRI from user input, it MAY apply
 the following (and only the following) normalizations to get the CRI
 more likely to validate:
-map the scheme name to lowercase ({{c-scheme}}{:ctr});
-map the registered name to NFC ({{c-reg-name}}{:ctr});
-elide the port if it's the default port for the scheme
+
+* map the scheme name to lowercase ({{c-scheme}}{:ctr});
+* map the registered name to NFC ({{c-reg-name}}{:ctr});
+* elide the port if it is the default port for the scheme
 ({{c-port-omitted}}{:ctr});
-elide a single zero-length path segment ({{c-path}}{:ctr});
-map path segments, query parameters and the fragment identifier to NFC
+* elide a single zero-length path segment ({{c-path}}{:ctr});
+* map path segments, query parameters and the fragment identifier to NFC
 ({{c-path-segment}}{:ctr}, {{c-query}}{:ctr}, {{c-fragment}}{:ctr}).
 
 Once a CRI has been created, it can be used and transferred without
 further normalization.
-All operations that operate on a CRI <bcp14>SHOULD</bcp14> rely on the
+All operations that operate on a CRI SHOULD rely on the
 assumption that the CRI is appropriately pre-normalized.
 (This does not contradict the requirement that when CRIs are
 transferred, recipients must operate on as-good-as untrusted input and
@@ -222,8 +246,8 @@ fail gracefully in the face of malicious inputs.)
 # Comparison
 
 One of the most common operations on CRIs is comparison: determining
-whether two CRIs are equivalent, without using the CRIs to access their
-respective resource(s).
+whether two CRIs are equivalent, without dereferencing the CRIs (using
+them to access their respective resource(s)).
 
 Determination of equivalence or difference of CRIs is based on simple
 component-wise comparison. If two CRIs are identical
@@ -262,7 +286,7 @@ The CBOR serialization of CRI references is specified in
 
 The only operation defined on a CRI reference is *reference resolution*:
 the act of transforming a CRI reference into a CRI.
-An application <bcp14>MUST</bcp14> implement this operation by applying
+An application MUST implement this operation by applying
 the algorithm specified in {{reference-resolution}} (or any algorithm
 that is functionally equivalent to it).
 
@@ -271,10 +295,10 @@ implementations are free to use any algorithm as long as reference
 resolution of the resulting CRI reference yields the original CRI.
 Notably, a CRI reference is not required to satisfy all of the
 constraints of a CRI; the only requirement on a CRI reference is that
-reference resolution <bcp14>MUST</bcp14> yield the original CRI.
+reference resolution MUST yield the original CRI.
 
-When testing for equivalence or difference, applications <bcp14>SHOULD
-NOT</bcp14> directly compare CRI references; the references should be
+When testing for equivalence or difference, applications SHOULD NOT
+directly compare CRI references; the references should be
 resolved to their respective CRI before comparison.
 
 ## CBOR Serialization {#cbor-serialization}
@@ -285,65 +309,68 @@ structure as described in the [Concise Data Definition Language
 
 ~~~~ cddl
 CRI-Reference = [
-  (authority // path-type),
+  (authority // discard),
   *path,
   ? (([], fragment)              ; include array only if
      //([+query], ?fragment))    ; at least one query and/or fragment
 ]
 
-authority = (?scheme, ?(host, ?port))
-scheme    = ((false, text .regexp "[a-z][a-z0-9+.-]*")
-              // COAP // COAPS // HTTP // HTTPS)
+authority   = (?scheme, ?(host, ?port))
+scheme      = (scheme-name
+               // COAP // COAPS // HTTP // HTTPS)
+scheme-name = (false, text .regexp "[a-z][a-z0-9+.-]*")
 COAP = -1 COAPS = -2 HTTP = -3 HTTPS = -4
-host      = ((true, text) // bytes .size 4 // bytes .size 16)
-port      = 0..65535
-path-type = 0..127
-
-path      = text
-query     = text
-fragment  = text
+host        = (host-name // host-ip)
+host-name   = (true, text)
+host-ip     = bytes .size 4 / bytes .size 16
+port        = 0..65535
+discard     = 0..127
+path        = text
+query       = text
+fragment    = text
 
 ~~~~
 
 The rules `scheme`, `host`, `port`, `path`, `query`, `fragment`
 correspond to the (sub-)components of a CRI, as described in
-{{constraints}}, with the addition of the `path.type` option.
-The `path.type` option can be used to express path prefixes such as "/",
+{{constraints}}, with the addition of the `discard` element.
+While `scheme` and `host` can comprise two array elements, we will treat
+such a combination as a single "element" in the following exposition.
+(The combination is needed to disambiguate what would otherwise be a
+leading text string as a scheme, host, or path element.)
+The `discard` element or its absence can be used to express path
+prefixes such as "/",
 "./", "../", "../../", etc.
-The exact semantics of the option values are defined by
+The exact semantics of the element values are defined by
 {{reference-resolution}}.
-A sequence of options that is empty or starts with a `path` option is
-equivalent the same sequence prefixed by a `path.type` option with value
-2.
 
 Examples:
 :  
 
 : ~~~~ cbor
-  [false, "coap",    / scheme /
-   h'C6336401',      / host /
-   61616,            / port /
-   ".well-known",    / path /
-   "core"]           / path /
+  [-1,            / scheme -- equivalent to ...false, "coap",... /
+   h'C6336401',   / host /
+   61616,         / port /
+   ".well-known", / path /
+   "core"]        / path /
   ~~~~
 
 : ~~~~ cbor
-  [0,                / path-type /
-   ".well-known",    / path /
-   "core",           / path /
+  [".well-known", / path /
+   "core",        / path /
    ["rt=temperature-c"]]  / query /
   ~~~~
 
 
-A CRI reference is considered *well-formed* if the sequence
-of options is in the correct order as defined by the CDDL structure.
+A CRI reference is considered *well-formed* if it matches the CDDL
+structure.
 
 A CRI reference is considered *absolute* if it is well-formed
-and the sequence of options starts with a `scheme` option.
+and the sequence of elements starts with a `scheme`.
 
 A CRI reference is considered *relative* if it is well-formed
-and the sequence of options is empty or starts with an option other
-than a `scheme` option.
+and the sequence of elements is empty or starts with an element other
+than those that would constitute a `scheme`.
 
 
 ## Reference Resolution {#reference-resolution}
@@ -360,83 +387,38 @@ an absolute CRI reference:
   form of an absolute CRI reference.
   (The base CRI can be established in a number of ways; see
   {{Section 5.1 of RFC3986}}.)
+  Assign each element an element number according to the number E for
+  that element in {{resolution-variables}}.
 
 1. Determine the values of two variables, T and E, depending on the
-  first option of the CRI reference to be resolved, according to {{resolution-variables}}.
+  first element of the CRI reference to be resolved, according to
+  {{resolution-variables}}.
 
-1. Initialize a buffer with all the options from the base CRI where the
-  option number is less than the value of E.
+1. Initialize a buffer with all the elements from the base CRI where
+   the element number is less than the value of E.
 
 1. If the value of T is greater than 0, remove the last T-many `path`
-   options from the end of the buffer (up to the number of `path`
-   options in the buffer).
+   elements from the end of the buffer (up to the number of `path`
+   elements in the buffer).
 
-1. Append all the options from the CRI reference to the buffer, except
-  for any `path.type` option.
+1. Append all the elements from the CRI reference to the buffer, except
+  for any `discard` element.
 
-1. If the number of `path` options in the buffer is one and the
-  value of that option is the zero-length string, remove the option
+1. If the number of `path` elements in the buffer is one and the
+  value of that element is the zero-length string, remove the element
   from the buffer.
 
-1. Return the sequence of options in the buffer as the resolved CRI.
+1. Return the sequence of elements in the buffer as the resolved CRI.
 
-<table anchor="resolution-variables" align="center">
-            <name>Values of the Variables T and E</name>
-            <thead>
-              <tr>
-                <th align="left">First Option Number</th>
-                <th align="left">T</th>
-                <th align="left">E</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td align="left">0 (scheme)</td>
-                <td align="left">0</td>
-                <td align="left">0</td>
-              </tr>
-              <tr>
-                <td align="left">1 (host.name)</td>
-                <td align="left">0</td>
-                <td align="left">1</td>
-              </tr>
-              <tr>
-                <td align="left">2 (host.ip)</td>
-                <td align="left">0</td>
-                <td align="left">1</td>
-              </tr>
-              <tr>
-                <td align="left">3 (port)</td>
-                <td align="left" colspan="2">(invalid sequence of options)</td>
-              </tr>
-              <tr>
-                <td align="left">4 (path.type)</td>
-                <td align="left">option value - 1</td>
-                <td align="left">if T &lt; 0 then 5 else 6</td>
-              </tr>
-              <tr>
-                <td align="left">5 (path)</td>
-                <td align="left">1</td>
-                <td align="left">6</td>
-              </tr>
-              <tr>
-                <td align="left">6 (query)</td>
-                <td align="left">0</td>
-                <td align="left">6</td>
-              </tr>
-              <tr>
-                <td align="left">7 (fragment)</td>
-                <td align="left">0</td>
-                <td align="left">7</td>
-              </tr>
-              <tr>
-                <td align="left">none/empty sequence</td>
-                <td align="left">0</td>
-                <td align="left">7</td>
-              </tr>
-            </tbody>
-          </table>
-
+| First Element       |             T | E |
+| (scheme)            |             0 | 0 |
+| (host)              |             0 | 1 |
+| (discard)           | element value | 3 |
+| (path)              |             0 | 2 |
+| (query)             |             0 | 3 |
+| (fragment)          |             0 | 4 |
+| none/empty sequence |             0 | 4 |
+{: #resolution-variables align="center" title="Values of the Variables T and E"}
 
 
 # Relationship between CRIs, URIs and IRIs
@@ -465,19 +447,20 @@ URI to CRI
 CRI to IRI
 : A CRI can be converted to an IRI by first converting it to a URI as
   specified in {{cri-to-uri}}, and then converting the URI
-  to an IRI as described in {{RFC3987}}{: section="3.2"}.
+  to an IRI as described in {{Section 3.2 of RFC3987}}.
 
 IRI to CRI
 : An IRI can be converted to a CRI by first converting it to a URI as
-  described in {{RFC3987}}{: section="3.1"}, and then
+  described in {{Section 3.1 of RFC3987}}, and then
   converting the URI to a CRI as described above.
 
 Everything in this section also applies to CRI references, URI
 references and IRI references.
 
+
 ## Converting CRIs to URIs {#cri-to-uri}
 
-Applications <bcp14>MUST</bcp14> convert a CRI reference to a URI
+Applications MUST convert a CRI reference to a URI
 reference by determining the components of the URI reference according
 to the following steps and then recomposing the components to a URI
 reference string as specified in {{RFC3986}}{: section="5.3"}.
@@ -485,101 +468,101 @@ reference string as specified in {{RFC3986}}{: section="5.3"}.
 {: vspace='0'}
 
 scheme
-: If the CRI reference contains a `scheme` option, the scheme
+: If the CRI reference contains a `scheme` element, the scheme
   component of the URI reference consists of the value of that
-  option.
-    Otherwise, the scheme component is undefined.
+  element.
+  Otherwise, the scheme component is unset.
 
 authority
-: If the CRI reference contains a `host.name` or `host.ip` option, the
+: If the CRI reference contains a `host-name` or `host-ip` element, the
   authority component of the URI reference consists of a host
   subcomponent, optionally followed by a colon (":") character and a
-  port subcomponent.  Otherwise, the authority component is undefined.
+  port subcomponent.  Otherwise, the authority component is unset.
 
-  The host subcomponent consists of the value of the `host.name` or
-  `host.ip` option.
+  The host subcomponent consists of the value of the `host-name` or
+  `host-ip` element.
 
-  Any character in the value of a `host.name` option that is not in
+  Any character in the value of a `host-name` element that is not in
   the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
-  "sub-delims" ({{Section 2.2 of RFC3986}}) <bcp14>MUST</bcp14> be
+  "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
   percent-encoded.
 
-  The value of a `host.ip` option <bcp14>MUST</bcp14> be
+  The value of a `host-ip` element MUST be
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
 
-  If the CRI reference contains a `port` option, the port
-  subcomponent consists of the value of that option in decimal
+  If the CRI reference contains a `port` element, the port
+  subcomponent consists of the value of that element in decimal
   notation.
   Otherwise, the colon (":") character and the port subcomponent are
   both omitted.
 
 path
-: If the CRI reference is an empty sequence of options or starts with
-  a `port` option, a `path` option, or a `path.type` option where the
+: If the CRI reference is an empty sequence of elements or starts with
+  a `port` element, a `path` element, or a `discard` element where the
   value is not 0, the conversion fails.
 
-  If the CRI reference contains a `host.name` option, a `host.ip`
-  option or a `path.type` option where the value is not 0, the path
+  If the CRI reference contains a `host-name` element, a `host-ip`
+  element or a `discard` element, the path
   component of the URI reference is prefixed by a slash ("/")
   character.  Otherwise, the path component is prefixed by the empty
   string.
 
-  If the CRI reference contains one or more `path` options,
-  the prefix is followed by the value of each option, separated by a
+  If the CRI reference contains one or more `path` elements,
+  the prefix is followed by the value of each element, separated by a
   slash ("/") character.
 
-  Any character in the value of a `path` option that is not
+  Any character in the value of a `path` element that is not
   in the set of unreserved characters or "sub-delims" or a colon
-  (":") or commercial at ("@") character <bcp14>MUST</bcp14> be
+  (":") or commercial at ("@") character MUST be
   percent-encoded.
 
   If the authority component is defined and the path component does not
   match the "path-abempty" rule ({{Section 3.3 of RFC3986}}), the
   conversion fails.
 
-  If the authority component is undefined and the scheme component is
+  If the authority component is unset and the scheme component is
   defined and the path component does not match the "path-absolute",
   "path-rootless" or "path-empty" rule ({{Section 3.3 of RFC3986}}), the
   conversion fails.
 
-  If the authority component is undefined and the scheme component is
-  undefined and the path component does not match the "path-absolute",
+  If the authority component is unset and the scheme component is
+  unset and the path component does not match the "path-absolute",
   "path-noscheme" or "path-empty" rule ({{Section 3.3 of RFC3986}}), the
   conversion fails.
 
 query
-: If the CRI reference contains one or more `query` options,
+: If the CRI reference contains one or more `query` elements,
   the query component of the URI reference consists of the value of
-  each option, separated by an ampersand ("&") character.
-  Otherwise, the query component is undefined.
+  each element, separated by an ampersand ("&") character.
+  Otherwise, the query component is unset.
 
-  Any character in the value of a `query` option that is not
+  Any character in the value of a `query` element that is not
   in the set of unreserved characters or "sub-delims" or a colon
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
-  character <bcp14>MUST</bcp14> be percent-encoded.
-  Additionally, any ampersand character ("&") in the option
-  value <bcp14>MUST</bcp14> be percent-encoded.
+  character MUST be percent-encoded.
+  Additionally, any ampersand character ("&") in the element
+  value MUST be percent-encoded.
 
 fragment
-: If the CRI reference contains a fragment option, the fragment
+: If the CRI reference contains a fragment element, the fragment
   component of the URI reference consists of the value of that
-  option.
-  Otherwise, the fragment component is undefined.
+  element.
+  Otherwise, the fragment component is unset.
 
-  Any character in the value of a `fragment` option that is
+  Any character in the value of a `fragment` element that is
   not in the set of unreserved characters or "sub-delims" or a colon
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
-  character <bcp14>MUST</bcp14> be percent-encoded.
+  character MUST be percent-encoded.
 
 
 
 # Security Considerations {#security}
 
 Parsers of CRI references must operate on input that is assumed to be
-untrusted. This means that parsers <bcp14>MUST</bcp14> fail gracefully
+untrusted. This means that parsers MUST fail gracefully
 in the face of malicious inputs.
-Additionally, parsers <bcp14>MUST</bcp14> be prepared to deal with
+Additionally, parsers MUST be prepared to deal with
 resource exhaustion (e.g., resulting from the allocation of big data
 items) or exhaustion of the call stack (stack overflow).
 See {{Section 10 of RFC8949}} for additional
@@ -603,17 +586,25 @@ Changes from -03 to -04:
 
 * Minor editorial improvements.
 
+* Renamed path.type/path-type to discard.
+
+* Renamed option to element.
+
+* Simplied {{resolution-variables}}.
+
+* Use the CBOR structure inspired by Jim Schaad's proposals.
+
 Changes from -02 to -03:
 
 * Expanded the set of supported schemes (#3).
 
 * Specified creation, normalization and comparison (#9).
 
-* Clarified the default value of the `path.type` option (#33).
+* Clarified the default value of the `discard` option (#33).
 
-* Removed the `append-relation` path type (#41).
+* Removed the `append-relation` discard option (#41).
 
-* Renumbered the remaining path types.
+* Renumbered the remaining discards.
 
 * Renumbered the option numbers.
 
@@ -644,3 +635,8 @@ Thanks to
 for helpful comments and discussions that have shaped the
 document.
 
+
+<!--  LocalWords:  CRI normalizations dereferencing dereference CRIs
+<!--  LocalWords:  untrusted subcomponent
+ -->
+ -->
