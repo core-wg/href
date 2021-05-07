@@ -309,27 +309,7 @@ structure as described in the [Concise Data Definition Language
 (CDDL)](#RFC8610) as follows:
 
 ~~~~ cddl
-CRI-Reference = [
-  (authority // discard),
-  *path,
-  ? (([], fragment)              ; include array only if
-     //([+query], ?fragment))    ; at least one query and/or fragment
-]
-
-authority   = (?scheme, ?(host, ?port))
-scheme      = (scheme-name
-               // COAP // COAPS // HTTP // HTTPS)
-scheme-name = (false, text .regexp "[a-z][a-z0-9+.-]*")
-COAP = -1 COAPS = -2 HTTP = -3 HTTPS = -4
-host        = (host-name // host-ip)
-host-name   = (true, text)
-host-ip     = bytes .size 4 / bytes .size 16
-port        = 0..65535
-discard     = 0..127
-path        = text
-query       = text
-fragment    = text
-
+{::include cddl/cri.cddl}
 ~~~~
 
 The rules `scheme`, `host`, `port`, `path`, `query`, `fragment`
@@ -349,17 +329,11 @@ Examples:
 :  
 
 : ~~~~ cbor
-  [-1,            / scheme -- equivalent to ...false, "coap",... /
-   h'C6336401',   / host /
-   61616,         / port /
-   ".well-known", / path /
-   "core"]        / path /
+{::include example/href-cri-reference-1.diag}
   ~~~~
 
 : ~~~~ cbor
-  [".well-known", / path /
-   "core",        / path /
-   ["rt=temperature-c"]]  / query /
+{::include example/href-cri-reference-2.diag}
   ~~~~
 
 

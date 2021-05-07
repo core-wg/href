@@ -26,3 +26,22 @@
     * [RIOT](https://github.com/leandrolanzieri/RIOT/tree/pr/sys-coral)
 * Python
     * [micrurus](https://gitlab.com/chrysn/micrurus)
+
+
+# Build the href draft
+
+* install prerequisite tooling:
+```
+gem install cbor-diag cddl
+```
+
+* create the HTML and TXT version from the markdown source (also validate all the examples):
+```
+make -f href.mk
+```
+
+* remove build output and by-products:
+```
+make -f href.mk clean
+```
+

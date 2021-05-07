@@ -1,0 +1,3 @@
+[".well-known", / path /
+ "core",        / path /
+ ["rt=temperature-c"]]  / query /
