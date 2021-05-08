@@ -19,9 +19,13 @@ XML := $(SRC:.md=.xml)
 
 CLEANFILES += $(XML)
 
-$(HTML) $(XML) $(TXT): $(SRC) $(CBORS)
+SUBMIT_XML := $(SRC:.md=.v2v3.xml)
+
+CLEANFILES += $(SUBMIT_XML)
+
+$(SUBMIT_XML) $(HTML) $(XML) $(TXT): $(SRC) $(CBORS)
 	for f in $(CBORS) ; do cddl cddl/cri.cddl v $$f ; done
-	kdrfc -3 -h -i $<
+	kdrfc -3chi $<
 
 .PHONY: clean
 clean: ; $(RM) $(CLEANFILES)
