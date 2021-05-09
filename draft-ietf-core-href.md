@@ -314,15 +314,16 @@ structure as described in the [Concise Data Definition Language
 
 The rules `scheme`, `host`, `port`, `path`, `query`, `fragment`
 correspond to the (sub-)components of a CRI, as described in
-{{constraints}}, with the addition of the `discard` element.
-While `scheme` and `host` can comprise two array elements, we will treat
-such a combination as a single "element" in the following exposition.
-(The combination is needed to disambiguate what would otherwise be a
-leading text string as a scheme, host, or path element.)
-The `discard` element or its absence can be used to express path
+{{constraints}}, with the addition of the `discard` section.
+As `scheme` and `host` can comprise two array elements, and `path`
+segments and `query` parameters can occur zero or more times, we will treat
+such combinations as a single "section" in the following exposition.
+(For `scheme` and `host`, the combination is needed to disambiguate what would otherwise be a
+leading text string as a scheme, host, or path segment.)
+The `discard` section or its absence can be used to express path
 prefixes such as "/",
 "./", "../", "../../", etc.
-The exact semantics of the element values are defined by
+The exact semantics of the section values are defined by
 {{reference-resolution}}.
 
 Examples:
@@ -341,10 +342,10 @@ A CRI reference is considered *well-formed* if it matches the CDDL
 structure.
 
 A CRI reference is considered *absolute* if it is well-formed
-and the sequence of elements starts with a `scheme`.
+and the sequence of sections starts with a `scheme`.
 
 A CRI reference is considered *relative* if it is well-formed
-and the sequence of elements is empty or starts with an element other
+and the sequence of sections is empty or starts with an section other
 than those that would constitute a `scheme`.
 
 
@@ -362,33 +363,33 @@ an absolute CRI reference:
   form of an absolute CRI reference.
   (The base CRI can be established in a number of ways; see
   {{Section 5.1 of RFC3986}}.)
-  Assign each element an element number according to the number E for
-  that element in {{resolution-variables}}.
+  Assign each section an section number according to the number E for
+  that section in {{resolution-variables}}.
 
 1. Determine the values of two variables, T and E, based on the first
-   element in the sequence of elements of the CRI reference to be
+   section in the sequence of sections of the CRI reference to be
    resolved, according to {{resolution-variables}}.
 
-1. Initialize a buffer with all the elements from the base CRI where
-   the element number is less than the value of E.
+1. Initialize a buffer with all the sections from the base CRI where
+   the section number is less than the value of E.
 
 1. If the value of T is greater than 0, remove the last T-many `path`
-   elements from the end of the buffer (up to the number of `path`
-   elements in the buffer).
+   segments from the end of the buffer (up to the number of `path`
+   segments in the buffer).
 
-1. Append all the elements from the CRI reference to the buffer, except
-  for any `discard` element.
+1. Append all the sections from the CRI reference to the buffer, except
+  for any `discard` section.
 
-1. If the number of `path` elements in the buffer is one and the
-  value of that element is the zero-length string, remove that element
+1. If the number of `path` segments in the buffer is one and the
+  value of that segment is the zero-length string, remove that segment
   from the buffer.
 
-1. Return the sequence of elements in the buffer as the resolved CRI.
-
-| First Element       |             T | E |
+1. Return the sequence of sections in the buffer as the resolved CRI.
+n
+| First Section       |             T | E |
 | (scheme)            |             0 | 0 |
 | (host)              |             0 | 1 |
-| (discard)           | element value | 3 |
+| (discard)           | item value | 4 |
 | (path)              |             0 | 2 |
 | (query)             |             0 | 3 |
 | (fragment)          |             0 | 4 |
@@ -443,51 +444,51 @@ reference string as specified in {{RFC3986}}{: section="5.3"}.
 {: vspace='0'}
 
 scheme
-: If the CRI reference contains a `scheme` element, the scheme
+: If the CRI reference contains a `scheme` section, the scheme
   component of the URI reference consists of the value of that
-  element.
+  section.
   Otherwise, the scheme component is unset.
 
 authority
-: If the CRI reference contains a `host-name` or `host-ip` element, the
+: If the CRI reference contains a `host-name` or `host-ip` item, the
   authority component of the URI reference consists of a host
   subcomponent, optionally followed by a colon (":") character and a
   port subcomponent.  Otherwise, the authority component is unset.
 
   The host subcomponent consists of the value of the `host-name` or
-  `host-ip` element.
+  `host-ip` item.
 
-  Any character in the value of a `host-name` element that is not in
+  Any character in the value of a `host-name` item that is not in
   the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
   "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
   percent-encoded.
 
-  The value of a `host-ip` element MUST be
+  The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
 
-  If the CRI reference contains a `port` element, the port
-  subcomponent consists of the value of that element in decimal
+  If the CRI reference contains a `port` item, the port
+  subcomponent consists of the value of that item in decimal
   notation.
   Otherwise, the colon (":") character and the port subcomponent are
   both omitted.
 
 path
-: If the CRI reference is an empty sequence of elements or starts with
-  a `port` element, a `path` element, or a `discard` element where the
+: If the CRI reference is an empty sequence of items or starts with
+  a `port` item, a `path` item, or a `discard` item where the
   value is not 0, the conversion fails.
 
-  If the CRI reference contains a `host-name` element, a `host-ip`
-  element or a `discard` element, the path
+  If the CRI reference contains a `host-name` item, a `host-ip`
+  item or a `discard` section, the path
   component of the URI reference is prefixed by a slash ("/")
   character.  Otherwise, the path component is prefixed by the
   zero-length string.
 
-  If the CRI reference contains one or more `path` elements,
-  the prefix is followed by the value of each element, separated by a
+  If the CRI reference contains one or more `path` items,
+  the prefix is followed by the value of each item, separated by a
   slash ("/") character.
 
-  Any character in the value of a `path` element that is not
+  Any character in the value of a `path` item that is not
   in the set of unreserved characters or "sub-delims" or a colon
   (":") or commercial at ("@") character MUST be
   percent-encoded.
@@ -507,25 +508,25 @@ path
   conversion fails.
 
 query
-: If the CRI reference contains one or more `query` elements,
+: If the CRI reference contains one or more `query` items,
   the query component of the URI reference consists of the value of
-  each element, separated by an ampersand ("&") character.
+  each item, separated by an ampersand ("&") character.
   Otherwise, the query component is unset.
 
-  Any character in the value of a `query` element that is not
+  Any character in the value of a `query` item that is not
   in the set of unreserved characters or "sub-delims" or a colon
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
-  Additionally, any ampersand character ("&") in the element
+  Additionally, any ampersand character ("&") in the item
   value MUST be percent-encoded.
 
 fragment
-: If the CRI reference contains a fragment element, the fragment
+: If the CRI reference contains a fragment item, the fragment
   component of the URI reference consists of the value of that
-  element.
+  item.
   Otherwise, the fragment component is unset.
 
-  Any character in the value of a `fragment` element that is
+  Any character in the value of a `fragment` item that is
   not in the set of unreserved characters or "sub-delims" or a colon
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
@@ -563,7 +564,7 @@ Changes from -03 to -04:
 
 * Renamed path.type/path-type to discard.
 
-* Renamed option to element.
+* Renamed option to section, substructured into items.
 
 * Simplied {{resolution-variables}}.
 
