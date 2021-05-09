@@ -1,14 +1,14 @@
 CRI-Reference = [
   (authority // discard),
   *path,
-  ? (([], fragment)              ; include array only if
-     //([+query], ?fragment))    ; at least one query and/or fragment
+  ? ((null, fragment)         ; no query section, but fragment
+     //([+query], ?fragment)) ; present query section has >0 items
 ]
 
 authority   = (?scheme, ?(host, ?port))
-scheme      = (scheme-name
-               // COAP // COAPS // HTTP // HTTPS)
+scheme      = (scheme-name // scheme-id)
 scheme-name = (false, text .regexp "[a-z][a-z0-9+.-]*")
+scheme-id   =  COAP / COAPS / HTTP / HTTPS
 COAP = -1 COAPS = -2 HTTP = -3 HTTPS = -4
 host        = (host-name // host-ip)
 host-name   = (true, text)
