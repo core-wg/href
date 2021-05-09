@@ -575,11 +575,11 @@ Changes from -02 to -03:
 
 * Specified creation, normalization and comparison (#9).
 
-* Clarified the default value of the `discard` option (#33).
+* Clarified the default value of the `path.type` option (#33).
 
-* Removed the `append-relation` discard option (#41).
+* Removed the `append-relation` path.type option (#41).
 
-* Renumbered the remaining discards.
+* Renumbered the remaining path.types.
 
 * Renumbered the option numbers.
 
