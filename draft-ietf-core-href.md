@@ -312,14 +312,14 @@ structure as described in the [Concise Data Definition Language
 {::include cddl/cri.cddl}
 ~~~~
 
-The rules `scheme`, `host`, `port`, `path`, `query`, `fragment`
+The rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the (sub-)components of a CRI, as described in
 {{constraints}}, with the addition of the `discard` section.
-As `scheme` and `host` can comprise two array elements, and `path`
+As `scheme` and `authority` can comprise two or three array elements, and `path`
 segments and `query` parameters can occur zero or more times, we will treat
 such combinations as a single "section" in the following exposition.
 (For `scheme` and `host`, the combination is needed to disambiguate what would otherwise be a
-leading text string as a scheme, host, or path segment.)
+leading text string into either a scheme, a host-name, or a path segment.)
 The `discard` section or its absence can be used to express path
 prefixes such as "/",
 "./", "../", "../../", etc.
@@ -386,14 +386,14 @@ an absolute CRI reference:
 
 1. Return the sequence of sections in the buffer as the resolved CRI.
 n
-| First Section       |             T | E |
-| (scheme)            |             0 | 0 |
-| (host)              |             0 | 1 |
+| First Section       |          T | E |
+| (scheme)            |          0 | 0 |
+| (authority)         |          0 | 1 |
 | (discard)           | item value | 4 |
-| (path)              |             0 | 2 |
-| (query)             |             0 | 3 |
-| (fragment)          |             0 | 4 |
-| none/empty sequence |             0 | 4 |
+| (path)              |          0 | 2 |
+| (query)             |          0 | 3 |
+| (fragment)          |          0 | 4 |
+| none/empty sequence |          0 | 4 |
 {: #resolution-variables align="center" title="Values of the Variables T and E"}
 
 
