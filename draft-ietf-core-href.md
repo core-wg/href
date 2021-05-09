@@ -319,7 +319,7 @@ As `scheme` and `authority` can comprise two or three array elements, and `path`
 segments and `query` parameters can occur zero or more times, we will treat
 such combinations as a single "section" in the following exposition.
 (For `scheme` and `host`, the combination is needed to disambiguate what would otherwise be a
-leading text string into either a scheme, a host-name, or a path segment.)
+leading text string as a scheme, host, or path segment.)
 The `discard` section or its absence can be used to express path
 prefixes such as "/",
 "./", "../", "../../", etc.
@@ -365,6 +365,9 @@ an absolute CRI reference:
   {{Section 5.1 of RFC3986}}.)
   Assign each section an section number according to the number E for
   that section in {{resolution-variables}}.
+  (As an implementation note, the second column lists the CBOR types
+  of the first item in the CRI that can occur to start the respective
+  first section.)
 
 1. Determine the values of two variables, T and E, based on the first
    section in the sequence of sections of the CRI reference to be
@@ -385,15 +388,15 @@ an absolute CRI reference:
   from the buffer.
 
 1. Return the sequence of sections in the buffer as the resolved CRI.
-n
-| First Section       |          T | E |
-| (scheme)            |          0 | 0 |
-| (authority)         |          0 | 1 |
-| (discard)           | item value | 4 |
-| (path)              |          0 | 2 |
-| (query)             |          0 | 3 |
-| (fragment)          |          0 | 4 |
-| none/empty sequence |          0 | 4 |
+
+| First Section       | First item   |          T | E |
+| (scheme)            | false / nint |          0 | 0 |
+| (authority)         | true / bytes |          0 | 1 |
+| (discard)           | uint         | item value | 4 |
+| (path)              | text         |          0 | 2 |
+| (query)             | array        |          0 | 3 |
+| (fragment)          | null         |          0 | 4 |
+| none/empty sequence | –            |          0 | 4 |
 {: #resolution-variables align="center" title="Values of the Variables T and E"}
 
 
