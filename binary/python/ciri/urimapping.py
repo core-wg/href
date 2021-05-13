@@ -13,11 +13,11 @@ def recompose(href):
       result += value + ':'
       path_separator = ''
     elif option == Option.HOST_NAME:
-      result += '//' + _encode_reg_name(value)
-      path_separator = '/'
+      result += '//' + _encode_reg_name(value) + '/'
+      path_separator = ''
     elif option == Option.HOST_IP:
-      result += '//' + _encode_ip_address(value)
-      path_separator = '/'
+      result += '//' + _encode_ip_address(value) + '/'
+      path_separator = ''
     elif option == Option.PORT:
       result += ':' + _encode_port(value)
     elif option == Option.BASE_PATH:

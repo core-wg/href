@@ -477,12 +477,9 @@ authority
   both omitted.
 
 path
-: If the CRI reference is an empty sequence of items or starts with
-  a `port` item, a `path` item, or a `discard` item where the
-  value is not 0, the conversion fails.
+: If the CRI reference contains a `discard` item, the conversion fails.
 
-  If the CRI reference contains a `host-name` item, a `host-ip`
-  item or a `discard` section, the path
+  If the CRI reference contains a `host-name`, `host-ip`, or `path` item, the path
   component of the URI reference is prefixed by a slash ("/")
   character.  Otherwise, the path component is prefixed by the
   zero-length string.
