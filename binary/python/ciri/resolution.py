@@ -14,8 +14,6 @@ def resolve(base, href):
       e = Option.HOST_NAME
     elif option == Option.BASE_PATH:
       t = value
-      e = Option.QUERY if t > 0 else Option.PATH
-    elif option == Option.PATH:
       e = Option.QUERY
     else:
       e = option

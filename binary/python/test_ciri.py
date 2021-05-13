@@ -87,9 +87,7 @@ def resolve(base, href):
           T.query = Base.query
       else:
         if R.path[0][0] != Option.BASE_PATH:
-          T.path = Base.path + R.path
-        elif R.path[0][1] == 0:
-          T.path = R.path[1:]
+          T.path = R.path
         else:
           T.path = Base.path[:max(0, len(Base.path) - R.path[0][1])] + R.path[1:]
         T.query = R.query
