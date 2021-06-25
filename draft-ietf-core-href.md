@@ -403,44 +403,25 @@ reference against a base CRI so that the result is a CRI in the form of
 an absolute CRI reference:
 
 1. Establish the base CRI of the CRI reference and express it in the
-  form of an absolute CRI reference.
-  (The base CRI can be established in a number of ways; see
-  {{Section 5.1 of RFC3986}}.)
-  Assign each section an section number according to the number E for
-  that section in {{resolution-variables}}.
-  (As an implementation note, the second column lists the CBOR types
-  of the first item in the CRI that can occur to start the respective
-  first section.)
+  form of an abstract absolute CRI reference.
 
-2. Determine the values of two variables, T and E, based on the first
-   section in the sequence of sections of the CRI reference to be
-   resolved, according to {{resolution-variables}}.
+2. Initialize a buffer with the sections from the base CRI.
 
-3. Initialize a buffer with all the sections from the base CRI where
-   the section number is less than the value of E.
+3. If the value of discard is `true` in the CRI reference, replace the
+   path in the buffer with the empty array, and unset query and
+   fragment.  If it is an unsigned number, remove as many elements
+   from the end of the path array; if it is non-zero, unset query and
+   fragment.  Set discard to `true` in the buffer.
 
-4. If the value of T is greater than 0, remove the last T-many `path`
-   segments from the end of the buffer (up to the number of `path`
-   segments in the buffer).
+4. If the path section is set in the CRI reference, append all
+   elements from the path array to the array in the path section in
+   the buffer; unset query and fragment.
 
-5. Append all the sections from the CRI reference to the buffer, except
-  for any `discard` section.
+5. Apart from the path and discard, copy all non-null sections from
+   the CRI reference to the buffer in sequence; unset fragment if
+   query is non-null and thus copied.
 
-6. If the number of `path` segments in the buffer is one and the
-  value of that segment is the zero-length string, remove that segment
-  from the buffer.
-
-7. Return the sequence of sections in the buffer as the resolved CRI.
-
-| First Section       | First item           |          T | E |
-| (scheme)            | text / nint          |          0 | 0 |
-| (authority)         | text / bytes / array |          0 | 1 |
-| (discard)           | true / uint          | item value | 4 |
-| (path)              | array of text        |          0 | 2 |
-| (query)             | array of text        |          0 | 3 |
-| (fragment)          | text                 |          0 | 4 |
-| none/empty sequence | –                    |          0 | 4 |
-{: #resolution-variables align="center" title="Values of the Variables T and E"}
+6. Return the sections in the buffer as the resolved CRI.
 
 
 # Relationship between CRIs, URIs and IRIs
@@ -619,7 +600,7 @@ Changes from -03 to -04:
 
 * Renamed option to section, substructured into items.
 
-* Simplied {{resolution-variables}}.
+* Simplied the table "resolution-variables".
 
 * Use the CBOR structure inspired by Jim Schaad's proposals.
 
