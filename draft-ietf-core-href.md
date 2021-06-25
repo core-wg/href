@@ -361,6 +361,36 @@ A CRI reference is considered *relative* if it is well-formed
 and the sequence of sections is empty or starts with an section other
 than those that would constitute a `scheme`.
 
+## Ingesting and encoding a CRI Reference
+
+From an abstract point of view, a CRI Reference is a data structure
+with six sections:
+
+scheme, authority, discard, path, query, fragment
+
+Each of these sections can be unset ("null"), except for discard,
+which is always an unsigned number or `true`.  If scheme and/or
+authority are non-null, discard must be `true`.
+
+When ingesting a CRI Reference that is in the transfer form, those
+sections are filled in from the transfer form (unset sections are
+filled with null), and the following steps are performed:
+
+* If the array is entirely empty, replace it with `[true]` \[or is that `[0]`?].
+* If discard is present in the transfer form (i.e., the outer array
+  starts with true or an unsigned number), set scheme and authority to null.
+* If scheme and/or authority are present in the transfer form (i.e.,
+  the outer array starts with null, a text string, or a negative integer), set
+  discard to `true`.
+
+Upon encoding the abstract form into the transfer form, the inverse
+processing is performed:  If scheme and/or authority are not null, the
+discard value is not transferred (it must be true in this case).  If
+they are both null, they are both left out and only discard is
+transferred.
+Trailing null values are removed from the array.
+As a special case, an empty array is sent in place for a remaining
+`[true]` (URI "/") \[or is that `[0]`, URI ""?].
 
 ## Reference Resolution {#reference-resolution}
 
