@@ -1,5 +1,6 @@
-[-1,            / scheme -- equivalent to ...false, "coap",... /
- h'C6336401',   / host /
- 61616,         / port /
- ".well-known", / path /
- "core"]
+[-1,             / scheme -- equivalent to "coap" /
+ [h'C6336401',   / host /
+  61616],        / port /
+ [".well-known", / path /
+  "core"]
+]

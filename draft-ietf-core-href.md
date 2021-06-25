@@ -144,36 +144,36 @@ The components are subject to the following constraints:
    scheme (see {{Section 3.1 of RFC3986}}) and is lowercase (see
    Definition D139 in {{Unicode}}).
 
-1. {:#c-authority} An authority is always a host identified by an IP
+2. {:#c-authority} An authority is always a host identified by an IP
    address or registered name, along with optional port information.
    User information is not supported.
 
-1. {:#c-ip-address} An IP address can be either an IPv4 address or an IPv6 address.
+3. {:#c-ip-address} An IP address can be either an IPv4 address or an IPv6 address.
    IPv6 scoped addressing zone identifiers and future versions of IP are
    not supported.
 
-1. {:#c-reg-name} A registered name can be any Unicode string that is lowercase and in
+4. {:#c-reg-name} A registered name can be any Unicode string that is lowercase and in
    Unicode Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
    (The syntax may be further restricted by the scheme.)
 
-1. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
+5. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
    Empty ports or ports outside this range are not supported.
 
-1. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
+6. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
    scheme's default port (provided the scheme is defining such a default
    port) or the scheme is not using ports.
 
-1. {:#c-path} A path consists of zero or more path segments.
+7. {:#c-path} A path consists of zero or more path segments.
    A path must not consist of a single zero-length path segment, which
    is considered equivalent to a path of zero path segments.
 
-1. {:#c-path-segment} A path segment can be any Unicode string that is
+8. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
    segments.
    It can be the zero-length string. No special constraints are placed
    on the first path segment.
 
-1. {:#c-query} A query always consists of one or more query parameters.
+9. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
    It is often in the form of a "key=value" pair.
    When converting a CRI to a URI, query parameters are separated by an
@@ -183,19 +183,19 @@ The components are subject to the following constraints:
    Queries are optional; there is a difference between an absent query
    and a single query parameter that is the empty string.
 
-1. {:#c-fragment} A fragment identifier can be any Unicode string that
+10. {:#c-fragment} A fragment identifier can be any Unicode string that
    is in NFC.
    Fragment identifiers are optional; there is a difference between an
    absent fragment identifier and a fragment identifier that is the
    empty string.
 
-1. {:#c-escaping} The syntax of registered names, path segments, query
+11. {:#c-escaping} The syntax of registered names, path segments, query
    parameters, and fragment identifiers may be further restricted and
    sub-structured by the scheme.
    There is no support, however, for escaping sub-delimiters
    that are not intended to be used in a delimiting function.
 
-1. {:#c-mapping} When converting a CRI to a URI, any character that is
+12. {:#c-mapping} When converting a CRI to a URI, any character that is
    outside the allowed character range or is a delimiter in the URI syntax
    is percent-encoded.
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
@@ -220,19 +220,17 @@ satisfies the constraints defined in {{constraints}}. The creation of a
 CRI fails if the CRI cannot be validated to satisfy all of the
 constraints.
 
-{:ctr: format="counter"}
-
 If a naming authority creates a CRI from user input, it MAY apply
 the following (and only the following) normalizations to get the CRI
 more likely to validate:
 
-* map the scheme name to lowercase ({{c-scheme}}{:ctr});
-* map the registered name to NFC ({{c-reg-name}}{:ctr});
+* map the scheme name to lowercase ({{<c-scheme}});
+* map the registered name to NFC ({{<c-reg-name}});
 * elide the port if it is the default port for the scheme
-({{c-port-omitted}}{:ctr});
-* elide a single zero-length path segment ({{c-path}}{:ctr});
+({{<c-port-omitted}});
+* elide a single zero-length path segment ({{<c-path}});
 * map path segments, query parameters and the fragment identifier to NFC
-({{c-path-segment}}{:ctr}, {{c-query}}{:ctr}, {{c-fragment}}{:ctr}).
+({{<c-path-segment}}, {{<c-query}}, {{<c-fragment}}).
 
 Once a CRI has been created, it can be used and transferred without
 further normalization.
@@ -312,37 +310,52 @@ structure as described in the [Concise Data Definition Language
 {::include cddl/cri.cddl}
 ~~~~
 
+This CDDL specification is simplified for exposition and needs to be augmented by the
+following rule for interchange: Trailing null values are removed, and
+two leading null values (scheme and authority both not given) are
+represented by using the `discard` alternative instead.
+A complete CDDL specification is given in {{cddl-complete}}.
+
 The rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the (sub-)components of a CRI, as described in
 {{constraints}}, with the addition of the `discard` section.
-As `scheme` and `authority` can comprise two or three array elements, and `path`
-segments and `query` parameters can occur zero or more times, we will treat
-such combinations as a single "section" in the following exposition.
-(For `scheme` and `host`, the combination is needed to disambiguate what would otherwise be a
-leading text string as a scheme, host, or path segment.)
-The `discard` section or its absence can be used to express path
+The `discard` section can be used when neither a scheme nor an
+authority is present.
+It then expresses path
 prefixes such as "/",
 "./", "../", "../../", etc.
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
 
+<aside markdown="1">
+The structure of a CRI is visualized using the somewhat limited means
+of a railroad diagram below.
+
+~~~ railroad-utf8
+cri-reference = [((scheme authority) / discard) [path [query [fragment]]]]
+~~~
+
+This visualization does not go into the details of the elements.
+</aside>
+
+
+
 Examples:
-:  
 
-: ~~~~ cbor
+~~~~ cbor
 {::include example/href-cri-reference-1.diag}
-  ~~~~
+~~~~
 
-: ~~~~ cbor
+~~~~ cbor
 {::include example/href-cri-reference-2.diag}
-  ~~~~
+~~~~
 
 
 A CRI reference is considered *well-formed* if it matches the CDDL
 structure.
 
 A CRI reference is considered *absolute* if it is well-formed
-and the sequence of sections starts with a `scheme`.
+and the sequence of sections starts with a non-null `scheme`.
 
 A CRI reference is considered *relative* if it is well-formed
 and the sequence of sections is empty or starts with an section other
@@ -369,34 +382,34 @@ an absolute CRI reference:
   of the first item in the CRI that can occur to start the respective
   first section.)
 
-1. Determine the values of two variables, T and E, based on the first
+2. Determine the values of two variables, T and E, based on the first
    section in the sequence of sections of the CRI reference to be
    resolved, according to {{resolution-variables}}.
 
-1. Initialize a buffer with all the sections from the base CRI where
+3. Initialize a buffer with all the sections from the base CRI where
    the section number is less than the value of E.
 
-1. If the value of T is greater than 0, remove the last T-many `path`
+4. If the value of T is greater than 0, remove the last T-many `path`
    segments from the end of the buffer (up to the number of `path`
    segments in the buffer).
 
-1. Append all the sections from the CRI reference to the buffer, except
+5. Append all the sections from the CRI reference to the buffer, except
   for any `discard` section.
 
-1. If the number of `path` segments in the buffer is one and the
+6. If the number of `path` segments in the buffer is one and the
   value of that segment is the zero-length string, remove that segment
   from the buffer.
 
-1. Return the sequence of sections in the buffer as the resolved CRI.
+7. Return the sequence of sections in the buffer as the resolved CRI.
 
-| First Section       | First item   |          T | E |
-| (scheme)            | false / nint |          0 | 0 |
-| (authority)         | true / bytes |          0 | 1 |
-| (discard)           | uint         | item value | 4 |
-| (path)              | text         |          0 | 2 |
-| (query)             | array        |          0 | 3 |
-| (fragment)          | null         |          0 | 4 |
-| none/empty sequence | –            |          0 | 4 |
+| First Section       | First item           |          T | E |
+| (scheme)            | text / nint          |          0 | 0 |
+| (authority)         | text / bytes / array |          0 | 1 |
+| (discard)           | true / uint          | item value | 4 |
+| (path)              | array of text        |          0 | 2 |
+| (query)             | array of text        |          0 | 3 |
+| (fragment)          | text                 |          0 | 4 |
+| none/empty sequence | –                    |          0 | 4 |
 {: #resolution-variables align="center" title="Values of the Variables T and E"}
 
 
@@ -554,6 +567,16 @@ This document has no IANA actions.
 
 
 --- back
+
+# CDDL specification {#cddl-complete}
+
+The full CDDL specification is somewhat redundant internally in order
+to express trailing null suppression.
+
+~~~~ cddl
+{::include cddl/cri-complete.cddl}
+~~~~
+
 
 # Change Log
 {: removeInRFC="true"}

@@ -1,11 +1,13 @@
-; not expressed in this CDDL spec: trailing nulls to be left off
+; expressing null suppression
 
 CRI-Reference = [
-  ((scheme / null, authority / null)
-   // discard),                 ; relative reference
-  path / null,
-  query / null,
-  fragment / null
+  ?( ((scheme, (authority / null) 
+       // (null, authority))
+     // discard),                 ; relative reference
+     ?( (path / null, query / null, fragment) //
+        (path / null, query) //
+         path)
+  )
 ]
 
 scheme      = scheme-name / scheme-id
