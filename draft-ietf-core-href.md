@@ -49,17 +49,17 @@ contributor:
 
 
 informative:
-  RFC7228:
-  RFC7230:
-  RFC7252:
-  RFC8141:
-  RFC8288:
-  RFC8820:
+  RFC7228: term
+  RFC7230: http
+  RFC7252: coap
+  RFC8141: urn
+  RFC8288: web-linking
+  RFC8820: lawn
   W3C.REC-html52-20171214:
 normative:
-  RFC3986:
-  RFC3987:
-  RFC8610:
+  RFC3986: uri
+  RFC3987: iri
+  RFC8610: cddl
   Unicode:
     target: https://www.unicode.org/versions/Unicode13.0.0/
     title: The Unicode Standard, Version 13.0.0
@@ -115,7 +115,7 @@ As a result, many implementations in such environments support only an
 ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
 half of RFC 3986.
 
-This document defines the Constrained Resource Identifier (CRI) by
+This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and serializing their
 components in [Concise Binary Object Representation (CBOR)](#RFC8949)
 instead of a sequence of characters.
@@ -154,12 +154,13 @@ The components are subject to the following constraints:
 {: type="C%d."}
 1. {:#c-scheme} The scheme name can be any Unicode string (see
    Definition D80 in {{Unicode}}) that matches the syntax of a URI
-   scheme (see {{Section 3.1 of RFC3986}}) and is lowercase (see
-   Definition D139 in {{Unicode}}).
+   scheme (see {{Section 3.1 of RFC3986}}, which constrains schemes to
+   ASCII) and is lowercase (see Definition D139 in {{Unicode}}).
 
 2. {:#c-authority} An authority is always a host identified by an IP
    address or registered name, along with optional port information.
    User information is not supported.
+   <!-- Authorities are optional! -->
 
 3. {:#c-ip-address} An IP address can be either an IPv4 address or an IPv6 address.
    IPv6 scoped addressing zone identifiers and future versions of IP are
@@ -185,6 +186,7 @@ The components are subject to the following constraints:
    segments.
    It can be the zero-length string. No special constraints are placed
    on the first path segment.
+   <!-- explain last sentence vs. previous item -->
 
 9. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
@@ -214,7 +216,7 @@ The components are subject to the following constraints:
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
    Definition D92 in {{Unicode}}) to convert the character to a sequence
    of bytes (that is then converted to a sequence of %HH triplets).
-
+   <!-- As per 3986 2.1, use uppercase hex. -->
 
 # Creation and Normalization
 
@@ -297,6 +299,7 @@ The CBOR serialization of CRI references is specified in
 
 The only operation defined on a CRI reference is *reference resolution*:
 the act of transforming a CRI reference into a CRI.
+<!-- , relative to a base URI -->
 An application MUST implement this operation by applying
 the algorithm specified in {{reference-resolution}} (or any algorithm
 that is functionally equivalent to it).
@@ -371,7 +374,7 @@ A CRI reference is considered *absolute* if it is well-formed
 and the sequence of sections starts with a non-null `scheme`.
 
 A CRI reference is considered *relative* if it is well-formed
-and the sequence of sections is empty or starts with an section other
+and the sequence of sections is empty or starts with a section other
 than those that would constitute a `scheme`.
 
 ## Ingesting and encoding a CRI Reference
@@ -381,7 +384,9 @@ with six sections:
 
 scheme, authority, discard, path, query, fragment
 
-Each of these sections can be unset ("null"), except for discard,
+Each of these sections can be unset ("null"),
+<!-- "not defined" in RFC 3986 -->
+except for discard,
 which is always an unsigned number or `true`.  If scheme and/or
 authority are non-null, discard must be `true`.
 
@@ -515,11 +520,13 @@ authority
 
 path
 : If the CRI reference contains a `discard` item, the conversion fails.
+  <!-- huh? -->
 
   If the CRI reference contains a `host-name`, `host-ip`, or `path` item, the path
   component of the URI reference is prefixed by a slash ("/")
   character.  Otherwise, the path component is prefixed by the
   zero-length string.
+  <!-- So a path is always slash-prefixed? -->
 
   If the CRI reference contains one or more `path` items,
   the prefix is followed by the value of each item, separated by a
@@ -568,7 +575,9 @@ fragment
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
 
+# Implementation Status {#impl}
 
+<!-- see RFC 7942 -->
 
 # Security Considerations {#security}
 
@@ -604,6 +613,12 @@ to express trailing null suppression.
 
 # Change Log
 {: removeInRFC="true"}
+
+Changes from -04 to -05
+
+* Simplify CBOR structure.
+
+* Add implementation status section.
 
 Changes from -03 to -04:
 
