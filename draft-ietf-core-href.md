@@ -15,14 +15,6 @@ title: Constrained Resource Identifiers
 wg: CoRE Working Group
 
 author:
-- ins: K. Hartke
-  name: Klaus Hartke
-  org: Ericsson
-  street: Torshamnsgatan 23
-  city: Stockholm
-  code: '16483'
-  country: Sweden
-  email: klaus.hartke@ericsson.com
 -
   ins: C. Bormann
   name: Carsten Bormann
@@ -34,6 +26,27 @@ author:
   phone: +49-421-218-63921
   email: cabo@tzi.org
   role: editor
+- ins: H. Birkholz
+  name: Henk Birkholz
+  org: Fraunhofer SIT
+  abbrev: Fraunhofer SIT
+  email: henk.birkholz@sit.fraunhofer.de
+  street: Rheinstrasse 75
+  code: '64295'
+  city: Darmstadt
+  country: Germany
+
+
+contributor:
+- ins: K. Hartke
+  name: Klaus Hartke
+  org: Ericsson
+  street: Torshamnsgatan 23
+  city: Stockholm
+  code: '16483'
+  country: Sweden
+  email: klaus.hartke@ericsson.com
+
 
 informative:
   RFC7228:
@@ -635,6 +648,11 @@ Changes from -00 to -01:
 
 # Acknowledgements
 {: numbered="false"}
+
+CRIs were developed by {{{Klaus Hartke}}} for use in the Constrained
+RESTful Application Language (CoRAL).
+The current author team is completing this work with a view to achieve
+good integration with the potential use cases, both inside and outside of CoRAL.
 
 Thanks to
 {{{Christian Amsüss}}},
