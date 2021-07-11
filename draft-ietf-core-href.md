@@ -156,11 +156,16 @@ The components are subject to the following constraints:
    Definition D80 in {{Unicode}}) that matches the syntax of a URI
    scheme (see {{Section 3.1 of RFC3986}}, which constrains schemes to
    ASCII) and is lowercase (see Definition D139 in {{Unicode}}).
+   The scheme is always present.
 
 2. {:#c-authority} An authority is always a host identified by an IP
    address or registered name, along with optional port information.
    User information is not supported.
    <!-- Authorities are optional! -->
+   The authority can be absent; in {{RFC3986}}, in this case the path
+   can be rootless or, as when he authority is present, begin with a
+   root ("/"); this is modelled by two different values for an absent
+   authority.
 
 3. {:#c-ip-address} An IP address can be either an IPv4 address or an IPv6 address.
    IPv6 scoped addressing zone identifiers and future versions of IP are
@@ -396,7 +401,7 @@ When ingesting a CRI Reference that is in the transfer form, those
 sections are filled in from the transfer form (unset sections are
 filled with null), and the following steps are performed:
 
-* If the array is entirely empty, replace it with `[true]` \[or is that `[0]`?].
+* If the array is entirely empty, replace it with `[0]`.
 * If discard is present in the transfer form (i.e., the outer array
   starts with true or an unsigned number), set scheme and authority to null.
 * If scheme and/or authority are present in the transfer form (i.e.,
@@ -410,7 +415,7 @@ they are both null, they are both left out and only discard is
 transferred.
 Trailing null values are removed from the array.
 As a special case, an empty array is sent in place for a remaining
-`[true]` (URI "/") \[or is that `[0]`, URI ""?].
+`[0]` (URI "").
 
 ## Reference Resolution {#reference-resolution}
 
@@ -428,8 +433,9 @@ an absolute CRI reference:
 2. Initialize a buffer with the sections from the base CRI.
 
 3. If the value of discard is `true` in the CRI reference, replace the
-   path in the buffer with the empty array, and unset query and
-   fragment.  If it is an unsigned number, remove as many elements
+   path in the buffer with the empty array, unset query and
+   fragment, and set a `true` authority to `null`.  If the value of
+   discard is an unsigned number, remove as many elements
    from the end of the path array; if it is non-zero, unset query and
    fragment.  Set discard to `true` in the buffer.
 
@@ -522,35 +528,41 @@ authority
   both omitted.
 
 path
-: If the CRI reference contains a `discard` item, the conversion fails.
-  <!-- huh? -->
+: If the CRI reference contains a `discard` item of value `true`, the
+  path component is prefixed by a slash ("/") character.  If it
+  contains a `discard` item of value `0` and the `path` item is
+  present, the conversion fails.  Otherwise, the path component is
+  prefixed by as many "../" components as the `discard` value minus
+  one indicates.
 
-  If the CRI reference contains a `host-name`, `host-ip`, or `path` item, the path
-  component of the URI reference is prefixed by a slash ("/")
-  character.  Otherwise, the path component is prefixed by the
-  zero-length string.
-  <!-- So a path is always slash-prefixed? -->
+  If the discard item is not present and the CRI reference contains an
+  authority that is `true`, the path component of the URI reference is
+  prefixed by the zero-length string.  Otherwise, the path component
+  is prefixed by a slash ("/") character.
 
-  If the CRI reference contains one or more `path` items,
-  the prefix is followed by the value of each item, separated by a
-  slash ("/") character.
+  If the CRI reference contains one or more `path` items, the prefix
+  is followed by the value of each item, separated by a slash ("/")
+  character.  <!-- A path segment that contains a colon character (e.g., -->
+  <!-- "this:that") cannot directly be used as the first such item.  Such a -->
+  <!-- segment MUST be preceded by a dot-segment (e.g., "./this:that") -->
+  <!-- unless scheme and/or authority are present. -->
 
   Any character in the value of a `path` item that is not
   in the set of unreserved characters or "sub-delims" or a colon
   (":") or commercial at ("@") character MUST be
   percent-encoded.
 
-  If the authority component is defined and the path component does not
-  match the "path-abempty" rule ({{Section 3.3 of RFC3986}}), the
-  conversion fails.
+  If the authority component is present (not `null` or `true`) and the
+  path component does not match the "path-abempty" rule ({{Section 3.3
+  of RFC3986}}), the conversion fails.
 
-  If the authority component is unset and the scheme component is
-  defined and the path component does not match the "path-absolute",
-  "path-rootless" or "path-empty" rule ({{Section 3.3 of RFC3986}}), the
-  conversion fails.
+  If the authority component is not present, but the scheme component
+  is, and the path component does not match the "path-absolute",
+  "path-rootless" (authority == `true`) or "path-empty" rule ({{Section
+  3.3 of RFC3986}}), the conversion fails.
 
-  If the authority component is unset and the scheme component is
-  unset and the path component does not match the "path-absolute",
+  If neither the authority component nor the scheme component are
+  present, and the path component does not match the "path-absolute",
   "path-noscheme" or "path-empty" rule ({{Section 3.3 of RFC3986}}), the
   conversion fails.
 
