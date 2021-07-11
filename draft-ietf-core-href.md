@@ -176,6 +176,8 @@ The components are subject to the following constraints:
 6. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
    scheme's default port (provided the scheme is defining such a default
    port) or the scheme is not using ports.
+   <!-- Note that this is hard to do by a generic URI implementation
+   that may not know the scheme's default port -->
 
 7. {:#c-path} A path consists of zero or more path segments.
    A path must not consist of a single zero-length path segment, which
@@ -475,6 +477,7 @@ IRI to CRI
   described in {{Section 3.1 of RFC3987}}, and then
   converting the URI to a CRI as described above.
 
+<!-- What? -->
 Everything in this section also applies to CRI references, URI
 references and IRI references.
 
