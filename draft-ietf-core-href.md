@@ -350,6 +350,14 @@ prefixes such as "/",
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
 
+Most URI references that {{Section 4.2 of RFC3986}} calls "relative
+references" (i.e., references that need to undergo a resolution
+process to obtain a URI) correspond to the CRI form that starts with
+`discard`.  The exception are relative references with an `authority`
+(called a "network-path reference" in {{Section 4.2 of RFC3986}}),
+which in CRI references never carry a `discard` section (the value of
+`discard` defaults to `true`).
+
 <aside markdown="1">
 The structure of a CRI is visualized using the somewhat limited means
 of a railroad diagram below.
