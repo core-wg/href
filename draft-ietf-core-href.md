@@ -600,6 +600,7 @@ fragment
 
 # Implementation Status {#impl}
 
+With the exception of the authority=true fix, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
 <!-- see RFC 7942 -->
 
 # Security Considerations {#security}
