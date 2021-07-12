@@ -16,9 +16,8 @@ wg: CoRE Working Group
 
 author:
 -
-  ins: C. Bormann
   name: Carsten Bormann
-  org: Universitaet Bremen TZI
+  org: Universität Bremen TZI
   street: Postfach 330440
   city: Bremen
   code: D-28359
@@ -501,7 +500,7 @@ references and IRI references.
 Applications MUST convert a CRI reference to a URI
 reference by determining the components of the URI reference according
 to the following steps and then recomposing the components to a URI
-reference string as specified in {{RFC3986}}{: section="5.3"}.
+reference string as specified in {{Section 5.3 of RFC3986}}.
 
 {: vspace='0'}
 
