@@ -1,9 +1,0 @@
-#using iana = <http://www.iana.org/assignments/relation/>
-#using http = <http://coreapps.org/http#>
-
-iana:icon </favicon.png> {  
-   http:type "image/png"
-}
-iana:icon </favicon.gif> {  
-   http:type "image/gif"
-}

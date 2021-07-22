@@ -1,47 +1,28 @@
-# The Constrained RESTful Application Language (CoRAL)
+# Constrained Resource Identifiers
+
+This is the working area for the IETF [CORE Working Group](https://datatracker.ietf.org/wg/core/documents/) Internet-Draft, "Constrained Resource Identifiers".
+
+* [Editor's Copy](https://core-wg.github.io/href/#go.draft-ietf-core-href.html)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-core-href)
+* [Compare Editor's Copy to Working Group Draft](https://core-wg.github.io/href/#go.draft-ietf-core-href.diff)
 
 
-## Specifications
+## Contributing
 
-* Constrained RESTful Application Language
-    * [draft-ietf-core-coral-03](https://www.ietf.org/id/draft-ietf-core-coral-03.html) ([datatracker](https://datatracker.ietf.org/doc/draft-ietf-core-coral/))
-* Constrained Resource Identifiers
-    * [draft-ietf-core-href-03](https://www.ietf.org/id/draft-ietf-core-href-03.html) ([datatracker](https://datatracker.ietf.org/doc/draft-ietf-core-href/))
+See the
+[guidelines for contributions](https://github.com/core-wg/href/blob/main/CONTRIBUTING.md).
 
-
-## Companion Material 
-
-* binary/
-    * [python/](binary/python/)
-    * [grammar.cddl](binary/grammar.cddl)
-* textual/
-    * [unicode/](textual/unicode/)
-    * [lexical-grammar.abnf](textual/lexical-grammar.abnf)
-    * [syntactic-grammar.abnf](textual/syntactic-grammar.abnf)
+Contributions can be made by editing markdown through the GitHub interface.
 
 
-## Implementations
+## Command Line Usage
 
-* C
-    * [RIOT](https://github.com/leandrolanzieri/RIOT/tree/pr/sys-coral)
-* Python
-    * [micrurus](https://gitlab.com/chrysn/micrurus)
+Formatted text and HTML versions of the draft can be built using `make`.
 
-
-# Build the href draft
-
-* install prerequisite tooling:
-```
-gem install cbor-diag cddl
+```sh
+$ make
 ```
 
-* create the HTML and TXT version from the markdown source (also validate all the examples):
-```
-make -f href.mk
-```
-
-* remove build output and by-products:
-```
-make -f href.mk clean
-```
+This requires that you have the necessary software installed.  See
+[the instructions](https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md).
 

@@ -1,38 +1,11 @@
-REV = 04
+LIBDIR := lib
+include $(LIBDIR)/main.mk
 
-OUTDIR=__build__/
-
-SOURCES = $(wildcard *.xml)
-INCLUDES = $(wildcard textual/examples/*.coral) $(wildcard binary/python/ciri/*.py)
-
-TEXT = $(addprefix $(OUTDIR),$(SOURCES:.xml=-$(REV).txt))
-HTML = $(addprefix $(OUTDIR),$(SOURCES:.xml=-$(REV).html))
-XML = $(addprefix $(OUTDIR),$(SOURCES:.xml=-$(REV).xml))
-
-all: html txt xml
-
-html: $(HTML)
-
-txt: $(TEXT)
-
-xml: $(XML)
-
-$(OUTDIR)%-$(REV).xml: %.xml $(INCLUDES)
-	@mkdir -p $(dir $@)
-	xml2rfc -p $(dir $@) -o $@ --expand $<
-
-$(OUTDIR)%-$(REV).txt: %.xml $(INCLUDES)
-	@mkdir -p $(dir $@)
-	xml2rfc -p $(dir $@) -o $@ --v3 --no-pagination $<
-
-$(OUTDIR)%-$(REV).html: %.xml $(INCLUDES)
-	@mkdir -p $(dir $@)
-	xml2rfc -p $(dir $@) -o $@ --html $<
-
-clean:
-	rm -f $(TEXT) $(HTML) $(XML)
-
-cleancache:
-	xml2rfc --clear-cache
-
-.PHONY: all html txt xml clean cleancache
+$(LIBDIR)/main.mk:
+ifneq (,$(shell grep "path *= *$(LIBDIR)" .gitmodules 2>/dev/null))
+	git submodule sync
+	git submodule update $(CLONE_ARGS) --init
+else
+	git clone -q --depth 10 $(CLONE_ARGS) \
+	    -b main https://github.com/martinthomson/i-d-template $(LIBDIR)
+endif
