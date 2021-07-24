@@ -1,7 +1,7 @@
 ; not expressed in this CDDL spec: trailing nulls to be left off
 
 CRI-Reference = [
-  ((scheme / null, authority / null)
+  ((scheme / null, authority / null / true)
    // discard),                 ; relative reference
   path / null,
   query / null,

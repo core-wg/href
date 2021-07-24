@@ -15,6 +15,28 @@ title: Constrained Resource Identifiers
 wg: CoRE Working Group
 
 author:
+-
+  name: Carsten Bormann
+  org: Universität Bremen TZI
+  street: Postfach 330440
+  city: Bremen
+  code: D-28359
+  country: Germany
+  phone: +49-421-218-63921
+  email: cabo@tzi.org
+  role: editor
+- ins: H. Birkholz
+  name: Henk Birkholz
+  org: Fraunhofer SIT
+  abbrev: Fraunhofer SIT
+  email: henk.birkholz@sit.fraunhofer.de
+  street: Rheinstrasse 75
+  code: '64295'
+  city: Darmstadt
+  country: Germany
+
+
+contributor:
 - ins: K. Hartke
   name: Klaus Hartke
   org: Ericsson
@@ -23,30 +45,20 @@ author:
   code: '16483'
   country: Sweden
   email: klaus.hartke@ericsson.com
--
-  ins: C. Bormann
-  name: Carsten Bormann
-  org: Universitaet Bremen TZI
-  street: Postfach 330440
-  city: Bremen
-  code: D-28359
-  country: Germany
-  phone: +49-421-218-63921
-  email: cabo@tzi.org
-  role: editor
+
 
 informative:
-  RFC7228:
-  RFC7230:
-  RFC7252:
-  RFC8141:
-  RFC8288:
-  RFC8820:
+  RFC7228: term
+  RFC7230: http
+  RFC7252: coap
+  RFC8141: urn
+  RFC8288: web-linking
+  RFC8820: lawn
   W3C.REC-html52-20171214:
 normative:
-  RFC3986:
-  RFC3987:
-  RFC8610:
+  RFC3986: uri
+  RFC3987: iri
+  RFC8610: cddl
   Unicode:
     target: https://www.unicode.org/versions/Unicode13.0.0/
     title: The Unicode Standard, Version 13.0.0
@@ -102,7 +114,7 @@ As a result, many implementations in such environments support only an
 ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
 half of RFC 3986.
 
-This document defines the Constrained Resource Identifier (CRI) by
+This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and serializing their
 components in [Concise Binary Object Representation (CBOR)](#RFC8949)
 instead of a sequence of characters.
@@ -141,12 +153,18 @@ The components are subject to the following constraints:
 {: type="C%d."}
 1. {:#c-scheme} The scheme name can be any Unicode string (see
    Definition D80 in {{Unicode}}) that matches the syntax of a URI
-   scheme (see {{Section 3.1 of RFC3986}}) and is lowercase (see
-   Definition D139 in {{Unicode}}).
+   scheme (see {{Section 3.1 of RFC3986}}, which constrains schemes to
+   ASCII) and is lowercase (see Definition D139 in {{Unicode}}).
+   The scheme is always present.
 
 2. {:#c-authority} An authority is always a host identified by an IP
    address or registered name, along with optional port information.
    User information is not supported.
+   <!-- Authorities are optional! -->
+   The authority can be absent; in {{RFC3986}}, in this case the path
+   can be rootless or, as when he authority is present, begin with a
+   root ("/"); this is modelled by two different values for an absent
+   authority.
 
 3. {:#c-ip-address} An IP address can be either an IPv4 address or an IPv6 address.
    IPv6 scoped addressing zone identifiers and future versions of IP are
@@ -162,6 +180,8 @@ The components are subject to the following constraints:
 6. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
    scheme's default port (provided the scheme is defining such a default
    port) or the scheme is not using ports.
+   <!-- Note that this is hard to do by a generic URI implementation
+   that may not know the scheme's default port -->
 
 7. {:#c-path} A path consists of zero or more path segments.
    A path must not consist of a single zero-length path segment, which
@@ -172,6 +192,7 @@ The components are subject to the following constraints:
    segments.
    It can be the zero-length string. No special constraints are placed
    on the first path segment.
+   <!-- explain last sentence vs. previous item -->
 
 9. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
@@ -201,7 +222,7 @@ The components are subject to the following constraints:
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
    Definition D92 in {{Unicode}}) to convert the character to a sequence
    of bytes (that is then converted to a sequence of %HH triplets).
-
+   <!-- As per 3986 2.1, use uppercase hex. -->
 
 # Creation and Normalization
 
@@ -284,6 +305,7 @@ The CBOR serialization of CRI references is specified in
 
 The only operation defined on a CRI reference is *reference resolution*:
 the act of transforming a CRI reference into a CRI.
+<!-- , relative to a base URI -->
 An application MUST implement this operation by applying
 the algorithm specified in {{reference-resolution}} (or any algorithm
 that is functionally equivalent to it).
@@ -327,6 +349,14 @@ prefixes such as "/",
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
 
+Most URI references that {{Section 4.2 of RFC3986}} calls "relative
+references" (i.e., references that need to undergo a resolution
+process to obtain a URI) correspond to the CRI form that starts with
+`discard`.  The exception are relative references with an `authority`
+(called a "network-path reference" in {{Section 4.2 of RFC3986}}),
+which in CRI references never carry a `discard` section (the value of
+`discard` defaults to `true`).
+
 <aside markdown="1">
 The structure of a CRI is visualized using the somewhat limited means
 of a railroad diagram below.
@@ -358,7 +388,7 @@ A CRI reference is considered *absolute* if it is well-formed
 and the sequence of sections starts with a non-null `scheme`.
 
 A CRI reference is considered *relative* if it is well-formed
-and the sequence of sections is empty or starts with an section other
+and the sequence of sections is empty or starts with a section other
 than those that would constitute a `scheme`.
 
 ## Ingesting and encoding a CRI Reference
@@ -368,7 +398,9 @@ with six sections:
 
 scheme, authority, discard, path, query, fragment
 
-Each of these sections can be unset ("null"), except for discard,
+Each of these sections can be unset ("null"),
+<!-- "not defined" in RFC 3986 -->
+except for discard,
 which is always an unsigned number or `true`.  If scheme and/or
 authority are non-null, discard must be `true`.
 
@@ -376,7 +408,7 @@ When ingesting a CRI Reference that is in the transfer form, those
 sections are filled in from the transfer form (unset sections are
 filled with null), and the following steps are performed:
 
-* If the array is entirely empty, replace it with `[true]` \[or is that `[0]`?].
+* If the array is entirely empty, replace it with `[0]`.
 * If discard is present in the transfer form (i.e., the outer array
   starts with true or an unsigned number), set scheme and authority to null.
 * If scheme and/or authority are present in the transfer form (i.e.,
@@ -390,7 +422,7 @@ they are both null, they are both left out and only discard is
 transferred.
 Trailing null values are removed from the array.
 As a special case, an empty array is sent in place for a remaining
-`[true]` (URI "/") \[or is that `[0]`, URI ""?].
+`[0]` (URI "").
 
 ## Reference Resolution {#reference-resolution}
 
@@ -408,8 +440,9 @@ an absolute CRI reference:
 2. Initialize a buffer with the sections from the base CRI.
 
 3. If the value of discard is `true` in the CRI reference, replace the
-   path in the buffer with the empty array, and unset query and
-   fragment.  If it is an unsigned number, remove as many elements
+   path in the buffer with the empty array, unset query and
+   fragment, and set a `true` authority to `null`.  If the value of
+   discard is an unsigned number, remove as many elements
    from the end of the path array; if it is non-zero, unset query and
    fragment.  Set discard to `true` in the buffer.
 
@@ -457,6 +490,7 @@ IRI to CRI
   described in {{Section 3.1 of RFC3987}}, and then
   converting the URI to a CRI as described above.
 
+<!-- What? -->
 Everything in this section also applies to CRI references, URI
 references and IRI references.
 
@@ -466,7 +500,7 @@ references and IRI references.
 Applications MUST convert a CRI reference to a URI
 reference by determining the components of the URI reference according
 to the following steps and then recomposing the components to a URI
-reference string as specified in {{RFC3986}}{: section="5.3"}.
+reference string as specified in {{Section 5.3 of RFC3986}}.
 
 {: vspace='0'}
 
@@ -501,33 +535,41 @@ authority
   both omitted.
 
 path
-: If the CRI reference contains a `discard` item, the conversion fails.
+: If the CRI reference contains a `discard` item of value `true`, the
+  path component is prefixed by a slash ("/") character.  If it
+  contains a `discard` item of value `0` and the `path` item is
+  present, the conversion fails.  Otherwise, the path component is
+  prefixed by as many "../" components as the `discard` value minus
+  one indicates.
 
-  If the CRI reference contains a `host-name`, `host-ip`, or `path` item, the path
-  component of the URI reference is prefixed by a slash ("/")
-  character.  Otherwise, the path component is prefixed by the
-  zero-length string.
+  If the discard item is not present and the CRI reference contains an
+  authority that is `true`, the path component of the URI reference is
+  prefixed by the zero-length string.  Otherwise, the path component
+  is prefixed by a slash ("/") character.
 
-  If the CRI reference contains one or more `path` items,
-  the prefix is followed by the value of each item, separated by a
-  slash ("/") character.
+  If the CRI reference contains one or more `path` items, the prefix
+  is followed by the value of each item, separated by a slash ("/")
+  character.  <!-- A path segment that contains a colon character (e.g., -->
+  <!-- "this:that") cannot directly be used as the first such item.  Such a -->
+  <!-- segment MUST be preceded by a dot-segment (e.g., "./this:that") -->
+  <!-- unless scheme and/or authority are present. -->
 
   Any character in the value of a `path` item that is not
   in the set of unreserved characters or "sub-delims" or a colon
   (":") or commercial at ("@") character MUST be
   percent-encoded.
 
-  If the authority component is defined and the path component does not
-  match the "path-abempty" rule ({{Section 3.3 of RFC3986}}), the
-  conversion fails.
+  If the authority component is present (not `null` or `true`) and the
+  path component does not match the "path-abempty" rule ({{Section 3.3
+  of RFC3986}}), the conversion fails.
 
-  If the authority component is unset and the scheme component is
-  defined and the path component does not match the "path-absolute",
-  "path-rootless" or "path-empty" rule ({{Section 3.3 of RFC3986}}), the
-  conversion fails.
+  If the authority component is not present, but the scheme component
+  is, and the path component does not match the "path-absolute",
+  "path-rootless" (authority == `true`) or "path-empty" rule ({{Section
+  3.3 of RFC3986}}), the conversion fails.
 
-  If the authority component is unset and the scheme component is
-  unset and the path component does not match the "path-absolute",
+  If neither the authority component nor the scheme component are
+  present, and the path component does not match the "path-absolute",
   "path-noscheme" or "path-empty" rule ({{Section 3.3 of RFC3986}}), the
   conversion fails.
 
@@ -555,7 +597,10 @@ fragment
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
 
+# Implementation Status {#impl}
 
+With the exception of the authority=true fix, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
+<!-- see RFC 7942 -->
 
 # Security Considerations {#security}
 
@@ -591,6 +636,12 @@ to express trailing null suppression.
 
 # Change Log
 {: removeInRFC="true"}
+
+Changes from -04 to -05
+
+* Simplify CBOR structure.
+
+* Add implementation status section.
 
 Changes from -03 to -04:
 
@@ -635,6 +686,11 @@ Changes from -00 to -01:
 
 # Acknowledgements
 {: numbered="false"}
+
+CRIs were developed by {{{Klaus Hartke}}} for use in the Constrained
+RESTful Application Language (CoRAL).
+The current author team is completing this work with a view to achieve
+good integration with the potential use cases, both inside and outside of CoRAL.
 
 Thanks to
 {{{Christian Amsüss}}},

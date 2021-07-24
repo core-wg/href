@@ -1,7 +1,7 @@
 ; expressing null suppression
 
 CRI-Reference = [
-  ?( ((scheme, (authority / null) 
+  ?( ((scheme, (authority / null / true)
        // (null, authority))
      // discard),                 ; relative reference
      ?( (path / null, query / null, fragment) //
