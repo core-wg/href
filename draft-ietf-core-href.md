@@ -533,8 +533,10 @@ authority
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
-  Any zone-id is appended to the string, separated by "%25", as
-  defined in {{Section 2 of -zone}}.
+  Any zone-id is appended to the string, separated by "%25" as
+  defined in {{Section 2 of -zone}}, or as specified in a successor
+  zone-id specification document; this also leads to a modified
+  "IP-literal" rule as specified in these documents.
 
   If the CRI reference contains a `port` item, the port
   subcomponent consists of the value of that item in decimal
