@@ -17,10 +17,12 @@ scheme-id   = (COAP / COAPS / HTTP / HTTPS / other-scheme)
 COAP = -1 COAPS = -2 HTTP = -3 HTTPS = -4
 other-scheme = nint .feature "scheme-id-extension"
 
-authority   = host / [host, port]
-host        = host-name / host-ip
-host-name   = text
-host-ip     = bytes .size 4 / bytes .size 16
+authority   = [host, ?port]
+host        = (host-name // host-ip)
+host-name   = (*text) ; lowercase, NFC labels
+host-ip     = (bytes .size 4 //
+               (bytes .size 16, ?zone-id))
+zone-id     = text
 port        = 0..65535
 
 discard     = true / 0..127
