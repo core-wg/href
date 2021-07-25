@@ -58,6 +58,7 @@ informative:
 normative:
   RFC3986: uri
   RFC3987: iri
+  RFC6874: zone
   RFC8610: cddl
   Unicode:
     target: https://www.unicode.org/versions/Unicode13.0.0/
@@ -79,13 +80,13 @@ This simplifies parsing, comparison and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
---- to_be_removed_note_Note_to_Readers
+--- to_be_removed_note_Discussion_Venues
 
-The issues list for this Internet-Draft can be found at
-\<https://github.com/core-wg/coral/labels/href>.
-
-A reference implementation and a set of test vectors can be found at
-\<https://github.com/core-wg/coral/tree/master/binary/python>.
+Discussion of this document takes place on the
+Constrained RESTful Environments Working Group mailing list (core@ietf.org),
+which is archived at <https://mailarchive.ietf.org/arch/browse/core/>.
+Source for this draft and an issue tracker can be found at
+<https://github.com/core-wg/href>
 
 --- middle
 
@@ -166,12 +167,14 @@ The components are subject to the following constraints:
    root ("/"); this is modelled by two different values for an absent
    authority.
 
-3. {:#c-ip-address} An IP address can be either an IPv4 address or an IPv6 address.
-   IPv6 scoped addressing zone identifiers and future versions of IP are
-   not supported.
+3. {:#c-ip-address} An IP address can be either an IPv4 address or an
+   IPv6 address, optionally with a zone identifier {{-zone}}.
+   Future versions of IP are not supported.
 
-4. {:#c-reg-name} A registered name can be any Unicode string that is lowercase and in
-   Unicode Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
+4. {:#c-reg-name} A registered name is a sequence of one or more
+   *labels*, which, when joined with dots (".") in between them,
+   result in a Unicode string that is lowercase and in Unicode
+   Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
    (The syntax may be further restricted by the scheme.)
 
 5. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
@@ -246,7 +249,8 @@ the following (and only the following) normalizations to get the CRI
 more likely to validate:
 
 * map the scheme name to lowercase ({{<c-scheme}});
-* map the registered name to NFC ({{<c-reg-name}});
+* map the registered name to NFC ({{<c-reg-name}}) and split it on
+  embedded dots;
 * elide the port if it is the default port for the scheme
 ({{<c-port-omitted}});
 * elide a single zero-length path segment ({{<c-path}});
@@ -519,6 +523,8 @@ authority
   The host subcomponent consists of the value of the `host-name` or
   `host-ip` item.
 
+  The `host-name` is turned into a single string by joining the
+  elements separated by dots (".").
   Any character in the value of a `host-name` item that is not in
   the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
   "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
@@ -527,6 +533,10 @@ authority
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
+  Any zone-id is appended to the string, separated by "%25" as
+  defined in {{Section 2 of -zone}}, or as specified in a successor
+  zone-id specification document; this also leads to a modified
+  "IP-literal" rule as specified in these documents.
 
   If the CRI reference contains a `port` item, the port
   subcomponent consists of the value of that item in decimal
@@ -599,7 +609,8 @@ fragment
 
 # Implementation Status {#impl}
 
-With the exception of the authority=true fix, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
+With the exception of the authority=true fix and host-names split into
+labels, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
 <!-- see RFC 7942 -->
 
 # Security Considerations {#security}
@@ -636,6 +647,12 @@ to express trailing null suppression.
 
 # Change Log
 {: removeInRFC="true"}
+
+Changes from -05 to -06
+
+* rework authority:
+  * split reg-names at dots;
+  * add optional zone identifiers {{-zone}} to IP addresses
 
 Changes from -04 to -05
 
