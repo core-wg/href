@@ -163,7 +163,7 @@ The components are subject to the following constraints:
    User information is not supported.
    <!-- Authorities are optional! -->
    The authority can be absent; in {{RFC3986}}, in this case the path
-   can be rootless or, as when he authority is present, begin with a
+   can be rootless or, as when the authority is present, begin with a
    root ("/"); this is modelled by two different values for an absent
    authority.
 
