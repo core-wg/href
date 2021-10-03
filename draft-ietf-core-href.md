@@ -162,10 +162,14 @@ The components are subject to the following constraints:
    address or registered name, along with optional port information.
    User information is not supported.
    <!-- Authorities are optional! -->
-   The authority can be absent; in {{RFC3986}}, in this case the path
-   can be rootless or, as when the authority is present, begin with a
-   root ("/"); this is modelled by two different values for an absent
-   authority.
+
+   Alternatively, the authority can be absent; the two cases for this
+   defined in {{Section 3.3 of RFC3986}} are modeled by two different
+   values used in place of an absent authority:
+
+   * the path can begin with a root ("/", as when the authority is
+     present), or
+   * the path can be rootless.
 
 3. {:#c-ip-address} An IP address can be either an IPv4 address or an
    IPv6 address, optionally with a zone identifier {{-zone}}.
