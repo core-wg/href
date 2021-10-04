@@ -182,7 +182,9 @@ The components are subject to the following constraints:
    (The syntax may be further restricted by the scheme.)
 
 5. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
-   Empty ports or ports outside this range are not supported.
+   Ports outside this range, empty ports (port subcomponents with no
+   digits, see {{Section 3.2.3 of RFC3986}}), or ports with redundant
+   leading zeros, are not supported.
 
 6. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
    scheme's default port (provided the scheme is defining such a default
