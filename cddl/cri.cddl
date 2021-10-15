@@ -1,7 +1,7 @@
 ; not expressed in this CDDL spec: trailing nulls to be left off
 
 CRI-Reference = [
-  ((scheme / null, authority / null / true)
+  ((scheme / null, authority / no-authority)
    // discard),                 ; relative reference
   path / null,
   query / null,
@@ -15,6 +15,10 @@ scheme-id   = (COAP / COAPS / HTTP / HTTPS / other-scheme)
 COAP = -1 COAPS = -2 HTTP = -3 HTTPS = -4
 other-scheme = nint .feature "scheme-id-extension"
 
+no-authority = NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH
+NOAUTH-NOSLASH = null
+NOAUTH-LEADINGSLASH = true
+
 authority   = [host, ?port]
 host        = (host-name // host-ip)
 host-name   = (*text) ; lowercase, NFC labels
@@ -23,7 +27,8 @@ host-ip     = (bytes .size 4 //
 zone-id     = text
 port        = 0..65535
 
-discard     = true / 0..127
+discard     = DISCARD-ALL / 0..127
+DISCARD-ALL = true
 path        = [*text]
 query       = [*text]
 fragment    = text
