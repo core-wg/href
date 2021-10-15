@@ -1,12 +1,22 @@
 ; not expressed in this CDDL spec: trailing nulls to be left off
 
 CRI-Reference = [
-  ((scheme / null, authority / null / true)
+  ((scheme / keep-scheme, authority / no-authority-no-slash / no-authority-leading-slash)
    // discard),                 ; relative reference
   path / null,
   query / null,
   fragment / null
 ]
+
+; Sentinel values for scheme
+keep-scheme = null
+
+; Sentinel values for authority
+no-authority-no-slash = null
+no-authority-leading-slash = true
+
+; Sentinel values for discard
+discard-all = true
 
 scheme      = scheme-name / scheme-id
 scheme-name = text .regexp "[a-z][a-z0-9+.-]*"
@@ -23,7 +33,7 @@ host-ip     = (bytes .size 4 //
 zone-id     = text
 port        = 0..65535
 
-discard     = true / 0..127
+discard     = discard-all / 0..127
 path        = [*text]
 query       = [*text]
 fragment    = text
