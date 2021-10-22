@@ -249,25 +249,25 @@ these URIs illustrate the constraints by example:
   are special in that they are syntactic delimiters of their respective components in CRIs.
   Thus, the following examples *are* convertible to CRIs:
 
-  `https://interior%2edot`
+  `https://interior%2edot/`
 
   `https://example.com/path%2fcomponent/second-component`
 
   `https://example.com/x?ampersand=%26&questionmark=?`
 
-* `https://alice@example.com`
+* `https://alice@example.com/`
 
   The user information can not be expressed in CRIs.
 
-* Distinguishing `http://example.com` and `http://example.com/`
+* URIs with an authority but a completely empty path (eg. `http://example.com`)
 
-  CRIs do not distinguish between the presence and absence of a single slash path.
+  CRIs with an authority component always produce at least a slash in the path component.
 
   For generic schemes, the conversion of `scheme://example.com` to a CRI is impossible
   because no CRI produces a URI with an authority not followed by a slash following the rules of {{cri-to-uri}}.
   Most schemes do not distinguish between the empty path and the path containing a single slash when an authority is set
   (as recommended in {{RFC3986}}).
-  For these schemes, that equivalence allows converting either URI to a CRI
+  For these schemes, that equivalence allows converting even the slash-less URI to a CRI
   (which, when converted back, produces a slash after the authority).
 
 ## Constraints not expressed by the data model
