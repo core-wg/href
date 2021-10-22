@@ -236,6 +236,8 @@ these URIs illustrate the constraints by example:
 * `https://host%ffname`, `https://example.com/x?data=%ff`
 
   All URI components must, after percent decoding, be valid UTF-8 encoded text.
+  Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.
+  <!-- <https://www.bittorrent.org/beps/bep_0017.html>, not sure this warrants an informative reference -->
 
 * `https://example.com/component%3bone;component%3btwo`, `http://example.com/component%3dequals`
 
