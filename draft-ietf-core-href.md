@@ -233,6 +233,74 @@ The components are subject to the following constraints:
    of bytes (that is then converted to a sequence of %HH triplets).
    <!-- As per 3986 2.1, use uppercase hex. -->
 
+## Constraints by example
+
+While most URIs in everyday use can be converted to CRIs and back to URIs
+matching the input after syntax-based normalization of the URI,
+these URIs illustrate the constraints by example:
+
+* `https://host%ffname`, `https://example.com/x?data=%ff`
+
+  All URI components must, after percent decoding, be valid UTF-8 encoded text.
+  Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.
+  <!-- <https://www.bittorrent.org/beps/bep_0017.html>, not sure this warrants an informative reference -->
+
+* `https://example.com/component%3bone;component%3btwo`, `http://example.com/component%3dequals`
+
+  While delimiters can be used in an escaped and unescaped form in URIs with generally distinct meanings,
+  CRIs only support one escapable delimiter character per component,
+  which is the delimiter by which the component is split up in the CRI.
+
+  Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
+  are special in that they are syntactic delimiters of their respective components in CRIs.
+  Thus, the following examples *are* convertible to CRIs:
+
+  `https://interior%2edot/`
+
+  `https://example.com/path%2fcomponent/second-component`
+
+  `https://example.com/x?ampersand=%26&questionmark=?`
+
+* `https://alice@example.com/`
+
+  The user information can not be expressed in CRIs.
+
+* URIs with an authority but a completely empty path (eg. `http://example.com`)
+
+  CRIs with an authority component always produce at least a slash in the path component.
+
+  For generic schemes, the conversion of `scheme://example.com` to a CRI is impossible
+  because no CRI produces a URI with an authority not followed by a slash following the rules of {{cri-to-uri}}.
+  Most schemes do not distinguish between the empty path and the path containing a single slash when an authority is set
+  (as recommended in {{RFC3986}}).
+  For these schemes, that equivalence allows converting even the slash-less URI to a CRI
+  (which, when converted back, produces a slash after the authority).
+
+## Constraints not expressed by the data model
+
+There are syntactically valid CRIs and CRI references that can not be converted into a URI or URI reference, respectively.
+
+For CRI references, this is acceptable -- they can be resolved still and result in a valid CRI that can be converted back.
+(An example of this is `[0, ["p"]]` which appends a slash and the path segment "p" to its base).
+
+(Full) CRIs that do not correspond to a valid URI are not valid on their own, and can not be used.
+Normatively they are characterized by the {{cri-to-uri}} process producing a valid and syntax-normalized URI.
+For easier understanding, they are listed here:
+
+* CRIs (and CRI references) containing a path component "." or "..".
+
+  These would be removed by the remove_dot_segments algorithm of {{RFC3986}},
+  and thus never produce a normalized URI after resolution.
+
+  (In CRI references, the `discard` value is used to afford segment removal,
+  and with "." being an unreserved character, expressing them as "%2e" and "%2e%2e" is not even viable,
+  let alone practical).
+
+* CRIs without authority whose path starts with two or more empty segments.
+
+  When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path can not begin with two slash characters,
+  and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
+
 # Creation and Normalization
 
 In general, resource identifiers are created on the initial creation of a
