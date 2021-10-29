@@ -17,9 +17,9 @@ Each test vector is organized as follows:
 | Key Name | Description |
 | --- | --- |
 | `uri` | a URI reference |
-| `cri` | hex-encoded binary representation of the CRI reference corresponding to `uri` |
+| `cri` | hex-encoded CBOR representation of the CRI reference corresponding to `uri` |
 | `uri-from-cri` | the URI obtained translating the CRI reference `cri` |
-| `resolved-cri` | hex-encoded binary representation of the resolved CRI reference relative to the [base CRI](#bases) |
+| `resolved-cri` | hex-encoded CBOR representation of the resolved CRI reference relative to the [base CRI](#bases) |
 | `resolved-uri` | resolved URI relative to the [base URI](#bases) |
 
 ## Test Logics
