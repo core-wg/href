@@ -16,8 +16,8 @@ COAP = -1 COAPS = -2 HTTP = -3 HTTPS = -4
 other-scheme = nint .feature "scheme-id-extension"
 
 no-authority = NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH
-NOAUTH-NOSLASH = null
-NOAUTH-LEADINGSLASH = true
+NOAUTH-LEADINGSLASH = null
+NOAUTH-NOSLASH = true
 
 authority   = [host, ?port]
 host        = (host-name // host-ip)
