@@ -414,7 +414,6 @@ This CDDL specification is simplified for exposition and needs to be augmented b
 following rule for interchange: Trailing null values are removed, and
 two leading null values (scheme and authority both not given) are
 represented by using the `discard` alternative instead.
-A complete CDDL specification is given in {{cddl-complete}}.
 
 The rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the (sub-)components of a CRI, as described in
@@ -708,16 +707,6 @@ This document has no IANA actions.
 
 
 --- back
-
-# CDDL specification {#cddl-complete}
-
-The full CDDL specification is somewhat redundant internally in order
-to express trailing null suppression.
-
-~~~~ cddl
-{::include cddl/cri-complete.cddl}
-~~~~
-
 
 # Change Log
 {: removeInRFC="true"}
