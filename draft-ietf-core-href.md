@@ -46,6 +46,10 @@ contributor:
   country: Sweden
   email: klaus.hartke@ericsson.com
 
+venue:
+  group: Constrained RESTful Environments
+  mail: core@ietf.org
+  github: core-wg/href
 
 informative:
   RFC7228: term
@@ -79,14 +83,6 @@ Binary Object Representation (CBOR) instead of a sequence of characters.
 This simplifies parsing, comparison and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
-
---- to_be_removed_note_Discussion_Venues
-
-Discussion of this document takes place on the
-Constrained RESTful Environments Working Group mailing list (core@ietf.org),
-which is archived at <https://mailarchive.ietf.org/arch/browse/core/>.
-Source for this draft and an issue tracker can be found at
-<https://github.com/core-wg/href>
 
 --- middle
 
