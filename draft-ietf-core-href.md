@@ -449,12 +449,16 @@ This visualization does not go into the details of the elements.
 
 Examples:
 
-~~~~ cbor
+~~~~ cbor-diag
 {::include example/href-cri-reference-1.diag}
 ~~~~
 
-~~~~ cbor
+~~~~ cbor-diag
 {::include example/href-cri-reference-2.diag}
+~~~~
+
+~~~~ cbor-diag
+{::include example/href-cri-reference-3.diag}
 ~~~~
 
 
