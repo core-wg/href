@@ -680,6 +680,74 @@ fragment
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
 
+# Extended CRI: Accommodating Percent Encoding
+
+CRIs have been designed to relieve implementations operating on CRIs
+from string scanning, which both helps constrained implementations and
+implementations that need to achieve high throughput.
+
+Basic CRI does not support URI components that *require*
+percent-encoding {{Section 2.1 of -uri}} to represent them in the URI
+syntax, except where that percent-encoding is used to escape the main
+delimiter in use.
+
+E.g., the URI
+
+~~~ uri
+https://alice/3%2f4-inch
+~~~
+
+is represented by the basic CRI
+
+~~~ coap-diag
+[-4, ["alice"], ["3/4-inch"]]
+~~~
+
+However, percent-encoding that is used at the application level is not
+supported by basic CRIs:
+
+~~~ uri
+did:web:alice:7%3A1-balun
+~~~
+
+This section presents a method to represent percent-encoded segments
+of hostnames, paths, and queries.
+
+The three CDDL rules
+
+~~~ cddl
+host-name   = (*text)
+path        = [*text]
+query       = [*text]
+~~~
+
+are replaced with
+
+~~~ cddl
+host-name   = (*text-or-pet)
+path        = [*text-or-pet]
+query       = [*text-or-pet]
+
+text-or-pet = text /
+    ([*(text, pet), ?text]) .feature "extended-cri"
+
+; pet is perent-encoded text
+pet = text
+~~~
+
+That is, for each of the host-name, path, and query segments, for each
+segment an alternate representation is provided: an array of text
+strings, the even-numbered ones of which are normal text strings,
+while the odd-numbered ones are text strings that retain the special
+semantics of percent-encoded text without actually being
+percent-encoded.
+
+The above DID URI can now be represented as:
+
+~~~ cri
+[-6, true, [["web:alice:7", ":", "1-balun"]]]
+~~~
+
 # Implementation Status {#impl}
 
 With the exception of the authority=true fix and host-names split into
