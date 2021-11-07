@@ -687,7 +687,7 @@ from string scanning, which both helps constrained implementations and
 implementations that need to achieve high throughput.
 
 Basic CRI does not support URI components that *require*
-percent-encoding {{Section 2.1 of -uri}} to represent them in the URI
+percent-encoding ({{Section 2.1 of -uri}}) to represent them in the URI
 syntax, except where that percent-encoding is used to escape the main
 delimiter in use.
 
