@@ -407,7 +407,7 @@ structure as described in the [Concise Data Definition Language
 ~~~~
 
 This CDDL specification is simplified for exposition and needs to be augmented by the
-following rule for interchange: Trailing null values are removed, and
+following rule for interchange: Trailing null values MUST be removed, and
 two leading null values (scheme and authority both not given) are
 represented by using the `discard` alternative instead.
 
