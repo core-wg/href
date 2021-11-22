@@ -731,8 +731,8 @@ query       = [*text-or-pet]
 text-or-pet = text /
     ([*(text, pet), ?text]) .feature "extended-cri"
 
-; pet is perent-encoded text
-pet = text
+; pet is perent-encoded bytes
+pet = bytes .ne ''
 ~~~
 
 That is, for each of the host-name, path, and query segments, for each
