@@ -621,7 +621,8 @@ path
 : If the CRI reference contains a `discard` item of value `true`, the
   path component is prefixed by a slash ("/") character.  If it
   contains a `discard` item of value `0` and the `path` item is
-  present, the conversion fails.  Otherwise, the path component is
+  present, the conversion fails.  If it contains a positive discard
+  item, the path component is
   prefixed by as many "../" components as the `discard` value minus
   one indicates.
 
