@@ -681,7 +681,7 @@ fragment
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
 
-# Extended CRI: Accommodating Percent Encoding
+# Extended CRI: Accommodating Percent Encoding {#pet}
 
 CRIs have been designed to relieve implementations operating on CRIs
 from string scanning, which both helps constrained implementations and
@@ -714,12 +714,13 @@ did:web:alice:7%3A1-balun
 This section presents a method to represent percent-encoded segments
 of hostnames, paths, and queries.
 
-The three CDDL rules
+The four CDDL rules
 
 ~~~ cddl
 host-name   = (*text)
 path        = [*text]
 query       = [*text]
+fragment    = text
 ~~~
 
 are replaced with
@@ -728,31 +729,36 @@ are replaced with
 host-name   = (*text-or-pet)
 path        = [*text-or-pet]
 query       = [*text-or-pet]
+fragment    = text-or-pet
 
 text-or-pet = text /
-    ([*(text, pet), ?text]) .feature "extended-cri"
+    text-pet-sequence .feature "extended-cri"
 
-; pet is perent-encoded bytes
-pet = bytes .ne ''
+; text1 and pet1 alternating, at least one pet1:
+text-pet-sequence = [?text1, ((+(pet1, text1), ?pet1) // pet1)]
+; pet is percent-encoded bytes
+pet1 = bytes .ne ''
+text1 = text .ne ""
 ~~~
 
-That is, for each of the host-name, path, and query segments, for each
-segment an alternate representation is provided: an array of text
-strings, the even-numbered ones of which are normal text strings,
-while the odd-numbered ones are text strings that retain the special
+That is, for each of the host-name, path, and query segments, and for
+the fragment component, an alternate representation is provided
+besides a simple text string: a non-empty array of alternating non-blank text and byte
+strings, the text strings of which stand for non-percent-encoded text,
+while the byte strings retain the special
 semantics of percent-encoded text without actually being
 percent-encoded.
 
 The above DID URI can now be represented as:
 
 ~~~ cri
-[-6, true, [["web:alice:7", ":", "1-balun"]]]
+[-6, true, [["web:alice:7", ':', "1-balun"]]]
 ~~~
 
 # Implementation Status {#impl}
 
-With the exception of the authority=true fix and host-names split into
-labels, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
+With the exception of the authority=true fix, host-names split into
+labels, and {{pet}}, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
 <!-- see RFC 7942 -->
 
 # Security Considerations {#security}
