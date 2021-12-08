@@ -157,7 +157,6 @@ The components are subject to the following constraints:
 2. {:#c-authority} An authority is always a host identified by an IP
    address or registered name, along with optional port information.
    User information is not supported.
-   <!-- Authorities are optional! -->
 
    Alternatively, the authority can be absent; the two cases for this
    defined in {{Section 3.3 of RFC3986}} are modeled by two different
@@ -166,6 +165,9 @@ The components are subject to the following constraints:
    * the path can begin with a root ("/", as when the authority is
      present), or
    * the path can be rootless.
+
+   (Note that in {{cddl}}, `no-authority` is marked as a feature, as
+   not all CRI implementations will support authority-less URIs.)
 
 3. {:#c-ip-address} An IP address can be either an IPv4 address or an
    IPv6 address, optionally with a zone identifier {{-zone}}.
@@ -405,6 +407,7 @@ structure as described in the [Concise Data Definition Language
 ~~~~ cddl
 {::include cddl/cri.cddl}
 ~~~~
+{: #cddl title="CDDL for CRI CBOR serialization"}
 
 This CDDL specification is simplified for exposition and needs to be augmented by the
 following rule for interchange: Trailing null values MUST be removed, and
