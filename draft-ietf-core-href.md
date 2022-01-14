@@ -193,7 +193,9 @@ The components are subject to the following constraints:
 7. {:#c-path} A path consists of zero or more path segments.
    Note that a path of just a single zero-length path segment is allowed —
    this is considered equivalent to a path of zero path segments by
-   HTTP and CoAP, but not at the URI processing level CRIs operate at.
+   HTTP and CoAP, but not for CRIs in general as they only perform
+   normalizations on the Syntax-Based Normalization level ({{Section
+   6.2.2 of RFC3986}}).
 
 8. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
