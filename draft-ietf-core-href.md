@@ -326,8 +326,8 @@ more likely to validate:
 * elide the port if it is the default port for the scheme
 ({{<c-port-omitted}});
 * elide a single zero-length path segment ({{<c-path}});
-* map path segments, query parameters and the fragment identifier to NFC
-({{<c-path-segment}}, {{<c-query}}, {{<c-fragment}}).
+* map path segments, query parameters and the fragment identifier to
+  NFC form ({{<c-path-segment}}, {{<c-query}}, {{<c-fragment}}).
 
 Once a CRI has been created, it can be used and transferred without
 further normalization.
