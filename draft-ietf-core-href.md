@@ -755,7 +755,7 @@ percent-encoded.
 
 The above DID URI can now be represented as:
 
-~~~ cri
+~~~ cbor-diag
 [-6, true, [["web:alice:7", ':', "1-balun"]]]
 ~~~
 
