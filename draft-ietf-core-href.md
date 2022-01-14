@@ -263,7 +263,7 @@ these URIs illustrate the constraints by example:
 
   The user information can not be expressed in CRIs.
 
-* URIs with an authority but a completely empty path (eg. `http://example.com`)
+* URIs with an authority but a completely empty path (e.g., `http://example.com`)
 
   CRIs with an authority component always produce at least a slash in the path component.
 
@@ -810,7 +810,7 @@ Changes from -03 to -04:
 
 * Renamed option to section, substructured into items.
 
-* Simplied the table "resolution-variables".
+* Simplified the table "resolution-variables".
 
 * Use the CBOR structure inspired by Jim Schaad's proposals.
 
