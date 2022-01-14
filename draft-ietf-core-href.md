@@ -198,8 +198,9 @@ The components are subject to the following constraints:
 8. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
    segments.
-   Note that this includes the zero-length string, and that no
-   additional constraints are placed on the first path segment.
+   Note that this includes the zero-length string.
+   
+   If no authority is present in a CRI, the leading path segment can not be empty.
 
 9. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
