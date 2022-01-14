@@ -461,8 +461,9 @@ Examples:
 ~~~~
 
 
-A CRI reference is considered *well-formed* if it matches the CDDL
-structure.
+A CRI reference is considered *well-formed* if it matches the
+structure as expressed in {{cddl}} in CDDL, with the additional
+requirement that trailing `null` values are removed from the array.
 
 A CRI reference is considered *absolute* if it is well-formed
 and the sequence of sections starts with a non-null `scheme`.
