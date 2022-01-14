@@ -263,17 +263,6 @@ these URIs illustrate the constraints by example:
 
   The user information can not be expressed in CRIs.
 
-* URIs with an authority but a completely empty path (e.g., `http://example.com`)
-
-  CRIs with an authority component always produce at least a slash in the path component.
-
-  For generic schemes, the conversion of `scheme://example.com` to a CRI is impossible
-  because no CRI produces a URI with an authority not followed by a slash following the rules of {{cri-to-uri}}.
-  Most schemes do not distinguish between the empty path and the path containing a single slash when an authority is set
-  (as recommended in {{RFC3986}}).
-  For these schemes, that equivalence allows converting even the slash-less URI to a CRI
-  (which, when converted back, produces a slash after the authority).
-
 ## Constraints not expressed by the data model
 
 There are syntactically valid CRIs and CRI references that can not be converted into a URI or URI reference, respectively.
@@ -789,6 +778,28 @@ This document has no IANA actions.
 
 # Change Log
 {: removeInRFC="true"}
+
+Changes from -08 to ...
+
+* URIs with an authority but a completely empty path (e.g.,
+  `http://example.com`): CRIs with an authority component no longer
+  always produce at least a slash in the path component.
+
+  For generic schemes, the conversion of `scheme://example.com` to a
+  CRI is now possible
+  because CRI produces a URI with an authority not followed by a slash
+  following the updated rules of {{cri-to-uri}}.
+  Schemes like http and coap do not distinguish between the empty path
+  and the path containing a single slash when an authority is set (as
+  recommended in {{RFC3986}}).
+  For these schemes, that equivalence allows implementations to
+  convert the just-a-slash URI to a CRI with a zero length path array
+  (which, however, when converted back, does not produce a slash after
+  the authority).
+
+  (Issue: how much of this text should be in the body of the document,
+  and where.)
+
 
 Changes from -05 to -06
 
