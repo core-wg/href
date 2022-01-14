@@ -191,15 +191,15 @@ The components are subject to the following constraints:
    that may not know the scheme's default port -->
 
 7. {:#c-path} A path consists of zero or more path segments.
-   A path must not consist of a single zero-length path segment, which
-   is considered equivalent to a path of zero path segments.
+   Note that a path of just a single zero-length path segment is allowed —
+   this is considered equivalent to a path of zero path segments by
+   HTTP and CoAP, but not at the URI processing level CRIs operate at.
 
 8. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
    segments.
-   It can be the zero-length string. No special constraints are placed
-   on the first path segment.
-   <!-- explain last sentence vs. previous item -->
+   Note that this includes the zero-length string, and that no
+   additional constraints are placed on the first path segment.
 
 9. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
@@ -325,7 +325,7 @@ more likely to validate:
   embedded dots;
 * elide the port if it is the default port for the scheme
 ({{<c-port-omitted}});
-* elide a single zero-length path segment ({{<c-path}});
+<!-- * elide a single zero-length path segment ({{<c-path}}); -->
 * map path segments, query parameters and the fragment identifier to
   NFC form ({{<c-path-segment}}, {{<c-query}}, {{<c-fragment}}).
 
