@@ -156,7 +156,9 @@ The components are subject to the following constraints:
 
 2. {:#c-authority} An authority is always a host identified by an IP
    address or registered name, along with optional port information.
-   User information is not supported.
+   User information is not supported (it is often considered to be a
+   deprecated part of the URI syntax, but then see also
+   <https://www.rfc-editor.org/errata/eid5964>).
 
    Alternatively, the authority can be absent; the two cases for this
    defined in {{Section 3.3 of RFC3986}} are modeled by two different
@@ -171,7 +173,10 @@ The components are subject to the following constraints:
 
 3. {:#c-ip-address} An IP address can be either an IPv4 address or an
    IPv6 address, optionally with a zone identifier {{-zone}}.
-   Future versions of IP are not supported.
+   Future versions of IP are not supported (it is likely that a binary
+   mapping would be strongly desirable, and that cannot be designed
+   ahead of time, to these versions need to be added as a future
+   extension if needed).
 
 4. {:#c-reg-name} A registered name is a sequence of one or more
    *labels*, which, when joined with dots (".") in between them,
@@ -194,15 +199,26 @@ The components are subject to the following constraints:
    Note that a path of just a single zero-length path segment is allowed —
    this is considered equivalent to a path of zero path segments by
    HTTP and CoAP, but not for CRIs in general as they only perform
-   normalizations on the Syntax-Based Normalization level ({{Section
-   6.2.2 of RFC3986}}).
+   normalization on the Syntax-Based Normalization level ({{Section
+   6.2.2 of -uri}}, not on the scheme-specific Scheme-Based
+   Normalization level ({{Section 6.2.3 of -uri}}).
+
+   (A CRI implementation may want to offer scheme-cognizant
+   interfaces, performing this scheme-specific normalization for
+   schemes it knows.  The interface could assert which schemes the
+   implementation knows and provide pre-normalized CRIs.  This can
+   also relieve the application from removing a lone zero-length path
+   segment before putting path segments into CoAP Options, i.e., from
+   performing the check and jump in item 8 of {{Section 6.4 of
+   -coap}}.  See also {{<sp-initial-empty}} in {{the-small-print}}.)
 
 8. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
    segments.
    Note that this includes the zero-length string.
-   
+
    If no authority is present in a CRI, the leading path segment can not be empty.
+   (See also {{<sp-initial-empty}} in {{the-small-print}}.)
 
 9. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
