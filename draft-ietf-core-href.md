@@ -795,6 +795,46 @@ This document has no IANA actions.
 
 --- back
 
+# The Small Print
+
+This appendix lists a few corner cases of URI semantics that
+implementers of CRIs need to be aware of, but that are not
+representative of the normal operation of CRIs.
+
+{: type="SP%d."}
+1. {:#sp-initial-empty} Initial (Lone/Leading) Empty Path Segments:
+
+  *  *Lone empty path segments:*
+  As per {{-uri}}, `s://x` is distinct from `s://x/` -- i.e., a URI
+  with an empty path is different from one with a lone empty path segment.
+  However, in HTTP, CoAP, they are implicitly aliased (for CoAP, in
+  item 8 of {{Section 6.4 of -coap}}).
+  As per item 7 of {{Section 6.5 of -coap}}, recomposition of a URI
+  without Uri-Path Options from the other URI-related CoAP Options
+  produces `s://x/`, not `s://x` -- CoAP prefers the lone empty path
+  segment form.
+  [^leps-tbd]
+  After discussing HTTP semantics, {{Section 6.2.3 of -uri}} even states:
+
+  {:quote}
+  > In general, a URI that uses the generic syntax for authority with an
+  empty path should be normalized to a path of "/".
+
+  [^leps-tbd]: TBD: add similar text for HTTP, if that can be made.
+
+  * *Leading empty path segments without authority*:
+  Somewhat related, note also that URIs and URI references that do not
+  carry an authority cannot represent initial empty path segments
+  (i.e., that are followed by further path segments): `s://x//foo`
+  works, but in a `s://foo` URI or an (absolute-path) URI reference of
+  the form `//foo` the double slash would be mis-parsed as leading in
+  to an authority.
+
+[^sp-tbd]
+
+[^sp-tbd]: (TBD: Add more small print/move that over from above.)
+
+
 # Change Log
 {: removeInRFC="true"}
 
