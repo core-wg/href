@@ -950,9 +950,11 @@ good integration with the potential use cases, both inside and outside of CoRAL.
 
 Thanks to
 {{{Christian Amsüss}}},
+{{{Thomas Fossati}}},
 {{{Ari Keränen}}},
-{{{Jim Schaad}}} and
-{{{Dave Thaler}}}
+{{{Jim Schaad}}},
+{{{Dave Thaler}}} and
+{{{Marco Tiloca}}}
 for helpful comments and discussions that have shaped the
 document.
 
