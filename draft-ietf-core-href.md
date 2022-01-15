@@ -156,7 +156,9 @@ The components are subject to the following constraints:
 
 2. {:#c-authority} An authority is always a host identified by an IP
    address or registered name, along with optional port information.
-   User information is not supported.
+   User information is not supported (it is often considered to be a
+   deprecated part of the URI syntax, but then see also
+   <https://www.rfc-editor.org/errata/eid5964>).
 
    Alternatively, the authority can be absent; the two cases for this
    defined in {{Section 3.3 of RFC3986}} are modeled by two different
@@ -171,7 +173,10 @@ The components are subject to the following constraints:
 
 3. {:#c-ip-address} An IP address can be either an IPv4 address or an
    IPv6 address, optionally with a zone identifier {{-zone}}.
-   Future versions of IP are not supported.
+   Future versions of IP are not supported (it is likely that a binary
+   mapping would be strongly desirable, and that cannot be designed
+   ahead of time, to these versions need to be added as a future
+   extension if needed).
 
 4. {:#c-reg-name} A registered name is a sequence of one or more
    *labels*, which, when joined with dots (".") in between them,
@@ -191,15 +196,29 @@ The components are subject to the following constraints:
    that may not know the scheme's default port -->
 
 7. {:#c-path} A path consists of zero or more path segments.
-   A path must not consist of a single zero-length path segment, which
-   is considered equivalent to a path of zero path segments.
+   Note that a path of just a single zero-length path segment is allowed —
+   this is considered equivalent to a path of zero path segments by
+   HTTP and CoAP, but not for CRIs in general as they only perform
+   normalization on the Syntax-Based Normalization level ({{Section
+   6.2.2 of -uri}}, not on the scheme-specific Scheme-Based
+   Normalization level ({{Section 6.2.3 of -uri}}).
+
+   (A CRI implementation may want to offer scheme-cognizant
+   interfaces, performing this scheme-specific normalization for
+   schemes it knows.  The interface could assert which schemes the
+   implementation knows and provide pre-normalized CRIs.  This can
+   also relieve the application from removing a lone zero-length path
+   segment before putting path segments into CoAP Options, i.e., from
+   performing the check and jump in item 8 of {{Section 6.4 of
+   -coap}}.  See also {{<sp-initial-empty}} in {{the-small-print}}.)
 
 8. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
    segments.
-   It can be the zero-length string. No special constraints are placed
-   on the first path segment.
-   <!-- explain last sentence vs. previous item -->
+   Note that this includes the zero-length string.
+
+   If no authority is present in a CRI, the leading path segment can not be empty.
+   (See also {{<sp-initial-empty}} in {{the-small-print}}.)
 
 9. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
@@ -263,17 +282,6 @@ these URIs illustrate the constraints by example:
 
   The user information can not be expressed in CRIs.
 
-* URIs with an authority but a completely empty path (eg. `http://example.com`)
-
-  CRIs with an authority component always produce at least a slash in the path component.
-
-  For generic schemes, the conversion of `scheme://example.com` to a CRI is impossible
-  because no CRI produces a URI with an authority not followed by a slash following the rules of {{cri-to-uri}}.
-  Most schemes do not distinguish between the empty path and the path containing a single slash when an authority is set
-  (as recommended in {{RFC3986}}).
-  For these schemes, that equivalence allows converting even the slash-less URI to a CRI
-  (which, when converted back, produces a slash after the authority).
-
 ## Constraints not expressed by the data model
 
 There are syntactically valid CRIs and CRI references that can not be converted into a URI or URI reference, respectively.
@@ -325,9 +333,9 @@ more likely to validate:
   embedded dots;
 * elide the port if it is the default port for the scheme
 ({{<c-port-omitted}});
-* elide a single zero-length path segment ({{<c-path}});
-* map path segments, query parameters and the fragment identifier to NFC
-({{<c-path-segment}}, {{<c-query}}, {{<c-fragment}}).
+<!-- * elide a single zero-length path segment ({{<c-path}}); -->
+* map path segments, query parameters and the fragment identifier to
+  NFC form ({{<c-path-segment}}, {{<c-query}}, {{<c-fragment}}).
 
 Once a CRI has been created, it can be used and transferred without
 further normalization.
@@ -461,8 +469,9 @@ Examples:
 ~~~~
 
 
-A CRI reference is considered *well-formed* if it matches the CDDL
-structure.
+A CRI reference is considered *well-formed* if it matches the
+structure as expressed in {{cddl}} in CDDL, with the additional
+requirement that trailing `null` values are removed from the array.
 
 A CRI reference is considered *absolute* if it is well-formed
 and the sequence of sections starts with a non-null `scheme`.
@@ -754,7 +763,7 @@ percent-encoded.
 
 The above DID URI can now be represented as:
 
-~~~ cri
+~~~ cbor-diag
 [-6, true, [["web:alice:7", ':', "1-balun"]]]
 ~~~
 
@@ -786,8 +795,97 @@ This document has no IANA actions.
 
 --- back
 
+# The Small Print
+
+This appendix lists a few corner cases of URI semantics that
+implementers of CRIs need to be aware of, but that are not
+representative of the normal operation of CRIs.
+
+{: type="SP%d."}
+1. {:#sp-initial-empty} Initial (Lone/Leading) Empty Path Segments:
+
+  *  *Lone empty path segments:*
+  As per {{-uri}}, `s://x` is distinct from `s://x/` -- i.e., a URI
+  with an empty path is different from one with a lone empty path segment.
+  However, in HTTP, CoAP, they are implicitly aliased (for CoAP, in
+  item 8 of {{Section 6.4 of -coap}}).
+  As per item 7 of {{Section 6.5 of -coap}}, recomposition of a URI
+  without Uri-Path Options from the other URI-related CoAP Options
+  produces `s://x/`, not `s://x` -- CoAP prefers the lone empty path
+  segment form.
+  [^leps-tbd]
+  After discussing HTTP semantics, {{Section 6.2.3 of -uri}} even states:
+
+  {:quote}
+  > In general, a URI that uses the generic syntax for authority with an
+  empty path should be normalized to a path of "/".
+
+  [^leps-tbd]: TBD: add similar text for HTTP, if that can be made.
+
+  * *Leading empty path segments without authority*:
+  Somewhat related, note also that URIs and URI references that do not
+  carry an authority cannot represent initial empty path segments
+  (i.e., that are followed by further path segments): `s://x//foo`
+  works, but in a `s://foo` URI or an (absolute-path) URI reference of
+  the form `//foo` the double slash would be mis-parsed as leading in
+  to an authority.
+
+[^sp-tbd]
+
+[^sp-tbd]: (TBD: Add more small print/move that over from above.)
+
+
 # Change Log
 {: removeInRFC="true"}
+
+Changes from -08 to -09
+
+* Identify more esoteric features with a CDDL ".feature".
+
+* Clarify that well-formedness requires removing trailing nulls.
+
+* Fragments can contain PET.
+
+* Percent-encoded text in PET is treated as byte strings.
+
+* URIs with an authority but a completely empty path (e.g.,
+  `http://example.com`): CRIs with an authority component no longer
+  always produce at least a slash in the path component.
+
+  For generic schemes, the conversion of `scheme://example.com` to a
+  CRI is now possible
+  because CRI produces a URI with an authority not followed by a slash
+  following the updated rules of {{cri-to-uri}}.
+  Schemes like http and coap do not distinguish between the empty path
+  and the path containing a single slash when an authority is set (as
+  recommended in {{RFC3986}}).
+  For these schemes, that equivalence allows implementations to
+  convert the just-a-slash URI to a CRI with a zero length path array
+  (which, however, when converted back, does not produce a slash after
+  the authority).
+
+  (Add an appendix "the small print" for more detailed discussion of
+  pesky corner cases like this.)
+
+Changes from -07 to -08
+
+* Fix the encoding of NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH
+
+* Add URN and DID schemes, add example.
+
+* Add PET
+
+* Remove hopeless attempt to encode "remote trailing nulls" rule in
+  CDDL (which is not a transformation language).
+
+Changes from -06 to -07
+
+* More explicitly discuss constraints ({{constraints}}), add examples ({{constraints-by-example}}).
+
+* Make CDDL more explicit about special simple values.
+
+* Lots of gratuitous changes from XML2RFC redefinition of `<tt>`
+  semantics.
 
 Changes from -05 to -06
 
@@ -809,7 +907,7 @@ Changes from -03 to -04:
 
 * Renamed option to section, substructured into items.
 
-* Simplied the table "resolution-variables".
+* Simplified the table "resolution-variables".
 
 * Use the CBOR structure inspired by Jim Schaad's proposals.
 
@@ -852,9 +950,11 @@ good integration with the potential use cases, both inside and outside of CoRAL.
 
 Thanks to
 {{{Christian Amsüss}}},
+{{{Thomas Fossati}}},
 {{{Ari Keränen}}},
-{{{Jim Schaad}}} and
-{{{Dave Thaler}}}
+{{{Jim Schaad}}},
+{{{Dave Thaler}}} and
+{{{Marco Tiloca}}}
 for helpful comments and discussions that have shaped the
 document.
 
