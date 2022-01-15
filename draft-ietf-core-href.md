@@ -838,7 +838,15 @@ representative of the normal operation of CRIs.
 # Change Log
 {: removeInRFC="true"}
 
-Changes from -08 to ...
+Changes from -08 to -09
+
+* Identify more esoteric features with a CDDL ".feature".
+
+* Clarify that well-formedness requires removing trailing nulls.
+
+* Fragments can contain PET.
+
+* Percent-encoded text in PET is treated as byte strings.
 
 * URIs with an authority but a completely empty path (e.g.,
   `http://example.com`): CRIs with an authority component no longer
@@ -856,9 +864,28 @@ Changes from -08 to ...
   (which, however, when converted back, does not produce a slash after
   the authority).
 
-  (Issue: how much of this text should be in the body of the document,
-  and where.)
+  (Add an appendix "the small print" for more detailed discussion of
+  pesky corner cases like this.)
 
+Changes from -07 to -08
+
+* Fix the encoding of NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH
+
+* Add URN and DID schemes, add example.
+
+* Add PET
+
+* Remove hopeless attempt to encode "remote trailing nulls" rule in
+  CDDL (which is not a transformation language).
+
+Changes from -06 to -07
+
+* More explicitly discuss constraints ({{constraints}}), add examples ({{constraints-by-example}}).
+
+* Make CDDL more explicit about special simple values.
+
+* Lots of gratuitous changes from XML2RFC redefinition of `<tt>`
+  semantics.
 
 Changes from -05 to -06
 
