@@ -533,7 +533,9 @@ an absolute CRI reference:
    fragment, and set a `true` authority to `null`.  If the value of
    discard is an unsigned number, remove as many elements
    from the end of the path array; if it is non-zero, unset query and
-   fragment.  Set discard to `true` in the buffer.
+   fragment.
+
+   Set discard to `true` in the buffer.
 
 4. If the path section is set in the CRI reference, append all
    elements from the path array to the array in the path section in
