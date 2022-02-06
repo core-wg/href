@@ -89,14 +89,14 @@
     {
       "uri": "../a",
       "cri": "8202816161",
-      "uri-from-cri": "a",
+      "uri-from-cri": "../a",
       "resolved-cri": "83218263666f6f191267816161",
       "resolved-uri": "coaps://foo:4711/a"
     },
     {
       "uri": "../a/b/../c/.",
       "cri": "82028261616163",
-      "uri-from-cri": "a/c",
+      "uri-from-cri": "../a/c",
       "resolved-cri": "83218263666f6f1912678261616163",
       "resolved-uri": "coaps://foo:4711/a/c"
     },
