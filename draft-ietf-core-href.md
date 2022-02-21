@@ -633,24 +633,29 @@ authority
 
 path
 : If the CRI reference contains a `discard` item of value `true`, the
-  path component is prefixed by a slash ("/") character.  If it
+  path component is considered *rooted*.  If it
   contains a `discard` item of value `0` and the `path` item is
   present, the conversion fails.  If it contains a positive discard
-  item, the path component is
+  item, the path component is considered *unrooted* and
   prefixed by as many "../" components as the `discard` value minus
   one indicates.
 
   If the discard item is not present and the CRI reference contains an
   authority that is `true`, the path component of the URI reference is
-  prefixed by the zero-length string.  Otherwise, the path component
-  is prefixed by a slash ("/") character.
+  considered unrooted.  Otherwise, the path component is considered
+  rooted.
 
-  If the CRI reference contains one or more `path` items, the prefix
-  is followed by the value of each item, separated by a slash ("/")
-  character.  <!-- A path segment that contains a colon character (e.g., -->
-  <!-- "this:that") cannot directly be used as the first such item.  Such a -->
-  <!-- segment MUST be preceded by a dot-segment (e.g., "./this:that") -->
-  <!-- unless scheme and/or authority are present. -->
+  If the CRI reference contains one or more `path` items, the path
+  component is constructed by concatenating the sequence of
+  representations of these items.  These representations generally
+  contain a leading slash ("/") character and the value of each item,
+  processed as discussed below.  The leading slash character is
+  omitted for the first path item only if the path component is
+  considered "unrooted".  <!-- A path segment that contains a colon
+  character (e.g., --> <!-- "this:that") cannot directly be used as
+  the first such item.  Such a --> <!-- segment MUST be preceded by a
+  dot-segment (e.g., "./this:that") --> <!-- unless scheme and/or
+  authority are present. -->
 
   Any character in the value of a `path` item that is not
   in the set of unreserved characters or "sub-delims" or a colon
