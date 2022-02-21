@@ -528,7 +528,8 @@ an absolute CRI reference:
 
 2. Initialize a buffer with the sections from the base CRI.
 
-3. If the value of discard is `true` in the CRI reference, replace the
+3. If the value of discard is `true` in the CRI reference (which is
+   implicitly the case when scheme and/or authority are present in the reference), replace the
    path in the buffer with the empty array, unset query and
    fragment, and set a `true` authority to `null`.  If the value of
    discard is an unsigned number, remove as many elements
