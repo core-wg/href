@@ -543,8 +543,9 @@ an absolute CRI reference:
    the buffer; unset query and fragment.
 
 5. Apart from the path and discard, copy all non-null sections from
-   the CRI reference to the buffer in sequence; unset fragment if
-   query is non-null and thus copied.
+   the CRI reference to the buffer in sequence; unset fragment in the buffer if
+   query is non-null in the CRI reference (and therefore has been
+   copied to the buffer).
 
 6. Return the sections in the buffer as the resolved CRI.
 
