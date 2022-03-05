@@ -779,6 +779,8 @@ The above DID URI can now be represented as:
 
 With the exception of the authority=true fix, host-names split into
 labels, and {{pet}}, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
+A golang implementation of version -10 of this document is found at:
+`https://github.com/thomas-fossati/href`
 <!-- see RFC 7942 -->
 
 # Security Considerations {#security}
