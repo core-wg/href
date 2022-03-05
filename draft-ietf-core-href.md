@@ -63,6 +63,7 @@ normative:
   RFC3986: uri
   RFC3987: iri
   RFC6874: zone
+  I-D.carpenter-6man-rfc6874bis: zonebis
   RFC8610: cddl
   Unicode:
     target: https://www.unicode.org/versions/Unicode13.0.0/
@@ -608,8 +609,8 @@ authority
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
   Any zone-id is appended to the string, separated by "%25" as
-  defined in {{Section 2 of -zone}}, or as specified in a successor
-  zone-id specification document; this also leads to a modified
+  defined in {{Section 2 of -zone}}, or as specified in a superseding
+  zone-id specification document {{-zonebis}}; this also leads to a modified
   "IP-literal" rule as specified in these documents.
 
   If the CRI reference contains a `port` item, the port
