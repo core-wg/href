@@ -434,8 +434,9 @@ It then expresses the operations performed on a base CRI by CRI references that
 are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.
 E.g., a simple URI reference "foo" specifies to remove one leading segment
 from the base URI's path, which is represented in the equivalent CRI
-reference discard section as the value `1`; similarly "../foo", two segments,
-`2`; and "/foo", all segments, represented in the `discard` section as the value `true`.
+reference discard section as the value `1`; similarly "../foo" removes
+two leading segments, represented as `2`;
+and "/foo" removes all segments, represented in the `discard` section as the value `true`.
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
 
