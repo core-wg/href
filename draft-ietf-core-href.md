@@ -156,10 +156,8 @@ The components are subject to the following constraints:
    The scheme is always present.
 
 2. {:#c-authority} An authority is always a host identified by an IP
-   address or registered name, along with optional port information.
-   User information is not supported (it is often considered to be a
-   deprecated part of the URI syntax, but then see also
-   <https://www.rfc-editor.org/errata/eid5964>).
+   address or registered name, along with optional port information,
+   and optionally preceded by user information.
 
    Alternatively, the authority can be absent; the two cases for this
    defined in {{Section 3.3 of RFC3986}} are modeled by two different
@@ -582,14 +580,25 @@ authority
 : If the CRI reference contains a `host-name` or `host-ip` item, the
   authority component of the URI reference consists of a host
   subcomponent, optionally followed by a colon (":") character and a
-  port subcomponent.  Otherwise, the authority component is unset.
+  port subcomponent, optionally preceded by a `userinfo` subcomponent.
+  Otherwise, the authority component is unset.
 
   The host subcomponent consists of the value of the `host-name` or
   `host-ip` item.
 
+  The `userinfo` subcomponent, if present, is turned into a single
+  string by joining the elements separated by colons (":") and
+  appending a "@".  Otherwise, both the subcomponent and the "@" sign
+  are omitted.
+  Any character in the value of the `userinfo` elements that is not in
+  the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
+  "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
+  percent-encoded.
+
   The `host-name` is turned into a single string by joining the
   elements separated by dots (".").
-  Any character in the value of a `host-name` item that is not in
+  Any character in the elements of a `host-name` item that is a dot
+  ("."), or not in
   the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
   "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
   percent-encoded.
@@ -708,11 +717,12 @@ did:web:alice:7%3A1-balun
 ~~~
 
 This section presents a method to represent percent-encoded segments
-of hostnames, paths, and queries.
+of userinfo, hostnames, paths, and queries, as well as fragments.
 
 The four CDDL rules
 
 ~~~ cddl
+userinfo    = [*text] .feature "userinfo"
 host-name   = (*text)
 path        = [*text]
 query       = [*text]
@@ -722,6 +732,7 @@ fragment    = text
 are replaced with
 
 ~~~ cddl
+userinfo    = [*text-or-pet] .feature "userinfo"
 host-name   = (*text-or-pet)
 path        = [*text-or-pet]
 query       = [*text-or-pet]
@@ -737,7 +748,7 @@ pet1 = bytes .ne ''
 text1 = text .ne ""
 ~~~
 
-That is, for each of the host-name, path, and query segments, and for
+That is, for each of the userinfo, host-name, path, and query segments, and for
 the fragment component, an alternate representation is provided
 besides a simple text string: a non-empty array of alternating non-blank text and byte
 strings, the text strings of which stand for non-percent-encoded text,
@@ -849,8 +860,9 @@ representative of the normal operation of CRIs.
 
    * `https://alice@example.com/`
 
-     The user information can not be expressed in CRIs.
-
+     The user information can be expressed in CRIs if the "userinfo"
+     feature is present.  The URI `https://@example.com` is
+     represented as `[-4, [[], "example", "com"]]`.
 
 # Change Log
 {:removeinrfc}

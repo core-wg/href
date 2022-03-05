@@ -20,7 +20,8 @@ no-authority = NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH
 NOAUTH-LEADINGSLASH = null .feature "no-authority"
 NOAUTH-NOSLASH = true .feature "no-authority"
 
-authority   = [host, ?port]
+authority   = [?userinfo, host, ?port]
+userinfo    = [*text] .feature "userinfo" ; split on ":"
 host        = (host-ip // host-name)
 host-name   = (*text) ; lowercase, NFC labels
 host-ip     = (bytes .size 4 //
