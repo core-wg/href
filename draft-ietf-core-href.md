@@ -432,6 +432,9 @@ The `discard` section can be used in a CRI reference when neither a
 scheme nor an authority is present.
 It then expresses the operations performed on a base CRI by CRI references that
 are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.
+"." and ".." are not available in CRIs and are therefore expressed
+using `discard` after a normalization step, as is the presence or absence of a leading "/".
+
 E.g., a simple URI reference "foo" specifies to remove one leading segment
 from the base URI's path, which is represented in the equivalent CRI
 reference discard section as the value `1`; similarly "../foo" removes
