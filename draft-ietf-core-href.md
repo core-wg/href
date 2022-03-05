@@ -284,7 +284,7 @@ these URIs illustrate the constraints by example:
 
 ## Constraints not expressed by the data model
 
-There are syntactically valid CRIs and CRI references that can not be converted into a URI or URI reference, respectively.
+There are syntactically valid CRIs and CRI references that cannot be converted into a URI or URI reference, respectively.
 
 For CRI references, this is acceptable -- they can be resolved still and result in a valid CRI that can be converted back.
 (An example of this is `[0, ["p"]]` which appends a slash and the path segment "p" to its base).
