@@ -175,7 +175,7 @@ The components are subject to the following constraints:
    IPv6 address, optionally with a zone identifier {{-zone}}.
    Future versions of IP are not supported (it is likely that a binary
    mapping would be strongly desirable, and that cannot be designed
-   ahead of time, to these versions need to be added as a future
+   ahead of time, so these versions need to be added as a future
    extension if needed).
 
 4. {:#c-reg-name} A registered name is a sequence of one or more
