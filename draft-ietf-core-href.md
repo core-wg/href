@@ -677,7 +677,7 @@ fragment
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
 
-# Extended CRI: Accommodating Percent Encoding {#pet}
+# Extended CRI: Accommodating Percent Encoding (PET) {#pet}
 
 CRIs have been designed to relieve implementations operating on CRIs
 from string scanning, which both helps constrained implementations and
@@ -818,9 +818,38 @@ representative of the normal operation of CRIs.
   the form `//foo` the double slash would be mis-parsed as leading in
   to an authority.
 
-[^sp-tbd]
+{:sp}
+2. {:#sp-constraints} Constraints ({{constraints}}) of CRIs/basic CRIs
 
-[^sp-tbd]: (TBD: Add more small print/move that over from above.)
+   While most URIs in everyday use can be converted to CRIs and back to URIs
+   matching the input after syntax-based normalization of the URI,
+   these URIs illustrate the constraints by example:
+
+   * `https://host%ffname`, `https://example.com/x?data=%ff`
+
+     All URI components must, after percent decoding, be valid UTF-8 encoded text.
+     Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.
+     <!-- <https://www.bittorrent.org/beps/bep_0017.html>, not sure this warrants an informative reference -->
+
+   * `https://example.com/component%3bone;component%3btwo`, `http://example.com/component%3dequals`
+
+     While delimiters can be used in an escaped and unescaped form in URIs with generally distinct meanings,
+     basic CRIs (i.e., without percent-encoded text {{pet}}) only support one escapable delimiter character per component,
+     which is the delimiter by which the component is split up in the CRI.
+
+     Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
+     are special in that they are syntactic delimiters of their respective components in CRIs.
+     Thus, the following examples *are* convertible to basic CRIs:
+
+     `https://interior%2edot/`
+
+     `https://example.com/path%2fcomponent/second-component`
+
+     `https://example.com/x?ampersand=%26&questionmark=?`
+
+   * `https://alice@example.com/`
+
+     The user information can not be expressed in CRIs.
 
 
 # Change Log
@@ -868,7 +897,7 @@ Changes from -07 to -08
 
 Changes from -06 to -07
 
-* More explicitly discuss constraints ({{constraints}}), add examples ({{constraints-by-example}}).
+* More explicitly discuss constraints ({{constraints}}), add examples ({{sp-constraints}}).
 
 * Make CDDL more explicit about special simple values.
 
