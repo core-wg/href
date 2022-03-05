@@ -425,11 +425,17 @@ represented by using the `discard` alternative instead.
 The rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the (sub-)components of a CRI, as described in
 {{constraints}}, with the addition of the `discard` section.
-The `discard` section can be used when neither a scheme nor an
-authority is present.
-It then expresses path
-prefixes such as "/",
-"./", "../", "../../", etc.
+
+### The `discard` Section
+
+The `discard` section can be used in a CRI reference when neither a
+scheme nor an authority is present.
+It then expresses the operations performed on a base CRI by CRI references that
+are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.
+E.g., a simple URI reference "foo" specifies to remove one leading segment
+from the base URI's path, which is represented in the equivalent CRI
+reference discard section as the value `1`; similarly "../foo", two segments,
+`2`; and "/foo", all segments, represented in the `discard` section as the value `true`.
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
 
@@ -437,24 +443,23 @@ Most URI references that {{Section 4.2 of RFC3986}} calls "relative
 references" (i.e., references that need to undergo a resolution
 process to obtain a URI) correspond to the CRI form that starts with
 `discard`.  The exception are relative references with an `authority`
-(called a "network-path reference" in {{Section 4.2 of RFC3986}}),
-which in CRI references never carry a `discard` section (the value of
-`discard` defaults to `true`).
+(called a "network-path reference" in {{Section 4.2 of RFC3986}}), which
+discard the entire path of the base CRI.
+These CRI references never carry a `discard` section: the value of
+`discard` defaults to `true`.
 
-<aside markdown="1">
-The structure of a CRI is visualized using the somewhat limited means
-of a railroad diagram below.
+### Visualization
+
+The structure of a CRI reference is visualized using the somewhat limited means
+of a railroad diagram:
 
 ~~~ railroad-utf8
 cri-reference = [((scheme authority) / discard) [path [query [fragment]]]]
 ~~~
 
 This visualization does not go into the details of the elements.
-</aside>
 
-
-
-Examples:
+### Examples
 
 ~~~~ cbor-diag
 {::include example/href-cri-reference-1.diag}
@@ -468,6 +473,7 @@ Examples:
 {::include example/href-cri-reference-3.diag}
 ~~~~
 
+### Specific Terminology
 
 A CRI reference is considered *well-formed* if it matches the
 structure as expressed in {{cddl}} in CDDL, with the additional
