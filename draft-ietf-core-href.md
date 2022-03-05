@@ -408,7 +408,7 @@ resolved to their respective CRI before comparison.
 
 ## CBOR Serialization {#cbor-serialization}
 
-A CRI reference is encoded as a CBOR array {{RFC8949}}, with the
+A CRI or CRI reference is encoded as a CBOR array {{RFC8949}}, with the
 structure as described in the [Concise Data Definition Language
 (CDDL)](#RFC8610) as follows:
 
@@ -418,14 +418,14 @@ structure as described in the [Concise Data Definition Language
 {: #cddl title="CDDL for CRI CBOR serialization"}
 
 This CDDL specification is simplified for exposition and needs to be augmented by the
-following rule for interchange: Trailing null values MUST be removed, and
+following rule for interchange of CRIs and CRI references: Trailing null values MUST be removed, and
 two leading null values (scheme and authority both not given) are
 represented by using the `discard` alternative instead.
 
 The rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the (sub-)components of a CRI, as described in
 {{constraints}}, with the addition of the `discard` section.
-The `discard` section can be used when neither a scheme nor an
+The `discard` section can be used in a CRI reference when neither a scheme nor an
 authority is present.
 It then expresses path
 prefixes such as "/",
@@ -442,7 +442,7 @@ which in CRI references never carry a `discard` section (the value of
 `discard` defaults to `true`).
 
 <aside markdown="1">
-The structure of a CRI is visualized using the somewhat limited means
+The structure of a CRI reference is visualized using the somewhat limited means
 of a railroad diagram below.
 
 ~~~ railroad-utf8
