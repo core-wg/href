@@ -178,11 +178,13 @@ The components are subject to the following constraints:
    ahead of time, to these versions need to be added as a future
    extension if needed).
 
-4. {:#c-reg-name} A registered name is a sequence of one or more
+4. {:#c-reg-name} A registered name is a sequence of zero or more
    *labels*, which, when joined with dots (".") in between them,
    result in a Unicode string that is lowercase and in Unicode
    Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
-   (The syntax may be further restricted by the scheme.)
+   (The syntax may be further restricted by the scheme.
+   As per {{Section 3.2.2 of -uri}}, a registered name can be empty, for
+   which case a scheme can define a default for the host.)
 
 5. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
    Ports outside this range, empty ports (port subcomponents with no
