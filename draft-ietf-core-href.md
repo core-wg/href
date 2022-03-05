@@ -256,37 +256,7 @@ The components are subject to the following constraints:
    of bytes (that is then converted to a sequence of %HH triplets).
    <!-- As per 3986 2.1, use uppercase hex. -->
 
-## Constraints by example
-
-While most URIs in everyday use can be converted to CRIs and back to URIs
-matching the input after syntax-based normalization of the URI,
-these URIs illustrate the constraints by example:
-
-* `https://host%ffname`, `https://example.com/x?data=%ff`
-
-  All URI components must, after percent decoding, be valid UTF-8 encoded text.
-  Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.
-  <!-- <https://www.bittorrent.org/beps/bep_0017.html>, not sure this warrants an informative reference -->
-
-* `https://example.com/component%3bone;component%3btwo`, `http://example.com/component%3dequals`
-
-  While delimiters can be used in an escaped and unescaped form in URIs with generally distinct meanings,
-  CRIs only support one escapable delimiter character per component,
-  which is the delimiter by which the component is split up in the CRI.
-
-  Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
-  are special in that they are syntactic delimiters of their respective components in CRIs.
-  Thus, the following examples *are* convertible to CRIs:
-
-  `https://interior%2edot/`
-
-  `https://example.com/path%2fcomponent/second-component`
-
-  `https://example.com/x?ampersand=%26&questionmark=?`
-
-* `https://alice@example.com/`
-
-  The user information can not be expressed in CRIs.
+Examples for URIs at or beyond the boundaries of these constraints are in {{<sp-constraints}} in {{the-small-print}}.
 
 ## Constraints not expressed by the data model
 
@@ -580,7 +550,7 @@ However, it may be necessary in other environments to determine the
 associated URI or IRI of a CRI, and vice versa. Applications can perform
 these conversions as follows:
 
-{: vspace='0'}
+{:vspace}
 CRI to URI
 : A CRI is converted to a URI as specified in {{cri-to-uri}}.
 
@@ -611,8 +581,7 @@ reference by determining the components of the URI reference according
 to the following steps and then recomposing the components to a URI
 reference string as specified in {{Section 5.3 of RFC3986}}.
 
-{: vspace='0'}
-
+{:vspace}
 scheme
 : If the CRI reference contains a `scheme` section, the scheme
   component of the URI reference consists of the value of that
@@ -824,11 +793,13 @@ This document has no IANA actions.
 
 # The Small Print
 
+{:sp: type="SP%d." group="SP"}
+
 This appendix lists a few corner cases of URI semantics that
 implementers of CRIs need to be aware of, but that are not
 representative of the normal operation of CRIs.
 
-{: type="SP%d."}
+{:sp}
 1. {:#sp-initial-empty} Initial (Lone/Leading) Empty Path Segments:
 
   *  *Lone empty path segments:*
@@ -863,7 +834,7 @@ representative of the normal operation of CRIs.
 
 
 # Change Log
-{: removeInRFC="true"}
+{:removeinrfc}
 
 Changes from -08 to -09
 
