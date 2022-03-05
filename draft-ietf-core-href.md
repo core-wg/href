@@ -86,6 +86,10 @@ memory size.
 
 --- middle
 
+[^replace-xxxx]: RFC Ed.: throughout this section, please replace
+    RFC-XXXX with the RFC number of this specification and remove this
+    note.
+
 # Introduction
 
 The [Uniform Resource Identifier (URI)](#RFC3986) and its most common
@@ -410,7 +414,7 @@ resolved to their respective CRI before comparison.
 
 A CRI or CRI reference is encoded as a CBOR array {{RFC8949}}, with the
 structure as described in the [Concise Data Definition Language
-(CDDL)](#RFC8610) as follows:
+(CDDL)](#RFC8610) as follows: [^replace-xxxx]
 
 ~~~~ cddl
 {::include cddl/cri.cddl}
