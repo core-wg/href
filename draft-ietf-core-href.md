@@ -170,7 +170,13 @@ The components are subject to the following constraints:
    (Note that in {{cddl}}, `no-authority` is marked as a feature, as
    not all CRI implementations will support authority-less URIs.)
 
-3. {:#c-ip-address} An IP address can be either an IPv4 address or an
+3. {:#c-userinfo} A userinfo is a text string built out of unreserved
+  characters ({{Section 2.3 of RFC3986}}) or "sub-delims" ({{Section 2.2
+  of RFC3986}}); any other character needs to be percent-encoded ({{pet}}).
+   Note that this excludes the ":" character, which is commonly
+   deprecated as a way to delimit a cleartext password in a userinfo.
+
+4. {:#c-ip-address} An IP address can be either an IPv4 address or an
    IPv6 address, optionally with a zone identifier {{-zone}}.
    Future versions of IP are not supported (it is likely that a binary
    mapping would be strongly desirable, and that cannot be designed
