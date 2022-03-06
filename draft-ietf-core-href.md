@@ -86,6 +86,10 @@ memory size.
 
 --- middle
 
+[^replace-xxxx]: RFC Ed.: throughout this section, please replace
+    RFC-XXXX with the RFC number of this specification and remove this
+    note.
+
 # Introduction
 
 The [Uniform Resource Identifier (URI)](#RFC3986) and its most common
@@ -178,11 +182,13 @@ The components are subject to the following constraints:
    ahead of time, to these versions need to be added as a future
    extension if needed).
 
-4. {:#c-reg-name} A registered name is a sequence of one or more
+4. {:#c-reg-name} A registered name is a sequence of zero or more
    *labels*, which, when joined with dots (".") in between them,
    result in a Unicode string that is lowercase and in Unicode
    Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
-   (The syntax may be further restricted by the scheme.)
+   (The syntax may be further restricted by the scheme.
+   As per {{Section 3.2.2 of -uri}}, a registered name can be empty, for
+   which case a scheme can define a default for the host.)
 
 5. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
    Ports outside this range, empty ports (port subcomponents with no
@@ -284,7 +290,7 @@ these URIs illustrate the constraints by example:
 
 ## Constraints not expressed by the data model
 
-There are syntactically valid CRIs and CRI references that can not be converted into a URI or URI reference, respectively.
+There are syntactically valid CRIs and CRI references that cannot be converted into a URI or URI reference, respectively.
 
 For CRI references, this is acceptable -- they can be resolved still and result in a valid CRI that can be converted back.
 (An example of this is `[0, ["p"]]` which appends a slash and the path segment "p" to its base).
@@ -408,9 +414,9 @@ resolved to their respective CRI before comparison.
 
 ## CBOR Serialization {#cbor-serialization}
 
-A CRI reference is encoded as a CBOR array {{RFC8949}}, with the
+A CRI or CRI reference is encoded as a CBOR array {{RFC8949}}, with the
 structure as described in the [Concise Data Definition Language
-(CDDL)](#RFC8610) as follows:
+(CDDL)](#RFC8610) as follows: [^replace-xxxx]
 
 ~~~~ cddl
 {::include cddl/cri.cddl}
@@ -418,7 +424,7 @@ structure as described in the [Concise Data Definition Language
 {: #cddl title="CDDL for CRI CBOR serialization"}
 
 This CDDL specification is simplified for exposition and needs to be augmented by the
-following rule for interchange: Trailing null values MUST be removed, and
+following rule for interchange of CRIs and CRI references: Trailing null values MUST be removed, and
 two leading null values (scheme and authority both not given) are
 represented by using the `discard` alternative instead.
 
@@ -553,8 +559,9 @@ an absolute CRI reference:
    the buffer; unset query and fragment.
 
 5. Apart from the path and discard, copy all non-null sections from
-   the CRI reference to the buffer in sequence; unset fragment if
-   query is non-null and thus copied.
+   the CRI reference to the buffer in sequence; unset fragment in the buffer if
+   query is non-null in the CRI reference (and therefore has been
+   copied to the buffer).
 
 6. Return the sections in the buffer as the resolved CRI.
 
