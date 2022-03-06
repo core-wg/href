@@ -228,7 +228,7 @@ The components are subject to the following constraints:
    segments.
    Note that this includes the zero-length string.
 
-   If no authority is present in a CRI, the leading path segment can not be empty.
+   If no authority is present in a CRI, the leading path segment cannot be empty.
    (See also {{<sp-initial-empty}} in {{the-small-print}}.)
 
 10. {:#c-query} A query always consists of one or more query parameters.
@@ -265,12 +265,12 @@ Examples for URIs at or beyond the boundaries of these constraints are in {{<sp-
 
 ## Constraints not expressed by the data model
 
-There are syntactically valid CRIs and CRI references that can not be converted into a URI or URI reference, respectively.
+There are syntactically valid CRIs and CRI references that cannot be converted into a URI or URI reference, respectively.
 
 For CRI references, this is acceptable -- they can be resolved still and result in a valid CRI that can be converted back.
 (An example of this is `[0, ["p"]]` which appends a slash and the path segment "p" to its base).
 
-(Full) CRIs that do not correspond to a valid URI are not valid on their own, and can not be used.
+(Full) CRIs that do not correspond to a valid URI are not valid on their own, and cannot be used.
 Normatively they are characterized by the {{cri-to-uri}} process producing a valid and syntax-normalized URI.
 For easier understanding, they are listed here:
 
@@ -285,7 +285,7 @@ For easier understanding, they are listed here:
 
 * CRIs without authority whose path starts with two or more empty segments.
 
-  When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path can not begin with two slash characters,
+  When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
   and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
 
 # Creation and Normalization
