@@ -177,24 +177,24 @@ The components are subject to the following constraints:
    ahead of time, so these versions need to be added as a future
    extension if needed).
 
-4. {:#c-reg-name} A registered name is a sequence of one or more
+5. {:#c-reg-name} A registered name is a sequence of one or more
    *labels*, which, when joined with dots (".") in between them,
    result in a Unicode string that is lowercase and in Unicode
    Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
    (The syntax may be further restricted by the scheme.)
 
-5. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
+6. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
    Ports outside this range, empty ports (port subcomponents with no
    digits, see {{Section 3.2.3 of RFC3986}}), or ports with redundant
    leading zeros, are not supported.
 
-6. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
+7. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
    scheme's default port (provided the scheme is defining such a default
    port) or the scheme is not using ports.
    <!-- Note that this is hard to do by a generic URI implementation
    that may not know the scheme's default port -->
 
-7. {:#c-path} A path consists of zero or more path segments.
+8. {:#c-path} A path consists of zero or more path segments.
    Note that a path of just a single zero-length path segment is allowed —
    this is considered equivalent to a path of zero path segments by
    HTTP and CoAP, but this equivalence does not hold for CRIs in general as they only perform
@@ -211,7 +211,7 @@ The components are subject to the following constraints:
    performing the check and jump in item 8 of {{Section 6.4 of
    -coap}}.  See also {{<sp-initial-empty}} in {{the-small-print}}.)
 
-8. {:#c-path-segment} A path segment can be any Unicode string that is
+9. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
    segments.
    Note that this includes the zero-length string.
@@ -219,7 +219,7 @@ The components are subject to the following constraints:
    If no authority is present in a CRI, the leading path segment can not be empty.
    (See also {{<sp-initial-empty}} in {{the-small-print}}.)
 
-9. {:#c-query} A query always consists of one or more query parameters.
+10. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
    It is often in the form of a "key=value" pair.
    When converting a CRI to a URI, query parameters are separated by an
@@ -229,19 +229,19 @@ The components are subject to the following constraints:
    Queries are optional; there is a difference between an absent query
    and a single query parameter that is the empty string.
 
-10. {:#c-fragment} A fragment identifier can be any Unicode string that
+11. {:#c-fragment} A fragment identifier can be any Unicode string that
    is in NFC.
    Fragment identifiers are optional; there is a difference between an
    absent fragment identifier and a fragment identifier that is the
    empty string.
 
-11. {:#c-escaping} The syntax of registered names, path segments, query
+12. {:#c-escaping} The syntax of registered names, path segments, query
    parameters, and fragment identifiers may be further restricted and
    sub-structured by the scheme.
    There is no support, however, for escaping sub-delimiters
    that are not intended to be used in a delimiting function.
 
-12. {:#c-mapping} When converting a CRI to a URI, any character that is
+13. {:#c-mapping} When converting a CRI to a URI, any character that is
    outside the allowed character range or is a delimiter in the URI syntax
    is percent-encoded.
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
