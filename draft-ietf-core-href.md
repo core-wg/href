@@ -85,6 +85,12 @@ This simplifies parsing, comparison and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
+The present revision -10 of this draft contains an experimental
+addition that allows representing user information
+(`https://alice@chains.example`) in the URI authority component.
+This feature lacks test vectors and implementation experience at the
+time of writing and requires discussion.
+
 --- middle
 
 # Introduction
