@@ -197,7 +197,7 @@ The components are subject to the following constraints:
 7. {:#c-path} A path consists of zero or more path segments.
    Note that a path of just a single zero-length path segment is allowed —
    this is considered equivalent to a path of zero path segments by
-   HTTP and CoAP, but not for CRIs in general as they only perform
+   HTTP and CoAP, but this equivalence does not hold for CRIs in general as they only perform
    normalization on the Syntax-Based Normalization level ({{Section
    6.2.2 of -uri}}, not on the scheme-specific Scheme-Based
    Normalization level ({{Section 6.2.3 of -uri}}).
