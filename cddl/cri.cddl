@@ -21,7 +21,7 @@ NOAUTH-LEADINGSLASH = null .feature "no-authority"
 NOAUTH-NOSLASH = true .feature "no-authority"
 
 authority   = [?userinfo, host, ?port]
-userinfo    = [*text] .feature "userinfo" ; split on ":"
+userinfo    = (false, text .feature "userinfo")
 host        = (host-ip // host-name)
 host-name   = (*text) ; lowercase, NFC labels
 host-ip     = (bytes .size 4 //
@@ -34,3 +34,4 @@ DISCARD-ALL = true
 path        = [*text]
 query       = [*text]
 fragment    = text
+

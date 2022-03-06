@@ -593,7 +593,7 @@ authority
   `host-ip` item.
 
   The `userinfo` subcomponent, if present, is turned into a single
-  string by joining the elements separated by colons (":") and
+  string by
   appending a "@".  Otherwise, both the subcomponent and the "@" sign
   are omitted.
   Any character in the value of the `userinfo` elements that is not in
@@ -728,7 +728,7 @@ of userinfo, hostnames, paths, and queries, as well as fragments.
 The four CDDL rules
 
 ~~~ cddl
-userinfo    = [*text] .feature "userinfo"
+userinfo    = (false, text .feature "userinfo")
 host-name   = (*text)
 path        = [*text]
 query       = [*text]
@@ -738,7 +738,7 @@ fragment    = text
 are replaced with
 
 ~~~ cddl
-userinfo    = [*text-or-pet] .feature "userinfo"
+userinfo    = (false, text-or-pet .feature "userinfo")
 host-name   = (*text-or-pet)
 path        = [*text-or-pet]
 query       = [*text-or-pet]
@@ -754,8 +754,8 @@ pet1 = bytes .ne ''
 text1 = text .ne ""
 ~~~
 
-That is, for each of the userinfo, host-name, path, and query segments, and for
-the fragment component, an alternate representation is provided
+That is, for each of the host-name, path, and query segments, and for
+the userinfo and fragment components, an alternate representation is provided
 besides a simple text string: a non-empty array of alternating non-blank text and byte
 strings, the text strings of which stand for non-percent-encoded text,
 while the byte strings retain the special
@@ -836,7 +836,7 @@ representative of the normal operation of CRIs.
   to an authority.
 
 {:sp}
-2. {:#sp-constraints} Constraints ({{constraints}}) of CRIs/basic CRIs
+1. {:#sp-constraints} Constraints ({{constraints}}) of CRIs/basic CRIs
 
    While most URIs in everyday use can be converted to CRIs and back to URIs
    matching the input after syntax-based normalization of the URI,
@@ -868,7 +868,11 @@ representative of the normal operation of CRIs.
 
      The user information can be expressed in CRIs if the "userinfo"
      feature is present.  The URI `https://@example.com` is
-     represented as `[-4, [[], "example", "com"]]`.
+     represented as `[-4, [false, "", "example", "com"]]`; the `false`
+     serves as a marker that the next element is the userinfo.
+     
+     The rules do not cater for unencoded ":" in userinfo, which is
+     commonly considered a deprecated inclusion of a literal password.
 
 # Change Log
 {:removeinrfc}
