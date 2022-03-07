@@ -85,6 +85,12 @@ This simplifies parsing, comparison and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
+The present revision -10 of this draft contains an experimental
+addition that allows representing user information
+(`https://alice@chains.example`) in the URI authority component.
+This feature lacks test vectors and implementation experience at the
+time of writing and requires discussion.
+
 --- middle
 
 [^replace-xxxx]: RFC Ed.: throughout this section, please replace
@@ -160,10 +166,8 @@ The components are subject to the following constraints:
    The scheme is always present.
 
 2. {:#c-authority} An authority is always a host identified by an IP
-   address or registered name, along with optional port information.
-   User information is not supported (it is often considered to be a
-   deprecated part of the URI syntax, but then see also
-   <https://www.rfc-editor.org/errata/eid5964>).
+   address or registered name, along with optional port information,
+   and optionally preceded by user information.
 
    Alternatively, the authority can be absent; the two cases for this
    defined in {{Section 3.3 of RFC3986}} are modeled by two different
@@ -176,14 +180,20 @@ The components are subject to the following constraints:
    (Note that in {{cddl}}, `no-authority` is marked as a feature, as
    not all CRI implementations will support authority-less URIs.)
 
-3. {:#c-ip-address} An IP address can be either an IPv4 address or an
+3. {:#c-userinfo} A userinfo is a text string built out of unreserved
+  characters ({{Section 2.3 of RFC3986}}) or "sub-delims" ({{Section 2.2
+  of RFC3986}}); any other character needs to be percent-encoded ({{pet}}).
+   Note that this excludes the ":" character, which is commonly
+   deprecated as a way to delimit a cleartext password in a userinfo.
+
+4. {:#c-ip-address} An IP address can be either an IPv4 address or an
    IPv6 address, optionally with a zone identifier {{-zone}}.
    Future versions of IP are not supported (it is likely that a binary
    mapping would be strongly desirable, and that cannot be designed
    ahead of time, so these versions need to be added as a future
    extension if needed).
 
-4. {:#c-reg-name} A registered name is a sequence of zero or more
+5. {:#c-reg-name} A registered name is a sequence of one or more
    *labels*, which, when joined with dots (".") in between them,
    result in a Unicode string that is lowercase and in Unicode
    Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
@@ -191,21 +201,21 @@ The components are subject to the following constraints:
    As per {{Section 3.2.2 of -uri}}, a registered name can be empty, for
    which case a scheme can define a default for the host.)
 
-5. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
+6. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
    Ports outside this range, empty ports (port subcomponents with no
    digits, see {{Section 3.2.3 of RFC3986}}), or ports with redundant
    leading zeros, are not supported.
 
-6. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
+7. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
    scheme's default port (provided the scheme is defining such a default
    port) or the scheme is not using ports.
    <!-- Note that this is hard to do by a generic URI implementation
    that may not know the scheme's default port -->
 
-7. {:#c-path} A path consists of zero or more path segments.
+8. {:#c-path} A path consists of zero or more path segments.
    Note that a path of just a single zero-length path segment is allowed —
    this is considered equivalent to a path of zero path segments by
-   HTTP and CoAP, but not for CRIs in general as they only perform
+   HTTP and CoAP, but this equivalence does not hold for CRIs in general as they only perform
    normalization on the Syntax-Based Normalization level ({{Section
    6.2.2 of -uri}}, not on the scheme-specific Scheme-Based
    Normalization level ({{Section 6.2.3 of -uri}}).
@@ -219,15 +229,15 @@ The components are subject to the following constraints:
    performing the check and jump in item 8 of {{Section 6.4 of
    -coap}}.  See also {{<sp-initial-empty}} in {{the-small-print}}.)
 
-8. {:#c-path-segment} A path segment can be any Unicode string that is
+9. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
    segments.
    Note that this includes the zero-length string.
 
-   If no authority is present in a CRI, the leading path segment can not be empty.
+   If no authority is present in a CRI, the leading path segment cannot be empty.
    (See also {{<sp-initial-empty}} in {{the-small-print}}.)
 
-9. {:#c-query} A query always consists of one or more query parameters.
+10. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
    It is often in the form of a "key=value" pair.
    When converting a CRI to a URI, query parameters are separated by an
@@ -237,19 +247,19 @@ The components are subject to the following constraints:
    Queries are optional; there is a difference between an absent query
    and a single query parameter that is the empty string.
 
-10. {:#c-fragment} A fragment identifier can be any Unicode string that
+11. {:#c-fragment} A fragment identifier can be any Unicode string that
    is in NFC.
    Fragment identifiers are optional; there is a difference between an
    absent fragment identifier and a fragment identifier that is the
    empty string.
 
-11. {:#c-escaping} The syntax of registered names, path segments, query
+12. {:#c-escaping} The syntax of registered names, path segments, query
    parameters, and fragment identifiers may be further restricted and
    sub-structured by the scheme.
    There is no support, however, for escaping sub-delimiters
    that are not intended to be used in a delimiting function.
 
-12. {:#c-mapping} When converting a CRI to a URI, any character that is
+13. {:#c-mapping} When converting a CRI to a URI, any character that is
    outside the allowed character range or is a delimiter in the URI syntax
    is percent-encoded.
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
@@ -266,7 +276,7 @@ There are syntactically valid CRIs and CRI references that cannot be converted i
 For CRI references, this is acceptable -- they can be resolved still and result in a valid CRI that can be converted back.
 (An example of this is `[0, ["p"]]` which appends a slash and the path segment "p" to its base).
 
-(Full) CRIs that do not correspond to a valid URI are not valid on their own, and can not be used.
+(Full) CRIs that do not correspond to a valid URI are not valid on their own, and cannot be used.
 Normatively they are characterized by the {{cri-to-uri}} process producing a valid and syntax-normalized URI.
 For easier understanding, they are listed here:
 
@@ -281,7 +291,7 @@ For easier understanding, they are listed here:
 
 * CRIs without authority whose path starts with two or more empty segments.
 
-  When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path can not begin with two slash characters,
+  When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
   and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
 
 # Creation and Normalization
@@ -593,14 +603,25 @@ authority
 : If the CRI reference contains a `host-name` or `host-ip` item, the
   authority component of the URI reference consists of a host
   subcomponent, optionally followed by a colon (":") character and a
-  port subcomponent.  Otherwise, the authority component is unset.
+  port subcomponent, optionally preceded by a `userinfo` subcomponent.
+  Otherwise, the authority component is unset.
 
   The host subcomponent consists of the value of the `host-name` or
   `host-ip` item.
 
+  The `userinfo` subcomponent, if present, is turned into a single
+  string by
+  appending a "@".  Otherwise, both the subcomponent and the "@" sign
+  are omitted.
+  Any character in the value of the `userinfo` elements that is not in
+  the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
+  "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
+  percent-encoded.
+
   The `host-name` is turned into a single string by joining the
   elements separated by dots (".").
-  Any character in the value of a `host-name` item that is not in
+  Any character in the elements of a `host-name` item that is a dot
+  ("."), or not in
   the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
   "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
   percent-encoded.
@@ -719,11 +740,12 @@ did:web:alice:7%3A1-balun
 ~~~
 
 This section presents a method to represent percent-encoded segments
-of hostnames, paths, and queries.
+of userinfo, hostnames, paths, and queries, as well as fragments.
 
 The four CDDL rules
 
 ~~~ cddl
+userinfo    = (false, text .feature "userinfo")
 host-name   = (*text)
 path        = [*text]
 query       = [*text]
@@ -733,6 +755,7 @@ fragment    = text
 are replaced with
 
 ~~~ cddl
+userinfo    = (false, text-or-pet .feature "userinfo")
 host-name   = (*text-or-pet)
 path        = [*text-or-pet]
 query       = [*text-or-pet]
@@ -749,7 +772,7 @@ text1 = text .ne ""
 ~~~
 
 That is, for each of the host-name, path, and query segments, and for
-the fragment component, an alternate representation is provided
+the userinfo and fragment components, an alternate representation is provided
 besides a simple text string: a non-empty array of alternating non-blank text and byte
 strings, the text strings of which stand for non-percent-encoded text,
 while the byte strings retain the special
@@ -860,8 +883,13 @@ representative of the normal operation of CRIs.
 
    * `https://alice@example.com/`
 
-     The user information can not be expressed in CRIs.
-
+     The user information can be expressed in CRIs if the "userinfo"
+     feature is present.  The URI `https://@example.com` is
+     represented as `[-4, [false, "", "example", "com"]]`; the `false`
+     serves as a marker that the next element is the userinfo.
+     
+     The rules do not cater for unencoded ":" in userinfo, which is
+     commonly considered a deprecated inclusion of a literal password.
 
 # Change Log
 {:removeinrfc}
