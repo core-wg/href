@@ -1,12 +1,25 @@
 ; not expressed in this CDDL spec: trailing nulls to be left off
 
+RFC-XXXX-Definitions = [CRI, CRI-Reference]
+
+CRI = [
+  scheme,
+  authority / no-authority,
+  local-part
+]
+
+
 CRI-Reference = [
   ((scheme / null, authority / no-authority)
    // discard),                 ; relative reference
+  local-part
+]
+
+local-part = (
   path / null,
   query / null,
   fragment / null
-]
+)
 
 scheme      = scheme-name / scheme-id
 scheme-name = text .regexp "[a-z][a-z0-9+.-]*"
