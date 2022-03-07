@@ -63,6 +63,7 @@ normative:
   RFC3986: uri
   RFC3987: iri
   RFC6874: zone
+  I-D.carpenter-6man-rfc6874bis: zonebis
   RFC8610: cddl
   Unicode:
     target: https://www.unicode.org/versions/Unicode13.0.0/
@@ -179,7 +180,7 @@ The components are subject to the following constraints:
    IPv6 address, optionally with a zone identifier {{-zone}}.
    Future versions of IP are not supported (it is likely that a binary
    mapping would be strongly desirable, and that cannot be designed
-   ahead of time, to these versions need to be added as a future
+   ahead of time, so these versions need to be added as a future
    extension if needed).
 
 4. {:#c-reg-name} A registered name is a sequence of zero or more
@@ -256,37 +257,7 @@ The components are subject to the following constraints:
    of bytes (that is then converted to a sequence of %HH triplets).
    <!-- As per 3986 2.1, use uppercase hex. -->
 
-## Constraints by example
-
-While most URIs in everyday use can be converted to CRIs and back to URIs
-matching the input after syntax-based normalization of the URI,
-these URIs illustrate the constraints by example:
-
-* `https://host%ffname`, `https://example.com/x?data=%ff`
-
-  All URI components must, after percent decoding, be valid UTF-8 encoded text.
-  Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.
-  <!-- <https://www.bittorrent.org/beps/bep_0017.html>, not sure this warrants an informative reference -->
-
-* `https://example.com/component%3bone;component%3btwo`, `http://example.com/component%3dequals`
-
-  While delimiters can be used in an escaped and unescaped form in URIs with generally distinct meanings,
-  CRIs only support one escapable delimiter character per component,
-  which is the delimiter by which the component is split up in the CRI.
-
-  Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
-  are special in that they are syntactic delimiters of their respective components in CRIs.
-  Thus, the following examples *are* convertible to CRIs:
-
-  `https://interior%2edot/`
-
-  `https://example.com/path%2fcomponent/second-component`
-
-  `https://example.com/x?ampersand=%26&questionmark=?`
-
-* `https://alice@example.com/`
-
-  The user information can not be expressed in CRIs.
+Examples for URIs at or beyond the boundaries of these constraints are in {{<sp-constraints}} in {{the-small-print}}.
 
 ## Constraints not expressed by the data model
 
@@ -580,7 +551,7 @@ However, it may be necessary in other environments to determine the
 associated URI or IRI of a CRI, and vice versa. Applications can perform
 these conversions as follows:
 
-{: vspace='0'}
+{:vspace}
 CRI to URI
 : A CRI is converted to a URI as specified in {{cri-to-uri}}.
 
@@ -611,8 +582,7 @@ reference by determining the components of the URI reference according
 to the following steps and then recomposing the components to a URI
 reference string as specified in {{Section 5.3 of RFC3986}}.
 
-{: vspace='0'}
-
+{:vspace}
 scheme
 : If the CRI reference contains a `scheme` section, the scheme
   component of the URI reference consists of the value of that
@@ -639,8 +609,8 @@ authority
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
   Any zone-id is appended to the string, separated by "%25" as
-  defined in {{Section 2 of -zone}}, or as specified in a successor
-  zone-id specification document; this also leads to a modified
+  defined in {{Section 2 of -zone}}, or as specified in a superseding
+  zone-id specification document {{-zonebis}}; this also leads to a modified
   "IP-literal" rule as specified in these documents.
 
   If the CRI reference contains a `port` item, the port
@@ -718,7 +688,7 @@ fragment
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
 
-# Extended CRI: Accommodating Percent Encoding {#pet}
+# Extended CRI: Accommodating Percent Encoding (PET) {#pet}
 
 CRIs have been designed to relieve implementations operating on CRIs
 from string scanning, which both helps constrained implementations and
@@ -824,11 +794,13 @@ This document has no IANA actions.
 
 # The Small Print
 
+{:sp: type="SP%d." group="SP"}
+
 This appendix lists a few corner cases of URI semantics that
 implementers of CRIs need to be aware of, but that are not
 representative of the normal operation of CRIs.
 
-{: type="SP%d."}
+{:sp}
 1. {:#sp-initial-empty} Initial (Lone/Leading) Empty Path Segments:
 
   *  *Lone empty path segments:*
@@ -857,13 +829,42 @@ representative of the normal operation of CRIs.
   the form `//foo` the double slash would be mis-parsed as leading in
   to an authority.
 
-[^sp-tbd]
+{:sp}
+2. {:#sp-constraints} Constraints ({{constraints}}) of CRIs/basic CRIs
 
-[^sp-tbd]: (TBD: Add more small print/move that over from above.)
+   While most URIs in everyday use can be converted to CRIs and back to URIs
+   matching the input after syntax-based normalization of the URI,
+   these URIs illustrate the constraints by example:
+
+   * `https://host%ffname`, `https://example.com/x?data=%ff`
+
+     All URI components must, after percent decoding, be valid UTF-8 encoded text.
+     Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.
+     <!-- <https://www.bittorrent.org/beps/bep_0017.html>, not sure this warrants an informative reference -->
+
+   * `https://example.com/component%3bone;component%3btwo`, `http://example.com/component%3dequals`
+
+     While delimiters can be used in an escaped and unescaped form in URIs with generally distinct meanings,
+     basic CRIs (i.e., without percent-encoded text {{pet}}) only support one escapable delimiter character per component,
+     which is the delimiter by which the component is split up in the CRI.
+
+     Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
+     are special in that they are syntactic delimiters of their respective components in CRIs.
+     Thus, the following examples *are* convertible to basic CRIs:
+
+     `https://interior%2edot/`
+
+     `https://example.com/path%2fcomponent/second-component`
+
+     `https://example.com/x?ampersand=%26&questionmark=?`
+
+   * `https://alice@example.com/`
+
+     The user information can not be expressed in CRIs.
 
 
 # Change Log
-{: removeInRFC="true"}
+{:removeinrfc}
 
 Changes from -08 to -09
 
@@ -907,7 +908,7 @@ Changes from -07 to -08
 
 Changes from -06 to -07
 
-* More explicitly discuss constraints ({{constraints}}), add examples ({{constraints-by-example}}).
+* More explicitly discuss constraints ({{constraints}}), add examples ({{sp-constraints}}).
 
 * Make CDDL more explicit about special simple values.
 
