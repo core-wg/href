@@ -596,7 +596,7 @@ reference string as specified in {{Section 5.3 of RFC3986}}.
 scheme
 : If the CRI reference contains a `scheme` section, the scheme
   component of the URI reference consists of the value of that
-  section.
+  section (with scheme numbers replaced with their corresponding names).
   Otherwise, the scheme component is unset.
 
 authority
