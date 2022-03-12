@@ -395,10 +395,17 @@
       "resolved-uri": "a:b/c"
     },
     {
-      "uri": "a:b?c",
+      "uri": "a:b%3Fc",
       "cri": "836161f58163623f63",
-      "uri-from-cri": "a:b?c",
+      "uri-from-cri": "a:b%3Fc",
       "resolved-cri": "836161f58163623f63",
+      "resolved-uri": "a:b%3Fc"
+    },
+    {
+      "uri": "a:b?c",
+      "cri": "846161F5816162816163",
+      "uri-from-cri": "a:b?c",
+      "resolved-cri": "846161F5816162816163",
       "resolved-uri": "a:b?c"
     },
     {
