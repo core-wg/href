@@ -708,6 +708,159 @@
       "uri-from-cri": "?a&b&c",
       "resolved-cri": "84218263666f6f1912678262706162746883616161626163",
       "resolved-uri": "coaps://foo:4711/pa/th?a&b&c"
+    },
+    {
+      "description": "Empty CRI",
+      "uri": null,
+      "cri": "80",
+      "uri-from-cri": null,
+      "resolved-cri": "8221f6",
+      "resolved-uri": "coaps:"
+    },
+    {
+      "description": "Dotted host name",
+      "uri": "//a.b",
+      "cri": "82f68261616162",
+      "uri-from-cri": "//a.b",
+      "resolved-cri": "82218261616162",
+      "resolved-uri": "coaps://a.b"
+    },
+    {
+      "description": "Weird non-PET in host",
+      "uri": "//a%2Ea",
+      "cri": "82f68163612e61",
+      "uri-from-cri": "//a%2Ea",
+      "resolved-cri": "82218163612e61",
+      "resolved-uri": "coaps://a%2Eb",
+      "invalid": "The dot ('.') is unreserved, and thus never percent encoded, and thus (when used with a delimiter) not legal in the strings of the host"
+    },
+    {
+      "description": "PET (':') in host",
+      "uri": "//a%3Aa",
+      "cri": "82f681836161413a6161",
+      "uri-from-cri": "//a%3Aa",
+      "resolved-cri": "822181836161413a6161",
+      "resolved-uri": "coaps://a%3Aa"
+    },
+    {
+      "description": "Non-PET in path",
+      "uri": "/a%2Fa%25a",
+      "cri": "82f58165612f612561",
+      "uri-from-cri": "/a%2Fa%25a",
+      "resolved-cri": "83218263666F6F1912678165612F612561",
+      "resolved-uri": "coaps://foo:4711/a%2Fa%25a"
+    },
+    {
+      "description": "Semicolon in path (pretty tame, but contrasting the next example)",
+      "uri": "/a;a",
+      "cri": "82f58163613b61",
+      "uri-from-cri": "/a;a",
+      "resolved-cri": "83218263666F6F1912678163613B61",
+      "resolved-uri": "coaps://foo:4711/a;a"
+    },
+    {
+      "description": "PET in path",
+      "uri": "/a%3Ba",
+      "cri": "82f581836161413b6161",
+      "uri-from-cri": "/a%3Ba",
+      "resolved-cri": "83218263666F6F19126781836161413B6161",
+      "resolved-uri": "coaps://foo:4711/a%3Ba"
+    },
+    {
+      "description": "escaped non-PET in query (discarding path without empty trailing)",
+      "uri": null,
+      "cri": "83f5808163612661",
+      "uri-from-cri": null,
+      "resolved-cri": "84218263666F6F191267808163612661",
+      "resolved-uri": "coaps://foo:4711?a%26a"
+    },
+    {
+      "description": "escaped non-PET in query (discarding path but restoring an empty trailing path component)",
+      "uri": "/?a%26a",
+      "cri": "83F581608163612661",
+      "uri-from-cri": "/?a%26a",
+      "resolved-cri": "84218263666F6F19126781608163612661",
+      "resolved-uri": "coaps://foo:4711/?a%26a"
+    },
+    {
+      "description": "PET in query",
+      "uri": "/?a%23a",
+      "cri": "83F581608183616141236161",
+      "uri-from-cri": "/?a%23a",
+      "resolved-cri": "84218263666F6F19126781608183616141236161",
+      "resolved-uri": "coaps://foo:4711/?a%23a"
+    },
+    {
+      "description": "unescaped non-PET (but delimiter) in fragment",
+      "uri": "#/",
+      "cri": "8400F6F6612F",
+      "uri-from-cri": "#/",
+      "resolved-cri": "85218263666F6F1912678262706162746881657175657279612F",
+      "resolved-uri": "coaps://foo:4711/pa/th?query#/"
+    },
+    {
+      "description": "escaped non-PET in fragment",
+      "uri": "#%5B%5D",
+      "cri": "8400f6f6625b5d",
+      "uri-from-cri": "#%5B%5D",
+      "resolved-cri": "85218263666F6F1912678262706162746881657175657279625B5D",
+      "resolved-uri": "coaps://foo:4711/pa/th?query#%5B%5D"
+    },
+    {
+      "description": "PET in fragment",
+      "uri": "#%2F",
+      "cri": "8400F6F681412F",
+      "uri-from-cri": "#%2F",
+      "resolved-cri": "85218263666F6F191267826270616274688165717565727981412F",
+      "resolved-uri": "coaps://foo:4711/pa/th?query#%2F"
+    },
+    {
+      "description": "escaped non-PET in host",
+      "uri": "//non%3Aport.x",
+      "cri": "82f682686E6F6E3A706F72746178",
+      "uri-from-cri": "//non%3Aport.x",
+      "resolved-cri": "822182686E6F6E3A706F72746178",
+      "resolved-uri": "coaps://non%3Aport.x"
+    },
+    {
+      "description": "unescaped non-PET (but delimiter) in host",
+      "uri": "//non!port.x",
+      "cri": "82F68281686E6F6E21706F72746178",
+      "uri-from-cri": "//non!port.x",
+      "resolved-cri": "82218281686E6F6E21706F72746178",
+      "resolved-uri": "coaps://non!port.x"
+    },
+    {
+      "description": "PET in host",
+      "uri": "//non%21port.x",
+      "cri": "82F68283636E6F6E412164706F72746178",
+      "uri-from-cri": "//non%21port.x",
+      "resolved-cri": "82218283636E6F6E412164706F72746178",
+      "resolved-uri": "coaps://non%21port.x"
+    },
+    {
+      "description": "escaped non-PET in userinfo",
+      "uri": "//alice%40example.com@example.com",
+      "cri": "82f684f471616c696365406578616d706c652e636f6d676578616d706c6563636f6d",
+      "uri-from-cri": "//alice%40example.com@example.com",
+      "resolved-cri": "822184F471616C696365406578616D706C652E636F6D676578616D706C6563636F6D",
+      "resolved-uri": "coaps://alice%40example.com@example.com"
+    },
+    {
+      "description": "escaped and unescaped delimiter in userinfo",
+      "uri": "//c+%2B@example.com",
+      "cri": "82F684F48262632B412B676578616D706C6563636F6D",
+      "uri-from-cri": "//c+%2B@example.com",
+      "resolved-cri": "822184F48262632B412B676578616D706C6563636F6D",
+      "resolved-uri": "coaps://c+%2B@example.com"
+    },
+    {
+      "description": "colon in first URI path needs to be preserved to disambiguate against full URIs",
+      "uri": "./foo:bar",
+      "cri": "82018167666F6F3A626172",
+      "uri-from-cri": "./foo:bar",
+      "resolved-cri": "83218263666F6F1912678262706167666F6F3A626172",
+      "resolved-uri": "coaps://foo:4711/pa/foo:bar"
     }
   ]
 }
