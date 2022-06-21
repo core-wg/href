@@ -869,6 +869,14 @@
       "uri-from-cri": "math://equation=E%3Dmc%C2%B2/",
       "resolved-cri": "83646D61746881836A6571756174696F6E3D45413D646D63C2B28160",
       "resolved-uri": "math://equation=E%3Dmc%C2%B2/"
+    },
+    {
+      "description": "Zone in host",
+      "uri": "http://[fe80::1%25eth0]/",
+      "cri": "83228250FE80000000000000000000000000000164657468308160",
+      "uri-from-cri": "http://[fe80::1%25eth0]/",
+      "resolved-cri": "83228250FE80000000000000000000000000000164657468308160",
+      "resolved-uri": "http://[fe80::1%25eth0]/"
     }
   ]
 }
