@@ -861,6 +861,14 @@
       "uri-from-cri": "./foo:bar",
       "resolved-cri": "83218263666F6F1912678262706167666F6F3A626172",
       "resolved-uri": "coaps://foo:4711/pa/foo:bar"
+    },
+    {
+      "description": "PET in contrast to unescaped subdelim in hostname",
+      "uri": "math://equation=E%3Dmc%C2%B2/",
+      "cri": "83646D61746881836A6571756174696F6E3D45413D646D63C2B28160",
+      "uri-from-cri": "math://equation=E%3Dmc%C2%B2/",
+      "resolved-cri": "83646D61746881836A6571756174696F6E3D45413D646D63C2B28160",
+      "resolved-uri": "math://equation=E%3Dmc%C2%B2/"
     }
   ]
 }
