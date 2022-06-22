@@ -24,13 +24,6 @@
       "resolved-uri": "coaps://192.168.0.97"
     },
     {
-      "uri": "",
-      "cri": "8100",
-      "uri-from-cri": "",
-      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
-      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
-    },
-    {
       "uri": "/",
       "cri": "82f58160",
       "uri-from-cri": "/",
@@ -711,11 +704,11 @@
     },
     {
       "description": "Empty CRI",
-      "uri": null,
+      "uri": "",
       "cri": "80",
-      "uri-from-cri": null,
-      "resolved-cri": "8221f6",
-      "resolved-uri": "coaps:"
+      "uri-from-cri": "",
+      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
+      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
     },
     {
       "description": "Dotted host name",
