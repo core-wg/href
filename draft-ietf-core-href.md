@@ -596,7 +596,9 @@ reference string as specified in {{Section 5.3 of RFC3986}}.
 scheme
 : If the CRI reference contains a `scheme` section, the scheme
   component of the URI reference consists of the value of that
-  section.
+  section, if text (`scheme-name`); or, if a negative integer is given
+  (`scheme-id`), the lower case scheme name corresponding to the
+  scheme number.
   Otherwise, the scheme component is unset.
 
 authority
@@ -887,7 +889,7 @@ representative of the normal operation of CRIs.
      feature is present.  The URI `https://@example.com` is
      represented as `[-4, [false, "", "example", "com"]]`; the `false`
      serves as a marker that the next element is the userinfo.
-     
+
      The rules do not cater for unencoded ":" in userinfo, which is
      commonly considered a deprecated inclusion of a literal password.
 
