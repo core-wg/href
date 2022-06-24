@@ -889,7 +889,7 @@ representative of the normal operation of CRIs.
      feature is present.  The URI `https://@example.com` is
      represented as `[-4, [false, "", "example", "com"]]`; the `false`
      serves as a marker that the next element is the userinfo.
-     
+
      The rules do not cater for unencoded ":" in userinfo, which is
      commonly considered a deprecated inclusion of a literal password.
 
