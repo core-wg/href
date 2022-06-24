@@ -16,11 +16,13 @@ Each test vector is organized as follows:
 
 | Key Name | Description |
 | --- | --- |
+| `description` | Text about the test, eg. why it is relevant, or why it is hard |
 | `uri` | a URI reference |
 | `cri` | hex-encoded CBOR representation of the CRI reference corresponding to `uri` |
 | `uri-from-cri` | the URI obtained translating the CRI reference `cri` |
 | `resolved-cri` | hex-encoded CBOR representation of the resolved CRI reference relative to the [base CRI](#bases) |
 | `resolved-uri` | resolved URI relative to the [base URI](#bases) |
+| `invalid` | is present if the CRI violates the specification |
 
 ## Test Logics
 
