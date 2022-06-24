@@ -5,8 +5,8 @@
 CoRE Working Group                                       C. Bormann, Ed.
 Internet-Draft                                    Universität Bremen TZI
 Intended status: Standards Track                             H. Birkholz
-Expires: 13 September 2022                                Fraunhofer SIT
-                                                           12 March 2022
+Expires: 26 December 2022                                 Fraunhofer SIT
+                                                            24 June 2022
 
 
                     Constrained Resource Identifiers
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 September 2022.
+   This Internet-Draft will expire on 26 December 2022.
 
 Copyright Notice
 
@@ -664,8 +664,9 @@ cri-reference:
    scheme
       If the CRI reference contains a scheme section, the scheme
       component of the URI reference consists of the value of that
-      section (with scheme numbers replaced with their corresponding
-      names).  Otherwise, the scheme component is unset.
+      section, if text (scheme-name); or, if a negative integer is given
+      (scheme-id), the lower case scheme name corresponding to the
+      scheme number.  Otherwise, the scheme component is unset.
 
    authority
       If the CRI reference contains a host-name or host-ip item, the
@@ -954,8 +955,8 @@ Appendix A.  The Small Print
       recomposition of a URI without Uri-Path Options from the other
       URI-related CoAP Options produces s://x/, not s://x -- CoAP
       prefers the lone empty path segment form.
-      // TBD: add similar text for HTTP, if that can be
-      made.Section 6.2.3 of [RFC3986] even states:
+      // TBD: add similar text for HTTP, if that can be made.  After
+      discussing HTTP semantics, Section 6.2.3 of [RFC3986] even states:
 
    |  In general, a URI that uses the generic syntax for authority with
    |  an empty path should be normalized to a path of "/".
