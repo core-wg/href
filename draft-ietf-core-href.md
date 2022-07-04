@@ -649,7 +649,10 @@ path
   present, the conversion fails.  If it contains a positive discard
   item, the path component is considered *unrooted* and
   prefixed by as many "../" components as the `discard` value minus
-  one indicates.
+  one indicates.  If the discard value is `1` and the first element of
+  the path contains a `:`, the path component is prefixed by "./"
+  (this avoids the first element to appear as supplying a URI scheme;
+  compare `path-noscheme` in {{Section 4.2 of -uri}}).
 
   If the discard item is not present and the CRI reference contains an
   authority that is `true`, the path component of the URI reference is
