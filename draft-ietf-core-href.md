@@ -787,6 +787,20 @@ The above DID URI can now be represented as:
 [-6, true, [["web:alice:7", ':', "1-balun"]]]
 ~~~
 
+{:aside}
+> Unlike the text elements of a path or a query, which through CoAP's
+> heritage are designed to be processable element by element, a
+> text-pet-sequence does not usually produce semantically meaningful
+> array elements.
+> This consequence of the flexibility in delimiters offered in URIs is
+> demonstrated by this example, which structurally singles out the one
+> ':' that is *not* a delimiter at the application level.
+> Applications designed for using CRIs will generally avoid using the
+> extended-cri feature.
+> Applications using existing URI structures that require
+> text-pet-sequence elements for their representation typically need
+> to process them byte by byte.
+
 # Implementation Status {#impl}
 
 With the exception of the authority=true fix, host-names split into
