@@ -74,6 +74,7 @@ normative:
     seriesinfo:
       ISBN: 978-1-936213-26-9
   RFC8949: cbor
+  RFC9165: cddlcontrol
 
 --- abstract
 
@@ -397,7 +398,7 @@ resolved to their respective CRI before comparison.
 
 A CRI or CRI reference is encoded as a CBOR array {{RFC8949}}, with the
 structure as described in the [Concise Data Definition Language
-(CDDL)](#RFC8610) as follows: [^replace-xxxx]
+(CDDL)](#RFC8610) [including its control extensions](#RFC9165) as follows: [^replace-xxxx]
 
 ~~~~ cddl
 {::include cddl/cri.cddl}
