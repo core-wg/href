@@ -53,7 +53,7 @@ venue:
 
 informative:
   RFC7228: term
-  RFC7230: http
+  RFC9110: http
   RFC7252: coap
   RFC8141: urn
   RFC8288: web-linking
@@ -136,7 +136,7 @@ expressing all URIs permitted by the generic syntax of RFC 3986 (hence
 the "constrained" in "Constrained Resource Identifier").
 The supported subset includes all URIs of the
 [Constrained Application Protocol (CoAP)](#RFC7252), most URIs of the
-[Hypertext Transfer Protocol (HTTP)](#RFC7230),
+[Hypertext Transfer Protocol (HTTP)](#RFC9110),
 [Uniform Resource Names (URNs)](#RFC8141), and other similar URIs.
 The exact constraints are defined in {{constraints}}.
 
