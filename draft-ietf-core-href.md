@@ -76,6 +76,7 @@ normative:
       ISBN: 978-1-936213-26-9
   RFC8949: cbor
   RFC9165: cddlcontrol
+  IANA.core-parameters:
 
 --- abstract
 
@@ -835,7 +836,7 @@ uri-scheme-id Registry
 ------------------
 
 This specification defines a new subregistry titled "URI Scheme ID
-Registry" in the "CoRE Parameters" registry {{!IANA.core-parameters}},
+Registry" in the "CoRE Parameters" registry {{IANA.core-parameters}},
 with "Expert Review" as the Registration Procedure ({{Sections 4.5 and
 4.7 of BCP26}}).
 
