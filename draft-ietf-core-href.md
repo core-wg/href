@@ -835,7 +835,7 @@ uri-scheme-id Registry
 ------------------
 
 This specification defines a new subregistry titled "URI Scheme ID
-Registry" in the "CoRE Parameters" registry [IANA.core-parameters],
+Registry" in the "CoRE Parameters" registry {{!IANA.core-parameters}},
 with "Expert Review" as the Registration Procedure ({{Sections 4.5 and
 4.7 of BCP26}}).
 
