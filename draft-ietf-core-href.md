@@ -860,7 +860,8 @@ The designated expert is requested to assign the key values with the
 shortest encodings (1+0 and 1+1 encoding) to registrations that are
 likely to enjoy wide use and can benefit from short encodings.
 
-New CRI scheme-id values can only be registered at the time the URI
+Beyond the scheme-ids in the initial content,
+new CRI scheme-id values can only be registered at the time the URI
 scheme itself is registered; this avoids the case of a URI scheme name
 being in use in text form for a while before a CRI scheme-id value is
 assigned.
