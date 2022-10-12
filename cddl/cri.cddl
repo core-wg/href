@@ -23,10 +23,20 @@ local-part = (
 
 scheme      = scheme-name / scheme-id
 scheme-name = text .regexp "[a-z][a-z0-9+.-]*"
-scheme-id   = (COAP / COAPS / HTTP / HTTPS / URN / DID /
-               other-scheme)
+scheme-id   = (initially-registered-scheme-id / other-scheme)
               .within nint
-COAP = -1 COAPS = -2 HTTP = -3 HTTPS = -4 URN = -5 DID = -6
+initially-registered-scheme-id = &(
+  coap: -1
+  coaps: -2
+  http: -3
+  https: -4
+  urn: -5
+  did: -6
+  "coap+tcp": -7
+  "coaps+tcp": -8
+  "coap+ws": -9
+  "coaps+ws": -10
+)
 other-scheme = nint .feature "scheme-id-extension"
 
 no-authority = NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH

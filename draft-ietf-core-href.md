@@ -60,6 +60,7 @@ informative:
   RFC8820: lawn
   W3C.REC-html52-20171214:
 normative:
+  BCP26: RFC8126
   RFC3986: uri
   RFC3987: iri
   RFC6874: zone
@@ -830,7 +831,42 @@ The security considerations discussed in {{Section 7 of RFC3986}} and
 
 # IANA Considerations
 
-This document has no IANA actions.
+uri-scheme-id Registry
+------------------
+
+This specification defines a new subregistry titled "URI Scheme ID
+Registry" in the "CoRE Parameters" registry [IANA.core-parameters],
+with "Expert Review" as the Registration Procedure ({{Sections 4.5 and
+4.7 of BCP26}}).
+
+Each entry needs to provide the name of a registered uri-scheme, and a
+negative number that can stand for this uri-scheme in a CRI.
+The initial contents are shown in {{tab-schemes}}.
+
+| URI scheme | CRI value | Reference |
+| coap       |        -1 | [RFCthis] |
+| coaps      |        -2 | [RFCthis] |
+| http       |        -3 | [RFCthis] |
+| https      |        -4 | [RFCthis] |
+| urn        |        -5 | [RFCthis] |
+| did        |        -6 | [RFCthis] |
+| coap+tcp   |        -7 | [RFCthis] |
+| coaps+tcp  |        -8 | [RFCthis] |
+| coap+ws    |        -9 | [RFCthis] |
+| coaps+ws   |       -10 | [RFCthis] |
+{: #tab-schemes cols='l r l' title="Initial Content of URI Scheme ID Registry"}
+
+The designated expert is requested to assign the key values with the
+shortest encodings (1+0 and 1+1 encoding) to registrations that are
+likely to enjoy wide use and can benefit from short encodings.
+
+New CRI scheme-id values can only be registered at the time the URI
+scheme itself is registered; this avoids the case of a URI scheme name
+being in use in text form for a while before a CRI scheme-id value is
+assigned.
+This would make it hard for a producer to decide whether the text form
+should be used to continue to obtain maximum interoperability or
+whether the integer form can finally be used.
 
 
 --- back
