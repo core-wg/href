@@ -174,9 +174,10 @@ The components are subject to the following constraints:
    defined in {{Section 3.3 of RFC3986}} are modeled by two different
    values used in place of an absent authority:
 
-   * the path can begin with a root ("/", as when the authority is
+   * the path can be root-based (zero or more path components that are
+     each started in the URI with "/", as when the authority is
      present), or
-   * the path can be rootless.
+   * the path can be rootless, which requires at least one path component.
 
    (Note that in {{cddl}}, `no-authority` is marked as a feature, as
    not all CRI implementations will support authority-less URIs.)
@@ -294,6 +295,10 @@ For easier understanding, they are listed here:
 
   When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
   and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
+
+* CRIs without authority that are rootless and do not have a path
+  component (e.g., `["a", true]`), which would be indistinguishable
+  from its root-based equivalent (`["a"]`) as both would have the URI `a:`.
 
 # Creation and Normalization
 
