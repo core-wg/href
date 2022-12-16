@@ -77,6 +77,7 @@ normative:
   RFC8949: cbor
   RFC9165: cddlcontrol
   IANA.core-parameters:
+  IANA.uri-schemes:
 
 --- abstract
 
@@ -858,8 +859,11 @@ The initial contents are shown in {{tab-schemes}}.
 {: #tab-schemes cols='l r l' title="Initial Content of URI Scheme ID Registry"}
 
 The designated expert is requested to assign the key values with the
-shortest encodings (1+0 and 1+1 encoding) to registrations that are
-likely to enjoy wide use and can benefit from short encodings.
+shortest encodings (1+0 and 1+1 byte encoding) to registrations that
+are likely to enjoy wide use and can benefit from short encodings.
+Unless the designated expert sees good reasons to deviate from this
+policy, provisional URI-scheme registrations should be assigned such
+that they use a 1+2 byte encoding.
 
 Beyond the scheme-ids in the initial content,
 new CRI scheme-id values can only be registered at the time the URI
@@ -869,6 +873,25 @@ assigned.
 This would make it hard for a producer to decide whether the text form
 should be used to continue to obtain maximum interoperability or
 whether the integer form can finally be used.
+
+Uniform Resource Identifier (URI) Schemes (uri-schemes) registry
+-------------------
+
+To increase awareness of the possibility to register a URI Scheme
+ID together with registering the URI scheme itself, IANA is requested
+to add this note to the Uniform Resource Identifier (URI) Schemes
+registry {{IANA.uri-schemes}}:
+
+{:quote}
+> For efficiently coding the URI scheme in a CRI [RFCthis], it may be
+beneficial to register an entry in the subregistry titled "URI Scheme ID
+Registry" in the "CoRE Parameters" registry {{IANA.core-parameters}}.
+> This registration can only be effected at the time of registration of
+the URI scheme.
+
+The designated expert is requested to make the registrant aware of
+this possibility.
+
 
 
 --- back
