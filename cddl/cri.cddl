@@ -29,9 +29,9 @@ scheme-id   = (COAP / COAPS / HTTP / HTTPS / URN / DID /
 COAP = -1 COAPS = -2 HTTP = -3 HTTPS = -4 URN = -5 DID = -6
 other-scheme = nint .feature "scheme-id-extension"
 
-no-authority = NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH
-NOAUTH-LEADINGSLASH = null .feature "no-authority"
-NOAUTH-NOSLASH = true .feature "no-authority"
+no-authority = NOAUTH-ROOTBASED / NOAUTH-ROOTLESS
+NOAUTH-ROOTBASED = null .feature "no-authority"
+NOAUTH-ROOTLESS = true .feature "no-authority"
 
 authority   = [?userinfo, host, ?port]
 userinfo    = (false, text .feature "userinfo")
