@@ -63,6 +63,11 @@ normative:
   RFC3986: uri
   RFC3987: iri
   RFC6874: zone
+  RFC7595: schemes
+  IANA.uri-schemes:
+  BCP26:
+    -: ianacons
+    =: RFC8126
   I-D.carpenter-6man-rfc6874bis: zonebis
   RFC8610: cddl
   Unicode:
@@ -86,11 +91,11 @@ This simplifies parsing, comparison and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
-The present revision -10 of this draft contains an experimental
-addition that allows representing user information
-(`https://alice@chains.example`) in the URI authority component.
-This feature lacks test vectors and implementation experience at the
-time of writing and requires discussion.
+[^status]
+
+[^status]: The present revision -12 of this draft adds a registry that
+    is intended to provide full coverage for representing a URI scheme
+    (and certain text strings used in their place) as negative integers.
 
 --- middle
 
@@ -416,7 +421,7 @@ two leading null values (scheme and authority both not given) are
 represented by using the `discard` alternative instead.
 
 The rules `scheme`, `authority`, `path`, `query`, `fragment`
-correspond to the (sub-)components of a CRI, as described in
+correspond to the (sub‑)components of a CRI, as described in
 {{constraints}}, with the addition of the `discard` section.
 
 ### The `discard` Section
@@ -604,7 +609,7 @@ scheme
   component of the URI reference consists of the value of that
   section, if text (`scheme-name`); or, if a negative integer is given
   (`scheme-id`), the lower case scheme name corresponding to the
-  scheme number.
+  scheme number as per the CRI Scheme Numbers registry {{cri-reg}}.
   Otherwise, the scheme component is unset.
 
 authority
@@ -720,16 +725,20 @@ fragment
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
 
-# Extended CRI: Accommodating Percent Encoding (PET) {#pet}
+# Extending CRIs
 
 CRIs have been designed to relieve implementations operating on CRIs
 from string scanning, which both helps constrained implementations and
 implementations that need to achieve high throughput.
 
-Basic CRI does not support URI components that *require*
-percent-encoding ({{Section 2.1 of -uri}}) to represent them in the URI
-syntax, except where that percent-encoding is used to escape the main
-delimiter in use.
+The CRI structure described up to this point is termed the _Basic CRI_.
+It should be sufficient for all applications that use the CoAP
+protocol, as well as most other protocols employing URIs.
+
+However, Basic CRIs have one limitation: They do not support URI
+components that *require* percent-encoding ({{Section 2.1 of -uri}}) to
+represent them in the URI syntax, except where that percent-encoding
+is used to escape the main delimiter in use.
 
 E.g., the URI
 
@@ -749,6 +758,20 @@ supported by basic CRIs:
 ~~~ uri
 did:web:alice:7%3A1-balun
 ~~~
+
+Extended forms of CRIs may be defined to enable these applications.
+They will generally extend the potential values of text components of
+URIs, such as userinfo, hostnames, paths, queries, and fragments.
+
+One such extended form is described in the following {{pet}}.
+Consumers of CRIs will generally notice when an extended form is in
+use, by finding structures that do not match the CDDL rules given in
+{{cddl}}.
+Future definitions of extended forms need to strive to be
+distinguishable in their structures from the extended form presented
+here as well as other future forms.
+
+## Extended CRI: Accommodating Percent Encoding (PET) {#pet}
 
 This section presents a method to represent percent-encoded segments
 of userinfo, hostnames, paths, and queries, as well as fragments.
@@ -835,10 +858,102 @@ The security considerations discussed in {{Section 7 of RFC3986}} and
 
 # IANA Considerations
 
-This document has no IANA actions.
+## CRI Scheme Numbers Registry {#cri-reg}
 
+This specification defines a new "CRI Scheme Numbers" sub-registry in
+the "CoRE Parameters" registry {{!IANA.core-parameters}}, with the
+policy "Expert Review" ({{Section 4.5 of -ianacons}}).
+The objective is to have CRI scheme number values registered for all
+registered URI schemes (Uniform Resource Identifier (URI) Schemes
+registry), as well as exceptionally for certain text strings that the
+Designated Expert considers widely used in constrained applications in
+place of URI scheme names.
+
+### Instructions for the Designated Expert {#de-instructions}
+
+The expert is instructed to be frugal in the allocation of CRI values
+with short representations (1+0 and 1+1 encoding), keeping them in
+reserve for applications that are likely to enjoy wide use and can
+make good use of their shortness.
+
+When the expert notices that a registration has been made in the
+Uniform Resource Identifier (URI) Schemes registry (see also {{upd}}),
+the expert is requested to initiate a parallel registration in the CRI
+Scheme Numbers registry.  CRI values in the range between 1000 and
+20000 (inclusive) should be assigned unless a shorter representation
+in CRIs appears desirable.
+
+The expert exceptionally also may make such a registration for text
+strings that have not been registered in the Uniform Resource
+Identifier (URI) Schemes registry if and only if the expert considers
+the to be in wide use in place of URI scheme names in constrained
+applications.
+(Note that the initial registrations in {{tab-numbers}} already include
+such registrations for the text strings "mqtt" and "mqtts".)
+
+A registration in the CRI Scheme Numbers registry does not imply that
+a URI scheme under this name exists or has been registered in the
+Uniform Resource Identifier (URI) Schemes registry -- it essentially
+is only providing an integer identifier for an otherwise uninterpreted
+text string.
+
+Any questions or issues that might interest a wider audience might be
+raised by the expert on the core-parameters@ietf.org mailing list for
+a time-limited discussion.
+
+### Structure of Entries
+
+Each entry in the registry must include:
+
+{:vspace}
+CRI value:
+: A negative integer unique in this registry
+
+URI scheme name:
+: a text string that would be acceptable for registration as a URI
+  Scheme Name in the Uniform Resource Identifier (URI) Schemes
+  registry
+
+Reference:
+: a reference to a document, if available, or the registrant
+
+### Initial Registrations
+
+The initial registrations for the CRI Scheme Numbers registry are
+provided in {{tab-numbers}}.
+
+## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
+
+{{-schemes}} is updated to add the following note in the "Uniform
+Resource Identifier (URI) Schemes" Registry {{IANA.uri-schemes}}:
+
+{:quote}
+>
+The CRI Scheme Numbers Registry registers numeric identifiers for what
+essentially are URI Scheme names.
+Registrants for the Uniform Resource Identifier (URI) Schemes Registry
+are requested to make a parallel registration in the CRI Scheme
+Numbers registry.
+The number for this registration will be assigned by the Designated
+Expert for that registry.
 
 --- back
+
+# Mapping Scheme Numbers to Scheme Names {#sec-numbers}
+
+{{tab-numbers}} defines the initial mapping from CRI scheme numbers to
+URI scheme names.
+
+{::include code/schemes-numbers.md}
+{: #tab-numbers title="Mapping Scheme Numbers to Scheme Names"}
+
+The assignments from this table can be extracted from the XML form of
+this document (when stored in a file "this.xml") into CSV form
+{{?RFC4180}} using this short Ruby program:
+
+~~~ ruby
+{::include code/extract-schemes-numbers.rb}
+~~~
 
 # The Small Print
 
