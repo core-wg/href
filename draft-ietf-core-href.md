@@ -94,11 +94,14 @@ memory size.
 
 [^status]
 
-[^status]: The present revision -12 of this draft adds a registry that
-    is intended to provide full coverage for representing a URI scheme
-    (and certain text strings used in their place) as negative integers.
+[^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
+    The present revision –13 of this draft picks up some additional
+    discussion points and is intended as input to the CoRE WG interim
+    meeting on 2023-05-10.
 
 --- middle
+
+{:cabo: source=" -- cabo"}
 
 [^replace-xxxx]: RFC Ed.: throughout this section, please replace
     RFC-XXXX with the RFC number of this specification and remove this
