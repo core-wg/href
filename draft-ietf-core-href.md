@@ -15,8 +15,7 @@ title: Constrained Resource Identifiers
 wg: CoRE Working Group
 
 author:
--
-  name: Carsten Bormann
+- name: Carsten Bormann
   org: Universität Bremen TZI
   street: Postfach 330440
   city: Bremen
@@ -25,20 +24,16 @@ author:
   phone: +49-421-218-63921
   email: cabo@tzi.org
   role: editor
-- ins: H. Birkholz
-  name: Henk Birkholz
+- name: Henk Birkholz
   org: Fraunhofer SIT
-  abbrev: Fraunhofer SIT
   email: henk.birkholz@sit.fraunhofer.de
   street: Rheinstrasse 75
   code: '64295'
   city: Darmstadt
   country: Germany
 
-
 contributor:
-- ins: K. Hartke
-  name: Klaus Hartke
+- name: Klaus Hartke
   org: Ericsson
   street: Torshamnsgatan 23
   city: Stockholm
