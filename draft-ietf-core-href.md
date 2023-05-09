@@ -15,8 +15,7 @@ title: Constrained Resource Identifiers
 wg: CoRE Working Group
 
 author:
--
-  name: Carsten Bormann
+- name: Carsten Bormann
   org: Universität Bremen TZI
   street: Postfach 330440
   city: Bremen
@@ -25,26 +24,28 @@ author:
   phone: +49-421-218-63921
   email: cabo@tzi.org
   role: editor
-- ins: H. Birkholz
-  name: Henk Birkholz
+- name: Henk Birkholz
   org: Fraunhofer SIT
-  abbrev: Fraunhofer SIT
   email: henk.birkholz@sit.fraunhofer.de
   street: Rheinstrasse 75
   code: '64295'
   city: Darmstadt
   country: Germany
 
-
 contributor:
-- ins: K. Hartke
-  name: Klaus Hartke
+- name: Klaus Hartke
   org: Ericsson
   street: Torshamnsgatan 23
   city: Stockholm
   code: '16483'
   country: Sweden
   email: klaus.hartke@ericsson.com
+- name: Christian Amsüss
+  street: Hollandstr. 12/4
+  city: Vienna
+  code: 1020
+  country: Austria
+  email: christian@amsuess.com
 
 venue:
   group: Constrained RESTful Environments
@@ -93,11 +94,14 @@ memory size.
 
 [^status]
 
-[^status]: The present revision -12 of this draft adds a registry that
-    is intended to provide full coverage for representing a URI scheme
-    (and certain text strings used in their place) as negative integers.
+[^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
+    The present revision –13 of this draft picks up some additional
+    discussion points and is intended as input to the CoRE WG interim
+    meeting on 2023-05-10.
 
 --- middle
+
+{:cabo: source=" -- cabo"}
 
 [^replace-xxxx]: RFC Ed.: throughout this section, please replace
     RFC-XXXX with the RFC number of this specification and remove this
@@ -521,6 +525,50 @@ Trailing null values are removed from the array.
 As a special case, an empty array is sent in place for a remaining
 `[0]` (URI "").
 
+### Error handling and extensibility {#unprocessable}
+
+It is recommended that specifications that describe the use of CRIs in CBOR-based protocols
+use the error handling mechanisms outlined in this section.
+Implementations of this document MUST adhere to rules
+unless the containing document overrides them.
+
+When encountering a CRI that is well-formed in terms of CBOR, but that
+
+* is not well-formed as a CRI,
+* does not meet the other requirements on CRIs that are not covered by
+  the term "well-formed", or
+* uses features not supported by the implementation,
+
+the CRI is treated as "unprocessable".
+
+When encountering an unprocessable CRI,
+the processor skips the entire CRI top-level array, including any CBOR
+items contained in there,
+and continues processing the CBOR items surrounding the unprocessable CRI.
+This skipping can be implemented in bound memory
+because CRI extensions may not use indefinite length items.
+[^dubious1]{:cabo}
+
+[^dubious1]: Hmm. The fact that an item is definite length encoded does
+             not bound its memory use.
+
+The unprocessable CRI is treated as an opaque identifier
+that is distinct from all processable CRIs,
+and distinct from all unprocessable CRIs with different serializations.
+It is up to implementation whether unprocessable CRIs with identical serializations
+are treated as identical to each other or not.
+Unprocessable CRIs can not be dereferenced,
+and it is an error to query any of their components.
+
+This mechanism ensures that CRI extensions
+(using originally defined features or later extensions)
+can be used without extending the compatibility hazard to the containing document.
+For example,
+if a collection of possible interaction targets contains several CRIs,
+some of which use the "no-authority" feature,
+an application consuming that collection that does not support that
+feature can still offer the supported interaction targets.
+
 ## Reference Resolution {#reference-resolution}
 
 The term "relative" implies that a "base CRI" exists against which the
@@ -770,6 +818,10 @@ use, by finding structures that do not match the CDDL rules given in
 Future definitions of extended forms need to strive to be
 distinguishable in their structures from the extended form presented
 here as well as other future forms.
+
+Extensions to CRIs MUST NOT allow indefinite length items.
+This provision ensures that recipients o CRIs can deal with unprocessable CRIs
+as described in {{unprocessable}}.
 
 ## Extended CRI: Accommodating Percent Encoding (PET) {#pet}
 
