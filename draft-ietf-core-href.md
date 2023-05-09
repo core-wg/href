@@ -527,27 +527,36 @@ As a special case, an empty array is sent in place for a remaining
 
 ### Error handling and extensibility {#unprocessable}
 
-It is recommended that specifications that describe the use of CRIs in own CBOR-based protocols
-use this error handling mechanisms in this section.
+It is recommended that specifications that describe the use of CRIs in CBOR-based protocols
+use the error handling mechanisms outlined in this section.
 Implementations of this document MUST adhere to rules
 unless the containing document overrides them.
 
-When encountering a CRI that is not well-formed,
-that does not meet requirements to CRIs that are not covered by that term,
-or that use features not supported by the implementation,
-but is well-formed in terms of CBOR,
+When encountering a CRI that is well-formed in terms of CBOR, but that
+
+* is not well-formed as a CRI,
+* does not meet the other requirements on CRIs that are not covered by
+  the term "well-formed", or
+* uses features not supported by the implementation,
+
 the CRI is treated as "unprocessable".
-Encountering an unprocessable CRI,
-the processor skips any CBOR items contained in the CRI's top-level array,
-and continues processing the surrounding CBOR items.
+
+When encountering an unprocessable CRI,
+the processor skips the entire CRI top-level array, including any CBOR
+items contained in there,
+and continues processing the CBOR items surrounding the unprocessable CRI.
 This skipping can be implemented in bound memory
 because CRI extensions may not use indefinite length items.
+[^dubious1]{:cabo}
+
+[^dubious1]: Hmm. The fact that an item is definite length encoded does
+             not bound its memory use.
 
 The unprocessable CRI is treated as an opaque identifier
 that is distinct from all processable CRIs,
 and distinct from all unprocessable CRIs with different serializations.
 It is up to implementation whether unprocessable CRIs with identical serializations
-are identical to each other or not.
+are treated as identical to each other or not.
 Unprocessable CRIs can not be dereferenced,
 and it is an error to query any of their components.
 
@@ -557,7 +566,8 @@ can be used without extending the compatibility hazard to the containing documen
 For example,
 if a collection of possible interaction targets contains several CRIs,
 some of which use the "no-authority" feature,
-an application consuming that collection can still offer the supported interaction targets.
+an application consuming that collection that does not support that
+feature can still offer the supported interaction targets.
 
 ## Reference Resolution {#reference-resolution}
 
