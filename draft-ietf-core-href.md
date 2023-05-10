@@ -428,7 +428,8 @@ references:
   be represented by using the `discard` alternative instead, and
 * an empty path in a `CRI` MUST be represented as the empty array `[]`
   (note that for `CRI-Reference` there is a difference between empty
-  and absent paths, represented by `[]` and `null`, respectively).
+  and absent paths, represented by `[]` and `null`, respectively),
+* an entirely empty outer array is not a valid CRI reference.
 
 The rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the (sub‑)components of a CRI, as described in
