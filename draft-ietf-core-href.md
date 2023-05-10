@@ -687,11 +687,14 @@ authority
 
   The `host-name` is turned into a single string by joining the
   elements separated by dots (".").
-  Any character in the elements of a `host-name` item that is a dot
-  ("."), or not in
+  Any character in the elements of a `host-name` item that is not in
   the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
   "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
   percent-encoded.
+  If there are dots (".") in such elements, the conversion fails
+  (percent-encoding is not able to present such elements, as
+  normalization would turn the percent-encoding back to the unreserved
+  character that a dot is.)
 
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
