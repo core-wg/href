@@ -891,6 +891,28 @@ The above DID URI can now be represented as:
 [-6, true, [["web:alice:7", ':', "1-balun"]]]
 ~~~
 
+(Note that, in CBOR diagnostic notation, single quotes delimit
+literals for byte strings, double quotes for text strings.)
+
+To yield a valid `extended-cri`, the use of byte strings MUST be
+minimal.
+Both the following examples are therefore not valid:
+
+~~~ cbor-diag
+[-6, true, [["web:alice:", '7:', "1-balun"]]]
+[-6, true, [["web:alice:7", ':1', "-balun"]]]
+~~~
+
+An algorithm for constructing a valid `text-pet-sequence` might
+repeatedly examine the byte sequences in each byte string; if such a
+sequence stands for an unreserved ASCII character, or constitutes a
+valid UTF-8 character ≥ U+0080, move this character over into a text
+string by appending it to the end of the preceding text string,
+prepending it to the start of the following text string, or splitting
+the byte string and inserting a new text string with this character,
+all while preserving the order of the bytes.  (Note that the
+properties of UTF-8 make this a simple linear process.)
+
 {:aside}
 > Unlike the text elements of a path or a query, which through CoAP's
 > heritage are designed to be processable element by element, a
