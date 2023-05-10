@@ -382,7 +382,7 @@ represented resource and the resource identified by the CRI.
 
 This section defines the representation of CRIs in
 [Concise Binary Object Representation (CBOR)](#RFC8949).
-To reduce representation size, CRIs are not serialized directly.
+When reduced representation size is desired, CRIs are not represented directly.
 Instead, CRIs are indirectly referenced through *CRI references*.
 These take advantage of hierarchical locality and provide a very compact
 encoding.
@@ -397,7 +397,7 @@ the algorithm specified in {{reference-resolution}} (or any algorithm
 that is functionally equivalent to it).
 
 The reverse operation of transforming a CRI into a CRI reference is
-unspecified;
+not specified in detail in this document;
 implementations are free to use any algorithm as long as reference
 resolution of the resulting CRI reference yields the original CRI.
 Notably, a CRI reference is not required to satisfy all of the
@@ -419,6 +419,10 @@ structure as described in the [Concise Data Definition Language
 ~~~~
 {: #cddl title="CDDL for CRI CBOR representation"}
 
+The rules `scheme`, `authority`, `path`, `query`, `fragment`
+correspond to the (sub‑)components of a CRI, as described in
+{{constraints}}, with the addition of the `discard` section.
+
 This CDDL specification is simplified for exposition and needs to be
 augmented by the following rules for interchange of CRIs and CRI
 references:
@@ -431,9 +435,10 @@ references:
   and absent paths, represented by `[]` and `null`, respectively),
 * an entirely empty outer array is not a valid CRI reference.
 
-The rules `scheme`, `authority`, `path`, `query`, `fragment`
-correspond to the (sub‑)components of a CRI, as described in
-{{constraints}}, with the addition of the `discard` section.
+For interchange, CRIs MUST NOT use indefinite length encoding (see
+{{Section 3.2 of RFC8949}}); this requirement is relaxed for
+specifications that embed CRIs into an encompassing CBOR
+representation that does provide for indefinite length encoding.
 
 ### The `discard` Section
 
@@ -552,12 +557,9 @@ When encountering an unprocessable CRI,
 the processor skips the entire CRI top-level array, including any CBOR
 items contained in there,
 and continues processing the CBOR items surrounding the unprocessable CRI.
-This skipping can be implemented in bound memory
-because CRI extensions may not use indefinite length items.
-[^dubious1]{:cabo}
-
-[^dubious1]: Hmm. The fact that an item is definite length encoded does
-             not bound its memory use.
+(Note: this skipping can be implemented in bounded memory for CRIs
+that do not use indefinite length encoding, as mandated in
+{{cbor-representation}}.)
 
 The unprocessable CRI is treated as an opaque identifier
 that is distinct from all processable CRIs,
