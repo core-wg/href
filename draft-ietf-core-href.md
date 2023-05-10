@@ -703,7 +703,7 @@ authority
   "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
   percent-encoded.
   If there are dots (".") in such elements, the conversion fails
-  (percent-encoding is not able to present such elements, as
+  (percent-encoding is not able to represent such elements, as
   normalization would turn the percent-encoding back to the unreserved
   character that a dot is.)
 
