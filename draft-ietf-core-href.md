@@ -419,10 +419,16 @@ structure as described in the [Concise Data Definition Language
 ~~~~
 {: #cddl title="CDDL for CRI CBOR serialization"}
 
-This CDDL specification is simplified for exposition and needs to be augmented by the
-following rule for interchange of CRIs and CRI references: Trailing null values MUST be removed, and
-two leading null values (scheme and authority both not given) are
-represented by using the `discard` alternative instead.
+This CDDL specification is simplified for exposition and needs to be
+augmented by the following rules for interchange of CRIs and CRI
+references:
+
+* Trailing null values MUST be removed,
+* two leading null values (scheme and authority both not given) MUST
+  be represented by using the `discard` alternative instead, and
+* an empty path in a `CRI` MUST be represented as the empty array `[]`
+  (note that for `CRI-Reference` there is a difference between empty
+  and absent paths, represented by `[]` and `null`, respectively).
 
 The rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the (sub‑)components of a CRI, as described in
