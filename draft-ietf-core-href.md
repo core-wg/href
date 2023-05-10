@@ -575,6 +575,16 @@ some of which use the "no-authority" feature,
 an application consuming that collection that does not support that
 feature can still offer the supported interaction targets.
 
+The duty of checking validity is with the recipients that rely on this
+validity.
+An intermediary that does not use the detailed information in a CRI
+(or merely performs reference resolution) MAY pass on a CRI/CRI
+reference without having fully checked it, relying on the producer
+having generated a valid CRI/CRI reference.
+This is true for both basic CRIs (e.g., checking for valid UTF-8) and
+for extensions (e.g., checking both for valid UTF-8 and the minimal
+use of PET elements in extended-cris as per {{pet}}).
+
 ## Reference Resolution {#reference-resolution}
 
 The term "relative" implies that a "base CRI" exists against which the
