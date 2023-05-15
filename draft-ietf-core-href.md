@@ -380,14 +380,14 @@ The most common usage of a Constrained Resource Identifier is to embed
 it in resource representations, e.g., to express a hyperlink between the
 represented resource and the resource identified by the CRI.
 
-This section defines the serialization of CRIs in
+This section defines the representation of CRIs in
 [Concise Binary Object Representation (CBOR)](#RFC8949).
 To reduce representation size, CRIs are not serialized directly.
 Instead, CRIs are indirectly referenced through *CRI references*.
 These take advantage of hierarchical locality and provide a very compact
 encoding.
-The CBOR serialization of CRI references is specified in
-{{cbor-serialization}}.
+The CBOR representation of CRI references is specified in
+{{cbor-representation}}.
 
 The only operation defined on a CRI reference is *reference resolution*:
 the act of transforming a CRI reference into a CRI.
@@ -408,7 +408,7 @@ When testing for equivalence or difference, applications SHOULD NOT
 directly compare CRI references; the references should be
 resolved to their respective CRI before comparison.
 
-## CBOR Serialization {#cbor-serialization}
+## CBOR Representation {#cbor-representation}
 
 A CRI or CRI reference is encoded as a CBOR array {{RFC8949}}, with the
 structure as described in the [Concise Data Definition Language
@@ -417,7 +417,7 @@ structure as described in the [Concise Data Definition Language
 ~~~~ cddl
 {::include cddl/cri.cddl}
 ~~~~
-{: #cddl title="CDDL for CRI CBOR serialization"}
+{: #cddl title="CDDL for CRI CBOR representation"}
 
 This CDDL specification is simplified for exposition and needs to be
 augmented by the following rules for interchange of CRIs and CRI
@@ -561,8 +561,8 @@ because CRI extensions may not use indefinite length items.
 
 The unprocessable CRI is treated as an opaque identifier
 that is distinct from all processable CRIs,
-and distinct from all unprocessable CRIs with different serializations.
-It is up to implementation whether unprocessable CRIs with identical serializations
+and distinct from all unprocessable CRIs with different CBOR representations.
+It is up to implementation whether unprocessable CRIs with identical representations
 are treated as identical to each other or not.
 Unprocessable CRIs can not be dereferenced,
 and it is an error to query any of their components.
