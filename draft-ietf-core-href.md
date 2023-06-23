@@ -435,7 +435,8 @@ references:
   and absent paths, represented by `[]` and `null`, respectively),
 * an entirely empty outer array is not a valid CRI reference.
 
-For interchange, CRIs MUST NOT use indefinite length encoding (see
+For interchange as separate encoded data items, CRIs MUST NOT use
+indefinite length encoding (see
 {{Section 3.2 of RFC8949}}); this requirement is relaxed for
 specifications that embed CRIs into an encompassing CBOR
 representation that does provide for indefinite length encoding.
