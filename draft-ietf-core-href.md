@@ -916,8 +916,8 @@ properties of UTF-8 make this a simple linear process.)
 {:aside}
 > Unlike the text elements of a path or a query, which through CoAP's
 > heritage are designed to be processable element by element, a
-> text-pet-sequence does not usually produce semantically meaningful
-> array elements.
+> text-pet-sequence does not usually produce a semantically meaningful
+> division into array elements.
 > This consequence of the flexibility in delimiters offered in URIs is
 > demonstrated by this example, which structurally singles out the one
 > ':' that is *not* a delimiter at the application level.
