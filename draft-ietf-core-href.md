@@ -473,7 +473,9 @@ The structure of a CRI reference is visualized using the somewhat limited means
 of a railroad diagram:
 
 ~~~ railroad-utf8
-cri-reference = [((scheme authority) / discard) [path [query [fragment]]]]
+cri-reference = ((scheme authority) / discard) local-part
+
+local-part = [path [query [fragment]]]
 ~~~
 
 This visualization does not go into the details of the elements.
