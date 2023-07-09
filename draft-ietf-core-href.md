@@ -651,6 +651,12 @@ URI to CRI
   implementations are free to use any algorithm as long as converting
   the resulting CRI back to a URI yields an equivalent URI.
 
+  Note that CRIs are defined to enable implementing conversions from
+  or to URIs analogously to processing URIs into CoAP Options and
+  back, with the exception that item 8 of {{Section 6.4 of -coap}}
+  and item 7 of {{Section 6.5 of -coap}} do not apply to CRI processing.
+  See {{<sp-initial-empty}} in {{the-small-print}} for more details.
+
 CRI to IRI
 : A CRI can be converted to an IRI by first converting it to a URI as
   specified in {{cri-to-uri}}, and then converting the URI
@@ -1065,23 +1071,21 @@ representative of the normal operation of CRIs.
 {:sp}
 1. {:#sp-initial-empty} Initial (Lone/Leading) Empty Path Segments:
 
-  *  *Lone empty path segments:*
+  * *Lone empty path segments:*
   As per {{-uri}}, `s://x` is distinct from `s://x/` -- i.e., a URI
-  with an empty path is different from one with a lone empty path segment.
-  However, in HTTP, CoAP, they are implicitly aliased (for CoAP, in
+  with an empty path (`[]` in CRI) is different from one with a lone
+  empty path segment (`[""]`).
+  However, in HTTP and CoAP, they are implicitly aliased (for CoAP, in
   item 8 of {{Section 6.4 of -coap}}).
   As per item 7 of {{Section 6.5 of -coap}}, recomposition of a URI
   without Uri-Path Options from the other URI-related CoAP Options
   produces `s://x/`, not `s://x` -- CoAP prefers the lone empty path
   segment form.
-  [^leps-tbd]
-  After discussing HTTP semantics, {{Section 6.2.3 of -uri}} even states:
+  Similarly, after discussing HTTP semantics, {{Section 6.2.3 of -uri}} states:
 
   {:quote}
   > In general, a URI that uses the generic syntax for authority with an
   empty path should be normalized to a path of "/".
-
-  [^leps-tbd]: TBD: add similar text for HTTP, if that can be made.
 
   * *Leading empty path segments without authority*:
   Somewhat related, note also that URIs and URI references that do not
