@@ -96,8 +96,8 @@ memory size.
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
     The present revision –13 of this draft picks up some additional
-    discussion points and is intended as input to the CoRE WG interim
-    meeting on 2023-05-10.
+    discussion points and is intended as input to the CoRE WG
+    meeting at IETF 117.
 
 --- middle
 
