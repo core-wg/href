@@ -285,7 +285,11 @@ Examples for URIs at or beyond the boundaries of these constraints are in {{<sp-
 There are syntactically valid CRIs and CRI references that cannot be converted into a URI or URI reference, respectively.
 
 For CRI references, this is acceptable -- they can be resolved still and result in a valid CRI that can be converted back.
-(An example of this is `[0, ["p"]]` which appends a slash and the path segment "p" to its base).
+Examples of this are:
+
+* `[0, ["p"]]`: appends a slash and the path segment "p" to its base
+  (and unsets the query and the fragment)
+* `[0, null, []]`: leaves the path alone but unsets the query and the fragment
 
 (Full) CRIs that do not correspond to a valid URI are not valid on their own, and cannot be used.
 Normatively they are characterized by the {{cri-to-uri}} process producing a valid and syntax-normalized URI.
@@ -621,9 +625,9 @@ an absolute CRI reference:
    the buffer; unset query and fragment.
 
 5. Apart from the path and discard, copy all non-null sections from
-   the CRI reference to the buffer in sequence; unset fragment in the buffer if
-   query is non-null in the CRI reference (and therefore has been
-   copied to the buffer).
+   the CRI reference to the buffer in sequence; unset query in the buffer if query
+   is the empty array `[]` in the CRI reference; unset fragment in the buffer if
+   query is non-null in the CRI reference.
 
 6. Return the sections in the buffer as the resolved CRI.
 
@@ -865,7 +869,7 @@ The four CDDL rules
 userinfo    = (false, text .feature "userinfo")
 host-name   = (*text)
 path        = [*text]
-query       = [*text]
+query       = [+text]
 fragment    = text
 ~~~
 
@@ -875,7 +879,7 @@ are replaced with
 userinfo    = (false, text-or-pet .feature "userinfo")
 host-name   = (*text-or-pet)
 path        = [*text-or-pet]
-query       = [*text-or-pet]
+query       = [+text-or-pet]
 fragment    = text-or-pet
 
 text-or-pet = text /
