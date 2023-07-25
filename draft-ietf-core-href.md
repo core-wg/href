@@ -1008,7 +1008,7 @@ strings that have not been registered in the Uniform Resource
 Identifier (URI) Schemes registry if and only if the expert considers
 the to be in wide use in place of URI scheme names in constrained
 applications.
-(Note that the initial registrations in {{tab-numbers}} already include
+(Note that the initial registrations in {{tab-numbers}} in {{sec-numbers}} already include
 such registrations for the text strings "mqtt" and "mqtts".)
 
 A registration in the CRI Scheme Numbers registry does not imply that
@@ -1040,7 +1040,7 @@ Reference:
 ### Initial Registrations
 
 The initial registrations for the CRI Scheme Numbers registry are
-provided in {{tab-numbers}}.
+provided in {{tab-numbers}} in {{sec-numbers}}.
 
 ## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
 
