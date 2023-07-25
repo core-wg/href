@@ -1061,6 +1061,8 @@ Expert for that registry.
 
 # Mapping Scheme Numbers to Scheme Names {#sec-numbers}
 
+[^replace-xxxx]
+
 {{tab-numbers}} defines the initial mapping from CRI scheme numbers to
 URI scheme names.
 
