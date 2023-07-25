@@ -88,7 +88,7 @@ normative:
 The Constrained Resource Identifier (CRI) is a complement to the Uniform
 Resource Identifier (URI) that represents the URI components in Concise
 Binary Object Representation (CBOR) instead of a sequence of characters.
-This simplifies parsing, comparison and reference resolution in
+This simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
@@ -137,7 +137,7 @@ constraining URIs to a simplified subset and representing their
 components in [Concise Binary Object Representation (CBOR)](#RFC8949)
 instead of a sequence of characters.
 This allows typical operations on URI references such as parsing,
-comparison and reference resolution (including all corner cases) to be
+comparison, and reference resolution (including all corner cases) to be
 implemented in a comparatively small amount of code.
 
 As a result of simplification, however, CRIs are not capable of
@@ -188,7 +188,7 @@ The components are subject to the following constraints:
      present), or
    * the path can be rootless, which requires at least one path component.
 
-   (Note that in {{cddl}}, `no-authority` is marked as a feature, as
+   (Note that, in {{cddl}}, `no-authority` is marked as a feature, as
    not all CRI implementations will support authority-less URIs.)
 
 3. {:#c-userinfo} A userinfo is a text string built out of unreserved
@@ -228,7 +228,7 @@ The components are subject to the following constraints:
    this is considered equivalent to a path of zero path segments by
    HTTP and CoAP, but this equivalence does not hold for CRIs in general as they only perform
    normalization on the Syntax-Based Normalization level ({{Section
-   6.2.2 of -uri}}, not on the scheme-specific Scheme-Based
+   6.2.2 of -uri}}), not on the scheme-specific Scheme-Based
    Normalization level ({{Section 6.2.3 of -uri}}).
 
    (A CRI implementation may want to offer scheme-cognizant
@@ -414,9 +414,11 @@ resolved to their respective CRI before comparison.
 
 ## CBOR Representation {#cbor-representation}
 
+[^replace-xxxx]
+
 A CRI or CRI reference is encoded as a CBOR array {{RFC8949}}, with the
 structure as described in the [Concise Data Definition Language
-(CDDL)](#RFC8610) [including its control extensions](#RFC9165) as follows: [^replace-xxxx]
+(CDDL)](#RFC8610) [including its control extensions](#RFC9165) as follows:
 
 ~~~~ cddl
 {::include cddl/cri.cddl}
@@ -559,7 +561,7 @@ As a special case, an empty array is sent in place for a remaining
 
 It is recommended that specifications that describe the use of CRIs in CBOR-based protocols
 use the error handling mechanisms outlined in this section.
-Implementations of this document MUST adhere to rules
+Implementations of this document MUST adhere to these rules
 unless the containing document overrides them.
 
 When encountering a CRI that is well-formed in terms of CBOR, but that
@@ -643,7 +645,7 @@ an absolute CRI reference:
 6. Return the sections in the buffer as the resolved CRI.
 
 
-# Relationship between CRIs, URIs and IRIs
+# Relationship between CRIs, URIs, and IRIs
 
 CRIs are meant to replace both [Uniform Resource Identifiers (URIs)](#RFC3986)
 and [Internationalized Resource Identifiers (IRIs)](#RFC3987)
@@ -684,7 +686,7 @@ IRI to CRI
 
 <!-- What? -->
 Everything in this section also applies to CRI references, URI
-references and IRI references.
+references, and IRI references.
 
 
 ## Converting CRIs to URIs {#cri-to-uri}
@@ -700,7 +702,7 @@ scheme
   component of the URI reference consists of the value of that
   section, if text (`scheme-name`); or, if a negative integer is given
   (`scheme-id`), the lower case scheme name corresponding to the
-  scheme number as per the CRI Scheme Numbers registry {{cri-reg}}.
+  scheme number as per the CRI Scheme Numbers registry ({{cri-reg}}).
   Otherwise, the scheme component is unset.
 
 authority
@@ -866,7 +868,7 @@ distinguishable in their structures from the extended form presented
 here as well as other future forms.
 
 Extensions to CRIs MUST NOT allow indefinite length items.
-This provision ensures that recipients o CRIs can deal with unprocessable CRIs
+This provision ensures that recipients of CRIs can deal with unprocessable CRIs
 as described in {{unprocessable}}.
 
 ## Extended CRI: Accommodating Percent Encoding (PET) {#pet}
@@ -1006,7 +1008,7 @@ in CRIs appears desirable.
 The expert exceptionally also may make such a registration for text
 strings that have not been registered in the Uniform Resource
 Identifier (URI) Schemes registry if and only if the expert considers
-the to be in wide use in place of URI scheme names in constrained
+them to be in wide use in place of URI scheme names in constrained
 applications.
 (Note that the initial registrations in {{tab-numbers}} in {{sec-numbers}} already include
 such registrations for the text strings "mqtt" and "mqtts".)
@@ -1269,7 +1271,8 @@ Thanks to
 {{{Thomas Fossati}}},
 {{{Ari Keränen}}},
 {{{Jim Schaad}}},
-{{{Dave Thaler}}} and
+{{{Dave Thaler}}},
+and
 {{{Marco Tiloca}}}
 for helpful comments and discussions that have shaped the
 document.
