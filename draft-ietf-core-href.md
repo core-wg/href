@@ -487,15 +487,26 @@ This visualization does not go into the details of the elements.
 ### Examples
 
 ~~~~ cbor-diag
-{::include example/href-cri-reference-1.diag}
+[-1,             / scheme -- equivalent to "coap" /
+ [h'C6336401',   / host /
+  61616],        / port /
+ [".well-known", / path /
+  "core"]
+]
 ~~~~
 
 ~~~~ cbor-diag
-{::include example/href-cri-reference-2.diag}
+[true,                  / discard /
+ [".well-known",        / path /
+  "core"],
+ ["rt=temperature-c"]]  / query /
 ~~~~
 
 ~~~~ cbor-diag
-{::include example/href-cri-reference-3.diag}
+[-6,             / scheme -- equivalent to "did" /
+ true,           / authority = NOAUTH-ROOTLESS /
+ ["web:alice:bob"] / path /
+]
 ~~~~
 
 ### Specific Terminology
