@@ -130,7 +130,7 @@ This can be a problem especially in [constrained environments](#RFC7228),
 where nodes often have severe code size and memory size limitations.
 As a result, many implementations in such environments support only an
 ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
-half of RFC 3986.
+half of {{RFC3986}}.
 
 This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
@@ -141,7 +141,7 @@ comparison and reference resolution (including all corner cases) to be
 implemented in a comparatively small amount of code.
 
 As a result of simplification, however, CRIs are not capable of
-expressing all URIs permitted by the generic syntax of RFC 3986 (hence
+expressing all URIs permitted by the generic syntax of {{RFC3986}} (hence
 the "constrained" in "Constrained Resource Identifier").
 The supported subset includes all URIs of the
 [Constrained Application Protocol (CoAP)](#RFC7252), most URIs of the
