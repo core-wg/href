@@ -536,7 +536,7 @@ scheme, authority, discard, path, query, fragment
 Each of these sections can be unset ("null"),
 <!-- "not defined" in RFC 3986 -->
 except for discard,
-which is always an unsigned number or `true`.  If scheme and/or
+which is always an unsigned integer or `true`.  If scheme and/or
 authority are non-null, discard must be `true`.
 
 When ingesting a CRI Reference that is in the transfer form, those
@@ -545,7 +545,7 @@ filled with null), and the following steps are performed:
 
 * If the array is entirely empty, replace it with `[0]`.
 * If discard is present in the transfer form (i.e., the outer array
-  starts with true or an unsigned number), set scheme and authority to null.
+  starts with true or an unsigned integer), set scheme and authority to null.
 * If scheme and/or authority are present in the transfer form (i.e.,
   the outer array starts with null, a text string, or a negative integer), set
   discard to `true`.
@@ -629,7 +629,7 @@ an absolute CRI reference:
    implicitly the case when scheme and/or authority are present in the reference), replace the
    path in the buffer with the empty array, unset query and
    fragment, and set a `true` authority to `null`.  If the value of
-   discard is an unsigned number, remove as many elements
+   discard is an unsigned integer, remove as many elements
    from the end of the path array; if it is non-zero, unset query and
    fragment.
 
