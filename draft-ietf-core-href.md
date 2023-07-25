@@ -439,7 +439,9 @@ references:
 * an empty path in a `CRI` MUST be represented as the empty array `[]`
   (note that for `CRI-Reference` there is a difference between empty
   and absent paths, represented by `[]` and `null`, respectively),
-* an entirely empty outer array is not a valid CRI reference.
+* an entirely empty outer array is not a valid CRI (but a valid CRI reference,
+  as per {{ingest}} equivalent to `[0]`, which essentially copies the
+  base CRI).
 
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
@@ -466,7 +468,7 @@ The exact semantics of the section values are defined by
 
 Most URI references that {{Section 4.2 of RFC3986}} calls "relative
 references" (i.e., references that need to undergo a resolution
-process to obtain a URI) correspond to the CRI form that starts with
+process to obtain a URI) correspond to the CRI reference form that starts with
 `discard`.  The exception are relative references with an `authority`
 (called a "network-path reference" in {{Section 4.2 of RFC3986}}), which
 discard the entire path of the base CRI.
@@ -524,7 +526,7 @@ A CRI reference is considered *relative* if it is well-formed
 and the sequence of sections is empty or starts with a section other
 than those that would constitute a `scheme`.
 
-## Ingesting and encoding a CRI Reference
+## Ingesting and encoding a CRI Reference {#ingest}
 
 From an abstract point of view, a CRI Reference is a data structure
 with six sections:
