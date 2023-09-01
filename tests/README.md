@@ -42,6 +42,11 @@ The columns are:
 
 An initial line with type `base` gives the base URI and CRI applied, see above.
 
+Use the command
+
+    bundle
+
+to install the dependencies.
 
 ## Test Logics
 
