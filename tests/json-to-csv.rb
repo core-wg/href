@@ -1,4 +1,3 @@
-require 'cbor-cri'
 require 'cbor-diagnostic'
 require 'sid-csv'               # steal from sid-csv gem
 include CSV::SID
@@ -15,10 +14,6 @@ class String
   end
 end
 
-def hex_to_cri(h)
-  CBOR::CRI.new(*CBOR.decode(h.xeh))
-end
-
 def hex_to_diag(h)
   CBOR.decode(h.xeh).cbor_diagnostic
 end
@@ -30,7 +25,6 @@ test_data = JSON.load_file("tests.json")
 baseuri = test_data["base-uri"]
 basecri_hex = test_data["base-cri"]
 basecri_diag = hex_to_diag(basecri_hex)
-basecri = hex_to_cri(basecri_hex)
 
 data = [
   ["base", baseuri, # basecri_hex,

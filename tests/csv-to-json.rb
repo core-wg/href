@@ -1,4 +1,3 @@
-require 'cbor-cri'
 require 'cbor-diagnostic'
 require 'treetop'
 require 'cbor-diag-parser'
