@@ -1,16 +1,11 @@
 ---
-stand_alone: true
-ipr: trust200902
+v: 3
+
 docname: draft-ietf-core-href-latest
 cat: std
 submissiontype: IETF
 consensus: true
 lang: en
-pi:
-  toc: 'true'
-  tocdepth: '3'
-  symrefs: 'true'
-  sortrefs: 'true'
 title: Constrained Resource Identifiers
 wg: CoRE Working Group
 
@@ -95,9 +90,7 @@ memory size.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –13 of this draft picks up some additional
-    discussion points and is intended as input to the CoRE WG
-    meeting at IETF 117.
+    The present revision –14 of this draft picks up comments from the shepherd review.
 
 --- middle
 
@@ -1157,6 +1150,10 @@ representative of the normal operation of CRIs.
 
 # Change Log
 {:removeinrfc}
+
+Changes from -09 to -14
+
+
 
 Changes from -08 to -09
 
