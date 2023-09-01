@@ -1,4 +1,0 @@
-[-6,             / scheme -- equivalent to "did" /
- true,           / authority = NOAUTH-NOSLASH /
- ["web:alice:bob"] / path /
-]

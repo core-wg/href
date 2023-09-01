@@ -88,7 +88,7 @@ normative:
 The Constrained Resource Identifier (CRI) is a complement to the Uniform
 Resource Identifier (URI) that represents the URI components in Concise
 Binary Object Representation (CBOR) instead of a sequence of characters.
-This simplifies parsing, comparison and reference resolution in
+This simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
@@ -130,18 +130,18 @@ This can be a problem especially in [constrained environments](#RFC7228),
 where nodes often have severe code size and memory size limitations.
 As a result, many implementations in such environments support only an
 ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
-half of RFC 3986.
+half of {{RFC3986}}.
 
 This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
 components in [Concise Binary Object Representation (CBOR)](#RFC8949)
 instead of a sequence of characters.
 This allows typical operations on URI references such as parsing,
-comparison and reference resolution (including all corner cases) to be
+comparison, and reference resolution (including all corner cases) to be
 implemented in a comparatively small amount of code.
 
 As a result of simplification, however, CRIs are not capable of
-expressing all URIs permitted by the generic syntax of RFC 3986 (hence
+expressing all URIs permitted by the generic syntax of {{RFC3986}} (hence
 the "constrained" in "Constrained Resource Identifier").
 The supported subset includes all URIs of the
 [Constrained Application Protocol (CoAP)](#RFC7252), most URIs of the
@@ -188,7 +188,7 @@ The components are subject to the following constraints:
      present), or
    * the path can be rootless, which requires at least one path component.
 
-   (Note that in {{cddl}}, `no-authority` is marked as a feature, as
+   (Note that, in {{cddl}}, `no-authority` is marked as a feature, as
    not all CRI implementations will support authority-less URIs.)
 
 3. {:#c-userinfo} A userinfo is a text string built out of unreserved
@@ -228,7 +228,7 @@ The components are subject to the following constraints:
    this is considered equivalent to a path of zero path segments by
    HTTP and CoAP, but this equivalence does not hold for CRIs in general as they only perform
    normalization on the Syntax-Based Normalization level ({{Section
-   6.2.2 of -uri}}, not on the scheme-specific Scheme-Based
+   6.2.2 of -uri}}), not on the scheme-specific Scheme-Based
    Normalization level ({{Section 6.2.3 of -uri}}).
 
    (A CRI implementation may want to offer scheme-cognizant
@@ -414,9 +414,11 @@ resolved to their respective CRI before comparison.
 
 ## CBOR Representation {#cbor-representation}
 
+[^replace-xxxx]
+
 A CRI or CRI reference is encoded as a CBOR array {{RFC8949}}, with the
 structure as described in the [Concise Data Definition Language
-(CDDL)](#RFC8610) [including its control extensions](#RFC9165) as follows: [^replace-xxxx]
+(CDDL)](#RFC8610) [including its control extensions](#RFC9165) as follows:
 
 ~~~~ cddl
 {::include cddl/cri.cddl}
@@ -437,7 +439,9 @@ references:
 * an empty path in a `CRI` MUST be represented as the empty array `[]`
   (note that for `CRI-Reference` there is a difference between empty
   and absent paths, represented by `[]` and `null`, respectively),
-* an entirely empty outer array is not a valid CRI reference.
+* an entirely empty outer array is not a valid CRI (but a valid CRI reference,
+  as per {{ingest}} equivalent to `[0]`, which essentially copies the
+  base CRI).
 
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
@@ -464,7 +468,7 @@ The exact semantics of the section values are defined by
 
 Most URI references that {{Section 4.2 of RFC3986}} calls "relative
 references" (i.e., references that need to undergo a resolution
-process to obtain a URI) correspond to the CRI form that starts with
+process to obtain a URI) correspond to the CRI reference form that starts with
 `discard`.  The exception are relative references with an `authority`
 (called a "network-path reference" in {{Section 4.2 of RFC3986}}), which
 discard the entire path of the base CRI.
@@ -487,15 +491,26 @@ This visualization does not go into the details of the elements.
 ### Examples
 
 ~~~~ cbor-diag
-{::include example/href-cri-reference-1.diag}
+[-1,             / scheme -- equivalent to "coap" /
+ [h'C6336401',   / host /
+  61616],        / port /
+ [".well-known", / path /
+  "core"]
+]
 ~~~~
 
 ~~~~ cbor-diag
-{::include example/href-cri-reference-2.diag}
+[true,                  / discard /
+ [".well-known",        / path /
+  "core"],
+ ["rt=temperature-c"]]  / query /
 ~~~~
 
 ~~~~ cbor-diag
-{::include example/href-cri-reference-3.diag}
+[-6,             / scheme -- equivalent to "did" /
+ true,           / authority = NOAUTH-ROOTLESS /
+ ["web:alice:bob"] / path /
+]
 ~~~~
 
 ### Specific Terminology
@@ -511,7 +526,7 @@ A CRI reference is considered *relative* if it is well-formed
 and the sequence of sections is empty or starts with a section other
 than those that would constitute a `scheme`.
 
-## Ingesting and encoding a CRI Reference
+## Ingesting and encoding a CRI Reference {#ingest}
 
 From an abstract point of view, a CRI Reference is a data structure
 with six sections:
@@ -521,7 +536,7 @@ scheme, authority, discard, path, query, fragment
 Each of these sections can be unset ("null"),
 <!-- "not defined" in RFC 3986 -->
 except for discard,
-which is always an unsigned number or `true`.  If scheme and/or
+which is always an unsigned integer or `true`.  If scheme and/or
 authority are non-null, discard must be `true`.
 
 When ingesting a CRI Reference that is in the transfer form, those
@@ -530,7 +545,7 @@ filled with null), and the following steps are performed:
 
 * If the array is entirely empty, replace it with `[0]`.
 * If discard is present in the transfer form (i.e., the outer array
-  starts with true or an unsigned number), set scheme and authority to null.
+  starts with true or an unsigned integer), set scheme and authority to null.
 * If scheme and/or authority are present in the transfer form (i.e.,
   the outer array starts with null, a text string, or a negative integer), set
   discard to `true`.
@@ -548,7 +563,7 @@ As a special case, an empty array is sent in place for a remaining
 
 It is recommended that specifications that describe the use of CRIs in CBOR-based protocols
 use the error handling mechanisms outlined in this section.
-Implementations of this document MUST adhere to rules
+Implementations of this document MUST adhere to these rules
 unless the containing document overrides them.
 
 When encountering a CRI that is well-formed in terms of CBOR, but that
@@ -614,7 +629,7 @@ an absolute CRI reference:
    implicitly the case when scheme and/or authority are present in the reference), replace the
    path in the buffer with the empty array, unset query and
    fragment, and set a `true` authority to `null`.  If the value of
-   discard is an unsigned number, remove as many elements
+   discard is an unsigned integer, remove as many elements
    from the end of the path array; if it is non-zero, unset query and
    fragment.
 
@@ -632,7 +647,7 @@ an absolute CRI reference:
 6. Return the sections in the buffer as the resolved CRI.
 
 
-# Relationship between CRIs, URIs and IRIs
+# Relationship between CRIs, URIs, and IRIs
 
 CRIs are meant to replace both [Uniform Resource Identifiers (URIs)](#RFC3986)
 and [Internationalized Resource Identifiers (IRIs)](#RFC3987)
@@ -673,7 +688,7 @@ IRI to CRI
 
 <!-- What? -->
 Everything in this section also applies to CRI references, URI
-references and IRI references.
+references, and IRI references.
 
 
 ## Converting CRIs to URIs {#cri-to-uri}
@@ -689,7 +704,7 @@ scheme
   component of the URI reference consists of the value of that
   section, if text (`scheme-name`); or, if a negative integer is given
   (`scheme-id`), the lower case scheme name corresponding to the
-  scheme number as per the CRI Scheme Numbers registry {{cri-reg}}.
+  scheme number as per the CRI Scheme Numbers registry ({{cri-reg}}).
   Otherwise, the scheme component is unset.
 
 authority
@@ -855,7 +870,7 @@ distinguishable in their structures from the extended form presented
 here as well as other future forms.
 
 Extensions to CRIs MUST NOT allow indefinite length items.
-This provision ensures that recipients o CRIs can deal with unprocessable CRIs
+This provision ensures that recipients of CRIs can deal with unprocessable CRIs
 as described in {{unprocessable}}.
 
 ## Extended CRI: Accommodating Percent Encoding (PET) {#pet}
@@ -995,9 +1010,9 @@ in CRIs appears desirable.
 The expert exceptionally also may make such a registration for text
 strings that have not been registered in the Uniform Resource
 Identifier (URI) Schemes registry if and only if the expert considers
-the to be in wide use in place of URI scheme names in constrained
+them to be in wide use in place of URI scheme names in constrained
 applications.
-(Note that the initial registrations in {{tab-numbers}} already include
+(Note that the initial registrations in {{tab-numbers}} in {{sec-numbers}} already include
 such registrations for the text strings "mqtt" and "mqtts".)
 
 A registration in the CRI Scheme Numbers registry does not imply that
@@ -1029,7 +1044,7 @@ Reference:
 ### Initial Registrations
 
 The initial registrations for the CRI Scheme Numbers registry are
-provided in {{tab-numbers}}.
+provided in {{tab-numbers}} in {{sec-numbers}}.
 
 ## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
 
@@ -1049,6 +1064,8 @@ Expert for that registry.
 --- back
 
 # Mapping Scheme Numbers to Scheme Names {#sec-numbers}
+
+[^replace-xxxx]
 
 {{tab-numbers}} defines the initial mapping from CRI scheme numbers to
 URI scheme names.
@@ -1256,7 +1273,8 @@ Thanks to
 {{{Thomas Fossati}}},
 {{{Ari Keränen}}},
 {{{Jim Schaad}}},
-{{{Dave Thaler}}} and
+{{{Dave Thaler}}},
+and
 {{{Marco Tiloca}}}
 for helpful comments and discussions that have shaped the
 document.

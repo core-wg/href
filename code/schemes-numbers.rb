@@ -57,20 +57,20 @@ result = (0...240).each do |start|
 end
 puts prefill
 result.sort {|a, b| b <=> a}.each do |value, scheme|
-puts "| %9s | %16s | \\[RFCthis] |"  % [value, scheme]
+puts "| %9s | %16s | \\[RFC-XXXX] |"  % [value, scheme]
 end
 
 __END__
 
-| CRI value | URI scheme | Reference  |
-|-----------|------------|------------|
-|        -1 | coap       | \[RFCthis] |
-|        -2 | coaps      | \[RFCthis] |
-|        -3 | http       | \[RFCthis] |
-|        -4 | https      | \[RFCthis] |
-|        -5 | urn        | \[RFCthis] |
-|        -6 | did        | \[RFCthis] |
-|        -7 | coap+tcp   | \[RFCthis] |
-|        -8 | coaps+tcp  | \[RFCthis] |
-|        -9 | coap+ws    | \[RFCthis] |
-|       -10 | coaps+ws   | \[RFCthis] |
+| CRI value | URI scheme | Reference   |
+|-----------|------------|-------------|
+|        -1 | coap       | \[RFC-XXXX] |
+|        -2 | coaps      | \[RFC-XXXX] |
+|        -3 | http       | \[RFC-XXXX] |
+|        -4 | https      | \[RFC-XXXX] |
+|        -5 | urn        | \[RFC-XXXX] |
+|        -6 | did        | \[RFC-XXXX] |
+|        -7 | coap+tcp   | \[RFC-XXXX] |
+|        -8 | coaps+tcp  | \[RFC-XXXX] |
+|        -9 | coap+ws    | \[RFC-XXXX] |
+|       -10 | coaps+ws   | \[RFC-XXXX] |

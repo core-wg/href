@@ -1,4 +1,0 @@
-[true,                  / discard /
- [".well-known",        / path /
-  "core"],
- ["rt=temperature-c"]]  / query /
