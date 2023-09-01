@@ -37,6 +37,7 @@
 -1760,magnet
 -1768,calculator
 -1836,ssh
+-1928,openid
 -1966,gopher
 -1985,ms-gamingoverlay
 -1997,z39.50
@@ -51,6 +52,7 @@
 -2264,tag
 -2369,feed
 -2460,ipps
+-2463,ms-launchremotedesktop
 -2484,xmlrpc.beeps
 -2492,jms
 -2542,wpid
@@ -85,6 +87,7 @@
 -3839,payment
 -3840,ms-settings-bluetooth
 -3951,palm
+-4014,at
 -4027,hyper
 -4043,microsoft.windows.camera
 -4067,mvn
@@ -102,6 +105,7 @@
 -4877,ms-settings-wifi
 -5004,v-event
 -5020,com-eventbrite-attendee
+-5039,ms-remotedesktop
 -5105,teliaeid
 -5222,itms
 -5234,fish
@@ -120,6 +124,7 @@
 -5673,rediss
 -5683,ms-settings-cellular
 -5743,ldaps
+-5803,dhttp
 -5843,z39.50s
 -5886,bitcoincash
 -5960,ms-mobileplans
@@ -180,6 +185,7 @@
 -8585,ms-settings-camera
 -8619,stun
 -8673,ms-stickers
+-8734,lid
 -8775,spotify
 -8860,starknet
 -8890,ms-settings-emailandaccounts

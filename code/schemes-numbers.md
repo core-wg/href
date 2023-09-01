@@ -39,6 +39,7 @@
 |     -1760 |           magnet | \[RFC-XXXX] |
 |     -1768 |       calculator | \[RFC-XXXX] |
 |     -1836 |              ssh | \[RFC-XXXX] |
+|     -1928 |           openid | \[RFC-XXXX] |
 |     -1966 |           gopher | \[RFC-XXXX] |
 |     -1985 | ms-gamingoverlay | \[RFC-XXXX] |
 |     -1997 |           z39.50 | \[RFC-XXXX] |
@@ -186,6 +187,7 @@
 |     -8585 | ms-settings-camera | \[RFC-XXXX] |
 |     -8619 |             stun | \[RFC-XXXX] |
 |     -8673 |      ms-stickers | \[RFC-XXXX] |
+|     -8734 |              lid | \[RFC-XXXX] |
 |     -8775 |          spotify | \[RFC-XXXX] |
 |     -8860 |         starknet | \[RFC-XXXX] |
 |     -8890 | ms-settings-emailandaccounts | \[RFC-XXXX] |
