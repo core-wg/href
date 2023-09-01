@@ -1,0 +1,137 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2021-09-26T00:25:41.930546+00:00",
+  "repo": "core-wg/href",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njk1NzY2Mzc2",
+      "title": "Simplified syntax",
+      "url": "https://github.com/core-wg/href/pull/1",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "This branch is the basis for -05 and will now be updated for -06",
+      "createdAt": "2021-07-23T08:32:27Z",
+      "updatedAt": "2021-07-24T23:49:22Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "b41a1f5a81840911d1684ed00436378e2db92845",
+      "headRepository": "core-wg/href",
+      "headRefName": "simplified-syntax",
+      "headRefOid": "9ca3d0972683ebcd07badb53176fdd1be53cd951",
+      "closedAt": "2021-07-24T23:49:22Z",
+      "mergedAt": "2021-07-24T23:49:22Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "ed6b65b3ac4c1337a73eee3201ff8c211521ab17"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njk2NDI4NzQx",
+      "title": "Ietf111",
+      "url": "https://github.com/core-wg/href/pull/2",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "* rework authority:\r\n  * split reg-names at dots;\r\n  * add optional zone identifiers {{-zone}} to IP addresses\r\n",
+      "createdAt": "2021-07-25T01:44:53Z",
+      "updatedAt": "2021-07-25T11:24:59Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "ed6b65b3ac4c1337a73eee3201ff8c211521ab17",
+      "headRepository": "core-wg/href",
+      "headRefName": "ietf111",
+      "headRefOid": "e827cd3b17981a75704c016283c0c7dcfc402832",
+      "closedAt": "2021-07-25T11:24:59Z",
+      "mergedAt": "2021-07-25T11:24:59Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "9e6fe90620dee38fa06ee954af27a75882def989"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njk4ODE3MTQz",
+      "title": "Add subsection on constraints-by-example",
+      "url": "https://github.com/core-wg/href/pull/3",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "This tries to make the constraints more relatable and understandable.\r\n\r\nIt's currently phrased as examples. I can imagine that at one point we'd like to rephrase the constraints themselves (possibly along with introducing the information model, which is currently a bit mixe into the constraints), at which point we may or may not try to merge in the examples.",
+      "createdAt": "2021-07-28T15:54:55Z",
+      "updatedAt": "2021-07-28T15:54:55Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "9e6fe90620dee38fa06ee954af27a75882def989",
+      "headRepository": "core-wg/href",
+      "headRefName": "constraints-in-practice",
+      "headRefOid": "25504456afd68363d93592c22d82126d7694574c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
