@@ -22,6 +22,27 @@ Each test vector is organized as follows:
 | `resolved-cri` | hex-encoded CBOR representation of the resolved CRI reference relative to the [base CRI](#bases) |
 | `resolved-uri` | resolved URI relative to the [base URI](#bases) |
 
+### Test Vector CSV Layout
+
+The test vectors are assembled in a CSV (RFC 4180)
+comma-separated-value file.
+
+The columns are:
+
+| Key Name            | Description                                                                                      |
+| ---                 | ---                                                                                              |
+| `type`              | kind of test: `ok`, `fail`; special value `base`                                                 |
+| `uri`               | a URI reference                                                                                  |
+| `cri`               | hex-encoded CBOR representation of the CRI reference corresponding to `uri`                      |
+| `cri-diag`          | `cri` in CBOR diagnostic format                                                                  |
+| `uri-from-cri`      | the URI obtained translating the CRI reference `cri`, or "=" if identical to `uri`               |
+| `resolved-cri`      | hex-encoded CBOR representation of the resolved CRI reference relative to the [base CRI](#bases) |
+| `resolved-cri-diag` | `resolved-cri` in CBOR diagnostic format                                                         |
+| `resolved-uri`      | resolved URI relative to the [base URI](#bases)                                                  |
+
+An initial line with type `base` gives the base URI and CRI applied, see above.
+
+
 ## Test Logics
 
 ### CBOR deserialization
