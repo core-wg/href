@@ -302,7 +302,7 @@ For easier understanding, they are listed here:
   When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
   and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
 
-* CRIs without authority that are rootless and do not have a path
+* {:#naked-rootless} CRIs without authority that are rootless and do not have a path
   component (e.g., `["a", true]`), which would be indistinguishable
   from its root-based equivalent (`["a"]`) as both would have the URI `a:`.
 
@@ -422,6 +422,7 @@ The rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the (sub‑)components of a CRI, as described in
 {{constraints}}, with the addition of the `discard` section.
 
+{:#prose}
 This CDDL specification is simplified for exposition and needs to be
 augmented by the following rules for interchange of CRIs and CRI
 references:
@@ -755,6 +756,7 @@ path
   the path contains a `:`, the path component is prefixed by "./"
   (this avoids the first element to appear as supplying a URI scheme;
   compare `path-noscheme` in {{Section 4.2 of -uri}}).
+  {:#colon}
 
   If the discard item is not present and the CRI reference contains an
   authority that is `true`, the path component of the URI reference is
@@ -816,7 +818,7 @@ fragment
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
 
-# Extending CRIs
+# Extending CRIs {#extending}
 
 CRIs have been designed to relieve implementations operating on CRIs
 from string scanning, which both helps constrained implementations and
@@ -1153,7 +1155,30 @@ representative of the normal operation of CRIs.
 
 Changes from -09 to -14
 
+* Editorial changes; move some examples to {{the-small-print}}, break up
+  railroad diagram; mention commonalities with (and tiny difference
+  from) CoAP Options; mention failure of percent-encoding for dots in
+  host-name components
 
+* Explicitly mention invalid case in {{naked-rootless}} (rootless CRIs without
+  authority that do not have a path component)
+
+* Generalize {{extending}}, discuss PET (percent-encoded text) extension in more detail
+
+* Add registry of URI scheme numbers ({{sec-numbers}}, {{iana-considerations}})
+
+* Add user information to the authority ("userinfo" feature)
+
+* {{cddl}}: Use separate rule for CRI, allow `[]` for query in CRI
+  Reference; generalize scheme numbers, add userinfo; add list of
+  additional requirements in prose ({{prose}})
+
+* Discuss {{<<unprocessable}} ({{unprocessable}})
+
+* Conversion to URI: Handle `:` in first pathname component of a
+  CRI-Reference ({{colon}})
+
+* Add Christian Amsüss as contributor
 
 Changes from -08 to -09
 
