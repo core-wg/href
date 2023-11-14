@@ -17,23 +17,23 @@ memory size.
        (This "cref" paragraph will be removed by the RFC editor:) 
 The present revision –14 of this draft picks up comments from the shepherd review. 
     ' name="description">
-<meta content="xml2rfc 3.18.0" name="generator">
+<meta content="xml2rfc 3.18.2" name="generator">
 <meta content="draft-ietf-core-href-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.0
-    Python 3.11.4
+  xml2rfc 3.18.2
+    Python 3.11.6
     ConfigArgParse 1.5.3
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.10.0
+    platformdirs 3.11.0
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.31.0
     setuptools 67.7.2
     six 1.16.0
-    wcwidth 0.2.6
+    wcwidth 0.2.9
 -->
 <link href="draft-ietf-core-href.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -656,7 +656,7 @@ sub, sup {
 }
 #toc nav li {
   line-height: 1.3em;
-  margin: 0.75em 0;
+  margin: 2px 0;
   padding-left: 1.2em;
   text-indent: -1.2em;
 }
@@ -749,7 +749,7 @@ hr.addr {
     z-index: 2;
     top: 0;
     right: 0;
-    padding: 0;
+    padding: 1px 0 0 0;
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
@@ -873,16 +873,13 @@ hr.addr {
     border-top: none;
     padding-top: 0;
   }
-  figure, pre {
+  figure, pre, .vcard {
     page-break-inside: avoid;
-  }
-  figure {
-    overflow: scroll;
   }
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
-  h2+*, h3+*, h4+*, h5+*, h6+* {
+  :is(h2, h3, h4, h5, h6)+*, dd {
     page-break-before: avoid;
   }
   pre {
@@ -895,6 +892,9 @@ hr.addr {
   }
   td {
     border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
   }
 }
 
@@ -996,28 +996,6 @@ address div.right {
   text-align: right;
 }
 
-/* Give the table caption label the same styling as the figcaption */
-
-@media print {
-  .toplink {
-    display: none;
-  }
-
-  /* avoid overwriting the top border line with the ToC header */
-  #toc {
-    padding-top: 1px;
-  }
-
-  /* Avoid page breaks inside dl and author address entries */
-  dd {
-    page-break-before: avoid;
-  }
-  .vcard {
-    page-break-inside: avoid;
-  }
-
-}
-
 /* Dark mode. */
 @media (prefers-color-scheme: dark) {
 :root {
@@ -1054,11 +1032,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Constrained Resource Identifiers</td>
-<td class="right">September 2023</td>
+<td class="right">November 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 4 March 2024</td>
+<td class="center">Expires 17 May 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1071,12 +1049,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-core-href-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-09-01" class="published">1 September 2023</time>
+<time datetime="2023-11-14" class="published">14 November 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-03-04">4 March 2024</time></dd>
+<dd class="expires"><time datetime="2024-05-17">17 May 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1137,7 +1115,7 @@ The present revision –14 of this draft picks up comments from the shepherd rev
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 17 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1367,11 +1345,12 @@ The components are subject to the following constraints:<a href="#section-2-1" c
 <span class="break"></span><dl class="olPercent" id="section-2-2">
 <dt>C1.</dt>
 <dd id="section-2-2.1">
-<div id="c-scheme">The scheme name can be any Unicode string (see
+<div id="c-scheme">
+          <p id="section-2-2.1.1">The scheme name can be any Unicode string (see
 Definition D80 in <span>[<a href="#Unicode" class="cite xref">Unicode</a>]</span>) that matches the syntax of a URI
 scheme (see <span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, which constrains schemes to
 ASCII) and is lowercase (see Definition D139 in <span>[<a href="#Unicode" class="cite xref">Unicode</a>]</span>).
-The scheme is always present.<a href="#c-scheme" class="pilcrow">¶</a>
+The scheme is always present.<a href="#section-2-2.1.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
@@ -1386,11 +1365,13 @@ Alternatively, the authority can be absent; the two cases for this
 defined in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">Section 3.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> are modeled by two different
 values used in place of an absent authority:<a href="#section-2-2.2.2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-2.2.3.1">the path can be root-based (zero or more path components that are
+<li class="normal" id="section-2-2.2.3.1">
+              <p id="section-2-2.2.3.1.1">the path can be root-based (zero or more path components that are
 each started in the URI with "/", as when the authority is
-present), or<a href="#section-2-2.2.3.1" class="pilcrow">¶</a>
+present), or<a href="#section-2-2.2.3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-2-2.2.3.2">the path can be rootless, which requires at least one path component.<a href="#section-2-2.2.3.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-2-2.2.3.2">
+              <p id="section-2-2.2.3.2.1">the path can be rootless, which requires at least one path component.<a href="#section-2-2.2.3.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-2-2.2.4">
@@ -1401,50 +1382,55 @@ not all CRI implementations will support authority-less URIs.)<a href="#section-
 <dd class="break"></dd>
 <dt>C3.</dt>
 <dd id="section-2-2.3">
-<div id="c-userinfo">A userinfo is a text string built out of unreserved
+<div id="c-userinfo">
+          <p id="section-2-2.3.1">A userinfo is a text string built out of unreserved
   characters (<span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.3" class="relref">Section 2.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>) or "sub-delims" (<span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.2" class="relref">Section 2.2</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>); any other character needs to be percent-encoded (<a href="#pet" class="auto internal xref">Section 7.1</a>).
 Note that this excludes the ":" character, which is commonly
-deprecated as a way to delimit a cleartext password in a userinfo.<a href="#c-userinfo" class="pilcrow">¶</a>
+deprecated as a way to delimit a cleartext password in a userinfo.<a href="#section-2-2.3.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
 <dt>C4.</dt>
 <dd id="section-2-2.4">
-<div id="c-ip-address">An IP address can be either an IPv4 address or an
+<div id="c-ip-address">
+          <p id="section-2-2.4.1">An IP address can be either an IPv4 address or an
 IPv6 address, optionally with a zone identifier <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span>.
 Future versions of IP are not supported (it is likely that a binary
 mapping would be strongly desirable, and that cannot be designed
 ahead of time, so these versions need to be added as a future
-extension if needed).<a href="#c-ip-address" class="pilcrow">¶</a>
+extension if needed).<a href="#section-2-2.4.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
 <dt>C5.</dt>
 <dd id="section-2-2.5">
-<div id="c-reg-name">A registered name is a sequence of one or more
+<div id="c-reg-name">
+          <p id="section-2-2.5.1">A registered name is a sequence of one or more
 <em>labels</em>, which, when joined with dots (".") in between them,
 result in a Unicode string that is lowercase and in Unicode
 Normalization Form C (NFC) (see Definition D120 in <span>[<a href="#Unicode" class="cite xref">Unicode</a>]</span>).
 (The syntax may be further restricted by the scheme.
 As per <span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">Section 3.2.2</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, a registered name can be empty, for
-which case a scheme can define a default for the host.)<a href="#c-reg-name" class="pilcrow">¶</a>
+which case a scheme can define a default for the host.)<a href="#section-2-2.5.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
 <dt>C6.</dt>
 <dd id="section-2-2.6">
-<div id="c-port-range">A port is always an integer in the range from 0 to 65535.
+<div id="c-port-range">
+          <p id="section-2-2.6.1">A port is always an integer in the range from 0 to 65535.
 Ports outside this range, empty ports (port subcomponents with no
 digits, see <span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.3" class="relref">Section 3.2.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>), or ports with redundant
-leading zeros, are not supported.<a href="#c-port-range" class="pilcrow">¶</a>
+leading zeros, are not supported.<a href="#section-2-2.6.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
 <dt>C7.</dt>
 <dd id="section-2-2.7">
-<div id="c-port-omitted">The port is omitted if and only if the port would be the same as the
+<div id="c-port-omitted">
+          <p id="section-2-2.7.1">The port is omitted if and only if the port would be the same as the
 scheme's default port (provided the scheme is defining such a default
-port) or the scheme is not using ports.<a href="#c-port-omitted" class="pilcrow">¶</a>
+port) or the scheme is not using ports.<a href="#section-2-2.7.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
@@ -1483,7 +1469,8 @@ If no authority is present in a CRI, the leading path segment cannot be empty.
 <dd class="break"></dd>
 <dt>C10.</dt>
 <dd id="section-2-2.10">
-<div id="c-query">A query always consists of one or more query parameters.
+<div id="c-query">
+          <p id="section-2-2.10.1">A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
    It is often in the form of a "key=value" pair.
    When converting a CRI to a URI, query parameters are separated by an
@@ -1491,38 +1478,41 @@ If no authority is present in a CRI, the leading path segment cannot be empty.
    (This matches the structure and encoding of the target URI in CoAP
    requests.)
    Queries are optional; there is a difference between an absent query
-   and a single query parameter that is the empty string.<a href="#c-query" class="pilcrow">¶</a>
+   and a single query parameter that is the empty string.<a href="#section-2-2.10.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
 <dt>C11.</dt>
 <dd id="section-2-2.11">
-<div id="c-fragment">A fragment identifier can be any Unicode string that
+<div id="c-fragment">
+          <p id="section-2-2.11.1">A fragment identifier can be any Unicode string that
    is in NFC.
    Fragment identifiers are optional; there is a difference between an
    absent fragment identifier and a fragment identifier that is the
-   empty string.<a href="#c-fragment" class="pilcrow">¶</a>
+   empty string.<a href="#section-2-2.11.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
 <dt>C12.</dt>
 <dd id="section-2-2.12">
-<div id="c-escaping">The syntax of registered names, path segments, query
+<div id="c-escaping">
+          <p id="section-2-2.12.1">The syntax of registered names, path segments, query
    parameters, and fragment identifiers may be further restricted and
    sub-structured by the scheme.
    There is no support, however, for escaping sub-delimiters
-   that are not intended to be used in a delimiting function.<a href="#c-escaping" class="pilcrow">¶</a>
+   that are not intended to be used in a delimiting function.<a href="#section-2-2.12.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
 <dt>C13.</dt>
 <dd id="section-2-2.13">
-<div id="c-mapping">When converting a CRI to a URI, any character that is
+<div id="c-mapping">
+          <p id="section-2-2.13.1">When converting a CRI to a URI, any character that is
    outside the allowed character range or is a delimiter in the URI syntax
    is percent-encoded.
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
    Definition D92 in <span>[<a href="#Unicode" class="cite xref">Unicode</a>]</span>) to convert the character to a sequence
-   of bytes (that is then converted to a sequence of %HH triplets).<a href="#c-mapping" class="pilcrow">¶</a>
+   of bytes (that is then converted to a sequence of %HH triplets).<a href="#section-2-2.13.1" class="pilcrow">¶</a></p>
 </div>
       </dd>
 <dd class="break"></dd>
@@ -1538,11 +1528,11 @@ If no authority is present in a CRI, the leading path segment cannot be empty.
 Examples of this are:<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.1-3.1">
-            <code>[0, ["p"]]</code>: appends a slash and the path segment "p" to its base
-(and unsets the query and the fragment)<a href="#section-2.1-3.1" class="pilcrow">¶</a>
+            <p id="section-2.1-3.1.1"><code>[0, ["p"]]</code>: appends a slash and the path segment "p" to its base
+(and unsets the query and the fragment)<a href="#section-2.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.2">
-            <code>[0, null, []]</code>: leaves the path alone but unsets the query and the fragment<a href="#section-2.1-3.2" class="pilcrow">¶</a>
+            <p id="section-2.1-3.2.1"><code>[0, null, []]</code>: leaves the path alone but unsets the query and the fragment<a href="#section-2.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-2.1-4">(Full) CRIs that do not correspond to a valid URI are not valid on their own, and cannot be used.
@@ -1565,11 +1555,14 @@ let alone practical).<a href="#section-2.1-5.1.3" class="pilcrow">¶</a></p>
 When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
 and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.<a href="#section-2.1-5.2.2" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-2.1-5.3">CRIs without authority that are rootless and do not have a path
+          <li id="section-2.1-5.3" class="normal">
+<div class="normal" id="naked-rootless">
+            <p id="section-2.1-5.3.1">CRIs without authority that are rootless and do not have a path
 component (e.g., <code>["a", true]</code>), which would be indistinguishable
-from its root-based equivalent (<code>["a"]</code>) as both would have the URI <code>a:</code>.<a href="#section-2.1-5.3" class="pilcrow">¶</a>
-</li>
-        </ul>
+from its root-based equivalent (<code>["a"]</code>) as both would have the URI <code>a:</code>.<a href="#section-2.1-5.3.1" class="pilcrow">¶</a></p>
+</div>
+        </li>
+</ul>
 </section>
 </div>
 </section>
@@ -1595,16 +1588,20 @@ constraints.<a href="#section-3-3" class="pilcrow">¶</a></p>
 the following (and only the following) normalizations to get the CRI
 more likely to validate:<a href="#section-3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3-5.1">map the scheme name to lowercase (<a href="#c-scheme" class="auto internal xref">C1</a>);<a href="#section-3-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3-5.1">
+          <p id="section-3-5.1.1">map the scheme name to lowercase (<a href="#c-scheme" class="auto internal xref">C1</a>);<a href="#section-3-5.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-5.2">map the registered name to NFC (<a href="#c-reg-name" class="auto internal xref">C5</a>) and split it on
-embedded dots;<a href="#section-3-5.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-5.2">
+          <p id="section-3-5.2.1">map the registered name to NFC (<a href="#c-reg-name" class="auto internal xref">C5</a>) and split it on
+embedded dots;<a href="#section-3-5.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-5.3">elide the port if it is the default port for the scheme
-(<a href="#c-port-omitted" class="auto internal xref">C7</a>);<a href="#section-3-5.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-5.3">
+          <p id="section-3-5.3.1">elide the port if it is the default port for the scheme
+(<a href="#c-port-omitted" class="auto internal xref">C7</a>);<a href="#section-3-5.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-5.4">map path segments, query parameters and the fragment identifier to
-NFC form (<a href="#c-path-segment" class="auto internal xref">C9</a>, <a href="#c-query" class="auto internal xref">C10</a>, <a href="#c-fragment" class="auto internal xref">C11</a>).<a href="#section-3-5.4" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-5.4">
+          <p id="section-3-5.4.1">map path segments, query parameters and the fragment identifier to
+NFC form (<a href="#c-path-segment" class="auto internal xref">C9</a>, <a href="#c-query" class="auto internal xref">C10</a>, <a href="#c-fragment" class="auto internal xref">C11</a>).<a href="#section-3-5.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-3-6">Once a CRI has been created, it can be used and transferred without
@@ -1742,22 +1739,28 @@ fragment    = text
 <p id="section-5.1-4">The rules <code>scheme</code>, <code>authority</code>, <code>path</code>, <code>query</code>, <code>fragment</code>
 correspond to the (sub‑)components of a CRI, as described in
 <a href="#constraints" class="auto internal xref">Section 2</a>, with the addition of the <code>discard</code> section.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+<div id="prose">
 <p id="section-5.1-5">This CDDL specification is simplified for exposition and needs to be
 augmented by the following rules for interchange of CRIs and CRI
 references:<a href="#section-5.1-5" class="pilcrow">¶</a></p>
+</div>
 <ul class="normal">
-<li class="normal" id="section-5.1-6.1">Trailing null values <span class="bcp14">MUST</span> be removed,<a href="#section-5.1-6.1" class="pilcrow">¶</a>
+<li class="normal" id="section-5.1-6.1">
+            <p id="section-5.1-6.1.1">Trailing null values <span class="bcp14">MUST</span> be removed,<a href="#section-5.1-6.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.1-6.2">two leading null values (scheme and authority both not given) <span class="bcp14">MUST</span>
-be represented by using the <code>discard</code> alternative instead, and<a href="#section-5.1-6.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-5.1-6.2">
+            <p id="section-5.1-6.2.1">two leading null values (scheme and authority both not given) <span class="bcp14">MUST</span>
+be represented by using the <code>discard</code> alternative instead, and<a href="#section-5.1-6.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.1-6.3">an empty path in a <code>CRI</code> <span class="bcp14">MUST</span> be represented as the empty array <code>[]</code>
+          <li class="normal" id="section-5.1-6.3">
+            <p id="section-5.1-6.3.1">an empty path in a <code>CRI</code> <span class="bcp14">MUST</span> be represented as the empty array <code>[]</code>
 (note that for <code>CRI-Reference</code> there is a difference between empty
-and absent paths, represented by <code>[]</code> and <code>null</code>, respectively),<a href="#section-5.1-6.3" class="pilcrow">¶</a>
+and absent paths, represented by <code>[]</code> and <code>null</code>, respectively),<a href="#section-5.1-6.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.1-6.4">an entirely empty outer array is not a valid CRI (but a valid CRI reference,
+          <li class="normal" id="section-5.1-6.4">
+            <p id="section-5.1-6.4.1">an entirely empty outer array is not a valid CRI (but a valid CRI reference,
 as per <a href="#ingest" class="auto internal xref">Section 5.2</a> equivalent to <code>[0]</code>, which essentially copies the
-base CRI).<a href="#section-5.1-6.4" class="pilcrow">¶</a>
+base CRI).<a href="#section-5.1-6.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.1-7">For interchange as separate encoded data items, CRIs <span class="bcp14">MUST NOT</span> use
@@ -1928,14 +1931,17 @@ authority are non-null, discard must be <code>true</code>.<a href="#section-5.2-
 sections are filled in from the transfer form (unset sections are
 filled with null), and the following steps are performed:<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2-5.1">If the array is entirely empty, replace it with <code>[0]</code>.<a href="#section-5.2-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-5.2-5.1">
+            <p id="section-5.2-5.1.1">If the array is entirely empty, replace it with <code>[0]</code>.<a href="#section-5.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.2-5.2">If discard is present in the transfer form (i.e., the outer array
-starts with true or an unsigned integer), set scheme and authority to null.<a href="#section-5.2-5.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-5.2-5.2">
+            <p id="section-5.2-5.2.1">If discard is present in the transfer form (i.e., the outer array
+starts with true or an unsigned integer), set scheme and authority to null.<a href="#section-5.2-5.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.2-5.3">If scheme and/or authority are present in the transfer form (i.e.,
+          <li class="normal" id="section-5.2-5.3">
+            <p id="section-5.2-5.3.1">If scheme and/or authority are present in the transfer form (i.e.,
 the outer array starts with null, a text string, or a negative integer), set
-discard to <code>true</code>.<a href="#section-5.2-5.3" class="pilcrow">¶</a>
+discard to <code>true</code>.<a href="#section-5.2-5.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.2-6">Upon encoding the abstract form into the transfer form, the inverse
@@ -1957,12 +1963,15 @@ Implementations of this document <span class="bcp14">MUST</span> adhere to these
 unless the containing document overrides them.<a href="#section-5.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.2.1-2">When encountering a CRI that is well-formed in terms of CBOR, but that<a href="#section-5.2.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2.1-3.1">is not well-formed as a CRI,<a href="#section-5.2.1-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-5.2.1-3.1">
+              <p id="section-5.2.1-3.1.1">is not well-formed as a CRI,<a href="#section-5.2.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-5.2.1-3.2">does not meet the other requirements on CRIs that are not covered by
-the term "well-formed", or<a href="#section-5.2.1-3.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-5.2.1-3.2">
+              <p id="section-5.2.1-3.2.1">does not meet the other requirements on CRIs that are not covered by
+the term "well-formed", or<a href="#section-5.2.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-5.2.1-3.3">uses features not supported by the implementation,<a href="#section-5.2.1-3.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-5.2.1-3.3">
+              <p id="section-5.2.1-3.3.1">uses features not supported by the implementation,<a href="#section-5.2.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-5.2.1-4">the CRI is treated as "unprocessable".<a href="#section-5.2.1-4" class="pilcrow">¶</a></p>
@@ -2013,10 +2022,12 @@ relative references are only usable when a base CRI is known.<a href="#section-5
 reference against a base CRI so that the result is a CRI in the form of
 an absolute CRI reference:<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.3-3">
-<li id="section-5.3-3.1">Establish the base CRI of the CRI reference and express it in the
-  form of an abstract absolute CRI reference.<a href="#section-5.3-3.1" class="pilcrow">¶</a>
+<li id="section-5.3-3.1">
+            <p id="section-5.3-3.1.1">Establish the base CRI of the CRI reference and express it in the
+  form of an abstract absolute CRI reference.<a href="#section-5.3-3.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-5.3-3.2">Initialize a buffer with the sections from the base CRI.<a href="#section-5.3-3.2" class="pilcrow">¶</a>
+          <li id="section-5.3-3.2">
+            <p id="section-5.3-3.2.1">Initialize a buffer with the sections from the base CRI.<a href="#section-5.3-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.3-3.3">
             <p id="section-5.3-3.3.1">If the value of discard is <code>true</code> in the CRI reference (which is
@@ -2029,16 +2040,19 @@ fragment.<a href="#section-5.3-3.3.1" class="pilcrow">¶</a></p>
 <p id="section-5.3-3.3.2">
 Set discard to <code>true</code> in the buffer.<a href="#section-5.3-3.3.2" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-5.3-3.4">If the path section is set in the CRI reference, append all
+          <li id="section-5.3-3.4">
+            <p id="section-5.3-3.4.1">If the path section is set in the CRI reference, append all
 elements from the path array to the array in the path section in
-the buffer; unset query and fragment.<a href="#section-5.3-3.4" class="pilcrow">¶</a>
+the buffer; unset query and fragment.<a href="#section-5.3-3.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-5.3-3.5">Apart from the path and discard, copy all non-null sections from
+          <li id="section-5.3-3.5">
+            <p id="section-5.3-3.5.1">Apart from the path and discard, copy all non-null sections from
 the CRI reference to the buffer in sequence; unset query in the buffer if query
 is the empty array <code>[]</code> in the CRI reference; unset fragment in the buffer if
-query is non-null in the CRI reference.<a href="#section-5.3-3.5" class="pilcrow">¶</a>
+query is non-null in the CRI reference.<a href="#section-5.3-3.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-5.3-3.6">Return the sections in the buffer as the resolved CRI.<a href="#section-5.3-3.6" class="pilcrow">¶</a>
+          <li id="section-5.3-3.6">
+            <p id="section-5.3-3.6.1">Return the sections in the buffer as the resolved CRI.<a href="#section-5.3-3.6.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>
@@ -2158,7 +2172,8 @@ both omitted.<a href="#section-6.1-2.4.6" class="pilcrow">¶</a></p>
           <dd class="break"></dd>
 <dt id="section-6.1-2.5">path</dt>
           <dd style="margin-left: 1.5em" id="section-6.1-2.6">
-            <p id="section-6.1-2.6.1">If the CRI reference contains a <code>discard</code> item of value <code>true</code>, the
+            <div id="colon">
+<p id="section-6.1-2.6.1">If the CRI reference contains a <code>discard</code> item of value <code>true</code>, the
 path component is considered <em>rooted</em>.  If it
 contains a <code>discard</code> item of value <code>0</code> and the <code>path</code> item is
 present, the conversion fails.  If it contains a positive discard
@@ -2168,6 +2183,7 @@ one indicates.  If the discard value is <code>1</code> and the first element of
 the path contains a <code>:</code>, the path component is prefixed by "./"
 (this avoids the first element to appear as supplying a URI scheme;
 compare <code>path-noscheme</code> in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>).<a href="#section-6.1-2.6.1" class="pilcrow">¶</a></p>
+</div>
 <p id="section-6.1-2.6.2">If the discard item is not present and the CRI reference contains an
 authority that is <code>true</code>, the path component of the URI reference is
 considered unrooted.  Otherwise, the path component is considered
@@ -2225,7 +2241,7 @@ character <span class="bcp14">MUST</span> be percent-encoded.<a href="#section-6
 </div>
 </section>
 </div>
-<div id="extending-cris">
+<div id="extending">
 <section id="section-7">
       <h2 id="name-extending-cris">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-extending-cris" class="section-name selfRef">Extending CRIs</a>
@@ -2499,6 +2515,7 @@ Expert for that registry.<a href="#section-10.2-2.1" class="pilcrow">¶</a></p>
       <h2 id="name-references">
 <a href="#section-11" class="section-number selfRef">11. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
 <section id="section-11.1">
         <h3 id="name-normative-references">
 <a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
@@ -2562,6 +2579,8 @@ Expert for that registry.<a href="#section-10.2-2.1" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
+<div id="sec-informative-references">
 <section id="section-11.2">
         <h3 id="name-informative-references">
 <a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
@@ -2601,6 +2620,7 @@ Expert for that registry.<a href="#section-10.2-2.1" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
 </section>
 <div id="sec-numbers">
 <section id="appendix-A">
@@ -4527,14 +4547,15 @@ representative of the normal operation of CRIs.<a href="#appendix-B-1" class="pi
 <span class="break"></span><dl class="olPercent" id="appendix-B-2">
 <dt>SP1.</dt>
 <dd id="appendix-B-2.1">
-<div id="sp-initial-empty">Initial (Lone/Leading) Empty Path Segments:<a href="#sp-initial-empty" class="pilcrow">¶</a>
+<div id="sp-initial-empty">
+          <p id="appendix-B-2.1.1">Initial (Lone/Leading) Empty Path Segments:<a href="#appendix-B-2.1.1" class="pilcrow">¶</a></p>
 </div>
       </dd>
 <dd class="break"></dd>
 </dl>
 <ul class="normal">
 <li class="normal" id="appendix-B-3.1">
-          <em>Lone empty path segments:</em>
+          <p id="appendix-B-3.1.1"><em>Lone empty path segments:</em>
   As per <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, <code>s://x</code> is distinct from <code>s://x/</code> -- i.e., a URI
   with an empty path (<code>[]</code> in CRI) is different from one with a lone
   empty path segment (<code>[""]</code>).
@@ -4544,7 +4565,7 @@ representative of the normal operation of CRIs.<a href="#appendix-B-1" class="pi
   without Uri-Path Options from the other URI-related CoAP Options
   produces <code>s://x/</code>, not <code>s://x</code> -- CoAP prefers the lone empty path
   segment form.
-  Similarly, after discussing HTTP semantics, <span><a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.3" class="relref">Section 6.2.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> states:<a href="#appendix-B-3.1" class="pilcrow">¶</a>
+  Similarly, after discussing HTTP semantics, <span><a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.3" class="relref">Section 6.2.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> states:<a href="#appendix-B-3.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <blockquote id="appendix-B-4">
@@ -4553,13 +4574,13 @@ representative of the normal operation of CRIs.<a href="#appendix-B-1" class="pi
 </blockquote>
 <ul class="normal">
 <li class="normal" id="appendix-B-5.1">
-          <em>Leading empty path segments without authority</em>:
+          <p id="appendix-B-5.1.1"><em>Leading empty path segments without authority</em>:
   Somewhat related, note also that URIs and URI references that do not
   carry an authority cannot represent initial empty path segments
   (i.e., that are followed by further path segments): <code>s://x//foo</code>
   works, but in a <code>s://foo</code> URI or an (absolute-path) URI reference of
   the form <code>//foo</code> the double slash would be mis-parsed as leading in
-  to an authority.<a href="#appendix-B-5.1" class="pilcrow">¶</a>
+  to an authority.<a href="#appendix-B-5.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <span class="break"></span><dl class="olPercent" id="appendix-B-6">
@@ -4617,21 +4638,61 @@ commonly considered a deprecated inclusion of a literal password.<a href="#appen
       </h2>
 <p id="appendix-C-1">This section is to be removed before publishing as an RFC.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <p id="appendix-C-2">Changes from -09 to -14<a href="#appendix-C-2" class="pilcrow">¶</a></p>
-<p id="appendix-C-3">Changes from -08 to -09<a href="#appendix-C-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-4.1">Identify more esoteric features with a CDDL ".feature".<a href="#appendix-C-4.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-C-3.1">
+          <p id="appendix-C-3.1.1">Editorial changes; move some examples to <a href="#the-small-print" class="auto internal xref">Appendix B</a>, break up
+railroad diagram; mention commonalities with (and tiny difference
+from) CoAP Options; mention failure of percent-encoding for dots in
+host-name components<a href="#appendix-C-3.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-4.2">Clarify that well-formedness requires removing trailing nulls.<a href="#appendix-C-4.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-3.2">
+          <p id="appendix-C-3.2.1">Explicitly mention invalid case in <a href="#naked-rootless" class="auto internal xref">Section 2.1, Paragraph 5, Item 3</a> (rootless CRIs without
+authority that do not have a path component)<a href="#appendix-C-3.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-4.3">Fragments can contain PET.<a href="#appendix-C-4.3" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-3.3">
+          <p id="appendix-C-3.3.1">Generalize <a href="#extending" class="auto internal xref">Section 7</a>, discuss PET (percent-encoded text) extension in more detail<a href="#appendix-C-3.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-4.4">Percent-encoded text in PET is treated as byte strings.<a href="#appendix-C-4.4" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-3.4">
+          <p id="appendix-C-3.4.1">Add registry of URI scheme numbers (<a href="#sec-numbers" class="auto internal xref">Appendix A</a>, <a href="#iana-considerations" class="auto internal xref">Section 10</a>)<a href="#appendix-C-3.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-4.5">
-          <p id="appendix-C-4.5.1">URIs with an authority but a completely empty path (e.g.,
+        <li class="normal" id="appendix-C-3.5">
+          <p id="appendix-C-3.5.1">Add user information to the authority ("userinfo" feature)<a href="#appendix-C-3.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-3.6">
+          <p id="appendix-C-3.6.1"><a href="#cddl" class="auto internal xref">Figure 1</a>: Use separate rule for CRI, allow <code>[]</code> for query in CRI
+Reference; generalize scheme numbers, add userinfo; add list of
+additional requirements in prose (<a href="#prose" class="auto internal xref">Section 5.1, Paragraph 5</a>)<a href="#appendix-C-3.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-3.7">
+          <p id="appendix-C-3.7.1">Discuss <a href="#unprocessable" class="internal xref">Error handling and extensibility</a> (<a href="#unprocessable" class="auto internal xref">Section 5.2.1</a>)<a href="#appendix-C-3.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-3.8">
+          <p id="appendix-C-3.8.1">Conversion to URI: Handle <code>:</code> in first pathname component of a
+CRI-Reference (<a href="#colon" class="auto internal xref">Section 6.1, Paragraph 2.6.1</a>)<a href="#appendix-C-3.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-3.9">
+          <p id="appendix-C-3.9.1">Add Christian Amsüss as contributor<a href="#appendix-C-3.9.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-C-4">Changes from -08 to -09<a href="#appendix-C-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-C-5.1">
+          <p id="appendix-C-5.1.1">Identify more esoteric features with a CDDL ".feature".<a href="#appendix-C-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-5.2">
+          <p id="appendix-C-5.2.1">Clarify that well-formedness requires removing trailing nulls.<a href="#appendix-C-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-5.3">
+          <p id="appendix-C-5.3.1">Fragments can contain PET.<a href="#appendix-C-5.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-5.4">
+          <p id="appendix-C-5.4.1">Percent-encoded text in PET is treated as byte strings.<a href="#appendix-C-5.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-5.5">
+          <p id="appendix-C-5.5.1">URIs with an authority but a completely empty path (e.g.,
 <code>http://example.com</code>): CRIs with an authority component no longer
-always produce at least a slash in the path component.<a href="#appendix-C-4.5.1" class="pilcrow">¶</a></p>
-<p id="appendix-C-4.5.2">
+always produce at least a slash in the path component.<a href="#appendix-C-5.5.1" class="pilcrow">¶</a></p>
+<p id="appendix-C-5.5.2">
 For generic schemes, the conversion of <code>scheme://example.com</code> to a
 CRI is now possible
 because CRI produces a URI with an authority not followed by a slash
@@ -4642,95 +4703,122 @@ recommended in <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>).
 For these schemes, that equivalence allows implementations to
 convert the just-a-slash URI to a CRI with a zero length path array
 (which, however, when converted back, does not produce a slash after
-the authority).<a href="#appendix-C-4.5.2" class="pilcrow">¶</a></p>
-<p id="appendix-C-4.5.3">
+the authority).<a href="#appendix-C-5.5.2" class="pilcrow">¶</a></p>
+<p id="appendix-C-5.5.3">
 (Add an appendix "the small print" for more detailed discussion of
-pesky corner cases like this.)<a href="#appendix-C-4.5.3" class="pilcrow">¶</a></p>
+pesky corner cases like this.)<a href="#appendix-C-5.5.3" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-C-5">Changes from -07 to -08<a href="#appendix-C-5" class="pilcrow">¶</a></p>
+<p id="appendix-C-6">Changes from -07 to -08<a href="#appendix-C-6" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-6.1">Fix the encoding of NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH<a href="#appendix-C-6.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-C-7.1">
+          <p id="appendix-C-7.1.1">Fix the encoding of NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH<a href="#appendix-C-7.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-6.2">Add URN and DID schemes, add example.<a href="#appendix-C-6.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-7.2">
+          <p id="appendix-C-7.2.1">Add URN and DID schemes, add example.<a href="#appendix-C-7.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-6.3">Add PET<a href="#appendix-C-6.3" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-7.3">
+          <p id="appendix-C-7.3.1">Add PET<a href="#appendix-C-7.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-6.4">Remove hopeless attempt to encode "remote trailing nulls" rule in
-CDDL (which is not a transformation language).<a href="#appendix-C-6.4" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-7.4">
+          <p id="appendix-C-7.4.1">Remove hopeless attempt to encode "remote trailing nulls" rule in
+CDDL (which is not a transformation language).<a href="#appendix-C-7.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-C-7">Changes from -06 to -07<a href="#appendix-C-7" class="pilcrow">¶</a></p>
+<p id="appendix-C-8">Changes from -06 to -07<a href="#appendix-C-8" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-8.1">More explicitly discuss constraints (<a href="#constraints" class="auto internal xref">Section 2</a>), add examples (<a href="#sp-constraints" class="auto internal xref">Appendix B, Paragraph 6, Item 1</a>).<a href="#appendix-C-8.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-C-9.1">
+          <p id="appendix-C-9.1.1">More explicitly discuss constraints (<a href="#constraints" class="auto internal xref">Section 2</a>), add examples (<a href="#sp-constraints" class="auto internal xref">Appendix B, Paragraph 6, Item 1</a>).<a href="#appendix-C-9.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-8.2">Make CDDL more explicit about special simple values.<a href="#appendix-C-8.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-9.2">
+          <p id="appendix-C-9.2.1">Make CDDL more explicit about special simple values.<a href="#appendix-C-9.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-8.3">Lots of gratuitous changes from XML2RFC redefinition of <code>&lt;tt&gt;</code>
-semantics.<a href="#appendix-C-8.3" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-9.3">
+          <p id="appendix-C-9.3.1">Lots of gratuitous changes from XML2RFC redefinition of <code>&lt;tt&gt;</code>
+semantics.<a href="#appendix-C-9.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-C-9">Changes from -05 to -06<a href="#appendix-C-9" class="pilcrow">¶</a></p>
+<p id="appendix-C-10">Changes from -05 to -06<a href="#appendix-C-10" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-10.1">
-          <p id="appendix-C-10.1.1">rework authority:<a href="#appendix-C-10.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C-11.1">
+          <p id="appendix-C-11.1.1">rework authority:<a href="#appendix-C-11.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-10.1.2.1">split reg-names at dots;<a href="#appendix-C-10.1.2.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-C-11.1.2.1">
+              <p id="appendix-C-11.1.2.1.1">split reg-names at dots;<a href="#appendix-C-11.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-C-10.1.2.2">add optional zone identifiers <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span> to IP addresses<a href="#appendix-C-10.1.2.2" class="pilcrow">¶</a>
+            <li class="normal" id="appendix-C-11.1.2.2">
+              <p id="appendix-C-11.1.2.2.1">add optional zone identifiers <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span> to IP addresses<a href="#appendix-C-11.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
       </ul>
-<p id="appendix-C-11">Changes from -04 to -05<a href="#appendix-C-11" class="pilcrow">¶</a></p>
+<p id="appendix-C-12">Changes from -04 to -05<a href="#appendix-C-12" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-12.1">Simplify CBOR structure.<a href="#appendix-C-12.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-C-13.1">
+          <p id="appendix-C-13.1.1">Simplify CBOR structure.<a href="#appendix-C-13.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-12.2">Add implementation status section.<a href="#appendix-C-12.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-13.2">
+          <p id="appendix-C-13.2.1">Add implementation status section.<a href="#appendix-C-13.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-C-13">Changes from -03 to -04:<a href="#appendix-C-13" class="pilcrow">¶</a></p>
+<p id="appendix-C-14">Changes from -03 to -04:<a href="#appendix-C-14" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-14.1">Minor editorial improvements.<a href="#appendix-C-14.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-C-15.1">
+          <p id="appendix-C-15.1.1">Minor editorial improvements.<a href="#appendix-C-15.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-14.2">Renamed path.type/path-type to discard.<a href="#appendix-C-14.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-15.2">
+          <p id="appendix-C-15.2.1">Renamed path.type/path-type to discard.<a href="#appendix-C-15.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-14.3">Renamed option to section, substructured into items.<a href="#appendix-C-14.3" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-15.3">
+          <p id="appendix-C-15.3.1">Renamed option to section, substructured into items.<a href="#appendix-C-15.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-14.4">Simplified the table "resolution-variables".<a href="#appendix-C-14.4" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-15.4">
+          <p id="appendix-C-15.4.1">Simplified the table "resolution-variables".<a href="#appendix-C-15.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-14.5">Use the CBOR structure inspired by Jim Schaad's proposals.<a href="#appendix-C-14.5" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-15.5">
+          <p id="appendix-C-15.5.1">Use the CBOR structure inspired by Jim Schaad's proposals.<a href="#appendix-C-15.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-C-15">Changes from -02 to -03:<a href="#appendix-C-15" class="pilcrow">¶</a></p>
+<p id="appendix-C-16">Changes from -02 to -03:<a href="#appendix-C-16" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-16.1">Expanded the set of supported schemes (#3).<a href="#appendix-C-16.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-C-17.1">
+          <p id="appendix-C-17.1.1">Expanded the set of supported schemes (#3).<a href="#appendix-C-17.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-16.2">Specified creation, normalization and comparison (#9).<a href="#appendix-C-16.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-17.2">
+          <p id="appendix-C-17.2.1">Specified creation, normalization and comparison (#9).<a href="#appendix-C-17.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-16.3">Clarified the default value of the <code>path.type</code> option (#33).<a href="#appendix-C-16.3" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-17.3">
+          <p id="appendix-C-17.3.1">Clarified the default value of the <code>path.type</code> option (#33).<a href="#appendix-C-17.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-16.4">Removed the <code>append-relation</code> path.type option (#41).<a href="#appendix-C-16.4" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-17.4">
+          <p id="appendix-C-17.4.1">Removed the <code>append-relation</code> path.type option (#41).<a href="#appendix-C-17.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-16.5">Renumbered the remaining path.types.<a href="#appendix-C-16.5" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-17.5">
+          <p id="appendix-C-17.5.1">Renumbered the remaining path.types.<a href="#appendix-C-17.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-16.6">Renumbered the option numbers.<a href="#appendix-C-16.6" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-17.6">
+          <p id="appendix-C-17.6.1">Renumbered the option numbers.<a href="#appendix-C-17.6.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-16.7">Restructured the document.<a href="#appendix-C-16.7" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-17.7">
+          <p id="appendix-C-17.7.1">Restructured the document.<a href="#appendix-C-17.7.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-16.8">Minor editorial improvements.<a href="#appendix-C-16.8" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-17.8">
+          <p id="appendix-C-17.8.1">Minor editorial improvements.<a href="#appendix-C-17.8.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-C-17">Changes from -01 to -02:<a href="#appendix-C-17" class="pilcrow">¶</a></p>
+<p id="appendix-C-18">Changes from -01 to -02:<a href="#appendix-C-18" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-18.1">Changed the syntax of schemes to exclude upper case characters (#13).<a href="#appendix-C-18.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-C-19.1">
+          <p id="appendix-C-19.1.1">Changed the syntax of schemes to exclude upper case characters (#13).<a href="#appendix-C-19.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-C-18.2">Minor editorial improvements (#34 #37).<a href="#appendix-C-18.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-C-19.2">
+          <p id="appendix-C-19.2.1">Minor editorial improvements (#34 #37).<a href="#appendix-C-19.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-C-19">Changes from -00 to -01:<a href="#appendix-C-19" class="pilcrow">¶</a></p>
+<p id="appendix-C-20">Changes from -00 to -01:<a href="#appendix-C-20" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-20.1">None.<a href="#appendix-C-20.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-C-21.1">
+          <p id="appendix-C-21.1.1">None.<a href="#appendix-C-21.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
