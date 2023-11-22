@@ -55,6 +55,7 @@ informative:
   RFC8288: web-linking
   RFC8820: lawn
   W3C.REC-html52-20171214:
+  I-D.ietf-cbor-edn-literals: edn
 normative:
   RFC3986: uri
   RFC3987: iri
@@ -1041,6 +1042,7 @@ Reference:
 The initial registrations for the CRI Scheme Numbers registry are
 provided in {{tab-numbers}} in {{sec-numbers}}.
 
+
 ## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
 
 {{-schemes}} is updated to add the following note in the "Uniform
@@ -1055,6 +1057,21 @@ are requested to make a parallel registration in the CRI Scheme
 Numbers registry.
 The number for this registration will be assigned by the Designated
 Expert for that registry.
+
+
+## CBOR Diagnostic Notation Application-extension Identifiers Registry {#cri-iana}
+
+In the "Application-Extension Identifiers" registry in the "CBOR
+Diagnostic Notation" registry group \[IANA.cbor-diagnostic-notation],
+IANA is requested to register the application-extension identifier
+`cri` as described in {{tab-iana}} and defined in {{edn-cri}}.
+
+| Application-extension Identifier | Description                     | Change Controller | Reference         |
+|----------------------------------|---------------------------------|-------------------|-------------------|
+| cri                              | Constrained Resource Identifier | IETF              | RFC-XXXX, {{edn-cri}} |
+{: #tab-iana title="CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI"}
+
+[^replace-xxxx]
 
 --- back
 
@@ -1150,6 +1167,141 @@ representative of the normal operation of CRIs.
      The rules do not cater for unencoded ":" in userinfo, which is
      commonly considered a deprecated inclusion of a literal password.
 
+# CBOR Extended Diagnostic Notation (EDN): The "cri" Extension {#edn-cri}
+
+{{-edn}} more rigorously defines and further extends the CBOR Extended
+Diagnostic Notation (EDN), as originally introduced in {{Section 8 of
+-cbor}} and extended in {{Appendix G of -cddl}}.
+Among others, it provides an extension point for
+"application-extension identifiers" that can be used to notate CBOR
+data items in application-specific ways.
+
+The present document defines and registers ({{cri-iana}}) the
+application-extension identifier "`cri`", which can be used to notate
+an EDN literal for a CRI reference as defined in this document.
+
+The text of the literal is a URI Reference as per {{-uri}} or an IRI
+Reference as per {{-iri}}.
+
+The value of the literal is a CRI reference that can be converted to
+the text of the literal using the procedure of {{cri-to-uri}}.
+Note that there may be more than one CRI reference that can be
+converted to the URI/IRI reference given; implementations are expected
+to favor the simplest variant available and make non-surprising
+choices otherwise.
+
+As an example, the CBOR diagnostic notation
+
+~~~ cbor-diag
+cri'https://example.com/bottarga/shaved'
+~~~
+
+is equivalent to
+
+~~~ cbor-diag
+[-4, ["example", "com"], ["bottarga", "shaved"]]
+~~~
+
+See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
+
+
+## cri: ABNF Definition of URI Representation of a CRI {#cri-grammar}
+
+The syntax of the content of `cri` literals can be described by the
+ABNF for `URI-reference` in {{Section 4.1 of -uri}}, as reproduced
+in {{abnf-grammar-cri}}.
+If the content is not ASCII only (i.e., for IRIs), first apply
+{{Section 3.1 of RFC3987}} and apply this grammar to the result.
+
+~~~ abnf
+app-string-cri = URI-reference
+; ABNF from RFC 3986:
+
+URI           = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
+
+hier-part     = "//" authority path-abempty
+                 / path-absolute
+                 / path-rootless
+                 / path-empty
+
+URI-reference = URI / relative-ref
+
+absolute-URI  = scheme ":" hier-part [ "?" query ]
+
+relative-ref  = relative-part [ "?" query ] [ "#" fragment ]
+
+relative-part = "//" authority path-abempty
+                 / path-absolute
+                 / path-noscheme
+                 / path-empty
+
+scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+
+authority     = [ userinfo "@" ] host [ ":" port ]
+userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
+host          = IP-literal / IPv4address / reg-name
+port          = *DIGIT
+
+IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
+
+IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
+
+IPv6address   =                            6( h16 ":" ) ls32
+                 /                       "::" 5( h16 ":" ) ls32
+                 / [               h16 ] "::" 4( h16 ":" ) ls32
+                 / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+                 / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+                 / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
+                 / [ *4( h16 ":" ) h16 ] "::"              ls32
+                 / [ *5( h16 ":" ) h16 ] "::"              h16
+                 / [ *6( h16 ":" ) h16 ] "::"
+
+h16           = 1*4HEXDIG
+ls32          = ( h16 ":" h16 ) / IPv4address
+IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
+dec-octet     = DIGIT                 ; 0-9
+                 / %x31-39 DIGIT         ; 10-99
+                 / "1" 2DIGIT            ; 100-199
+                 / "2" %x30-34 DIGIT     ; 200-249
+                 / "25" %x30-35          ; 250-255
+
+reg-name      = *( unreserved / pct-encoded / sub-delims )
+
+path          = path-abempty    ; begins with "/" or is empty
+                 / path-absolute   ; begins with "/" but not "//"
+                 / path-noscheme   ; begins with a non-colon segment
+                 / path-rootless   ; begins with a segment
+                 / path-empty      ; zero characters
+
+path-abempty  = *( "/" segment )
+path-absolute = "/" [ segment-nz *( "/" segment ) ]
+path-noscheme = segment-nz-nc *( "/" segment )
+path-rootless = segment-nz *( "/" segment )
+path-empty    = 0<pchar>
+
+segment       = *pchar
+segment-nz    = 1*pchar
+segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
+                 ; non-zero-length segment without any colon ":"
+
+pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+
+query         = *( pchar / "/" / "?" )
+
+fragment      = *( pchar / "/" / "?" )
+
+pct-encoded   = "%" HEXDIG HEXDIG
+
+unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+reserved      = gen-delims / sub-delims
+gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+                 / "*" / "+" / "," / ";" / "="
+~~~
+{: #abnf-grammar-cri sourcecode-name="cbor-edn-cri.abnf"
+title="ABNF Definition of URI Representation of a CRI"
+}
+
 # Change Log
 {:removeinrfc}
 
@@ -1179,6 +1331,8 @@ Changes from -09 to -14
   CRI-Reference ({{colon}})
 
 * Add Christian Amsüss as contributor
+
+* Add CBOR EDN application-extension "`cri`" (see {{edn-cri}} and {{cri-iana}}).
 
 Changes from -08 to -09
 
