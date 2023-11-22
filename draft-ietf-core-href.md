@@ -995,7 +995,7 @@ included in a request containing the Proxy-Cri Option).
 
 
    | No.    | C | U | N | R | Name                | Format | Length | Default |
-   | TBD239 | x | x | - |   | Proxy-Scheme-Number | uint   |  1-255 | (none)  |
+   | TBD239 | x | x | - |   | Proxy-Scheme-Number | uint   |    0-3 | (none)  |
 {: #tab-proxy-scheme-number title="Proxy-Scheme-Number CoAP Option"}
 
 The Proxy-Scheme-Number Option carries a URI Scheme Number represented as a
