@@ -65,6 +65,7 @@ normative:
   BCP26:
     -: ianacons
     =: RFC8126
+  IANA.core-parameters:
   I-D.carpenter-6man-rfc6874bis: zonebis
   RFC8610: cddl
   Unicode:
@@ -953,7 +954,78 @@ properties of UTF-8 make this a simple linear process.)
 > text-pet-sequence elements for their representation typically need
 > to process them byte by byte.
 
+# CoAP Integration
+
+This section discusses ways in which CRIs can be used in the context
+of the CoAP protocol {{-coap}}.
+
+## Converting Between CoAP CRIs and Sets of CoAP Options
+
+... Analogue to {{Sections 6.4 and 6.5 of -coap}}...
+
+## CoAP Options for Forward-Proxies {#coap-options}
+
+Apart from the above procedures to convert CoAP CRIs to and from sets
+of CoAP Options, two additional CoAP Options are defined in {{Section
+5.10.2 of -coap}} that support requests to forward-proxies:
+
+* Proxy-Uri, and
+* its more lightweight variant, Proxy-Scheme
+
+This section defines analogues of these that employ CRIs and the URI
+Scheme numering provided by the present specification.
+
+### Proxy-CRI
+
+   | No.    | C | U | N | R | Name         | Format | Length | Default |
+   | TBD235 | x | x | - |   | Proxy-Cri    | opaque | 1-1023 | (none)  |
+{: #tab-proxy-cri title="Proxy-Cri CoAP Option"}
+
+The Proxy-CRI Option carries an encoded CBOR data item that represents
+an absolute CRI reference.
+It is used analogously to Proxy-Uri as defined in {{Section 5.10.2
+of -coap}}.
+The Proxy-Cri Option MUST take precedence over any of the Uri-Host,
+Uri-Port, Uri-Path or Uri-Query options, as well as over any
+Proxy-Uri Option (each of which MUST NOT be
+included in a request containing the Proxy-Cri Option).
+
+
+### Proxy-Scheme-Number
+
+
+   | No.    | C | U | N | R | Name                | Format | Length | Default |
+   | TBD239 | x | x | - |   | Proxy-Scheme-Number | uint   |  1-255 | (none)  |
+{: #tab-proxy-scheme-number title="Proxy-Scheme-Number CoAP Option"}
+
+The Proxy-Scheme-Number Option carries a URI Scheme Number represented as a
+CoAP unsigned integer.
+It is used analogously to Proxy-Scheme as defined in {{Section 5.10.2
+of -coap}}.
+
+Since CoAP Options are only defined as empty, (text) string, opaque
+(byte string), or unsigned integer, the Option carries an unsigned
+integer that gives the 1's complement of the URI Scheme Number, i.e.:
+
+~~~ math
+option value = -1 - scheme number
+~~~
+
+[^scheme-negative]
+
+[^scheme-negative]: DISCUSS: Should the scheme registry simply use
+    unsigned numbers so it can be used here right away and the 1's
+    complement form is only used specifically for the nint that
+    `scheme-id` at the start of CRIs is?
+
+[^location-scheme]
+
+[^location-scheme]: TO DO: Discuss the need for a
+    location-scheme-numeric option?
+
 # Implementation Status {#impl}
+
+{::boilerplate rfc7942info}
 
 With the exception of the authority=true fix, host-names split into
 labels, and {{pet}}, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
@@ -981,7 +1053,7 @@ The security considerations discussed in {{Section 7 of RFC3986}} and
 ## CRI Scheme Numbers Registry {#cri-reg}
 
 This specification defines a new "CRI Scheme Numbers" sub-registry in
-the "CoRE Parameters" registry {{!IANA.core-parameters}}, with the
+the "CoRE Parameters" registry {{IANA.core-parameters}}, with the
 policy "Expert Review" ({{Section 4.5 of -ianacons}}).
 The objective is to have CRI scheme number values registered for all
 registered URI schemes (Uniform Resource Identifier (URI) Schemes
@@ -1070,6 +1142,19 @@ IANA is requested to register the application-extension identifier
 |----------------------------------|---------------------------------|-------------------|-------------------|
 | cri                              | Constrained Resource Identifier | IETF              | RFC-XXXX, {{edn-cri}} |
 {: #tab-iana title="CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI"}
+
+[^replace-xxxx]
+
+## CoAP Option Numbers Registry
+
+In the "CoAP Option Numbers" registry in the "CoRE Parameters" registry group [IANA.core-parameters],
+IANA is requested to register the CoAP Option Numbers
+as described in {{tab-iana-options}} and defined in {{coap-options}}.
+
+   | No.    | Name                | Reference |
+   | TBD235 | Proxy-Cri           | RFC-XXXX  |
+   | TBD239 | Proxy-Scheme-Number | RFC-XXXX  |
+{: #tab-iana-options title="New CoAP Option Numbers"}
 
 [^replace-xxxx]
 
