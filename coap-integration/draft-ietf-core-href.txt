@@ -1,0 +1,3024 @@
+
+
+
+
+CoRE Working Group                                       C. Bormann, Ed.
+Internet-Draft                                    Universität Bremen TZI
+Intended status: Standards Track                             H. Birkholz
+Expires: 25 May 2024                                      Fraunhofer SIT
+                                                        22 November 2023
+
+
+                    Constrained Resource Identifiers
+                      draft-ietf-core-href-latest
+
+Abstract
+
+   The Constrained Resource Identifier (CRI) is a complement to the
+   Uniform Resource Identifier (URI) that represents the URI components
+   in Concise Binary Object Representation (CBOR) instead of a sequence
+   of characters.  This simplifies parsing, comparison, and reference
+   resolution in environments with severe limitations on processing
+   power, code size, and memory size.
+
+
+   // (This "cref" paragraph will be removed by the RFC editor:) The
+   // present revision –14 of this draft picks up comments from the
+   // shepherd review.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-ietf-core-href/.
+
+   Discussion of this document takes place on the Constrained RESTful
+   Environments Working Group mailing list (mailto:core@ietf.org), which
+   is archived at https://mailarchive.ietf.org/arch/browse/core/.
+   Subscribe at https://www.ietf.org/mailman/listinfo/core/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/core-wg/href.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                  [Page 1]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 25 May 2024.
+
+Copyright Notice
+
+   Copyright (c) 2023 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   4
+   2.  Constraints . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     2.1.  Constraints not expressed by the data model . . . . . . .   7
+   3.  Creation and Normalization  . . . . . . . . . . . . . . . . .   8
+   4.  Comparison  . . . . . . . . . . . . . . . . . . . . . . . . .   8
+   5.  CRI References  . . . . . . . . . . . . . . . . . . . . . . .   9
+     5.1.  CBOR Representation . . . . . . . . . . . . . . . . . . .  10
+       5.1.1.  The discard Section . . . . . . . . . . . . . . . . .  12
+       5.1.2.  Visualization . . . . . . . . . . . . . . . . . . . .  13
+       5.1.3.  Examples  . . . . . . . . . . . . . . . . . . . . . .  13
+       5.1.4.  Specific Terminology  . . . . . . . . . . . . . . . .  14
+     5.2.  Ingesting and encoding a CRI Reference  . . . . . . . . .  14
+       5.2.1.  Error handling and extensibility  . . . . . . . . . .  15
+     5.3.  Reference Resolution  . . . . . . . . . . . . . . . . . .  16
+   6.  Relationship between CRIs, URIs, and IRIs . . . . . . . . . .  17
+     6.1.  Converting CRIs to URIs . . . . . . . . . . . . . . . . .  17
+   7.  Extending CRIs  . . . . . . . . . . . . . . . . . . . . . . .  20
+     7.1.  Extended CRI: Accommodating Percent Encoding (PET)  . . .  21
+   8.  CoAP Integration  . . . . . . . . . . . . . . . . . . . . . .  22
+     8.1.  Converting Between CoAP CRIs and Sets of CoAP Options . .  22
+     8.2.  CoAP Options for Forward-Proxies  . . . . . . . . . . . .  23
+       8.2.1.  Proxy-CRI . . . . . . . . . . . . . . . . . . . . . .  23
+       8.2.2.  Proxy-Scheme-Number . . . . . . . . . . . . . . . . .  23
+   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  24
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                  [Page 2]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  25
+   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  25
+     11.1.  CRI Scheme Numbers Registry  . . . . . . . . . . . . . .  25
+       11.1.1.  Instructions for the Designated Expert . . . . . . .  25
+       11.1.2.  Structure of Entries . . . . . . . . . . . . . . . .  26
+       11.1.3.  Initial Registrations  . . . . . . . . . . . . . . .  26
+     11.2.  Update to "Uniform Resource Identifier (URI) Schemes"
+            Registry . . . . . . . . . . . . . . . . . . . . . . . .  26
+     11.3.  CBOR Diagnostic Notation Application-extension Identifiers
+            Registry . . . . . . . . . . . . . . . . . . . . . . . .  27
+     11.4.  CoAP Option Numbers Registry . . . . . . . . . . . . . .  27
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  27
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  27
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  29
+   Appendix A.  Mapping Scheme Numbers to Scheme Names . . . . . . .  30
+   Appendix B.  The Small Print  . . . . . . . . . . . . . . . . . .  46
+   Appendix C.  CBOR Extended Diagnostic Notation (EDN): The "cri"
+           Extension . . . . . . . . . . . . . . . . . . . . . . . .  48
+     C.1.  cri: ABNF Definition of URI Representation of a CRI . . .  49
+   Appendix D.  Change Log . . . . . . . . . . . . . . . . . . . . .  50
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  53
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  54
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  54
+
+1.  Introduction
+
+   The Uniform Resource Identifier (URI) [RFC3986] and its most common
+   usage, the URI reference, are the Internet standard for linking to
+   resources in hypertext formats such as HTML [W3C.REC-html52-20171214]
+   or the HTTP "Link" header field [RFC8288].
+
+   A URI reference is a sequence of characters chosen from the
+   repertoire of US-ASCII characters.  The individual components of a
+   URI reference are delimited by a number of reserved characters, which
+   necessitates the use of a character escape mechanism called "percent-
+   encoding" when these reserved characters are used in a non-delimiting
+   function.  The resolution of URI references involves parsing a
+   character sequence into its components, combining those components
+   with the components of a base URI, merging path components, removing
+   dot-segments, and recomposing the result back into a character
+   sequence.
+
+   Overall, the proper handling of URI references is quite intricate.
+   This can be a problem especially in constrained environments
+   [RFC7228], where nodes often have severe code size and memory size
+   limitations.  As a result, many implementations in such environments
+   support only an ad-hoc, informally-specified, bug-ridden, non-
+   interoperable subset of half of [RFC3986].
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                  [Page 3]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   This document defines the _Constrained Resource Identifier (CRI)_ by
+   constraining URIs to a simplified subset and representing their
+   components in Concise Binary Object Representation (CBOR) [RFC8949]
+   instead of a sequence of characters.  This allows typical operations
+   on URI references such as parsing, comparison, and reference
+   resolution (including all corner cases) to be implemented in a
+   comparatively small amount of code.
+
+   As a result of simplification, however, CRIs are not capable of
+   expressing all URIs permitted by the generic syntax of [RFC3986]
+   (hence the "constrained" in "Constrained Resource Identifier").  The
+   supported subset includes all URIs of the Constrained Application
+   Protocol (CoAP) [RFC7252], most URIs of the Hypertext Transfer
+   Protocol (HTTP) [RFC9110], Uniform Resource Names (URNs) [RFC8141],
+   and other similar URIs.  The exact constraints are defined in
+   Section 2.
+
+1.1.  Notational Conventions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+   In this specification, the term "byte" is used in its now customary
+   sense as a synonym for "octet".
+
+   Terms defined in this document appear in _cursive_ where they are
+   introduced (rendered in plain text as the new term surrounded by
+   underscores).
+
+2.  Constraints
+
+   A Constrained Resource Identifier consists of the same five
+   components as a URI: scheme, authority, path, query, and fragment.
+   The components are subject to the following constraints:
+
+   C1.   The scheme name can be any Unicode string (see Definition D80
+         in [Unicode]) that matches the syntax of a URI scheme (see
+         Section 3.1 of [RFC3986], which constrains schemes to ASCII)
+         and is lowercase (see Definition D139 in [Unicode]).  The
+         scheme is always present.
+
+   C2.   An authority is always a host identified by an IP address or
+         registered name, along with optional port information, and
+         optionally preceded by user information.
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                  [Page 4]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+         Alternatively, the authority can be absent; the two cases for
+         this defined in Section 3.3 of [RFC3986] are modeled by two
+         different values used in place of an absent authority:
+
+         *  the path can be root-based (zero or more path components
+            that are each started in the URI with "/", as when the
+            authority is present), or
+
+         *  the path can be rootless, which requires at least one path
+            component.
+
+         (Note that, in Figure 1, no-authority is marked as a feature,
+         as not all CRI implementations will support authority-less
+         URIs.)
+
+   C3.   A userinfo is a text string built out of unreserved characters
+         (Section 2.3 of [RFC3986]) or "sub-delims" (Section 2.2 of
+         [RFC3986]); any other character needs to be percent-encoded
+         (Section 7.1).  Note that this excludes the ":" character,
+         which is commonly deprecated as a way to delimit a cleartext
+         password in a userinfo.
+
+   C4.   An IP address can be either an IPv4 address or an IPv6 address,
+         optionally with a zone identifier [RFC6874].  Future versions
+         of IP are not supported (it is likely that a binary mapping
+         would be strongly desirable, and that cannot be designed ahead
+         of time, so these versions need to be added as a future
+         extension if needed).
+
+   C5.   A registered name is a sequence of one or more _labels_, which,
+         when joined with dots (".") in between them, result in a
+         Unicode string that is lowercase and in Unicode Normalization
+         Form C (NFC) (see Definition D120 in [Unicode]).  (The syntax
+         may be further restricted by the scheme.  As per Section 3.2.2
+         of [RFC3986], a registered name can be empty, for which case a
+         scheme can define a default for the host.)
+
+   C6.   A port is always an integer in the range from 0 to 65535.
+         Ports outside this range, empty ports (port subcomponents with
+         no digits, see Section 3.2.3 of [RFC3986]), or ports with
+         redundant leading zeros, are not supported.
+
+   C7.   The port is omitted if and only if the port would be the same
+         as the scheme's default port (provided the scheme is defining
+         such a default port) or the scheme is not using ports.
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                  [Page 5]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   C8.   A path consists of zero or more path segments.  Note that a
+         path of just a single zero-length path segment is allowed —
+         this is considered equivalent to a path of zero path segments
+         by HTTP and CoAP, but this equivalence does not hold for CRIs
+         in general as they only perform normalization on the Syntax-
+         Based Normalization level (Section 6.2.2 of [RFC3986]), not on
+         the scheme-specific Scheme-Based Normalization level
+         (Section 6.2.3 of [RFC3986]).
+
+         (A CRI implementation may want to offer scheme-cognizant
+         interfaces, performing this scheme-specific normalization for
+         schemes it knows.  The interface could assert which schemes the
+         implementation knows and provide pre-normalized CRIs.  This can
+         also relieve the application from removing a lone zero-length
+         path segment before putting path segments into CoAP Options,
+         i.e., from performing the check and jump in item 8 of
+         Section 6.4 of [RFC7252].  See also SP1 in Appendix B.)
+
+   C9.   A path segment can be any Unicode string that is in NFC, with
+         the exception of the special "." and ".." complete path
+         segments.  Note that this includes the zero-length string.
+
+         If no authority is present in a CRI, the leading path segment
+         cannot be empty.  (See also SP1 in Appendix B.)
+
+   C10.  A query always consists of one or more query parameters.  A
+         query parameter can be any Unicode string that is in NFC.  It
+         is often in the form of a "key=value" pair.  When converting a
+         CRI to a URI, query parameters are separated by an ampersand
+         ("&") character.  (This matches the structure and encoding of
+         the target URI in CoAP requests.)  Queries are optional; there
+         is a difference between an absent query and a single query
+         parameter that is the empty string.
+
+   C11.  A fragment identifier can be any Unicode string that is in NFC.
+         Fragment identifiers are optional; there is a difference
+         between an absent fragment identifier and a fragment identifier
+         that is the empty string.
+
+   C12.  The syntax of registered names, path segments, query
+         parameters, and fragment identifiers may be further restricted
+         and sub-structured by the scheme.  There is no support,
+         however, for escaping sub-delimiters that are not intended to
+         be used in a delimiting function.
+
+   C13.  When converting a CRI to a URI, any character that is outside
+         the allowed character range or is a delimiter in the URI syntax
+         is percent-encoded.  For CRIs, percent-encoding always uses the
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                  [Page 6]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+         UTF-8 encoding form (see Definition D92 in [Unicode]) to
+         convert the character to a sequence of bytes (that is then
+         converted to a sequence of %HH triplets).
+
+   Examples for URIs at or beyond the boundaries of these constraints
+   are in SP2 in Appendix B.
+
+2.1.  Constraints not expressed by the data model
+
+   There are syntactically valid CRIs and CRI references that cannot be
+   converted into a URI or URI reference, respectively.
+
+   For CRI references, this is acceptable -- they can be resolved still
+   and result in a valid CRI that can be converted back.  Examples of
+   this are:
+
+   *  [0, ["p"]]: appends a slash and the path segment "p" to its base
+      (and unsets the query and the fragment)
+
+   *  [0, null, []]: leaves the path alone but unsets the query and the
+      fragment
+
+   (Full) CRIs that do not correspond to a valid URI are not valid on
+   their own, and cannot be used.  Normatively they are characterized by
+   the Section 6.1 process producing a valid and syntax-normalized URI.
+   For easier understanding, they are listed here:
+
+   *  CRIs (and CRI references) containing a path component "." or "..".
+
+      These would be removed by the remove_dot_segments algorithm of
+      [RFC3986], and thus never produce a normalized URI after
+      resolution.
+
+      (In CRI references, the discard value is used to afford segment
+      removal, and with "." being an unreserved character, expressing
+      them as "%2e" and "%2e%2e" is not even viable, let alone
+      practical).
+
+   *  CRIs without authority whose path starts with two or more empty
+      segments.
+
+      When converted to URIs, these would violate the requirement that
+      in absence of an authority, a URI's path cannot begin with two
+      slash characters, and they would be indistinguishable from a URI
+      with a shorter path and a present but empty authority component.
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                  [Page 7]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   *  CRIs without authority that are rootless and do not have a path
+      component (e.g., ["a", true]), which would be indistinguishable
+      from its root-based equivalent (["a"]) as both would have the URI
+      a:.
+
+3.  Creation and Normalization
+
+   In general, resource identifiers are created on the initial creation
+   of a resource with a certain resource identifier, or the initial
+   exposition of a resource under a particular resource identifier.
+
+   A Constrained Resource Identifier SHOULD be created by the naming
+   authority that governs the namespace of the resource identifier (see
+   also [RFC8820]).  For example, for the resources of an HTTP origin
+   server, that server is responsible for creating the CRIs for those
+   resources.
+
+   The naming authority MUST ensure that any CRI created satisfies the
+   constraints defined in Section 2.  The creation of a CRI fails if the
+   CRI cannot be validated to satisfy all of the constraints.
+
+   If a naming authority creates a CRI from user input, it MAY apply the
+   following (and only the following) normalizations to get the CRI more
+   likely to validate:
+
+   *  map the scheme name to lowercase (C1);
+
+   *  map the registered name to NFC (C5) and split it on embedded dots;
+
+   *  elide the port if it is the default port for the scheme (C7);
+
+   *  map path segments, query parameters and the fragment identifier to
+      NFC form (C9, C10, C11).
+
+   Once a CRI has been created, it can be used and transferred without
+   further normalization.  All operations that operate on a CRI SHOULD
+   rely on the assumption that the CRI is appropriately pre-normalized.
+   (This does not contradict the requirement that when CRIs are
+   transferred, recipients must operate on as-good-as untrusted input
+   and fail gracefully in the face of malicious inputs.)
+
+4.  Comparison
+
+   One of the most common operations on CRIs is comparison: determining
+   whether two CRIs are equivalent, without dereferencing the CRIs
+   (using them to access their respective resource(s)).
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                  [Page 8]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   Determination of equivalence or difference of CRIs is based on simple
+   component-wise comparison.  If two CRIs are identical component-by-
+   component (using code-point-by-code-point comparison for components
+   that are Unicode strings) then it is safe to conclude that they are
+   equivalent.
+
+   This comparison mechanism is designed to minimize false negatives
+   while strictly avoiding false positives.  The constraints defined in
+   Section 2 imply the most common forms of syntax- and scheme-based
+   normalizations in URIs, but do not comprise protocol-based
+   normalizations that require accessing the resources or detailed
+   knowledge of the scheme's dereference algorithm.  False negatives can
+   be caused, for example, by CRIs that are not appropriately pre-
+   normalized and by resource aliases.
+
+   When CRIs are compared to select (or avoid) a network action, such as
+   retrieval of a representation, fragment components (if any) should be
+   excluded from the comparison.
+
+5.  CRI References
+
+   The most common usage of a Constrained Resource Identifier is to
+   embed it in resource representations, e.g., to express a hyperlink
+   between the represented resource and the resource identified by the
+   CRI.
+
+   This section defines the representation of CRIs in Concise Binary
+   Object Representation (CBOR) [RFC8949].  When reduced representation
+   size is desired, CRIs are not represented directly.  Instead, CRIs
+   are indirectly referenced through _CRI references_. These take
+   advantage of hierarchical locality and provide a very compact
+   encoding.  The CBOR representation of CRI references is specified in
+   Section 5.1.
+
+   The only operation defined on a CRI reference is _reference
+   resolution_: the act of transforming a CRI reference into a CRI.  An
+   application MUST implement this operation by applying the algorithm
+   specified in Section 5.3 (or any algorithm that is functionally
+   equivalent to it).
+
+   The reverse operation of transforming a CRI into a CRI reference is
+   not specified in detail in this document; implementations are free to
+   use any algorithm as long as reference resolution of the resulting
+   CRI reference yields the original CRI.  Notably, a CRI reference is
+   not required to satisfy all of the constraints of a CRI; the only
+   requirement on a CRI reference is that reference resolution MUST
+   yield the original CRI.
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                  [Page 9]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   When testing for equivalence or difference, applications SHOULD NOT
+   directly compare CRI references; the references should be resolved to
+   their respective CRI before comparison.
+
+5.1.  CBOR Representation
+
+
+   // RFC Ed.: throughout this section, please replace RFC-XXXX with the
+   // RFC number of this specification and remove this note.
+
+   A CRI or CRI reference is encoded as a CBOR array [RFC8949], with the
+   structure as described in the Concise Data Definition Language (CDDL)
+   [RFC8610] including its control extensions [RFC9165] as follows:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 10]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   ; not expressed in this CDDL spec: trailing nulls to be left off
+
+   RFC-XXXX-Definitions = [CRI, CRI-Reference]
+
+   CRI = [
+     scheme,
+     authority / no-authority,
+     path / null,
+     query / null,
+     fragment / null
+   ]
+
+
+   CRI-Reference = [
+     ((scheme / null, authority / no-authority)
+      // discard),                 ; relative reference
+     path / null,
+     query / [] / null,            ; [] is explicit unset
+     fragment / null
+   ]
+
+   scheme      = scheme-name / scheme-id
+   scheme-name = text .regexp "[a-z][a-z0-9+.-]*"
+   scheme-id   = nint
+
+   no-authority = NOAUTH-ROOTBASED / NOAUTH-ROOTLESS
+   NOAUTH-ROOTBASED = null .feature "no-authority"
+   NOAUTH-ROOTLESS = true .feature "no-authority"
+
+   authority   = [?userinfo, host, ?port]
+   userinfo    = (false, text .feature "userinfo")
+   host        = (host-ip // host-name)
+   host-name   = (*text) ; lowercase, NFC labels
+   host-ip     = (bytes .size 4 //
+                  (bytes .size 16, ?zone-id))
+   zone-id     = text
+   port        = 0..65535
+
+   discard     = DISCARD-ALL / 0..127
+   DISCARD-ALL = true
+   path        = [*text]
+   query       = [+text]
+   fragment    = text
+
+                 Figure 1: CDDL for CRI CBOR representation
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 11]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   The rules scheme, authority, path, query, fragment correspond to the
+   (sub-)components of a CRI, as described in Section 2, with the
+   addition of the discard section.
+
+   This CDDL specification is simplified for exposition and needs to be
+   augmented by the following rules for interchange of CRIs and CRI
+   references:
+
+   *  Trailing null values MUST be removed,
+
+   *  two leading null values (scheme and authority both not given) MUST
+      be represented by using the discard alternative instead, and
+
+   *  an empty path in a CRI MUST be represented as the empty array []
+      (note that for CRI-Reference there is a difference between empty
+      and absent paths, represented by [] and null, respectively),
+
+   *  an entirely empty outer array is not a valid CRI (but a valid CRI
+      reference, as per Section 5.2 equivalent to [0], which essentially
+      copies the base CRI).
+
+   For interchange as separate encoded data items, CRIs MUST NOT use
+   indefinite length encoding (see Section 3.2 of [RFC8949]); this
+   requirement is relaxed for specifications that embed CRIs into an
+   encompassing CBOR representation that does provide for indefinite
+   length encoding.
+
+5.1.1.  The discard Section
+
+   The discard section can be used in a CRI reference when neither a
+   scheme nor an authority is present.  It then expresses the operations
+   performed on a base CRI by CRI references that are equivalent to URI
+   references with relative paths and path prefixes such as "/", "./",
+   "../", "../../", etc. "." and ".." are not available in CRIs and are
+   therefore expressed using discard after a normalization step, as is
+   the presence or absence of a leading "/".
+
+   E.g., a simple URI reference "foo" specifies to remove one leading
+   segment from the base URI's path, which is represented in the
+   equivalent CRI reference discard section as the value 1; similarly
+   "../foo" removes two leading segments, represented as 2; and "/foo"
+   removes all segments, represented in the discard section as the value
+   true.  The exact semantics of the section values are defined by
+   Section 5.3.
+
+   Most URI references that Section 4.2 of [RFC3986] calls "relative
+   references" (i.e., references that need to undergo a resolution
+   process to obtain a URI) correspond to the CRI reference form that
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 12]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   starts with discard.  The exception are relative references with an
+   authority (called a "network-path reference" in Section 4.2 of
+   [RFC3986]), which discard the entire path of the base CRI.  These CRI
+   references never carry a discard section: the value of discard
+   defaults to true.
+
+5.1.2.  Visualization
+
+   The structure of a CRI reference is visualized using the somewhat
+   limited means of a railroad diagram:
+
+   cri-reference:
+       │├──╮── scheme ── authority ──╭── local-part ──┤│
+           │                         │
+           ╰──────── discard ────────╯
+
+   local-part:
+           ╭─────────────────────>─────────────────────╮
+           │                                           │
+           │          ╭──────────────>──────────────╮  │
+           │          │                             │  │
+           │          │           ╭──────>───────╮  │  │
+           │          │           │              │  │  │
+       │├──╯── path ──╯── query ──╯── fragment ──╰──╰──╰──┤│
+
+   This visualization does not go into the details of the elements.
+
+5.1.3.  Examples
+
+   [-1,             / scheme -- equivalent to "coap" /
+    [h'C6336401',   / host /
+     61616],        / port /
+    [".well-known", / path /
+     "core"]
+   ]
+
+   [true,                  / discard /
+    [".well-known",        / path /
+     "core"],
+    ["rt=temperature-c"]]  / query /
+
+   [-6,             / scheme -- equivalent to "did" /
+    true,           / authority = NOAUTH-ROOTLESS /
+    ["web:alice:bob"] / path /
+   ]
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 13]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+5.1.4.  Specific Terminology
+
+   A CRI reference is considered _well-formed_ if it matches the
+   structure as expressed in Figure 1 in CDDL, with the additional
+   requirement that trailing null values are removed from the array.
+
+   A CRI reference is considered _absolute_ if it is well-formed and the
+   sequence of sections starts with a non-null scheme.
+
+   A CRI reference is considered _relative_ if it is well-formed and the
+   sequence of sections is empty or starts with a section other than
+   those that would constitute a scheme.
+
+5.2.  Ingesting and encoding a CRI Reference
+
+   From an abstract point of view, a CRI Reference is a data structure
+   with six sections:
+
+   scheme, authority, discard, path, query, fragment
+
+   Each of these sections can be unset ("null"), except for discard,
+   which is always an unsigned integer or true.  If scheme and/or
+   authority are non-null, discard must be true.
+
+   When ingesting a CRI Reference that is in the transfer form, those
+   sections are filled in from the transfer form (unset sections are
+   filled with null), and the following steps are performed:
+
+   *  If the array is entirely empty, replace it with [0].
+
+   *  If discard is present in the transfer form (i.e., the outer array
+      starts with true or an unsigned integer), set scheme and authority
+      to null.
+
+   *  If scheme and/or authority are present in the transfer form (i.e.,
+      the outer array starts with null, a text string, or a negative
+      integer), set discard to true.
+
+   Upon encoding the abstract form into the transfer form, the inverse
+   processing is performed: If scheme and/or authority are not null, the
+   discard value is not transferred (it must be true in this case).  If
+   they are both null, they are both left out and only discard is
+   transferred.  Trailing null values are removed from the array.  As a
+   special case, an empty array is sent in place for a remaining [0]
+   (URI "").
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 14]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+5.2.1.  Error handling and extensibility
+
+   It is recommended that specifications that describe the use of CRIs
+   in CBOR-based protocols use the error handling mechanisms outlined in
+   this section.  Implementations of this document MUST adhere to these
+   rules unless the containing document overrides them.
+
+   When encountering a CRI that is well-formed in terms of CBOR, but
+   that
+
+   *  is not well-formed as a CRI,
+
+   *  does not meet the other requirements on CRIs that are not covered
+      by the term "well-formed", or
+
+   *  uses features not supported by the implementation,
+
+   the CRI is treated as "unprocessable".
+
+   When encountering an unprocessable CRI, the processor skips the
+   entire CRI top-level array, including any CBOR items contained in
+   there, and continues processing the CBOR items surrounding the
+   unprocessable CRI.  (Note: this skipping can be implemented in
+   bounded memory for CRIs that do not use indefinite length encoding,
+   as mandated in Section 5.1.)
+
+   The unprocessable CRI is treated as an opaque identifier that is
+   distinct from all processable CRIs, and distinct from all
+   unprocessable CRIs with different CBOR representations.  It is up to
+   implementation whether unprocessable CRIs with identical
+   representations are treated as identical to each other or not.
+   Unprocessable CRIs can not be dereferenced, and it is an error to
+   query any of their components.
+
+   This mechanism ensures that CRI extensions (using originally defined
+   features or later extensions) can be used without extending the
+   compatibility hazard to the containing document.  For example, if a
+   collection of possible interaction targets contains several CRIs,
+   some of which use the "no-authority" feature, an application
+   consuming that collection that does not support that feature can
+   still offer the supported interaction targets.
+
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 15]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   The duty of checking validity is with the recipients that rely on
+   this validity.  An intermediary that does not use the detailed
+   information in a CRI (or merely performs reference resolution) MAY
+   pass on a CRI/CRI reference without having fully checked it, relying
+   on the producer having generated a valid CRI/CRI reference.  This is
+   true for both basic CRIs (e.g., checking for valid UTF-8) and for
+   extensions (e.g., checking both for valid UTF-8 and the minimal use
+   of PET elements in extended-cris as per Section 7.1).
+
+5.3.  Reference Resolution
+
+   The term "relative" implies that a "base CRI" exists against which
+   the relative reference is applied.  Aside from fragment-only
+   references, relative references are only usable when a base CRI is
+   known.
+
+   The following steps define the process of resolving any well-formed
+   CRI reference against a base CRI so that the result is a CRI in the
+   form of an absolute CRI reference:
+
+   1.  Establish the base CRI of the CRI reference and express it in the
+       form of an abstract absolute CRI reference.
+
+   2.  Initialize a buffer with the sections from the base CRI.
+
+   3.  If the value of discard is true in the CRI reference (which is
+       implicitly the case when scheme and/or authority are present in
+       the reference), replace the path in the buffer with the empty
+       array, unset query and fragment, and set a true authority to
+       null.  If the value of discard is an unsigned integer, remove as
+       many elements from the end of the path array; if it is non-zero,
+       unset query and fragment.
+
+       Set discard to true in the buffer.
+
+   4.  If the path section is set in the CRI reference, append all
+       elements from the path array to the array in the path section in
+       the buffer; unset query and fragment.
+
+   5.  Apart from the path and discard, copy all non-null sections from
+       the CRI reference to the buffer in sequence; unset query in the
+       buffer if query is the empty array [] in the CRI reference; unset
+       fragment in the buffer if query is non-null in the CRI reference.
+
+   6.  Return the sections in the buffer as the resolved CRI.
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 16]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+6.  Relationship between CRIs, URIs, and IRIs
+
+   CRIs are meant to replace both Uniform Resource Identifiers (URIs)
+   [RFC3986] and Internationalized Resource Identifiers (IRIs) [RFC3987]
+   in constrained environments [RFC7228].  Applications in these
+   environments may never need to use URIs and IRIs directly, especially
+   when the resource identifier is used simply for identification
+   purposes or when the CRI can be directly converted into a CoAP
+   request.
+
+   However, it may be necessary in other environments to determine the
+   associated URI or IRI of a CRI, and vice versa.  Applications can
+   perform these conversions as follows:
+
+   CRI to URI
+      A CRI is converted to a URI as specified in Section 6.1.
+
+   URI to CRI
+      The method of converting a URI to a CRI is unspecified;
+      implementations are free to use any algorithm as long as
+      converting the resulting CRI back to a URI yields an equivalent
+      URI.
+
+      Note that CRIs are defined to enable implementing conversions from
+      or to URIs analogously to processing URIs into CoAP Options and
+      back, with the exception that item 8 of Section 6.4 of [RFC7252]
+      and item 7 of Section 6.5 of [RFC7252] do not apply to CRI
+      processing.  See SP1 in Appendix B for more details.
+
+   CRI to IRI
+      A CRI can be converted to an IRI by first converting it to a URI
+      as specified in Section 6.1, and then converting the URI to an IRI
+      as described in Section 3.2 of [RFC3987].
+
+   IRI to CRI
+      An IRI can be converted to a CRI by first converting it to a URI
+      as described in Section 3.1 of [RFC3987], and then converting the
+      URI to a CRI as described above.
+
+   Everything in this section also applies to CRI references, URI
+   references, and IRI references.
+
+6.1.  Converting CRIs to URIs
+
+   Applications MUST convert a CRI reference to a URI reference by
+   determining the components of the URI reference according to the
+   following steps and then recomposing the components to a URI
+   reference string as specified in Section 5.3 of [RFC3986].
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 17]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   scheme
+      If the CRI reference contains a scheme section, the scheme
+      component of the URI reference consists of the value of that
+      section, if text (scheme-name); or, if a negative integer is given
+      (scheme-id), the lower case scheme name corresponding to the
+      scheme number as per the CRI Scheme Numbers registry
+      (Section 11.1).  Otherwise, the scheme component is unset.
+
+   authority
+      If the CRI reference contains a host-name or host-ip item, the
+      authority component of the URI reference consists of a host
+      subcomponent, optionally followed by a colon (":") character and a
+      port subcomponent, optionally preceded by a userinfo subcomponent.
+      Otherwise, the authority component is unset.
+
+      The host subcomponent consists of the value of the host-name or
+      host-ip item.
+
+      The userinfo subcomponent, if present, is turned into a single
+      string by appending a "@".  Otherwise, both the subcomponent and
+      the "@" sign are omitted.  Any character in the value of the
+      userinfo elements that is not in the set of unreserved characters
+      (Section 2.3 of [RFC3986]) or "sub-delims" (Section 2.2 of
+      [RFC3986]) MUST be percent-encoded.
+
+      The host-name is turned into a single string by joining the
+      elements separated by dots (".").  Any character in the elements
+      of a host-name item that is not in the set of unreserved
+      characters (Section 2.3 of [RFC3986]) or "sub-delims" (Section 2.2
+      of [RFC3986]) MUST be percent-encoded.  If there are dots (".") in
+      such elements, the conversion fails (percent-encoding is not able
+      to represent such elements, as normalization would turn the
+      percent-encoding back to the unreserved character that a dot is.)
+
+      The value of a host-ip item MUST be represented as a string that
+      matches the "IPv4address" or "IP-literal" rule (Section 3.2.2 of
+      [RFC3986]).  Any zone-id is appended to the string, separated by
+      "%25" as defined in Section 2 of [RFC6874], or as specified in a
+      superseding zone-id specification document
+      [I-D.carpenter-6man-rfc6874bis]; this also leads to a modified
+      "IP-literal" rule as specified in these documents.
+
+      If the CRI reference contains a port item, the port subcomponent
+      consists of the value of that item in decimal notation.
+      Otherwise, the colon (":") character and the port subcomponent are
+      both omitted.
+
+   path
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 18]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+      If the CRI reference contains a discard item of value true, the
+      path component is considered _rooted_.  If it contains a discard
+      item of value 0 and the path item is present, the conversion
+      fails.  If it contains a positive discard item, the path component
+      is considered _unrooted_ and prefixed by as many "../" components
+      as the discard value minus one indicates.  If the discard value is
+      1 and the first element of the path contains a :, the path
+      component is prefixed by "./" (this avoids the first element to
+      appear as supplying a URI scheme; compare path-noscheme in
+      Section 4.2 of [RFC3986]).
+
+      If the discard item is not present and the CRI reference contains
+      an authority that is true, the path component of the URI reference
+      is considered unrooted.  Otherwise, the path component is
+      considered rooted.
+
+      If the CRI reference contains one or more path items, the path
+      component is constructed by concatenating the sequence of
+      representations of these items.  These representations generally
+      contain a leading slash ("/") character and the value of each
+      item, processed as discussed below.  The leading slash character
+      is omitted for the first path item only if the path component is
+      considered "unrooted".
+
+      Any character in the value of a path item that is not in the set
+      of unreserved characters or "sub-delims" or a colon (":") or
+      commercial at ("@") character MUST be percent-encoded.
+
+      If the authority component is present (not null or true) and the
+      path component does not match the "path-abempty" rule (Section 3.3
+      of [RFC3986]), the conversion fails.
+
+      If the authority component is not present, but the scheme
+      component is, and the path component does not match the "path-
+      absolute", "path-rootless" (authority == true) or "path-empty"
+      rule (Section 3.3 of [RFC3986]), the conversion fails.
+
+      If neither the authority component nor the scheme component are
+      present, and the path component does not match the "path-
+      absolute", "path-noscheme" or "path-empty" rule (Section 3.3 of
+      [RFC3986]), the conversion fails.
+
+   query
+      If the CRI reference contains one or more query items, the query
+      component of the URI reference consists of the value of each item,
+      separated by an ampersand ("&") character.  Otherwise, the query
+      component is unset.
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 19]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+      Any character in the value of a query item that is not in the set
+      of unreserved characters or "sub-delims" or a colon (":"),
+      commercial at ("@"), slash ("/") or question mark ("?") character
+      MUST be percent-encoded.  Additionally, any ampersand character
+      ("&") in the item value MUST be percent-encoded.
+
+   fragment
+      If the CRI reference contains a fragment item, the fragment
+      component of the URI reference consists of the value of that item.
+      Otherwise, the fragment component is unset.
+
+      Any character in the value of a fragment item that is not in the
+      set of unreserved characters or "sub-delims" or a colon (":"),
+      commercial at ("@"), slash ("/") or question mark ("?") character
+      MUST be percent-encoded.
+
+7.  Extending CRIs
+
+   CRIs have been designed to relieve implementations operating on CRIs
+   from string scanning, which both helps constrained implementations
+   and implementations that need to achieve high throughput.
+
+   The CRI structure described up to this point is termed the _Basic
+   CRI_. It should be sufficient for all applications that use the CoAP
+   protocol, as well as most other protocols employing URIs.
+
+   However, Basic CRIs have one limitation: They do not support URI
+   components that _require_ percent-encoding (Section 2.1 of [RFC3986])
+   to represent them in the URI syntax, except where that percent-
+   encoding is used to escape the main delimiter in use.
+
+   E.g., the URI
+
+   https://alice/3%2f4-inch
+
+   is represented by the basic CRI
+
+   [-4, ["alice"], ["3/4-inch"]]
+
+   However, percent-encoding that is used at the application level is
+   not supported by basic CRIs:
+
+   did:web:alice:7%3A1-balun
+
+   Extended forms of CRIs may be defined to enable these applications.
+   They will generally extend the potential values of text components of
+   URIs, such as userinfo, hostnames, paths, queries, and fragments.
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 20]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   One such extended form is described in the following Section 7.1.
+   Consumers of CRIs will generally notice when an extended form is in
+   use, by finding structures that do not match the CDDL rules given in
+   Figure 1.  Future definitions of extended forms need to strive to be
+   distinguishable in their structures from the extended form presented
+   here as well as other future forms.
+
+   Extensions to CRIs MUST NOT allow indefinite length items.  This
+   provision ensures that recipients of CRIs can deal with unprocessable
+   CRIs as described in Section 5.2.1.
+
+7.1.  Extended CRI: Accommodating Percent Encoding (PET)
+
+   This section presents a method to represent percent-encoded segments
+   of userinfo, hostnames, paths, and queries, as well as fragments.
+
+   The four CDDL rules
+
+   userinfo    = (false, text .feature "userinfo")
+   host-name   = (*text)
+   path        = [*text]
+   query       = [+text]
+   fragment    = text
+
+   are replaced with
+
+   userinfo    = (false, text-or-pet .feature "userinfo")
+   host-name   = (*text-or-pet)
+   path        = [*text-or-pet]
+   query       = [+text-or-pet]
+   fragment    = text-or-pet
+
+   text-or-pet = text /
+       text-pet-sequence .feature "extended-cri"
+
+   ; text1 and pet1 alternating, at least one pet1:
+   text-pet-sequence = [?text1, ((+(pet1, text1), ?pet1) // pet1)]
+   ; pet is percent-encoded bytes
+   pet1 = bytes .ne ''
+   text1 = text .ne ""
+
+   That is, for each of the host-name, path, and query segments, and for
+   the userinfo and fragment components, an alternate representation is
+   provided besides a simple text string: a non-empty array of
+   alternating non-blank text and byte strings, the text strings of
+   which stand for non-percent-encoded text, while the byte strings
+   retain the special semantics of percent-encoded text without actually
+   being percent-encoded.
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 21]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   The above DID URI can now be represented as:
+
+   [-6, true, [["web:alice:7", ':', "1-balun"]]]
+
+   (Note that, in CBOR diagnostic notation, single quotes delimit
+   literals for byte strings, double quotes for text strings.)
+
+   To yield a valid extended-cri, the use of byte strings MUST be
+   minimal.  Both the following examples are therefore not valid:
+
+   [-6, true, [["web:alice:", '7:', "1-balun"]]]
+   [-6, true, [["web:alice:7", ':1', "-balun"]]]
+
+   An algorithm for constructing a valid text-pet-sequence might
+   repeatedly examine the byte sequences in each byte string; if such a
+   sequence stands for an unreserved ASCII character, or constitutes a
+   valid UTF-8 character ≥ U+0080, move this character over into a text
+   string by appending it to the end of the preceding text string,
+   prepending it to the start of the following text string, or splitting
+   the byte string and inserting a new text string with this character,
+   all while preserving the order of the bytes.  (Note that the
+   properties of UTF-8 make this a simple linear process.)
+
+      |  Unlike the text elements of a path or a query, which through
+      |  CoAP's heritage are designed to be processable element by
+      |  element, a text-pet-sequence does not usually produce a
+      |  semantically meaningful division into array elements.  This
+      |  consequence of the flexibility in delimiters offered in URIs is
+      |  demonstrated by this example, which structurally singles out
+      |  the one ':' that is _not_ a delimiter at the application level.
+      |  Applications designed for using CRIs will generally avoid using
+      |  the extended-cri feature.  Applications using existing URI
+      |  structures that require text-pet-sequence elements for their
+      |  representation typically need to process them byte by byte.
+
+8.  CoAP Integration
+
+   This section discusses ways in which CRIs can be used in the context
+   of the CoAP protocol [RFC7252].
+
+8.1.  Converting Between CoAP CRIs and Sets of CoAP Options
+
+   ... Analogue to Sections 6.4 and 6.5 of [RFC7252]...
+
+
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 22]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+8.2.  CoAP Options for Forward-Proxies
+
+   Apart from the above procedures to convert CoAP CRIs to and from sets
+   of CoAP Options, two additional CoAP Options are defined in
+   Section 5.10.2 of [RFC7252] that support requests to forward-proxies:
+
+   *  Proxy-Uri, and
+
+   *  its more lightweight variant, Proxy-Scheme
+
+   This section defines analogues of these that employ CRIs and the URI
+   Scheme numering provided by the present specification.
+
+8.2.1.  Proxy-CRI
+
+    +========+===+===+===+===+===========+========+========+=========+
+    | No.    | C | U | N | R | Name      | Format | Length | Default |
+    +========+===+===+===+===+===========+========+========+=========+
+    | TBD235 | x | x | - |   | Proxy-Cri | opaque | 1-1023 | (none)  |
+    +--------+---+---+---+---+-----------+--------+--------+---------+
+
+                      Table 1: Proxy-Cri CoAP Option
+
+   The Proxy-CRI Option carries an encoded CBOR data item that
+   represents an absolute CRI reference.  It is used analogously to
+   Proxy-Uri as defined in Section 5.10.2 of [RFC7252].  The Proxy-Cri
+   Option MUST take precedence over any of the Uri-Host, Uri-Port, Uri-
+   Path or Uri-Query options, as well as over any Proxy-Uri Option (each
+   of which MUST NOT be included in a request containing the Proxy-Cri
+   Option).
+
+8.2.2.  Proxy-Scheme-Number
+
+   +========+=+=+=+=+=====================+========+========+=========+
+   | No.    |C|U|N|R| Name                | Format | Length | Default |
+   +========+=+=+=+=+=====================+========+========+=========+
+   | TBD239 |x|x|-| | Proxy-Scheme-Number | uint   | 1-255  | (none)  |
+   +--------+-+-+-+-+---------------------+--------+--------+---------+
+
+                 Table 2: Proxy-Scheme-Number CoAP Option
+
+   The Proxy-Scheme-Number Option carries a URI Scheme Number
+   represented as a CoAP unsigned integer.  It is used analogously to
+   Proxy-Scheme as defined in Section 5.10.2 of [RFC7252].
+
+   Since CoAP Options are only defined as empty, (text) string, opaque
+   (byte string), or unsigned integer, the Option carries an unsigned
+   integer that gives the 1's complement of the URI Scheme Number, i.e.:
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 23]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   option value = -1 - scheme number
+
+
+   // DISCUSS: Should the scheme registry simply use unsigned numbers so
+   // it can be used here right away and the 1's complement form is only
+   // used specifically for the nint that scheme-id at the start of CRIs
+   // is?
+
+
+   // TO DO: Discuss the need for a location-scheme-numeric option?
+
+9.  Implementation Status
+
+   (Boilerplate as per Section 2.1 of [RFC7942]:)
+
+   This section records the status of known implementations of the
+   protocol defined by this specification at the time of posting of this
+   Internet-Draft, and is based on a proposal described in [RFC7942].
+   The description of implementations in this section is intended to
+   assist the IETF in its decision processes in progressing drafts to
+   RFCs.  Please note that the listing of any individual implementation
+   here does not imply endorsement by the IETF.  Furthermore, no effort
+   has been spent to verify the information presented here that was
+   supplied by IETF contributors.  This is not intended as, and must not
+   be construed to be, a catalog of available implementations or their
+   features.  Readers are advised to note that other implementations may
+   exist.
+
+   According to [RFC7942], "this will allow reviewers and working groups
+   to assign due consideration to documents that have the benefit of
+   running code, which may serve as evidence of valuable experimentation
+   and feedback that have made the implemented protocols more mature.
+   It is up to the individual working groups to use this information as
+   they see fit".
+
+   With the exception of the authority=true fix, host-names split into
+   labels, and Section 7.1, CRIs are implemented in
+   https://gitlab.com/chrysn/micrurus.  A golang implementation of
+   version -10 of this document is found at: https://github.com/thomas-
+   fossati/href
+
+
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 24]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+10.  Security Considerations
+
+   Parsers of CRI references must operate on input that is assumed to be
+   untrusted.  This means that parsers MUST fail gracefully in the face
+   of malicious inputs.  Additionally, parsers MUST be prepared to deal
+   with resource exhaustion (e.g., resulting from the allocation of big
+   data items) or exhaustion of the call stack (stack overflow).  See
+   Section 10 of [RFC8949] for additional security considerations
+   relating to CBOR.
+
+   The security considerations discussed in Section 7 of [RFC3986] and
+   Section 8 of [RFC3987] for URIs and IRIs also apply to CRIs.
+
+11.  IANA Considerations
+
+11.1.  CRI Scheme Numbers Registry
+
+   This specification defines a new "CRI Scheme Numbers" sub-registry in
+   the "CoRE Parameters" registry [IANA.core-parameters], with the
+   policy "Expert Review" (Section 4.5 of [BCP26]).  The objective is to
+   have CRI scheme number values registered for all registered URI
+   schemes (Uniform Resource Identifier (URI) Schemes registry), as well
+   as exceptionally for certain text strings that the Designated Expert
+   considers widely used in constrained applications in place of URI
+   scheme names.
+
+11.1.1.  Instructions for the Designated Expert
+
+   The expert is instructed to be frugal in the allocation of CRI values
+   with short representations (1+0 and 1+1 encoding), keeping them in
+   reserve for applications that are likely to enjoy wide use and can
+   make good use of their shortness.
+
+   When the expert notices that a registration has been made in the
+   Uniform Resource Identifier (URI) Schemes registry (see also
+   Section 11.2), the expert is requested to initiate a parallel
+   registration in the CRI Scheme Numbers registry.  CRI values in the
+   range between 1000 and 20000 (inclusive) should be assigned unless a
+   shorter representation in CRIs appears desirable.
+
+   The expert exceptionally also may make such a registration for text
+   strings that have not been registered in the Uniform Resource
+   Identifier (URI) Schemes registry if and only if the expert considers
+   them to be in wide use in place of URI scheme names in constrained
+   applications.  (Note that the initial registrations in Table 5 in
+   Appendix A already include such registrations for the text strings
+   "mqtt" and "mqtts".)
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 25]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   A registration in the CRI Scheme Numbers registry does not imply that
+   a URI scheme under this name exists or has been registered in the
+   Uniform Resource Identifier (URI) Schemes registry -- it essentially
+   is only providing an integer identifier for an otherwise
+   uninterpreted text string.
+
+   Any questions or issues that might interest a wider audience might be
+   raised by the expert on the core-parameters@ietf.org mailing list for
+   a time-limited discussion.
+
+11.1.2.  Structure of Entries
+
+   Each entry in the registry must include:
+
+   CRI value:
+      A negative integer unique in this registry
+
+   URI scheme name:
+      a text string that would be acceptable for registration as a URI
+      Scheme Name in the Uniform Resource Identifier (URI) Schemes
+      registry
+
+   Reference:
+      a reference to a document, if available, or the registrant
+
+11.1.3.  Initial Registrations
+
+   The initial registrations for the CRI Scheme Numbers registry are
+   provided in Table 5 in Appendix A.
+
+11.2.  Update to "Uniform Resource Identifier (URI) Schemes" Registry
+
+   [RFC7595] is updated to add the following note in the "Uniform
+   Resource Identifier (URI) Schemes" Registry [IANA.uri-schemes]:
+
+   |  The CRI Scheme Numbers Registry registers numeric identifiers for
+   |  what essentially are URI Scheme names.  Registrants for the
+   |  Uniform Resource Identifier (URI) Schemes Registry are requested
+   |  to make a parallel registration in the CRI Scheme Numbers
+   |  registry.  The number for this registration will be assigned by
+   |  the Designated Expert for that registry.
+
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 26]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+11.3.  CBOR Diagnostic Notation Application-extension Identifiers
+       Registry
+
+   In the "Application-Extension Identifiers" registry in the "CBOR
+   Diagnostic Notation" registry group [IANA.cbor-diagnostic-notation],
+   IANA is requested to register the application-extension identifier
+   cri as described in Table 3 and defined in Appendix C.
+
+     +=======================+=============+============+===========+
+     | Application-extension | Description | Change     | Reference |
+     | Identifier            |             | Controller |           |
+     +=======================+=============+============+===========+
+     | cri                   | Constrained | IETF       | RFC-XXXX, |
+     |                       | Resource    |            | Appendix  |
+     |                       | Identifier  |            | C         |
+     +-----------------------+-------------+------------+-----------+
+
+             Table 3: CBOR Extended Diagnostic Notation (EDN)
+                 Application-extension Identifier for CRI
+
+
+   // RFC Ed.: throughout this section, please replace RFC-XXXX with the
+   // RFC number of this specification and remove this note.
+
+11.4.  CoAP Option Numbers Registry
+
+   In the "CoAP Option Numbers" registry in the "CoRE Parameters"
+   registry group [IANA.core-parameters], IANA is requested to register
+   the CoAP Option Numbers as described in Table 4 and defined in
+   Section 8.2.
+
+               +========+=====================+===========+
+               | No.    | Name                | Reference |
+               +========+=====================+===========+
+               | TBD235 | Proxy-Cri           | RFC-XXXX  |
+               +--------+---------------------+-----------+
+               | TBD239 | Proxy-Scheme-Number | RFC-XXXX  |
+               +--------+---------------------+-----------+
+
+                     Table 4: New CoAP Option Numbers
+
+
+   // RFC Ed.: throughout this section, please replace RFC-XXXX with the
+   // RFC number of this specification and remove this note.
+
+12.  References
+
+12.1.  Normative References
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 27]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   [BCP26]    Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/rfc/rfc8126>.
+
+   [I-D.carpenter-6man-rfc6874bis]
+              Carpenter, B. E., Cheshire, S., and R. M. Hinden,
+              "Representing IPv6 Zone Identifiers in Address Literals
+              and Uniform Resource Identifiers", Work in Progress,
+              Internet-Draft, draft-carpenter-6man-rfc6874bis-03, 8
+              February 2022, <https://datatracker.ietf.org/doc/html/
+              draft-carpenter-6man-rfc6874bis-03>.
+
+   [IANA.core-parameters]
+              IANA, "Constrained RESTful Environments (CoRE)
+              Parameters",
+              <http://www.iana.org/assignments/core-parameters>.
+
+   [IANA.uri-schemes]
+              IANA, "Uniform Resource Identifier (URI) Schemes",
+              <http://www.iana.org/assignments/uri-schemes>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
+              <https://www.rfc-editor.org/rfc/rfc3986>.
+
+   [RFC3987]  Duerst, M. and M. Suignard, "Internationalized Resource
+              Identifiers (IRIs)", RFC 3987, DOI 10.17487/RFC3987,
+              January 2005, <https://www.rfc-editor.org/rfc/rfc3987>.
+
+   [RFC6874]  Carpenter, B., Cheshire, S., and R. Hinden, "Representing
+              IPv6 Zone Identifiers in Address Literals and Uniform
+              Resource Identifiers", RFC 6874, DOI 10.17487/RFC6874,
+              February 2013, <https://www.rfc-editor.org/rfc/rfc6874>.
+
+   [RFC7595]  Thaler, D., Ed., Hansen, T., and T. Hardie, "Guidelines
+              and Registration Procedures for URI Schemes", BCP 35,
+              RFC 7595, DOI 10.17487/RFC7595, June 2015,
+              <https://www.rfc-editor.org/rfc/rfc7595>.
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 28]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
+              Definition Language (CDDL): A Notational Convention to
+              Express Concise Binary Object Representation (CBOR) and
+              JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
+              June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
+
+   [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/rfc/rfc8949>.
+
+   [RFC9165]  Bormann, C., "Additional Control Operators for the Concise
+              Data Definition Language (CDDL)", RFC 9165,
+              DOI 10.17487/RFC9165, December 2021,
+              <https://www.rfc-editor.org/rfc/rfc9165>.
+
+   [Unicode]  The Unicode Consortium, "The Unicode Standard, Version
+              13.0.0", ISBN 978-1-936213-26-9, March 2020,
+              <https://www.unicode.org/versions/Unicode13.0.0/>.
+
+12.2.  Informative References
+
+   [I-D.ietf-cbor-edn-literals]
+              Bormann, C., "CBOR Extended Diagnostic Notation (EDN):
+              Application-Oriented Literals, ABNF, and Media Type", Work
+              in Progress, Internet-Draft, draft-ietf-cbor-edn-literals-
+              06, 20 November 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
+              edn-literals-06>.
+
+   [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
+              Separated Values (CSV) Files", RFC 4180,
+              DOI 10.17487/RFC4180, October 2005,
+              <https://www.rfc-editor.org/rfc/rfc4180>.
+
+   [RFC7228]  Bormann, C., Ersue, M., and A. Keranen, "Terminology for
+              Constrained-Node Networks", RFC 7228,
+              DOI 10.17487/RFC7228, May 2014,
+              <https://www.rfc-editor.org/rfc/rfc7228>.
+
+   [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
+              Application Protocol (CoAP)", RFC 7252,
+              DOI 10.17487/RFC7252, June 2014,
+              <https://www.rfc-editor.org/rfc/rfc7252>.
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 29]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, DOI 10.17487/RFC7942, July 2016,
+              <https://www.rfc-editor.org/rfc/rfc7942>.
+
+   [RFC8141]  Saint-Andre, P. and J. Klensin, "Uniform Resource Names
+              (URNs)", RFC 8141, DOI 10.17487/RFC8141, April 2017,
+              <https://www.rfc-editor.org/rfc/rfc8141>.
+
+   [RFC8288]  Nottingham, M., "Web Linking", RFC 8288,
+              DOI 10.17487/RFC8288, October 2017,
+              <https://www.rfc-editor.org/rfc/rfc8288>.
+
+   [RFC8820]  Nottingham, M., "URI Design and Ownership", BCP 190,
+              RFC 8820, DOI 10.17487/RFC8820, June 2020,
+              <https://www.rfc-editor.org/rfc/rfc8820>.
+
+   [RFC9110]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Semantics", STD 97, RFC 9110,
+              DOI 10.17487/RFC9110, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9110>.
+
+   [W3C.REC-html52-20171214]
+              Danilo, A., Ed., Eicholz, A., Ed., Moon, S., Ed.,
+              Faulkner, S., Ed., and T. Leithead, Ed., "HTML 5.2", W3C
+              REC REC-html52-20171214, W3C REC-html52-20171214, 14
+              December 2017,
+              <https://www.w3.org/TR/2017/REC-html52-20171214/>.
+
+Appendix A.  Mapping Scheme Numbers to Scheme Names
+
+
+   // RFC Ed.: throughout this section, please replace RFC-XXXX with the
+   // RFC number of this specification and remove this note.
+
+   Table 5 defines the initial mapping from CRI scheme numbers to URI
+   scheme names.
+
+     +===========+======================================+============+
+     | CRI value | URI scheme                           | Reference  |
+     +===========+======================================+============+
+     | -1        | coap                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2        | coaps                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3        | http                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4        | https                                | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 30]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -5        | urn                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6        | did                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7        | coap+tcp                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8        | coaps+tcp                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9        | coap+ws                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10       | coaps+ws                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1025     | telnet                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1046     | ldap                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1056     | ms-virtualtouchpad                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1091     | fax                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1107     | ves                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1147     | submit                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1192     | gg                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1219     | simplex                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1240     | ms-settings-nfctransactions          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1241     | secret-token                         | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1249     | acap                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1276     | openpgp4fpr                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1300     | ms-mixedrealitycapture               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1307     | ymsgr                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1320     | iris.xpcs                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1351     | turns                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1367     | opaquelocktoken                      | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1499     | platform                             | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 31]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -1597     | sftp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1613     | vscode                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1649     | mqtt                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1664     | ms-settings                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1690     | doi                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1720     | file                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1729     | dvb                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1760     | magnet                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1768     | calculator                           | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1836     | ssh                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1928     | openid                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1966     | gopher                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1985     | ms-gamingoverlay                     | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -1997     | z39.50                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2032     | ms-secondary-screen-setup            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2038     | fido                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2085     | mumble                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2095     | ms-settings-cloudstorage             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2106     | imap                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2152     | ms-officeapp                         | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2233     | pwid                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2236     | drm                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2264     | tag                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2369     | feed                                 | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 32]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -2460     | ipps                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2463     | ms-launchremotedesktop               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2484     | xmlrpc.beeps                         | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2492     | jms                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2542     | wpid                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2669     | barion                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2675     | onenote                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2695     | icon                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2769     | message                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2800     | ms-enrollment                        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2804     | bolo                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2817     | diaspora                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2833     | microsoft.windows.camera.picker      | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2864     | notes                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2866     | amss                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -2873     | tip                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3018     | fm                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3042     | rtmfp                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3060     | reload                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3111     | pres                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3232     | acd                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3362     | prospero                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3364     | geo                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3414     | snmp                                 | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 33]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -3483     | iris.beep                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3510     | maps                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3575     | content                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3618     | pack                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3619     | keyparc                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3632     | mongodb                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3693     | smb                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3796     | graph                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3818     | filesystem                           | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3839     | payment                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3840     | ms-settings-bluetooth                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -3951     | palm                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4014     | at                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4027     | hyper                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4043     | microsoft.windows.camera             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4067     | mvn                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4098     | mtqp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4130     | jabber                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4275     | mms                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4343     | skype                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4351     | oid                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4420     | dict                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4454     | attachment                           | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4662     | ocf                                  | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 34]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -4807     | isostore                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4816     | redis                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4862     | ms-settings-privacy                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -4877     | ms-settings-wifi                     | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5004     | v-event                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5020     | com-eventbrite-attendee              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5039     | ms-remotedesktop                     | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5105     | teliaeid                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5222     | itms                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5234     | fish                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5285     | dtn                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5298     | vscode-insiders                      | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5304     | tftp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5347     | rtsp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5358     | adiumxtra                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5464     | smp                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5470     | ms-eyecontrolspeech                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5479     | ms-settings-language                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5491     | mqtts                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5595     | wyciwyg                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5596     | hcp                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5619     | go                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5673     | rediss                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5683     | ms-settings-cellular                 | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 35]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -5743     | ldaps                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5803     | dhttp                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5843     | z39.50s                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5886     | bitcoincash                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -5960     | ms-mobileplans                       | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6182     | pttp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6208     | facetime                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6289     | gtalk                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6348     | afp                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6361     | mss                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6426     | ms-settings-notifications            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6448     | psyc                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6488     | tv                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6514     | wifi                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6523     | sarif                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6539     | moz                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6659     | ms-lockscreencomponent-config        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6716     | cabal                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6734     | ms-media-stream-id                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6780     | mupdate                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6793     | dis                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6804     | nih                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6809     | ms-help                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -6909     | soap.beep                            | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 36]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -6998     | iotdisco                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7027     | acr                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7040     | ms-newsandinterests                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7089     | hxxp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7096     | ms-settings-location                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7125     | soap.beeps                           | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7301     | ipn                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7309     | nntp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7316     | query                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7334     | smtp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7335     | ms-spd                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7400     | ni                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7403     | ms-excel                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7421     | ms-settings-power                    | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7435     | pop                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7447     | session                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7582     | ms-infopath                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7701     | ms-word                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7715     | web+ap                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7791     | steam                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -7995     | cstr                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8008     | web3                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8064     | videotex                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8069     | nfs                                  | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 37]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -8094     | udp                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8102     | ed2k                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8138     | ms-getoffice                         | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8203     | sgn                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8331     | data                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8364     | swidpath                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8385     | fuchsia-pkg                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8395     | ms-screensketch                      | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8426     | hxxps                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8487     | unreal                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8555     | ens                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8585     | ms-settings-camera                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8619     | stun                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8673     | ms-stickers                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8734     | lid                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8775     | spotify                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8860     | starknet                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8890     | ms-settings-emailandaccounts         | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8907     | market                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -8967     | ms-powerpoint                        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9001     | rtsps                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9064     | p1                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9128     | aw                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9132     | mailserver                           | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 38]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -9186     | irc6                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9338     | ms-settings-lock                     | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9339     | hcap                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9350     | drop                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9419     | icap                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9437     | xcon-userid                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9457     | leaptofrogans                        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9461     | ipfs                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9479     | bitcoin                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9555     | apt                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9605     | ms-whiteboard-cmd                    | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9669     | ssb                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9725     | aaas                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9734     | ar                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9767     | proxy                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9773     | res                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9780     | msrps                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9795     | aim                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9826     | tool                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9842     | finger                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9900     | turn                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9901     | num                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9903     | svn                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -9904     | ut2004                               | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 39]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -9932     | ms-visio                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10008    | eid                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10100    | wss                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10103    | gizmoproject                         | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10172    | dlna-playsingle                      | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10224    | swh                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10337    | dat                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10348    | cap                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10355    | z39.50r                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10412    | xcon                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10430    | gitoid                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10524    | hydrazone                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10565    | example                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10699    | crid                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10717    | teamspeak                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10743    | elsi                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10769    | dtmi                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10840    | ftp                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10902    | ms-drive-to                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10903    | upt                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -10911    | appdata                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11039    | callto                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11131    | ms-remotedesktop-launch              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11139    | dweb                                 | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 40]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -11264    | lastfm                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11307    | xmlrpc.beep                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11342    | ms-whiteboard                        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11465    | first-run-pen-experience             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11473    | webcal                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11553    | adt                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11566    | vemmi                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11590    | cvs                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11629    | taler                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11688    | ms-inputapp                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11864    | git                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11893    | irc                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -11936    | ms-settings-workplace                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12171    | blob                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12173    | modem                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12188    | msnim                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12268    | iris.lwz                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12302    | ms-sttoverlay                        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12321    | lbry                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12334    | rmi                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12346    | ms-restoretabcompanion               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12482    | ms-useractivityset                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12485    | dab                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12491    | about                                | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 41]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -12500    | embedded                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12501    | rtmp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12526    | ircs                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12558    | mid                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12573    | sip                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12593    | ipns                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12666    | dvx                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12706    | android                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12747    | wtai                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12831    | ms-search-repair                     | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12838    | microsoft.windows.camera.multipicker | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12857    | ms-settings-screenrotation           | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12879    | rtspu                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12914    | ms-screenclip                        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12943    | aaa                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12954    | xmpp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -12988    | soldat                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13041    | lorawan                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13054    | beshare                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13077    | sips                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13081    | iris.xpc                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13113    | simpleledger                         | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13127    | vsls                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13207    | matrix                               | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 42]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -13307    | otpauth                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13336    | cid                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13352    | service                              | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13417    | h323                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13438    | ms-settings-connectabledevices       | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13452    | payto                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13463    | ms-settings-displays-topology        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13505    | lvlt                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13596    | ms-walk-to                           | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13672    | dns                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13730    | quic-transport                       | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13762    | paparazzi                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13766    | ms-people                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13889    | xri                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13894    | onenote-cmd                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -13934    | dav                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14003    | content-type                         | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14068    | sms                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14119    | ms-publisher                         | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14197    | xfire                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14250    | secondlife                           | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14260    | ark                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14301    | iax                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14312    | msrp                                 | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 43]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -14475    | swid                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14590    | tn3270                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14596    | ms-appinstaller                      | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14627    | stuns                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14688    | dpp                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14701    | ms-secondary-screen-controller       | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14764    | browserext                           | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14820    | chrome                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -14878    | pkcs11                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15066    | dlna-playcontainer                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15155    | spiffe                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15207    | uuid-in-package                      | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15261    | ms-settings-proximity                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15356    | things                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15377    | ms-gamebarservices                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15379    | shc                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15547    | ipp                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15552    | mailto                               | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15558    | ms-browser-extension                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15838    | shttp (OBSOLETE)                     | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15842    | acct                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15849    | w3                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15869    | wais                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -15928    | qb                                   | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 44]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -15947    | ms-search                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16043    | ms-settings-airplanemode             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16045    | jar                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16069    | tel                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16074    | dntp                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16160    | chrome-extension                     | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16193    | cast                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16326    | view-source                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16356    | im                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16358    | resource                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16378    | ms-calculator                        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16380    | news                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16415    | wcr                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16523    | casts                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16689    | ms-access                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16723    | grd                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16750    | rsync                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16773    | lpa                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16850    | afs                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16874    | bb                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16884    | ham                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16926    | info                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -16972    | ms-meetnow                           | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17117    | ms-project                           | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 45]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+     +-----------+--------------------------------------+------------+
+     | -17172    | ethereum                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17225    | thismessage                          | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17226    | vnc                                  | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17232    | snews                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17245    | sieve                                | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17269    | feedready                            | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17271    | mt                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17288    | ws                                   | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17338    | ms-transit-to                        | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17346    | ventrilo                             | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+     | -17357    | iris                                 | [RFC-XXXX] |
+     +-----------+--------------------------------------+------------+
+
+              Table 5: Mapping Scheme Numbers to Scheme Names
+
+   The assignments from this table can be extracted from the XML form of
+   this document (when stored in a file "this.xml") into CSV form
+   [RFC4180] using this short Ruby program:
+
+   require 'rexml/document'; include REXML
+   XPath.each(Document.new(File.read("this.xml")),"//tr") {|row|
+     puts XPath.each(row,"td").map{|d|d.text()}[0..1].join(",")}
+
+Appendix B.  The Small Print
+
+   This appendix lists a few corner cases of URI semantics that
+   implementers of CRIs need to be aware of, but that are not
+   representative of the normal operation of CRIs.
+
+   SP1.  Initial (Lone/Leading) Empty Path Segments:
+
+   *  _Lone empty path segments:_ As per [RFC3986], s://x is distinct
+      from s://x/ -- i.e., a URI with an empty path ([] in CRI) is
+      different from one with a lone empty path segment ([""]).
+      However, in HTTP and CoAP, they are implicitly aliased (for CoAP,
+      in item 8 of Section 6.4 of [RFC7252]).  As per item 7 of
+      Section 6.5 of [RFC7252], recomposition of a URI without Uri-Path
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 46]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+      Options from the other URI-related CoAP Options produces s://x/,
+      not s://x -- CoAP prefers the lone empty path segment form.
+      Similarly, after discussing HTTP semantics, Section 6.2.3 of
+      [RFC3986] states:
+
+   |  In general, a URI that uses the generic syntax for authority with
+   |  an empty path should be normalized to a path of "/".
+
+   *  _Leading empty path segments without authority_: Somewhat related,
+      note also that URIs and URI references that do not carry an
+      authority cannot represent initial empty path segments (i.e., that
+      are followed by further path segments): s://x//foo works, but in a
+      s://foo URI or an (absolute-path) URI reference of the form //foo
+      the double slash would be mis-parsed as leading in to an
+      authority.
+
+   SP2.  Constraints (Section 2) of CRIs/basic CRIs
+
+         While most URIs in everyday use can be converted to CRIs and
+         back to URIs matching the input after syntax-based
+         normalization of the URI, these URIs illustrate the constraints
+         by example:
+
+         *  https://host%ffname, https://example.com/x?data=%ff
+
+            All URI components must, after percent decoding, be valid
+            UTF-8 encoded text.  Bytes that are not valid UTF-8 show up,
+            for example, in BitTorrent web seeds.
+
+         *  https://example.com/component%3bone;component%3btwo,
+            http://example.com/component%3dequals
+
+            While delimiters can be used in an escaped and unescaped
+            form in URIs with generally distinct meanings, basic CRIs
+            (i.e., without percent-encoded text Section 7.1) only
+            support one escapable delimiter character per component,
+            which is the delimiter by which the component is split up in
+            the CRI.
+
+            Note that the separators . (for authority parts), / (for
+            paths), & (for query parameters) are special in that they
+            are syntactic delimiters of their respective components in
+            CRIs.  Thus, the following examples _are_ convertible to
+            basic CRIs:
+
+            https://interior%2edot/
+
+            https://example.com/path%2fcomponent/second-component
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 47]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+            https://example.com/x?ampersand=%26&questionmark=?
+
+         *  https://alice@example.com/
+
+            The user information can be expressed in CRIs if the
+            "userinfo" feature is present.  The URI https://@example.com
+            is represented as [-4, [false, "", "example", "com"]]; the
+            false serves as a marker that the next element is the
+            userinfo.
+
+            The rules do not cater for unencoded ":" in userinfo, which
+            is commonly considered a deprecated inclusion of a literal
+            password.
+
+Appendix C.  CBOR Extended Diagnostic Notation (EDN): The "cri"
+             Extension
+
+   [I-D.ietf-cbor-edn-literals] more rigorously defines and further
+   extends the CBOR Extended Diagnostic Notation (EDN), as originally
+   introduced in Section 8 of [RFC8949] and extended in Appendix G of
+   [RFC8610].  Among others, it provides an extension point for
+   "application-extension identifiers" that can be used to notate CBOR
+   data items in application-specific ways.
+
+   The present document defines and registers (Section 11.3) the
+   application-extension identifier "cri", which can be used to notate
+   an EDN literal for a CRI reference as defined in this document.
+
+   The text of the literal is a URI Reference as per [RFC3986] or an IRI
+   Reference as per [RFC3987].
+
+   The value of the literal is a CRI reference that can be converted to
+   the text of the literal using the procedure of Section 6.1.  Note
+   that there may be more than one CRI reference that can be converted
+   to the URI/IRI reference given; implementations are expected to favor
+   the simplest variant available and make non-surprising choices
+   otherwise.
+
+   As an example, the CBOR diagnostic notation
+
+   cri'https://example.com/bottarga/shaved'
+
+   is equivalent to
+
+   [-4, ["example", "com"], ["bottarga", "shaved"]]
+
+   See Appendix C.1 for an ABNF definition for the content of cri
+   literals.
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 48]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+C.1.  cri: ABNF Definition of URI Representation of a CRI
+
+   The syntax of the content of cri literals can be described by the
+   ABNF for URI-reference in Section 4.1 of [RFC3986], as reproduced in
+   Figure 2.  If the content is not ASCII only (i.e., for IRIs), first
+   apply Section 3.1 of [RFC3987] and apply this grammar to the result.
+
+   app-string-cri = URI-reference
+   ; ABNF from RFC 3986:
+
+   URI           = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
+
+   hier-part     = "//" authority path-abempty
+                    / path-absolute
+                    / path-rootless
+                    / path-empty
+
+   URI-reference = URI / relative-ref
+
+   absolute-URI  = scheme ":" hier-part [ "?" query ]
+
+   relative-ref  = relative-part [ "?" query ] [ "#" fragment ]
+
+   relative-part = "//" authority path-abempty
+                    / path-absolute
+                    / path-noscheme
+                    / path-empty
+
+   scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+
+   authority     = [ userinfo "@" ] host [ ":" port ]
+   userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
+   host          = IP-literal / IPv4address / reg-name
+   port          = *DIGIT
+
+   IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
+
+   IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
+
+   IPv6address   =                            6( h16 ":" ) ls32
+                    /                       "::" 5( h16 ":" ) ls32
+                    / [               h16 ] "::" 4( h16 ":" ) ls32
+                    / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+                    / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+                    / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
+                    / [ *4( h16 ":" ) h16 ] "::"              ls32
+                    / [ *5( h16 ":" ) h16 ] "::"              h16
+                    / [ *6( h16 ":" ) h16 ] "::"
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 49]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   h16           = 1*4HEXDIG
+   ls32          = ( h16 ":" h16 ) / IPv4address
+   IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
+   dec-octet     = DIGIT                 ; 0-9
+                    / %x31-39 DIGIT         ; 10-99
+                    / "1" 2DIGIT            ; 100-199
+                    / "2" %x30-34 DIGIT     ; 200-249
+                    / "25" %x30-35          ; 250-255
+
+   reg-name      = *( unreserved / pct-encoded / sub-delims )
+
+   path          = path-abempty    ; begins with "/" or is empty
+                    / path-absolute   ; begins with "/" but not "//"
+                    / path-noscheme   ; begins with a non-colon segment
+                    / path-rootless   ; begins with a segment
+                    / path-empty      ; zero characters
+
+   path-abempty  = *( "/" segment )
+   path-absolute = "/" [ segment-nz *( "/" segment ) ]
+   path-noscheme = segment-nz-nc *( "/" segment )
+   path-rootless = segment-nz *( "/" segment )
+   path-empty    = 0<pchar>
+
+   segment       = *pchar
+   segment-nz    = 1*pchar
+   segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
+                    ; non-zero-length segment without any colon ":"
+
+   pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+
+   query         = *( pchar / "/" / "?" )
+
+   fragment      = *( pchar / "/" / "?" )
+
+   pct-encoded   = "%" HEXDIG HEXDIG
+
+   unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+   reserved      = gen-delims / sub-delims
+   gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+   sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+                    / "*" / "+" / "," / ";" / "="
+
+          Figure 2: ABNF Definition of URI Representation of a CRI
+
+Appendix D.  Change Log
+
+   This section is to be removed before publishing as an RFC.
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 50]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   Changes from -09 to -14
+
+   *  Editorial changes; move some examples to Appendix B, break up
+      railroad diagram; mention commonalities with (and tiny difference
+      from) CoAP Options; mention failure of percent-encoding for dots
+      in host-name components
+
+   *  Explicitly mention invalid case in Section 2.1, Paragraph 5, Item
+      3 (rootless CRIs without authority that do not have a path
+      component)
+
+   *  Generalize Section 7, discuss PET (percent-encoded text) extension
+      in more detail
+
+   *  Add registry of URI scheme numbers (Appendix A, Section 11)
+
+   *  Add user information to the authority ("userinfo" feature)
+
+   *  Figure 1: Use separate rule for CRI, allow [] for query in CRI
+      Reference; generalize scheme numbers, add userinfo; add list of
+      additional requirements in prose (Section 5.1, Paragraph 5)
+
+   *  Discuss Error handling and extensibility (Section 5.2.1)
+
+   *  Conversion to URI: Handle : in first pathname component of a CRI-
+      Reference (Section 6.1, Paragraph 2.6.1)
+
+   *  Add Christian Amsüss as contributor
+
+   *  Add CBOR EDN application-extension "cri" (see Appendix C and
+      Section 11.3).
+
+   Changes from -08 to -09
+
+   *  Identify more esoteric features with a CDDL ".feature".
+
+   *  Clarify that well-formedness requires removing trailing nulls.
+
+   *  Fragments can contain PET.
+
+   *  Percent-encoded text in PET is treated as byte strings.
+
+   *  URIs with an authority but a completely empty path (e.g.,
+      http://example.com): CRIs with an authority component no longer
+      always produce at least a slash in the path component.
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 51]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+      For generic schemes, the conversion of scheme://example.com to a
+      CRI is now possible because CRI produces a URI with an authority
+      not followed by a slash following the updated rules of
+      Section 6.1.  Schemes like http and coap do not distinguish
+      between the empty path and the path containing a single slash when
+      an authority is set (as recommended in [RFC3986]).  For these
+      schemes, that equivalence allows implementations to convert the
+      just-a-slash URI to a CRI with a zero length path array (which,
+      however, when converted back, does not produce a slash after the
+      authority).
+
+      (Add an appendix "the small print" for more detailed discussion of
+      pesky corner cases like this.)
+
+   Changes from -07 to -08
+
+   *  Fix the encoding of NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH
+
+   *  Add URN and DID schemes, add example.
+
+   *  Add PET
+
+   *  Remove hopeless attempt to encode "remote trailing nulls" rule in
+      CDDL (which is not a transformation language).
+
+   Changes from -06 to -07
+
+   *  More explicitly discuss constraints (Section 2), add examples
+      (Appendix B, Paragraph 6, Item 1).
+
+   *  Make CDDL more explicit about special simple values.
+
+   *  Lots of gratuitous changes from XML2RFC redefinition of <tt>
+      semantics.
+
+   Changes from -05 to -06
+
+   *  rework authority:
+
+      -  split reg-names at dots;
+
+      -  add optional zone identifiers [RFC6874] to IP addresses
+
+   Changes from -04 to -05
+
+   *  Simplify CBOR structure.
+
+   *  Add implementation status section.
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 52]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   Changes from -03 to -04:
+
+   *  Minor editorial improvements.
+
+   *  Renamed path.type/path-type to discard.
+
+   *  Renamed option to section, substructured into items.
+
+   *  Simplified the table "resolution-variables".
+
+   *  Use the CBOR structure inspired by Jim Schaad's proposals.
+
+   Changes from -02 to -03:
+
+   *  Expanded the set of supported schemes (#3).
+
+   *  Specified creation, normalization and comparison (#9).
+
+   *  Clarified the default value of the path.type option (#33).
+
+   *  Removed the append-relation path.type option (#41).
+
+   *  Renumbered the remaining path.types.
+
+   *  Renumbered the option numbers.
+
+   *  Restructured the document.
+
+   *  Minor editorial improvements.
+
+   Changes from -01 to -02:
+
+   *  Changed the syntax of schemes to exclude upper case characters
+      (#13).
+
+   *  Minor editorial improvements (#34 #37).
+
+   Changes from -00 to -01:
+
+   *  None.
+
+Acknowledgements
+
+   CRIs were developed by Klaus Hartke for use in the Constrained
+   RESTful Application Language (CoRAL).  The current author team is
+   completing this work with a view to achieve good integration with the
+   potential use cases, both inside and outside of CoRAL.
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 53]
+
+Internet-Draft      Constrained Resource Identifiers       November 2023
+
+
+   Thanks to Christian Amsüss, Thomas Fossati, Ari Keränen, Jim Schaad,
+   Dave Thaler, and Marco Tiloca for helpful comments and discussions
+   that have shaped the document.
+
+Contributors
+
+   Klaus Hartke
+   Ericsson
+   Torshamnsgatan 23
+   SE-16483 Stockholm
+   Sweden
+   Email: klaus.hartke@ericsson.com
+
+
+   Christian Amsüss
+   Hollandstr. 12/4
+   1020 Vienna
+   Austria
+   Email: christian@amsuess.com
+
+
+Authors' Addresses
+
+   Carsten Bormann (editor)
+   Universität Bremen TZI
+   Postfach 330440
+   D-28359 Bremen
+   Germany
+   Phone: +49-421-218-63921
+   Email: cabo@tzi.org
+
+
+   Henk Birkholz
+   Fraunhofer SIT
+   Rheinstrasse 75
+   64295 Darmstadt
+   Germany
+   Email: henk.birkholz@sit.fraunhofer.de
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz         Expires 25 May 2024                 [Page 54]
