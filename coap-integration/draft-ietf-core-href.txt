@@ -1270,7 +1270,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2023
    +========+=+=+=+=+=====================+========+========+=========+
    | No.    |C|U|N|R| Name                | Format | Length | Default |
    +========+=+=+=+=+=====================+========+========+=========+
-   | TBD239 |x|x|-| | Proxy-Scheme-Number | uint   | 1-255  | (none)  |
+   | TBD239 |x|x|-| | Proxy-Scheme-Number | uint   | 0-3    | (none)  |
    +--------+-+-+-+-+---------------------+--------+--------+---------+
 
                  Table 2: Proxy-Scheme-Number CoAP Option
