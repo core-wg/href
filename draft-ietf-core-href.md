@@ -961,7 +961,108 @@ of the CoAP protocol {{-coap}}.
 
 ## Converting Between CoAP CRIs and Sets of CoAP Options
 
-... Analogue to {{Sections 6.4 and 6.5 of -coap}}...
+This section provides an analogue to {{Sections 6.4 and 6.5 of -coap}}:
+Computing a set of CoAP options from a request CRI {{decompose-coap}} and computing a
+request CRI from a set of COAP options {{compose-coap}}.
+
+This section makes use of the mapping between CRI scheme ids
+and URI scheme names shown in {{scheme-map}}:
+
+| CRI scheme id | URI scheme |
+|---------------|------------|
+|            -1 | coap       |
+|            -2 | coaps      |
+|            -7 | coap+tcp   |
+|            -8 | coaps+tcp  |
+|            -9 | coap+ws    |
+|           -10 | coaps+ws   |
+{: #scheme-map title="Mapping CRI scheme ids and URI scheme names"}
+
+
+### Decomposing a Request CRI into a set of CoAP Options {#decompose-coap}
+
+   The steps to parse a request's options from a CRI »cri« are as
+   follows.  These steps either result in zero or more of the Uri-Host,
+   Uri-Port, Uri-Path, and Uri-Query Options being included in the
+   request or they fail.
+
+Where the following speaks of deriving a text-string for a CoAP Option
+value from a data item in the CRI, the presence of any
+`text-pet-sequence` subitem ({{pet}}) in this item fails this algorithm.
+
+   1.  If »cri« is not an absolute CRI reference, then fail this
+       algorithm.
+
+   2.  Translate the scheme id into a URI scheme name as per
+       {{scheme-map}}; if a scheme id not in this list is being used,
+       fail this algorithm.
+       Remember the specific variant of CoAP to be used based on this
+       URI scheme name.
+
+   3.  If »cri« has a `fragment` component, then fail this algorithm.
+
+   4.  If the `host` component of »cri« is a `host-name`, include a
+       Uri-Host Option and let that option's value be the text string
+       value of the `host-name`.
+
+   5.  If »cri« has a `port` component, then let »port« be that
+       component's unsigned integer value; otherwise, let »port« be
+       the default port number for the scheme.
+
+   6.  If »port« does not equal the request's destination UDP port,
+       include a Uri-Port Option and let that option's value be »port«.
+
+   7.  If the value of the `path` component of »cri« is empty or
+       consists of a single empty string, then move to the next step.
+
+       Otherwise, for each element in the »path« component, include a
+       Uri-Path Option and let that option's value be the text string
+       value of that element.
+
+   8.  If »cri« has a `query` component, then, for each element in the
+       `query` component, include a Uri-Query Option and let that
+       option's value be the be the text string
+       value of that element.
+
+### Composing a Request URI from a Set of CoAP Options {#compose-coap}
+
+   The steps to construct a CRI from a request's options are as follows.
+   These steps either result in a CRI or they fail.
+
+
+[^clarify-host]: Hmm, this is asymmetric.  Is this OK?
+
+
+   1.   Based on the variant of CoAP used in the request, choose a
+        `scheme-id` as per table {{scheme-map}}.  Use that as the first
+        value in the resulting CRI array.
+
+   2.   If the request includes a Uri-Host Option, insert an
+        `authority` with its value as the `host-name`.
+        If that value is not a valid
+        reg-name or IP-literal or IPv4address, fail the algorithm.
+        [^clarify-host]
+
+        If the request does not include a Uri-Host Option, inser an
+        `authority` with `host-ip` being the byte string that
+        represents the request's destination IP address.
+
+   3.   If the request includes a Uri-Port Option, let »port« be that
+        option's value.  Otherwise, let »port« be the request's
+        destination UDP port.
+        If »port« is not the default port for the scheme, then insert
+        the integer value of »port« as the value of `port` in the
+        authority.
+        Otherwise, elide the `port`.
+
+   4.   Insert a `path` component that contains an array built from
+        the text string values of the Uri-Path Options in the request,
+        or an empty array if no such options are present.
+
+   5.   Insert a `query` component that contains an array built from
+        the text string values of the Uri-Query Options in the request,
+        or an empty array if no such options are present.
+
 
 ## CoAP Options for Forward-Proxies {#coap-options}
 
