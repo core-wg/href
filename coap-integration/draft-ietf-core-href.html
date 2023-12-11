@@ -1036,7 +1036,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 10 June 2024</td>
+<td class="center">Expires 13 June 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1049,12 +1049,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-core-href-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-12-08" class="published">8 December 2023</time>
+<time datetime="2023-12-11" class="published">11 December 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-06-10">10 June 2024</time></dd>
+<dd class="expires"><time datetime="2024-06-13">13 June 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1115,7 +1115,7 @@ The present revision –14 of this draft picks up comments from the shepherd rev
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 June 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 13 June 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1225,7 +1225,7 @@ The present revision –14 of this draft picks up comments from the shepherd rev
                     <p id="section-toc.1-1.8.2.1.2.1.1"><a href="#section-8.1.1" class="auto internal xref">8.1.1</a>.  <a href="#name-decomposing-a-request-cri-i" class="internal xref">Decomposing a Request CRI into a set of CoAP Options</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1.2.2">
-                    <p id="section-toc.1-1.8.2.1.2.2.1"><a href="#section-8.1.2" class="auto internal xref">8.1.2</a>.  <a href="#name-composing-a-request-uri-fro" class="internal xref">Composing a Request URI from a Set of CoAP Options</a></p>
+                    <p id="section-toc.1-1.8.2.1.2.2.1"><a href="#section-8.1.2" class="auto internal xref">8.1.2</a>.  <a href="#name-composing-a-request-cri-fro" class="internal xref">Composing a Request CRI from a Set of CoAP Options</a></p>
 </li>
                 </ul>
 </li>
@@ -2197,6 +2197,7 @@ If there are dots (".") in such elements, the conversion fails
 (percent-encoding is not able to represent such elements, as
 normalization would turn the percent-encoding back to the unreserved
 character that a dot is.)<a href="#section-6.1-2.4.4" class="pilcrow">¶</a></p>
+<div id="host-ip-to-uri">
 <p id="section-6.1-2.4.5">The value of a <code>host-ip</code> item <span class="bcp14">MUST</span> be
 represented as a string that matches the "IPv4address" or
 "IP-literal" rule (<span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">Section 3.2.2</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>).
@@ -2204,6 +2205,7 @@ Any zone-id is appended to the string, separated by "%25" as
 defined in <span><a href="https://rfc-editor.org/rfc/rfc6874#section-2" class="relref">Section 2</a> of [<a href="#RFC6874" class="cite xref">RFC6874</a>]</span>, or as specified in a superseding
 zone-id specification document <span>[<a href="#I-D.carpenter-6man-rfc6874bis" class="cite xref">I-D.carpenter-6man-rfc6874bis</a>]</span>; this also leads to a modified
 "IP-literal" rule as specified in these documents.<a href="#section-6.1-2.4.5" class="pilcrow">¶</a></p>
+</div>
 <p id="section-6.1-2.4.6">If the CRI reference contains a <code>port</code> item, the port
 subcomponent consists of the value of that item in decimal
 notation.
@@ -2504,6 +2506,13 @@ URI scheme name.<a href="#section-8.1.1-3.2.1" class="pilcrow">¶</a></p>
               <p id="section-8.1.1-3.4.1">If the <code>host</code> component of »cri« is a <code>host-name</code>, include a
 Uri-Host Option and let that option's value be the text string
 value of the <code>host-name</code>.<a href="#section-8.1.1-3.4.1" class="pilcrow">¶</a></p>
+<p id="section-8.1.1-3.4.2">
+If the <code>host</code> component of »cri« is a <code>host-ip</code>, check whether
+the IP address given represents the request's
+destination IP address (and, if present, zone-id).
+Only if it does not, include a Uri-Host Option, and let that
+option's value be the text value of the URI representation of
+the IP address, as derived in <a href="#host-ip-to-uri" class="auto internal xref">Section 6.1, Paragraph 2.4.5</a>.<a href="#section-8.1.1-3.4.2" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.5">
               <p id="section-8.1.1-3.5.1">If »cri« has a <code>port</code> component, then let »port« be that
@@ -2533,8 +2542,8 @@ value of that element.<a href="#section-8.1.1-3.8.1" class="pilcrow">¶</a></p>
 </div>
 <div id="compose-coap">
 <section id="section-8.1.2">
-          <h4 id="name-composing-a-request-uri-fro">
-<a href="#section-8.1.2" class="section-number selfRef">8.1.2. </a><a href="#name-composing-a-request-uri-fro" class="section-name selfRef">Composing a Request URI from a Set of CoAP Options</a>
+          <h4 id="name-composing-a-request-cri-fro">
+<a href="#section-8.1.2" class="section-number selfRef">8.1.2. </a><a href="#name-composing-a-request-cri-fro" class="section-name selfRef">Composing a Request CRI from a Set of CoAP Options</a>
           </h4>
 <p id="section-8.1.2-1">The steps to construct a CRI from a request's options are as follows.
    These steps either result in a CRI or they fail.<a href="#section-8.1.2-1" class="pilcrow">¶</a></p>
@@ -2546,14 +2555,19 @@ value in the resulting CRI array.<a href="#section-8.1.2-2.1.1" class="pilcrow">
 </li>
             <li id="section-8.1.2-2.2">
               <p id="section-8.1.2-2.2.1">If the request includes a Uri-Host Option, insert an
-<code>authority</code> with its value as the <code>host-name</code>.
-If that value is not a valid
-reg-name or IP-literal or IPv4address, fail the algorithm.
-<span class="cref" id="clarify-host">Hmm, this is asymmetric.  Is this OK?</span><a href="#section-8.1.2-2.2.1" class="pilcrow">¶</a></p>
+<code>authority</code> with its value determined as follows:
+If the value of the  Uri-Host Option is a <code>reg-name</code>, include
+this as the <code>host-name</code>.
+If the value is an IP-literal or IPv4address, extract any
+<code>zone-id</code>, and represent the IP address as a byte string of
+the correct length in <code>host-ip</code>, followed by any <code>zone-id</code>
+extracted if present.
+If the value is none of the three, fail this algorithm.<a href="#section-8.1.2-2.2.1" class="pilcrow">¶</a></p>
 <p id="section-8.1.2-2.2.2">
-If the request does not include a Uri-Host Option, inser an
+If the request does not include a Uri-Host Option, insert an
 <code>authority</code> with <code>host-ip</code> being the byte string that
-represents the request's destination IP address.<a href="#section-8.1.2-2.2.2" class="pilcrow">¶</a></p>
+represents the request's destination IP address and,
+if one is present in the request's destination, add a <code>zone-id</code>.<a href="#section-8.1.2-2.2.2" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.2-2.3">
               <p id="section-8.1.2-2.3.1">If the request includes a Uri-Port Option, let »port« be that
