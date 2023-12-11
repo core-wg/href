@@ -733,6 +733,7 @@ authority
   normalization would turn the percent-encoding back to the unreserved
   character that a dot is.)
 
+  {: #host-ip-to-uri}
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
@@ -1005,6 +1006,13 @@ value from a data item in the CRI, the presence of any
        Uri-Host Option and let that option's value be the text string
        value of the `host-name`.
 
+       If the `host` component of »cri« is a `host-ip`, check whether
+       the IP address given represents the request's
+       destination IP address (and, if present, zone-id).
+       Only if it does not, include a Uri-Host Option, and let that
+       option's value be the text value of the URI representation of
+       the IP address, as derived in {{host-ip-to-uri}}.
+
    5.  If »cri« has a `port` component, then let »port« be that
        component's unsigned integer value; otherwise, let »port« be
        the default port number for the scheme.
@@ -1024,13 +1032,10 @@ value from a data item in the CRI, the presence of any
        option's value be the be the text string
        value of that element.
 
-### Composing a Request URI from a Set of CoAP Options {#compose-coap}
+### Composing a Request CRI from a Set of CoAP Options {#compose-coap}
 
    The steps to construct a CRI from a request's options are as follows.
    These steps either result in a CRI or they fail.
-
-
-[^clarify-host]: Hmm, this is asymmetric.  Is this OK?
 
 
    1.   Based on the variant of CoAP used in the request, choose a
@@ -1038,14 +1043,19 @@ value from a data item in the CRI, the presence of any
         value in the resulting CRI array.
 
    2.   If the request includes a Uri-Host Option, insert an
-        `authority` with its value as the `host-name`.
-        If that value is not a valid
-        reg-name or IP-literal or IPv4address, fail the algorithm.
-        [^clarify-host]
+        `authority` with its value determined as follows:
+        If the value of the  Uri-Host Option is a `reg-name`, include
+        this as the `host-name`.
+        If the value is an IP-literal or IPv4address, extract any
+        `zone-id`, and represent the IP address as a byte string of
+        the correct length in `host-ip`, followed by any `zone-id`
+        extracted if present.
+        If the value is none of the three, fail this algorithm.
 
-        If the request does not include a Uri-Host Option, inser an
+        If the request does not include a Uri-Host Option, insert an
         `authority` with `host-ip` being the byte string that
-        represents the request's destination IP address.
+        represents the request's destination IP address and,
+        if one is present in the request's destination, add a `zone-id`.
 
    3.   If the request includes a Uri-Port Option, let »port« be that
         option's value.  Otherwise, let »port« be the request's
