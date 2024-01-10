@@ -92,7 +92,13 @@ memory size.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –14 of this draft picks up comments from the shepherd review.
+    The present revision –14 of this draft picks up comments from the
+    shepherd review and adds sections on CoAP integration and on `cri`
+    application-oriented literals for the Extended Diagnostic
+    Notation.\\
+    This revision still contains open issues and is intended to serve
+    as a snapshot while the processing of the shepherd review is being
+    completed.
 
 --- middle
 
@@ -1528,7 +1534,11 @@ Changes from -09 to -14
 
 * Add Christian Amsüss as contributor
 
-* Add CBOR EDN application-extension "`cri`" (see {{edn-cri}} and {{cri-iana}}).
+* Add CBOR EDN application-extension "`cri`" (see {{edn-cri}} and
+  {{cri-iana}}).
+
+* Add Section on CoAP integration (and new CoAP Options Proxy-Cri and
+  Proxy-Scheme-Number).
 
 Changes from -08 to -09
 
