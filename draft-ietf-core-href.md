@@ -64,7 +64,7 @@ normative:
   IANA.uri-schemes:
   BCP26:
     -: ianacons
-    =: RFC8126
+#    =: RFC8126
   IANA.core-parameters:
   I-D.carpenter-6man-rfc6874bis: zonebis
   RFC8610: cddl
@@ -1165,7 +1165,7 @@ The security considerations discussed in {{Section 7 of RFC3986}} and
 
 This specification defines a new "CRI Scheme Numbers" sub-registry in
 the "CoRE Parameters" registry {{IANA.core-parameters}}, with the
-policy "Expert Review" ({{Section 4.5 of -ianacons}}).
+policy "Expert Review" ({{Section 4.5 of RFC8126@-ianacons}}).
 The objective is to have CRI scheme number values registered for all
 registered URI schemes (Uniform Resource Identifier (URI) Schemes
 registry), as well as exceptionally for certain text strings that the
