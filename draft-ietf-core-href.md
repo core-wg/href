@@ -64,7 +64,8 @@ normative:
   IANA.uri-schemes:
   BCP26:
     -: ianacons
-    =: RFC8126
+#    =: RFC8126
+  IANA.core-parameters:
   I-D.carpenter-6man-rfc6874bis: zonebis
   RFC8610: cddl
   Unicode:
@@ -91,7 +92,13 @@ memory size.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –14 of this draft picks up comments from the shepherd review.
+    The present revision –14 of this draft picks up comments from the
+    shepherd review and adds sections on CoAP integration and on `cri`
+    application-oriented literals for the Extended Diagnostic
+    Notation.\\
+    This revision still contains open issues and is intended to serve
+    as a snapshot while the processing of the shepherd review is being
+    completed.
 
 --- middle
 
@@ -732,6 +739,7 @@ authority
   normalization would turn the percent-encoding back to the unreserved
   character that a dot is.)
 
+  {: #host-ip-to-uri}
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
@@ -953,7 +961,188 @@ properties of UTF-8 make this a simple linear process.)
 > text-pet-sequence elements for their representation typically need
 > to process them byte by byte.
 
+# CoAP Integration
+
+This section discusses ways in which CRIs can be used in the context
+of the CoAP protocol {{-coap}}.
+
+## Converting Between CoAP CRIs and Sets of CoAP Options
+
+This section provides an analogue to {{Sections 6.4 and 6.5 of -coap}}:
+Computing a set of CoAP options from a request CRI {{decompose-coap}} and computing a
+request CRI from a set of COAP options {{compose-coap}}.
+
+This section makes use of the mapping between CRI scheme ids
+and URI scheme names shown in {{scheme-map}}:
+
+| CRI scheme id | URI scheme |
+|---------------|------------|
+|            -1 | coap       |
+|            -2 | coaps      |
+|            -7 | coap+tcp   |
+|            -8 | coaps+tcp  |
+|            -9 | coap+ws    |
+|           -10 | coaps+ws   |
+{: #scheme-map title="Mapping CRI scheme ids and URI scheme names"}
+
+
+### Decomposing a Request CRI into a set of CoAP Options {#decompose-coap}
+
+   The steps to parse a request's options from a CRI »cri« are as
+   follows.  These steps either result in zero or more of the Uri-Host,
+   Uri-Port, Uri-Path, and Uri-Query Options being included in the
+   request or they fail.
+
+Where the following speaks of deriving a text-string for a CoAP Option
+value from a data item in the CRI, the presence of any
+`text-pet-sequence` subitem ({{pet}}) in this item fails this algorithm.
+
+   1.  If »cri« is not an absolute CRI reference, then fail this
+       algorithm.
+
+   2.  Translate the scheme id into a URI scheme name as per
+       {{scheme-map}}; if a scheme id not in this list is being used,
+       fail this algorithm.
+       Remember the specific variant of CoAP to be used based on this
+       URI scheme name.
+
+   3.  If »cri« has a `fragment` component, then fail this algorithm.
+
+   4.  If the `host` component of »cri« is a `host-name`, include a
+       Uri-Host Option and let that option's value be the text string
+       value of the `host-name`.
+
+       If the `host` component of »cri« is a `host-ip`, check whether
+       the IP address given represents the request's
+       destination IP address (and, if present, zone-id).
+       Only if it does not, include a Uri-Host Option, and let that
+       option's value be the text value of the URI representation of
+       the IP address, as derived in {{host-ip-to-uri}}.
+
+   5.  If »cri« has a `port` component, then let »port« be that
+       component's unsigned integer value; otherwise, let »port« be
+       the default port number for the scheme.
+
+   6.  If »port« does not equal the request's destination UDP port,
+       include a Uri-Port Option and let that option's value be »port«.
+
+   7.  If the value of the `path` component of »cri« is empty or
+       consists of a single empty string, then move to the next step.
+
+       Otherwise, for each element in the »path« component, include a
+       Uri-Path Option and let that option's value be the text string
+       value of that element.
+
+   8.  If »cri« has a `query` component, then, for each element in the
+       `query` component, include a Uri-Query Option and let that
+       option's value be the be the text string
+       value of that element.
+
+### Composing a Request CRI from a Set of CoAP Options {#compose-coap}
+
+   The steps to construct a CRI from a request's options are as follows.
+   These steps either result in a CRI or they fail.
+
+
+   1.   Based on the variant of CoAP used in the request, choose a
+        `scheme-id` as per table {{scheme-map}}.  Use that as the first
+        value in the resulting CRI array.
+
+   2.   If the request includes a Uri-Host Option, insert an
+        `authority` with its value determined as follows:
+        If the value of the  Uri-Host Option is a `reg-name`, include
+        this as the `host-name`.
+        If the value is an IP-literal or IPv4address, extract any
+        `zone-id`, and represent the IP address as a byte string of
+        the correct length in `host-ip`, followed by any `zone-id`
+        extracted if present.
+        If the value is none of the three, fail this algorithm.
+
+        If the request does not include a Uri-Host Option, insert an
+        `authority` with `host-ip` being the byte string that
+        represents the request's destination IP address and,
+        if one is present in the request's destination, add a `zone-id`.
+
+   3.   If the request includes a Uri-Port Option, let »port« be that
+        option's value.  Otherwise, let »port« be the request's
+        destination UDP port.
+        If »port« is not the default port for the scheme, then insert
+        the integer value of »port« as the value of `port` in the
+        authority.
+        Otherwise, elide the `port`.
+
+   4.   Insert a `path` component that contains an array built from
+        the text string values of the Uri-Path Options in the request,
+        or an empty array if no such options are present.
+
+   5.   Insert a `query` component that contains an array built from
+        the text string values of the Uri-Query Options in the request,
+        or an empty array if no such options are present.
+
+
+## CoAP Options for Forward-Proxies {#coap-options}
+
+Apart from the above procedures to convert CoAP CRIs to and from sets
+of CoAP Options, two additional CoAP Options are defined in {{Section
+5.10.2 of -coap}} that support requests to forward-proxies:
+
+* Proxy-Uri, and
+* its more lightweight variant, Proxy-Scheme
+
+This section defines analogues of these that employ CRIs and the URI
+Scheme numering provided by the present specification.
+
+### Proxy-CRI
+
+   | No.    | C | U | N | R | Name         | Format | Length | Default |
+   | TBD235 | x | x | - |   | Proxy-Cri    | opaque | 1-1023 | (none)  |
+{: #tab-proxy-cri title="Proxy-Cri CoAP Option"}
+
+The Proxy-CRI Option carries an encoded CBOR data item that represents
+an absolute CRI reference.
+It is used analogously to Proxy-Uri as defined in {{Section 5.10.2
+of -coap}}.
+The Proxy-Cri Option MUST take precedence over any of the Uri-Host,
+Uri-Port, Uri-Path or Uri-Query options, as well as over any
+Proxy-Uri Option (each of which MUST NOT be
+included in a request containing the Proxy-Cri Option).
+
+
+### Proxy-Scheme-Number
+
+
+   | No.    | C | U | N | R | Name                | Format | Length | Default |
+   | TBD239 | x | x | - |   | Proxy-Scheme-Number | uint   |    0-3 | (none)  |
+{: #tab-proxy-scheme-number title="Proxy-Scheme-Number CoAP Option"}
+
+The Proxy-Scheme-Number Option carries a URI Scheme Number represented as a
+CoAP unsigned integer.
+It is used analogously to Proxy-Scheme as defined in {{Section 5.10.2
+of -coap}}.
+
+Since CoAP Options are only defined as empty, (text) string, opaque
+(byte string), or unsigned integer, the Option carries an unsigned
+integer that gives the 1's complement of the URI Scheme Number, i.e.:
+
+~~~ math
+option value = -1 - scheme number
+~~~
+
+[^scheme-negative]
+
+[^scheme-negative]: DISCUSS: Should the scheme registry simply use
+    unsigned numbers so it can be used here right away and the 1's
+    complement form is only used specifically for the nint that
+    `scheme-id` at the start of CRIs is?
+
+[^location-scheme]
+
+[^location-scheme]: TO DO: Discuss the need for a
+    location-scheme-numeric option?
+
 # Implementation Status {#impl}
+
+{::boilerplate rfc7942info}
 
 With the exception of the authority=true fix, host-names split into
 labels, and {{pet}}, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
@@ -981,8 +1170,8 @@ The security considerations discussed in {{Section 7 of RFC3986}} and
 ## CRI Scheme Numbers Registry {#cri-reg}
 
 This specification defines a new "CRI Scheme Numbers" sub-registry in
-the "CoRE Parameters" registry {{!IANA.core-parameters}}, with the
-policy "Expert Review" ({{Section 4.5 of -ianacons}}).
+the "CoRE Parameters" registry {{IANA.core-parameters}}, with the
+policy "Expert Review" ({{Section 4.5 of RFC8126@-ianacons}}).
 The objective is to have CRI scheme number values registered for all
 registered URI schemes (Uniform Resource Identifier (URI) Schemes
 registry), as well as exceptionally for certain text strings that the
@@ -1070,6 +1259,19 @@ IANA is requested to register the application-extension identifier
 |----------------------------------|---------------------------------|-------------------|-------------------|
 | cri                              | Constrained Resource Identifier | IETF              | RFC-XXXX, {{edn-cri}} |
 {: #tab-iana title="CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI"}
+
+[^replace-xxxx]
+
+## CoAP Option Numbers Registry
+
+In the "CoAP Option Numbers" registry in the "CoRE Parameters" registry group [IANA.core-parameters],
+IANA is requested to register the CoAP Option Numbers
+as described in {{tab-iana-options}} and defined in {{coap-options}}.
+
+   | No.    | Name                | Reference |
+   | TBD235 | Proxy-Cri           | RFC-XXXX  |
+   | TBD239 | Proxy-Scheme-Number | RFC-XXXX  |
+{: #tab-iana-options title="New CoAP Option Numbers"}
 
 [^replace-xxxx]
 
@@ -1332,7 +1534,11 @@ Changes from -09 to -14
 
 * Add Christian Amsüss as contributor
 
-* Add CBOR EDN application-extension "`cri`" (see {{edn-cri}} and {{cri-iana}}).
+* Add CBOR EDN application-extension "`cri`" (see {{edn-cri}} and
+  {{cri-iana}}).
+
+* Add Section on CoAP integration (and new CoAP Options Proxy-Cri and
+  Proxy-Scheme-Number).
 
 Changes from -08 to -09
 
