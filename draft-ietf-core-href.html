@@ -15,25 +15,31 @@ This simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size. 
        (This "cref" paragraph will be removed by the RFC editor:) 
-The present revision –14 of this draft picks up comments from the shepherd review. 
+The present revision –14 of this draft picks up comments from the
+shepherd review and adds sections on CoAP integration and on  cri 
+application-oriented literals for the Extended Diagnostic
+Notation. 
+This revision still contains open issues and is intended to serve
+as a snapshot while the processing of the shepherd review is being
+completed. 
     ' name="description">
-<meta content="xml2rfc 3.18.2" name="generator">
+<meta content="xml2rfc 3.19.1" name="generator">
 <meta content="draft-ietf-core-href-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.2
+  xml2rfc 3.19.1
     Python 3.11.6
-    ConfigArgParse 1.5.3
+    ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 4.0.0
+    platformdirs 4.1.0
     pycountry 22.3.5
-    PyYAML 6.0
+    PyYAML 6.0.1
     requests 2.31.0
-    setuptools 67.7.2
+    setuptools 68.2.2
     six 1.16.0
-    wcwidth 0.2.10
+    wcwidth 0.2.13
 -->
 <link href="draft-ietf-core-href.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1032,11 +1038,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Constrained Resource Identifiers</td>
-<td class="right">November 2023</td>
+<td class="right">January 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 25 May 2024</td>
+<td class="center">Expires 22 July 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1049,12 +1055,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-core-href-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-11-22" class="published">22 November 2023</time>
+<time datetime="2024-01-19" class="published">19 January 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-05-25">25 May 2024</time></dd>
+<dd class="expires"><time datetime="2024-07-22">22 July 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1079,7 +1085,13 @@ This simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC editor:)<br>
-The present revision –14 of this draft picks up comments from the shepherd review.</span><a href="#section-abstract-2" class="pilcrow">¶</a></p>
+The present revision –14 of this draft picks up comments from the
+shepherd review and adds sections on CoAP integration and on <code>cri</code>
+application-oriented literals for the Extended Diagnostic
+Notation.<br>
+This revision still contains open issues and is intended to serve
+as a snapshot while the processing of the shepherd review is being
+completed.</span><a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1115,7 +1127,7 @@ The present revision –14 of this draft picks up comments from the shepherd rev
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 25 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1124,7 +1136,7 @@ The present revision –14 of this draft picks up comments from the shepherd rev
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2023 IETF Trust and the persons identified as the
+            Copyright (c) 2024 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1216,72 +1228,102 @@ The present revision –14 of this draft picks up comments from the shepherd rev
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-implementation-status" class="internal xref">Implementation Status</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-coap-integration" class="internal xref">CoAP Integration</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
-                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-cri-scheme-numbers-registry" class="internal xref">CRI Scheme Numbers Registry</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-converting-between-coap-cri" class="internal xref">Converting Between CoAP CRIs and Sets of CoAP Options</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1.2.1">
-                    <p id="section-toc.1-1.10.2.1.2.1.1"><a href="#section-10.1.1" class="auto internal xref">10.1.1</a>.  <a href="#name-instructions-for-the-design" class="internal xref">Instructions for the Designated Expert</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1.2.1">
+                    <p id="section-toc.1-1.8.2.1.2.1.1"><a href="#section-8.1.1" class="auto internal xref">8.1.1</a>.  <a href="#name-decomposing-a-request-cri-i" class="internal xref">Decomposing a Request CRI into a set of CoAP Options</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1.2.2">
-                    <p id="section-toc.1-1.10.2.1.2.2.1"><a href="#section-10.1.2" class="auto internal xref">10.1.2</a>.  <a href="#name-structure-of-entries" class="internal xref">Structure of Entries</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1.2.3">
-                    <p id="section-toc.1-1.10.2.1.2.3.1"><a href="#section-10.1.3" class="auto internal xref">10.1.3</a>.  <a href="#name-initial-registrations" class="internal xref">Initial Registrations</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1.2.2">
+                    <p id="section-toc.1-1.8.2.1.2.2.1"><a href="#section-8.1.2" class="auto internal xref">8.1.2</a>.  <a href="#name-composing-a-request-cri-fro" class="internal xref">Composing a Request CRI from a Set of CoAP Options</a></p>
 </li>
                 </ul>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-update-to-uniform-resource-" class="internal xref">Update to "Uniform Resource Identifier (URI) Schemes" Registry</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-coap-options-for-forward-pr" class="internal xref">CoAP Options for Forward-Proxies</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.1">
+                    <p id="section-toc.1-1.8.2.2.2.1.1"><a href="#section-8.2.1" class="auto internal xref">8.2.1</a>.  <a href="#name-proxy-cri" class="internal xref">Proxy-CRI</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
-                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-cbor-diagnostic-notation-ap" class="internal xref">CBOR Diagnostic Notation Application-extension Identifiers Registry</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.2">
+                    <p id="section-toc.1-1.8.2.2.2.2.1"><a href="#section-8.2.2" class="auto internal xref">8.2.2</a>.  <a href="#name-proxy-scheme-number" class="internal xref">Proxy-Scheme-Number</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-implementation-status" class="internal xref">Implementation Status</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-references" class="internal xref">References</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
-                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-cri-scheme-numbers-registry" class="internal xref">CRI Scheme Numbers Registry</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.1">
+                    <p id="section-toc.1-1.11.2.1.2.1.1"><a href="#section-11.1.1" class="auto internal xref">11.1.1</a>.  <a href="#name-instructions-for-the-design" class="internal xref">Instructions for the Designated Expert</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.2">
+                    <p id="section-toc.1-1.11.2.1.2.2.1"><a href="#section-11.1.2" class="auto internal xref">11.1.2</a>.  <a href="#name-structure-of-entries" class="internal xref">Structure of Entries</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.3">
+                    <p id="section-toc.1-1.11.2.1.2.3.1"><a href="#section-11.1.3" class="auto internal xref">11.1.3</a>.  <a href="#name-initial-registrations" class="internal xref">Initial Registrations</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-update-to-uniform-resource-" class="internal xref">Update to "Uniform Resource Identifier (URI) Schemes" Registry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-cbor-diagnostic-notation-ap" class="internal xref">CBOR Diagnostic Notation Application-extension Identifiers Registry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
+                <p id="section-toc.1-1.11.2.4.1"><a href="#section-11.4" class="auto internal xref">11.4</a>.  <a href="#name-coap-option-numbers-registr" class="internal xref">CoAP Option Numbers Registry</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-mapping-scheme-numbers-to-s" class="internal xref">Mapping Scheme Numbers to Scheme Names</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-the-small-print" class="internal xref">The Small Print</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#appendix-C" class="auto internal xref">Appendix C</a>.  <a href="#name-cbor-extended-diagnostic-not" class="internal xref">CBOR Extended Diagnostic Notation (EDN): The "cri" Extension</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-references" class="internal xref">References</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14.2.1">
-                <p id="section-toc.1-1.14.2.1.1"><a href="#appendix-C.1" class="auto internal xref">C.1</a>.  <a href="#name-cri-abnf-definition-of-uri-" class="internal xref">cri: ABNF Definition of URI Representation of a CRI</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
+                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="auto internal xref">12.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
+                <p id="section-toc.1-1.12.2.2.1"><a href="#section-12.2" class="auto internal xref">12.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
             </ul>
 </li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-mapping-scheme-numbers-to-s" class="internal xref">Mapping Scheme Numbers to Scheme Names</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-the-small-print" class="internal xref">The Small Print</a></p>
+</li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#appendix-D" class="auto internal xref">Appendix D</a>.  <a href="#name-change-log" class="internal xref">Change Log</a></p>
+            <p id="section-toc.1-1.15.1"><a href="#appendix-C" class="auto internal xref">Appendix C</a>.  <a href="#name-cbor-extended-diagnostic-not" class="internal xref">CBOR Extended Diagnostic Notation (EDN): The "cri" Extension</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.1">
+                <p id="section-toc.1-1.15.2.1.1"><a href="#appendix-C.1" class="auto internal xref">C.1</a>.  <a href="#name-cri-abnf-definition-of-uri-" class="internal xref">cri: ABNF Definition of URI Representation of a CRI</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
-            <p id="section-toc.1-1.16.1"><a href="#appendix-E" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+            <p id="section-toc.1-1.16.1"><a href="#appendix-D" class="auto internal xref">Appendix D</a>.  <a href="#name-change-log" class="internal xref">Change Log</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
-            <p id="section-toc.1-1.17.1"><a href="#appendix-F" class="auto internal xref"></a><a href="#name-contributors" class="internal xref">Contributors</a></p>
+            <p id="section-toc.1-1.17.1"><a href="#appendix-E" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18">
-            <p id="section-toc.1-1.18.1"><a href="#appendix-G" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.18.1"><a href="#appendix-F" class="auto internal xref"></a><a href="#name-contributors" class="internal xref">Contributors</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.19">
+            <p id="section-toc.1-1.19.1"><a href="#appendix-G" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -2136,7 +2178,7 @@ reference string as specified in <span><a href="https://rfc-editor.org/rfc/rfc39
 component of the URI reference consists of the value of that
 section, if text (<code>scheme-name</code>); or, if a negative integer is given
 (<code>scheme-id</code>), the lower case scheme name corresponding to the
-scheme number as per the CRI Scheme Numbers registry (<a href="#cri-reg" class="auto internal xref">Section 10.1</a>).
+scheme number as per the CRI Scheme Numbers registry (<a href="#cri-reg" class="auto internal xref">Section 11.1</a>).
 Otherwise, the scheme component is unset.<a href="#section-6.1-2.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
@@ -2167,6 +2209,7 @@ If there are dots (".") in such elements, the conversion fails
 (percent-encoding is not able to represent such elements, as
 normalization would turn the percent-encoding back to the unreserved
 character that a dot is.)<a href="#section-6.1-2.4.4" class="pilcrow">¶</a></p>
+<div id="host-ip-to-uri">
 <p id="section-6.1-2.4.5">The value of a <code>host-ip</code> item <span class="bcp14">MUST</span> be
 represented as a string that matches the "IPv4address" or
 "IP-literal" rule (<span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">Section 3.2.2</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>).
@@ -2174,6 +2217,7 @@ Any zone-id is appended to the string, separated by "%25" as
 defined in <span><a href="https://rfc-editor.org/rfc/rfc6874#section-2" class="relref">Section 2</a> of [<a href="#RFC6874" class="cite xref">RFC6874</a>]</span>, or as specified in a superseding
 zone-id specification document <span>[<a href="#I-D.carpenter-6man-rfc6874bis" class="cite xref">I-D.carpenter-6man-rfc6874bis</a>]</span>; this also leads to a modified
 "IP-literal" rule as specified in these documents.<a href="#section-6.1-2.4.5" class="pilcrow">¶</a></p>
+</div>
 <p id="section-6.1-2.4.6">If the CRI reference contains a <code>port</code> item, the port
 subcomponent consists of the value of that item in decimal
 notation.
@@ -2386,153 +2430,525 @@ to process them byte by byte.<a href="#section-7.1-13.1" class="pilcrow">¶</a><
 </div>
 </section>
 </div>
-<div id="impl">
+<div id="coap-integration">
 <section id="section-8">
-      <h2 id="name-implementation-status">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-implementation-status" class="section-name selfRef">Implementation Status</a>
+      <h2 id="name-coap-integration">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-coap-integration" class="section-name selfRef">CoAP Integration</a>
       </h2>
-<p id="section-8-1">With the exception of the authority=true fix, host-names split into
+<p id="section-8-1">This section discusses ways in which CRIs can be used in the context
+of the CoAP protocol <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<div id="converting-between-coap-cris-and-sets-of-coap-options">
+<section id="section-8.1">
+        <h3 id="name-converting-between-coap-cri">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-converting-between-coap-cri" class="section-name selfRef">Converting Between CoAP CRIs and Sets of CoAP Options</a>
+        </h3>
+<p id="section-8.1-1">This section provides an analogue to Sections <a href="https://rfc-editor.org/rfc/rfc7252#section-6.4" class="relref">6.4</a> and <a href="https://rfc-editor.org/rfc/rfc7252#section-6.5" class="relref">6.5</a> of <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>:
+Computing a set of CoAP options from a request CRI <a href="#decompose-coap" class="auto internal xref">Section 8.1.1</a> and computing a
+request CRI from a set of COAP options <a href="#compose-coap" class="auto internal xref">Section 8.1.2</a>.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">This section makes use of the mapping between CRI scheme ids
+and URI scheme names shown in <a href="#scheme-map" class="auto internal xref">Table 1</a>:<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<span id="name-mapping-cri-scheme-ids-and-"></span><div id="scheme-map">
+<table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-mapping-cri-scheme-ids-and-" class="selfRef">Mapping CRI scheme ids and URI scheme names</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">CRI scheme id</th>
+              <th class="text-left" rowspan="1" colspan="1">URI scheme</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">-1</td>
+              <td class="text-left" rowspan="1" colspan="1">coap</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">-2</td>
+              <td class="text-left" rowspan="1" colspan="1">coaps</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">-7</td>
+              <td class="text-left" rowspan="1" colspan="1">coap+tcp</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">-8</td>
+              <td class="text-left" rowspan="1" colspan="1">coaps+tcp</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">-9</td>
+              <td class="text-left" rowspan="1" colspan="1">coap+ws</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">-10</td>
+              <td class="text-left" rowspan="1" colspan="1">coaps+ws</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<div id="decompose-coap">
+<section id="section-8.1.1">
+          <h4 id="name-decomposing-a-request-cri-i">
+<a href="#section-8.1.1" class="section-number selfRef">8.1.1. </a><a href="#name-decomposing-a-request-cri-i" class="section-name selfRef">Decomposing a Request CRI into a set of CoAP Options</a>
+          </h4>
+<p id="section-8.1.1-1">The steps to parse a request's options from a CRI »cri« are as
+   follows.  These steps either result in zero or more of the Uri-Host,
+   Uri-Port, Uri-Path, and Uri-Query Options being included in the
+   request or they fail.<a href="#section-8.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1.1-2">Where the following speaks of deriving a text-string for a CoAP Option
+value from a data item in the CRI, the presence of any
+<code>text-pet-sequence</code> subitem (<a href="#pet" class="auto internal xref">Section 7.1</a>) in this item fails this algorithm.<a href="#section-8.1.1-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-8.1.1-3">
+<li id="section-8.1.1-3.1">
+              <p id="section-8.1.1-3.1.1">If »cri« is not an absolute CRI reference, then fail this
+algorithm.<a href="#section-8.1.1-3.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.1-3.2">
+              <p id="section-8.1.1-3.2.1">Translate the scheme id into a URI scheme name as per
+<a href="#scheme-map" class="auto internal xref">Table 1</a>; if a scheme id not in this list is being used,
+fail this algorithm.
+Remember the specific variant of CoAP to be used based on this
+URI scheme name.<a href="#section-8.1.1-3.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.1-3.3">
+              <p id="section-8.1.1-3.3.1">If »cri« has a <code>fragment</code> component, then fail this algorithm.<a href="#section-8.1.1-3.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.1-3.4">
+              <p id="section-8.1.1-3.4.1">If the <code>host</code> component of »cri« is a <code>host-name</code>, include a
+Uri-Host Option and let that option's value be the text string
+value of the <code>host-name</code>.<a href="#section-8.1.1-3.4.1" class="pilcrow">¶</a></p>
+<p id="section-8.1.1-3.4.2">
+If the <code>host</code> component of »cri« is a <code>host-ip</code>, check whether
+the IP address given represents the request's
+destination IP address (and, if present, zone-id).
+Only if it does not, include a Uri-Host Option, and let that
+option's value be the text value of the URI representation of
+the IP address, as derived in <a href="#host-ip-to-uri" class="auto internal xref">Section 6.1, Paragraph 2.4.5</a>.<a href="#section-8.1.1-3.4.2" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.1-3.5">
+              <p id="section-8.1.1-3.5.1">If »cri« has a <code>port</code> component, then let »port« be that
+component's unsigned integer value; otherwise, let »port« be
+the default port number for the scheme.<a href="#section-8.1.1-3.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.1-3.6">
+              <p id="section-8.1.1-3.6.1">If »port« does not equal the request's destination UDP port,
+include a Uri-Port Option and let that option's value be »port«.<a href="#section-8.1.1-3.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.1-3.7">
+              <p id="section-8.1.1-3.7.1">If the value of the <code>path</code> component of »cri« is empty or
+consists of a single empty string, then move to the next step.<a href="#section-8.1.1-3.7.1" class="pilcrow">¶</a></p>
+<p id="section-8.1.1-3.7.2">
+Otherwise, for each element in the »path« component, include a
+Uri-Path Option and let that option's value be the text string
+value of that element.<a href="#section-8.1.1-3.7.2" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.1-3.8">
+              <p id="section-8.1.1-3.8.1">If »cri« has a <code>query</code> component, then, for each element in the
+<code>query</code> component, include a Uri-Query Option and let that
+option's value be the be the text string
+value of that element.<a href="#section-8.1.1-3.8.1" class="pilcrow">¶</a></p>
+</li>
+          </ol>
+</section>
+</div>
+<div id="compose-coap">
+<section id="section-8.1.2">
+          <h4 id="name-composing-a-request-cri-fro">
+<a href="#section-8.1.2" class="section-number selfRef">8.1.2. </a><a href="#name-composing-a-request-cri-fro" class="section-name selfRef">Composing a Request CRI from a Set of CoAP Options</a>
+          </h4>
+<p id="section-8.1.2-1">The steps to construct a CRI from a request's options are as follows.
+   These steps either result in a CRI or they fail.<a href="#section-8.1.2-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-8.1.2-2">
+<li id="section-8.1.2-2.1">
+              <p id="section-8.1.2-2.1.1">Based on the variant of CoAP used in the request, choose a
+<code>scheme-id</code> as per table <a href="#scheme-map" class="auto internal xref">Table 1</a>.  Use that as the first
+value in the resulting CRI array.<a href="#section-8.1.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.2-2.2">
+              <p id="section-8.1.2-2.2.1">If the request includes a Uri-Host Option, insert an
+<code>authority</code> with its value determined as follows:
+If the value of the  Uri-Host Option is a <code>reg-name</code>, include
+this as the <code>host-name</code>.
+If the value is an IP-literal or IPv4address, extract any
+<code>zone-id</code>, and represent the IP address as a byte string of
+the correct length in <code>host-ip</code>, followed by any <code>zone-id</code>
+extracted if present.
+If the value is none of the three, fail this algorithm.<a href="#section-8.1.2-2.2.1" class="pilcrow">¶</a></p>
+<p id="section-8.1.2-2.2.2">
+If the request does not include a Uri-Host Option, insert an
+<code>authority</code> with <code>host-ip</code> being the byte string that
+represents the request's destination IP address and,
+if one is present in the request's destination, add a <code>zone-id</code>.<a href="#section-8.1.2-2.2.2" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.2-2.3">
+              <p id="section-8.1.2-2.3.1">If the request includes a Uri-Port Option, let »port« be that
+option's value.  Otherwise, let »port« be the request's
+destination UDP port.
+If »port« is not the default port for the scheme, then insert
+the integer value of »port« as the value of <code>port</code> in the
+authority.
+Otherwise, elide the <code>port</code>.<a href="#section-8.1.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.2-2.4">
+              <p id="section-8.1.2-2.4.1">Insert a <code>path</code> component that contains an array built from
+the text string values of the Uri-Path Options in the request,
+or an empty array if no such options are present.<a href="#section-8.1.2-2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-8.1.2-2.5">
+              <p id="section-8.1.2-2.5.1">Insert a <code>query</code> component that contains an array built from
+the text string values of the Uri-Query Options in the request,
+or an empty array if no such options are present.<a href="#section-8.1.2-2.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ol>
+</section>
+</div>
+</section>
+</div>
+<div id="coap-options">
+<section id="section-8.2">
+        <h3 id="name-coap-options-for-forward-pr">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-coap-options-for-forward-pr" class="section-name selfRef">CoAP Options for Forward-Proxies</a>
+        </h3>
+<p id="section-8.2-1">Apart from the above procedures to convert CoAP CRIs to and from sets
+of CoAP Options, two additional CoAP Options are defined in <span><a href="https://rfc-editor.org/rfc/rfc7252#section-5.10.2" class="relref">Section 5.10.2</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span> that support requests to forward-proxies:<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-8.2-2.1">
+            <p id="section-8.2-2.1.1">Proxy-Uri, and<a href="#section-8.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-8.2-2.2">
+            <p id="section-8.2-2.2.1">its more lightweight variant, Proxy-Scheme<a href="#section-8.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-8.2-3">This section defines analogues of these that employ CRIs and the URI
+Scheme numering provided by the present specification.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
+<div id="proxy-cri">
+<section id="section-8.2.1">
+          <h4 id="name-proxy-cri">
+<a href="#section-8.2.1" class="section-number selfRef">8.2.1. </a><a href="#name-proxy-cri" class="section-name selfRef">Proxy-CRI</a>
+          </h4>
+<span id="name-proxy-cri-coap-option"></span><div id="tab-proxy-cri">
+<table class="center" id="table-2">
+            <caption>
+<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#name-proxy-cri-coap-option" class="selfRef">Proxy-Cri CoAP Option</a>
+            </caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">No.</th>
+                <th class="text-left" rowspan="1" colspan="1">C</th>
+                <th class="text-left" rowspan="1" colspan="1">U</th>
+                <th class="text-left" rowspan="1" colspan="1">N</th>
+                <th class="text-left" rowspan="1" colspan="1">R</th>
+                <th class="text-left" rowspan="1" colspan="1">Name</th>
+                <th class="text-left" rowspan="1" colspan="1">Format</th>
+                <th class="text-left" rowspan="1" colspan="1">Length</th>
+                <th class="text-left" rowspan="1" colspan="1">Default</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">TBD235</td>
+                <td class="text-left" rowspan="1" colspan="1">x</td>
+                <td class="text-left" rowspan="1" colspan="1">x</td>
+                <td class="text-left" rowspan="1" colspan="1">-</td>
+                <td class="text-left" rowspan="1" colspan="1"> </td>
+                <td class="text-left" rowspan="1" colspan="1">Proxy-Cri</td>
+                <td class="text-left" rowspan="1" colspan="1">opaque</td>
+                <td class="text-left" rowspan="1" colspan="1">1-1023</td>
+                <td class="text-left" rowspan="1" colspan="1">(none)</td>
+              </tr>
+            </tbody>
+          </table>
+</div>
+<p id="section-8.2.1-2">The Proxy-CRI Option carries an encoded CBOR data item that represents
+an absolute CRI reference.
+It is used analogously to Proxy-Uri as defined in <span><a href="https://rfc-editor.org/rfc/rfc7252#section-5.10.2" class="relref">Section 5.10.2</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.
+The Proxy-Cri Option <span class="bcp14">MUST</span> take precedence over any of the Uri-Host,
+Uri-Port, Uri-Path or Uri-Query options, as well as over any
+Proxy-Uri Option (each of which <span class="bcp14">MUST NOT</span> be
+included in a request containing the Proxy-Cri Option).<a href="#section-8.2.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="proxy-scheme-number">
+<section id="section-8.2.2">
+          <h4 id="name-proxy-scheme-number">
+<a href="#section-8.2.2" class="section-number selfRef">8.2.2. </a><a href="#name-proxy-scheme-number" class="section-name selfRef">Proxy-Scheme-Number</a>
+          </h4>
+<span id="name-proxy-scheme-number-coap-op"></span><div id="tab-proxy-scheme-number">
+<table class="center" id="table-3">
+            <caption>
+<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#name-proxy-scheme-number-coap-op" class="selfRef">Proxy-Scheme-Number CoAP Option</a>
+            </caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">No.</th>
+                <th class="text-left" rowspan="1" colspan="1">C</th>
+                <th class="text-left" rowspan="1" colspan="1">U</th>
+                <th class="text-left" rowspan="1" colspan="1">N</th>
+                <th class="text-left" rowspan="1" colspan="1">R</th>
+                <th class="text-left" rowspan="1" colspan="1">Name</th>
+                <th class="text-left" rowspan="1" colspan="1">Format</th>
+                <th class="text-left" rowspan="1" colspan="1">Length</th>
+                <th class="text-left" rowspan="1" colspan="1">Default</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">TBD239</td>
+                <td class="text-left" rowspan="1" colspan="1">x</td>
+                <td class="text-left" rowspan="1" colspan="1">x</td>
+                <td class="text-left" rowspan="1" colspan="1">-</td>
+                <td class="text-left" rowspan="1" colspan="1"> </td>
+                <td class="text-left" rowspan="1" colspan="1">Proxy-Scheme-Number</td>
+                <td class="text-left" rowspan="1" colspan="1">uint</td>
+                <td class="text-left" rowspan="1" colspan="1">0-3</td>
+                <td class="text-left" rowspan="1" colspan="1">(none)</td>
+              </tr>
+            </tbody>
+          </table>
+</div>
+<p id="section-8.2.2-2">The Proxy-Scheme-Number Option carries a URI Scheme Number represented as a
+CoAP unsigned integer.
+It is used analogously to Proxy-Scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc7252#section-5.10.2" class="relref">Section 5.10.2</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.<a href="#section-8.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.2.2-3">Since CoAP Options are only defined as empty, (text) string, opaque
+(byte string), or unsigned integer, the Option carries an unsigned
+integer that gives the 1's complement of the URI Scheme Number, i.e.:<a href="#section-8.2.2-3" class="pilcrow">¶</a></p>
+<div id="section-8.2.2-4">
+            <div class="alignLeft art-svg artwork" id="section-8.2.2-4.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" height="2.509ex" role="img" viewBox="0 -791.3 14311.5 1080.4" width="33.24ex">
+                <defs>
+                  <path d="M438 287c0 -139 -110 -298 -263 -298c-101 0 -135 90 -135 163c0 128 103 289 251 289c80 0 147 -46 147 -154zM357 318c0 38 -14 93 -67 93c-82 0 -169 -149 -169 -285c0 -33 3 -107 59 -107c106 0 177 223 177 299Z" id="E1-STIXWEBNORMALI-1D45C" stroke-width="1"></path>
+                  <path d="M253 370l14 13c39 37 78 58 113 58c61 0 94 -54 94 -155c0 -129 -110 -298 -254 -298c-24 0 -42 4 -61 19l-24 -100c-3 -13 -5 -24 -5 -35c0 -22 11 -43 61 -43h16l-3 -12h-234l3 12c62 3 69 33 81 79l117 464c0 19 -1 33 -31 33c-8 0 -20 -2 -28 -4l-2 16l158 24 l-18 -69zM214 238l-46 -200c14 -16 34 -21 46 -21c101 0 176 173 176 285c0 63 -28 83 -51 83c-53 0 -105 -61 -125 -147Z" id="E1-STIXWEBNORMALI-1D45D" stroke-width="1"></path>
+                  <path d="M283 438l-10 -38h-70l-78 -320c-1 -3 -2 -8 -2 -11c0 -6 3 -12 16 -12c0 0 23 2 60 52l13 -11c-24 -31 -74 -107 -133 -107c-31 0 -39 25 -39 52c0 13 2 26 5 37l81 320h-77l5 29c75 14 136 51 177 138h13l-31 -129h70Z" id="E1-STIXWEBNORMALI-1D461" stroke-width="1"></path>
+                  <path d="M257 566c0 -26 -22 -46 -48 -46c-29 0 -48 20 -48 46c0 25 19 50 48 50c26 0 48 -25 48 -50zM227 441l-92 -364c-1 -6 -1 -10 -1 -14c0 -7 6 -10 13 -10c22 0 28 12 64 51l13 -10c-35 -45 -85 -105 -134 -105c-28 0 -40 19 -40 46c0 12 0 31 79 338c1 2 2 9 2 12 c0 17 -8 22 -31 22c-9 0 -21 -2 -28 -4l-3 16Z" id="E1-STIXWEBNORMALI-1D456" stroke-width="1"></path>
+                  <path d="M467 96l-5 -6c-28 -34 -76 -98 -128 -98c-32 0 -41 23 -41 46c0 13 4 29 7 40l57 221c2 8 7 28 7 42c0 19 -6 38 -24 38c-38 0 -101 -86 -132 -133c-36 -54 -62 -101 -68 -122l-33 -124h-77l95 374c0 18 -3 32 -30 32c-10 0 -21 -2 -28 -3l-2 15l159 23l-51 -189h3 c5 0 54 70 56 73c40 50 100 116 160 116c44 0 56 -29 56 -62c0 -25 -6 -50 -11 -70l-59 -231c-1 -2 -1 -5 -1 -10c1 -6 4 -14 15 -14c24 0 48 36 62 53Z" id="E1-STIXWEBNORMALI-1D45B" stroke-width="1"></path>
+                  <path d="M247 454l-89 -326c-3 -10 -4 -21 -4 -32c0 -38 20 -66 60 -66c108 0 178 113 210 203c8 24 15 49 15 74c0 74 -61 65 -61 109c0 34 25 42 54 42c42 0 47 -51 47 -83c0 -99 -39 -200 -97 -280c-43 -60 -120 -104 -194 -104c-64 0 -116 20 -116 93c0 21 3 42 9 62l58 210 c2 8 5 17 5 25c0 20 -44 20 -57 20v15c52 13 106 20 156 42Z" id="E1-STIXWEBNORMALI-1D463" stroke-width="1"></path>
+                  <path d="M472 428l-91 -345s-1 -2 -1 -11c0 -11 6 -17 14 -17c10 0 25 2 64 54l12 -12c-31 -47 -85 -107 -133 -107c-33 0 -42 23 -42 55c0 13 6 34 11 50h-4c-72 -92 -134 -105 -173 -105c-63 0 -89 55 -89 119c0 132 132 332 276 332c43 0 64 -24 66 -46h1l9 33h80zM367 341 c0 41 -12 71 -50 71c-68 0 -128 -87 -162 -171c-18 -45 -28 -89 -28 -124c0 -53 31 -66 58 -66c69 0 139 95 167 190c8 26 15 66 15 100Z" id="E1-STIXWEBNORMALI-1D44E" stroke-width="1"></path>
+                  <path d="M278 668l-148 -591s-1 -4 -1 -11s4 -13 12 -13c23 0 53 39 62 55l16 -12c-34 -40 -77 -106 -135 -106c-30 0 -39 26 -39 51c0 12 3 26 6 36l128 510c3 13 3 21 3 24c0 12 -8 22 -31 22c-7 0 -19 -2 -27 -3l-3 15Z" id="E1-STIXWEBNORMALI-1D459" stroke-width="1"></path>
+                  <path d="M444 428l-89 -348c-1 -4 -1 -6 -1 -9c0 -8 4 -14 14 -14c21 0 40 26 57 46l5 6l13 -11c-23 -33 -74 -107 -132 -107c-29 0 -40 19 -40 52c0 9 1 25 4 37l26 95h-1c-7 -5 -97 -126 -137 -156c-23 -17 -49 -28 -72 -28c-47 0 -61 36 -61 74c0 21 3 40 8 59l59 231 c4 15 6 21 6 25c0 12 -11 23 -33 23c-7 0 -19 -1 -26 -3l-3 15l157 26l-84 -326c-2 -9 -3 -16 -3 -24c0 -21 8 -34 26 -34c25 0 65 31 100 77c43 57 89 146 109 219l21 75h77Z" id="E1-STIXWEBNORMALI-1D462" stroke-width="1"></path>
+                  <path d="M363 112l14 -13c-70 -86 -138 -110 -200 -110c-98 0 -137 84 -137 156c0 23 1 37 6 60c25 111 135 236 262 236c42 0 102 -14 102 -76c0 -127 -167 -176 -286 -182v-28c0 -64 52 -107 113 -107c42 0 90 18 126 64zM124 211h9c104 0 198 69 198 157c0 25 -19 43 -44 43 c-74 0 -134 -115 -163 -200Z" id="E1-STIXWEBNORMALI-1D452" stroke-width="1"></path>
+                  <path d="M637 320h-589v66h589v-66zM637 120h-589v66h589v-66Z" id="E1-STIXWEBMAIN-3D" stroke-width="1"></path>
+                  <path d="M621 220h-557v66h557v-66Z" id="E1-STIXWEBMAIN-2212" stroke-width="1"></path>
+                  <path d="M394 0h-276v15c74 4 95 25 95 80v449c0 34 -9 49 -30 49c-10 0 -27 -5 -45 -12l-27 -10v14l179 91l9 -3v-597c0 -43 20 -61 95 -61v-15Z" id="E1-STIXWEBMAIN-31" stroke-width="1"></path>
+                  <path d="M390 441l-24 -146h-15c0 64 -36 120 -92 120c-25 0 -51 -17 -51 -58c0 -55 134 -147 134 -242c0 -62 -48 -125 -135 -125c-34 0 -98 20 -110 20c-9 0 -18 -4 -30 -21h-17l25 156h16c0 -63 41 -130 104 -130c59 0 73 50 73 89c0 82 -130 132 -130 230c0 79 59 107 114 107 c43 0 63 -20 92 -20c11 0 22 10 30 20h16Z" id="E1-STIXWEBNORMALI-1D460" stroke-width="1"></path>
+                  <path d="M363 111l12 -13c-51 -60 -113 -109 -198 -109c-97 0 -137 78 -137 155c0 140 121 297 263 297c50 0 97 -27 97 -76c0 -38 -16 -70 -54 -70c-26 0 -38 21 -38 38c0 24 29 36 29 58c0 12 -10 21 -34 21c-119 0 -176 -179 -176 -259c0 -87 49 -109 94 -109 c61 0 107 33 142 67Z" id="E1-STIXWEBNORMALI-1D450" stroke-width="1"></path>
+                  <path d="M469 106l14 -11c-29 -34 -78 -106 -133 -106c-18 0 -41 10 -41 42c0 12 1 26 64 267c2 7 7 29 7 44c0 19 -7 35 -24 35c-36 0 -102 -85 -134 -133c-34 -51 -62 -102 -67 -122l-32 -122h-78l152 600c1 4 2 7 2 10c0 13 -10 22 -31 22c-10 0 -21 -1 -29 -2l-2 14l159 24 l-109 -416h4c53 58 125 189 216 189c42 0 57 -34 57 -70c0 -22 -6 -43 -11 -64l-58 -230c-1 -5 -2 -7 -2 -10c0 -6 3 -14 13 -14c22 0 49 35 63 53Z" id="E1-STIXWEBNORMALI-210E" stroke-width="1"></path>
+                  <path d="M667 107l13 -11c-32 -54 -84 -104 -131 -104c-22 0 -39 10 -39 49c0 7 1 17 6 37l56 221c4 14 6 23 6 40c0 20 -6 38 -24 38c-54 0 -164 -181 -179 -242l-34 -135h-79l77 299c2 9 5 25 5 40c0 20 -5 38 -23 38c-52 0 -162 -181 -178 -242l-35 -135h-78l95 374 c0 18 -6 31 -33 31c-8 0 -19 -1 -27 -2l-2 14l157 24l-44 -169h6c94 143 154 169 192 169c37 0 55 -37 55 -81c0 -17 -3 -32 -9 -52l-10 -36h5c29 52 81 114 130 147c22 15 41 22 61 22c36 0 54 -26 54 -71c0 -18 -1 -37 -7 -61l-61 -231c-1 -3 -2 -9 -2 -12 c0 -8 6 -12 15 -12c17 0 43 16 62 53Z" id="E1-STIXWEBNORMALI-1D45A" stroke-width="1"></path>
+                  <path d="M214 382l4 -4c33 32 72 63 121 63c70 0 111 -69 111 -151c0 -121 -109 -301 -266 -301c-53 0 -94 18 -139 48l144 563c1 4 2 8 2 11c-1 13 -16 21 -29 21c-10 0 -22 -1 -30 -4l-3 16l158 24zM179 252l-55 -215c0 -7 32 -19 55 -19c122 0 188 174 188 276 c0 70 -38 92 -71 92c-72 0 -106 -89 -117 -134Z" id="E1-STIXWEBNORMALI-1D44F" stroke-width="1"></path>
+                  <path d="M175 267l5 -1c9 18 21 38 32 56c34 54 82 119 137 119c29 0 44 -21 44 -48c0 -38 -24 -82 -65 -82c-39 0 -29 38 -47 38c-61 0 -148 -256 -153 -273l-21 -76h-77l92 364c3 11 4 18 4 23c0 13 -11 19 -33 19c-7 0 -21 -2 -27 -3l-2 15l157 23Z" id="E1-STIXWEBNORMALI-1D45F" stroke-width="1"></path>
+                </defs>
+                <g fill="black" stroke="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D45C" x="0" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D45D" x="458" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D461" x="948" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D456" x="1261" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D45C" x="1573" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D45B" x="2031" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D463" x="2529" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D44E" x="3035" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D459" x="3538" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D462" x="3856" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D452" x="4331" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBMAIN-3D" x="5054" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBMAIN-2212" x="6017" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBMAIN-31" x="6703" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBMAIN-2212" x="7425" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D460" x="8333" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D450" x="8774" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-210E" x="9189" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D452" x="9703" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D45A" x="10148" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D452" x="10859" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D45B" x="11304" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D462" x="11802" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D45A" x="12276" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D44F" x="12987" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D452" x="13457" y="0"></use>
+                  <use xlink:href="#E1-STIXWEBNORMALI-1D45F" x="13903" y="0"></use>
+                </g>
+              </svg><a href="#section-8.2.2-4.1" class="pilcrow">¶</a>
+</div>
+</div>
+<p id="section-8.2.2-5"><span class="cref" id="scheme-negative">DISCUSS: Should the scheme registry simply use
+unsigned numbers so it can be used here right away and the 1's
+complement form is only used specifically for the nint that
+<code>scheme-id</code> at the start of CRIs is?</span><a href="#section-8.2.2-5" class="pilcrow">¶</a></p>
+<p id="section-8.2.2-6"><span class="cref" id="location-scheme">TO DO: Discuss the need for a
+location-scheme-numeric option?</span><a href="#section-8.2.2-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="impl">
+<section id="section-9">
+      <h2 id="name-implementation-status">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-implementation-status" class="section-name selfRef">Implementation Status</a>
+      </h2>
+<p id="section-9-1">(Boilerplate as per <span><a href="https://rfc-editor.org/rfc/rfc7942#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC7942" class="cite xref">RFC7942</a>]</span>:)<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-2">This section records the status of known implementations of the
+protocol defined by this specification at the time of posting of
+this Internet-Draft, and is based on a proposal described in
+<span>[<a href="#RFC7942" class="cite xref">RFC7942</a>]</span>.  The description of implementations in this section is
+intended to assist the IETF in its decision processes in
+progressing drafts to RFCs.  Please note that the listing of any
+individual implementation here does not imply endorsement by the
+IETF.  Furthermore, no effort has been spent to verify the
+information presented here that was supplied by IETF contributors.
+This is not intended as, and must not be construed to be, a
+catalog of available implementations or their features.  Readers
+are advised to note that other implementations may exist.<a href="#section-9-2" class="pilcrow">¶</a></p>
+<p id="section-9-3">According to <span>[<a href="#RFC7942" class="cite xref">RFC7942</a>]</span>, "this will allow reviewers and working
+groups to assign due consideration to documents that have the
+benefit of running code, which may serve as evidence of valuable
+experimentation and feedback that have made the implemented
+protocols more mature.  It is up to the individual working groups
+to use this information as they see fit".<a href="#section-9-3" class="pilcrow">¶</a></p>
+<p id="section-9-4">With the exception of the authority=true fix, host-names split into
 labels, and <a href="#pet" class="auto internal xref">Section 7.1</a>, CRIs are implemented in <code>https://gitlab.com/chrysn/micrurus</code>.
 A golang implementation of version -10 of this document is found at:
-<code>https://github.com/thomas-fossati/href</code><a href="#section-8-1" class="pilcrow">¶</a></p>
+<code>https://github.com/thomas-fossati/href</code><a href="#section-9-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security">
-<section id="section-9">
+<section id="section-10">
       <h2 id="name-security-considerations">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-9-1">Parsers of CRI references must operate on input that is assumed to be
+<p id="section-10-1">Parsers of CRI references must operate on input that is assumed to be
 untrusted. This means that parsers <span class="bcp14">MUST</span> fail gracefully
 in the face of malicious inputs.
 Additionally, parsers <span class="bcp14">MUST</span> be prepared to deal with
 resource exhaustion (e.g., resulting from the allocation of big data
 items) or exhaustion of the call stack (stack overflow).
 See <span><a href="https://rfc-editor.org/rfc/rfc8949#section-10" class="relref">Section 10</a> of [<a href="#RFC8949" class="cite xref">RFC8949</a>]</span> for additional
-security considerations relating to CBOR.<a href="#section-9-1" class="pilcrow">¶</a></p>
-<p id="section-9-2">The security considerations discussed in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-7" class="relref">Section 7</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> and
-<span><a href="https://rfc-editor.org/rfc/rfc3987#section-8" class="relref">Section 8</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> for URIs and IRIs also apply to CRIs.<a href="#section-9-2" class="pilcrow">¶</a></p>
+security considerations relating to CBOR.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-2">The security considerations discussed in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-7" class="relref">Section 7</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> and
+<span><a href="https://rfc-editor.org/rfc/rfc3987#section-8" class="relref">Section 8</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> for URIs and IRIs also apply to CRIs.<a href="#section-10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-10">
+<section id="section-11">
       <h2 id="name-iana-considerations">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <div id="cri-reg">
-<section id="section-10.1">
+<section id="section-11.1">
         <h3 id="name-cri-scheme-numbers-registry">
-<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-cri-scheme-numbers-registry" class="section-name selfRef">CRI Scheme Numbers Registry</a>
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-cri-scheme-numbers-registry" class="section-name selfRef">CRI Scheme Numbers Registry</a>
         </h3>
-<p id="section-10.1-1">This specification defines a new "CRI Scheme Numbers" sub-registry in
+<p id="section-11.1-1">This specification defines a new "CRI Scheme Numbers" sub-registry in
 the "CoRE Parameters" registry <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, with the
-policy "Expert Review" (<span><a href="https://rfc-editor.org/rfc/rfc8126#section-4.5" class="relref">Section 4.5</a> of [<a href="#BCP26" class="cite xref">BCP26</a>]</span>).
+policy "Expert Review" (Section <a href="https://rfc-editor.org/rfc/rfc8126#section-4.5" class="relref">4.5</a> of RFC 8126 <span>[<a href="#BCP26" class="cite xref">BCP26</a>]</span>).
 The objective is to have CRI scheme number values registered for all
 registered URI schemes (Uniform Resource Identifier (URI) Schemes
 registry), as well as exceptionally for certain text strings that the
 Designated Expert considers widely used in constrained applications in
-place of URI scheme names.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+place of URI scheme names.<a href="#section-11.1-1" class="pilcrow">¶</a></p>
 <div id="de-instructions">
-<section id="section-10.1.1">
+<section id="section-11.1.1">
           <h4 id="name-instructions-for-the-design">
-<a href="#section-10.1.1" class="section-number selfRef">10.1.1. </a><a href="#name-instructions-for-the-design" class="section-name selfRef">Instructions for the Designated Expert</a>
+<a href="#section-11.1.1" class="section-number selfRef">11.1.1. </a><a href="#name-instructions-for-the-design" class="section-name selfRef">Instructions for the Designated Expert</a>
           </h4>
-<p id="section-10.1.1-1">The expert is instructed to be frugal in the allocation of CRI values
+<p id="section-11.1.1-1">The expert is instructed to be frugal in the allocation of CRI values
 with short representations (1+0 and 1+1 encoding), keeping them in
 reserve for applications that are likely to enjoy wide use and can
-make good use of their shortness.<a href="#section-10.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-10.1.1-2">When the expert notices that a registration has been made in the
-Uniform Resource Identifier (URI) Schemes registry (see also <a href="#upd" class="auto internal xref">Section 10.2</a>),
+make good use of their shortness.<a href="#section-11.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-11.1.1-2">When the expert notices that a registration has been made in the
+Uniform Resource Identifier (URI) Schemes registry (see also <a href="#upd" class="auto internal xref">Section 11.2</a>),
 the expert is requested to initiate a parallel registration in the CRI
 Scheme Numbers registry.  CRI values in the range between 1000 and
 20000 (inclusive) should be assigned unless a shorter representation
-in CRIs appears desirable.<a href="#section-10.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-10.1.1-3">The expert exceptionally also may make such a registration for text
+in CRIs appears desirable.<a href="#section-11.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-11.1.1-3">The expert exceptionally also may make such a registration for text
 strings that have not been registered in the Uniform Resource
 Identifier (URI) Schemes registry if and only if the expert considers
 them to be in wide use in place of URI scheme names in constrained
 applications.
-(Note that the initial registrations in <a href="#tab-numbers" class="auto internal xref">Table 2</a> in <a href="#sec-numbers" class="auto internal xref">Appendix A</a> already include
-such registrations for the text strings "mqtt" and "mqtts".)<a href="#section-10.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-10.1.1-4">A registration in the CRI Scheme Numbers registry does not imply that
+(Note that the initial registrations in <a href="#tab-numbers" class="auto internal xref">Table 6</a> in <a href="#sec-numbers" class="auto internal xref">Appendix A</a> already include
+such registrations for the text strings "mqtt" and "mqtts".)<a href="#section-11.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-11.1.1-4">A registration in the CRI Scheme Numbers registry does not imply that
 a URI scheme under this name exists or has been registered in the
 Uniform Resource Identifier (URI) Schemes registry -- it essentially
 is only providing an integer identifier for an otherwise uninterpreted
-text string.<a href="#section-10.1.1-4" class="pilcrow">¶</a></p>
-<p id="section-10.1.1-5">Any questions or issues that might interest a wider audience might be
+text string.<a href="#section-11.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-11.1.1-5">Any questions or issues that might interest a wider audience might be
 raised by the expert on the core-parameters@ietf.org mailing list for
-a time-limited discussion.<a href="#section-10.1.1-5" class="pilcrow">¶</a></p>
+a time-limited discussion.<a href="#section-11.1.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="structure-of-entries">
-<section id="section-10.1.2">
+<section id="section-11.1.2">
           <h4 id="name-structure-of-entries">
-<a href="#section-10.1.2" class="section-number selfRef">10.1.2. </a><a href="#name-structure-of-entries" class="section-name selfRef">Structure of Entries</a>
+<a href="#section-11.1.2" class="section-number selfRef">11.1.2. </a><a href="#name-structure-of-entries" class="section-name selfRef">Structure of Entries</a>
           </h4>
-<p id="section-10.1.2-1">Each entry in the registry must include:<a href="#section-10.1.2-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlNewline" id="section-10.1.2-2">
-            <dt id="section-10.1.2-2.1">CRI value:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-2.2">
-              <p id="section-10.1.2-2.2.1">A negative integer unique in this registry<a href="#section-10.1.2-2.2.1" class="pilcrow">¶</a></p>
+<p id="section-11.1.2-1">Each entry in the registry must include:<a href="#section-11.1.2-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-11.1.2-2">
+            <dt id="section-11.1.2-2.1">CRI value:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-2.2">
+              <p id="section-11.1.2-2.2.1">A negative integer unique in this registry<a href="#section-11.1.2-2.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-2.3">URI scheme name:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-2.4">
-              <p id="section-10.1.2-2.4.1">a text string that would be acceptable for registration as a URI
+<dt id="section-11.1.2-2.3">URI scheme name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-2.4">
+              <p id="section-11.1.2-2.4.1">a text string that would be acceptable for registration as a URI
 Scheme Name in the Uniform Resource Identifier (URI) Schemes
-registry<a href="#section-10.1.2-2.4.1" class="pilcrow">¶</a></p>
+registry<a href="#section-11.1.2-2.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-10.1.2-2.5">Reference:</dt>
-            <dd style="margin-left: 1.5em" id="section-10.1.2-2.6">
-              <p id="section-10.1.2-2.6.1">a reference to a document, if available, or the registrant<a href="#section-10.1.2-2.6.1" class="pilcrow">¶</a></p>
+<dt id="section-11.1.2-2.5">Reference:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.1.2-2.6">
+              <p id="section-11.1.2-2.6.1">a reference to a document, if available, or the registrant<a href="#section-11.1.2-2.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
 </section>
 </div>
 <div id="initial-registrations">
-<section id="section-10.1.3">
+<section id="section-11.1.3">
           <h4 id="name-initial-registrations">
-<a href="#section-10.1.3" class="section-number selfRef">10.1.3. </a><a href="#name-initial-registrations" class="section-name selfRef">Initial Registrations</a>
+<a href="#section-11.1.3" class="section-number selfRef">11.1.3. </a><a href="#name-initial-registrations" class="section-name selfRef">Initial Registrations</a>
           </h4>
-<p id="section-10.1.3-1">The initial registrations for the CRI Scheme Numbers registry are
-provided in <a href="#tab-numbers" class="auto internal xref">Table 2</a> in <a href="#sec-numbers" class="auto internal xref">Appendix A</a>.<a href="#section-10.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-11.1.3-1">The initial registrations for the CRI Scheme Numbers registry are
+provided in <a href="#tab-numbers" class="auto internal xref">Table 6</a> in <a href="#sec-numbers" class="auto internal xref">Appendix A</a>.<a href="#section-11.1.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="upd">
-<section id="section-10.2">
+<section id="section-11.2">
         <h3 id="name-update-to-uniform-resource-">
-<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-update-to-uniform-resource-" class="section-name selfRef">Update to "Uniform Resource Identifier (URI) Schemes" Registry</a>
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-update-to-uniform-resource-" class="section-name selfRef">Update to "Uniform Resource Identifier (URI) Schemes" Registry</a>
         </h3>
-<p id="section-10.2-1"><span>[<a href="#RFC7595" class="cite xref">RFC7595</a>]</span> is updated to add the following note in the "Uniform
-Resource Identifier (URI) Schemes" Registry <span>[<a href="#IANA.uri-schemes" class="cite xref">IANA.uri-schemes</a>]</span>:<a href="#section-10.2-1" class="pilcrow">¶</a></p>
-<blockquote id="section-10.2-2">
-          <p id="section-10.2-2.1">The CRI Scheme Numbers Registry registers numeric identifiers for what
+<p id="section-11.2-1"><span>[<a href="#RFC7595" class="cite xref">RFC7595</a>]</span> is updated to add the following note in the "Uniform
+Resource Identifier (URI) Schemes" Registry <span>[<a href="#IANA.uri-schemes" class="cite xref">IANA.uri-schemes</a>]</span>:<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<blockquote id="section-11.2-2">
+          <p id="section-11.2-2.1">The CRI Scheme Numbers Registry registers numeric identifiers for what
 essentially are URI Scheme names.
 Registrants for the Uniform Resource Identifier (URI) Schemes Registry
 are requested to make a parallel registration in the CRI Scheme
 Numbers registry.
 The number for this registration will be assigned by the Designated
-Expert for that registry.<a href="#section-10.2-2.1" class="pilcrow">¶</a></p>
+Expert for that registry.<a href="#section-11.2-2.1" class="pilcrow">¶</a></p>
 </blockquote>
 </section>
 </div>
 <div id="cri-iana">
-<section id="section-10.3">
+<section id="section-11.3">
         <h3 id="name-cbor-diagnostic-notation-ap">
-<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-cbor-diagnostic-notation-ap" class="section-name selfRef">CBOR Diagnostic Notation Application-extension Identifiers Registry</a>
+<a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-cbor-diagnostic-notation-ap" class="section-name selfRef">CBOR Diagnostic Notation Application-extension Identifiers Registry</a>
         </h3>
-<p id="section-10.3-1">In the "Application-Extension Identifiers" registry in the "CBOR
+<p id="section-11.3-1">In the "Application-Extension Identifiers" registry in the "CBOR
 Diagnostic Notation" registry group [IANA.cbor-diagnostic-notation],
 IANA is requested to register the application-extension identifier
-<code>cri</code> as described in <a href="#tab-iana" class="auto internal xref">Table 1</a> and defined in <a href="#edn-cri" class="auto internal xref">Appendix C</a>.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
+<code>cri</code> as described in <a href="#tab-iana" class="auto internal xref">Table 4</a> and defined in <a href="#edn-cri" class="auto internal xref">Appendix C</a>.<a href="#section-11.3-1" class="pilcrow">¶</a></p>
 <span id="name-cbor-extended-diagnostic-no"></span><div id="tab-iana">
-<table class="center" id="table-1">
+<table class="center" id="table-4">
           <caption>
-<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#table-4" class="selfRef">Table 4</a>:
 <a href="#name-cbor-extended-diagnostic-no" class="selfRef">CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI</a>
           </caption>
 <thead>
@@ -2554,26 +2970,69 @@ IANA is requested to register the application-extension identifier
           </tbody>
         </table>
 </div>
-<p id="section-10.3-3"><span class="cref" id="replace-xxxx_1">RFC Ed.: throughout this section, please replace
+<p id="section-11.3-3"><span class="cref" id="replace-xxxx_1">RFC Ed.: throughout this section, please replace
 RFC-XXXX with the RFC number of this specification and remove this
-note.</span><a href="#section-10.3-3" class="pilcrow">¶</a></p>
+note.</span><a href="#section-11.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="coap-option-numbers-registry">
+<section id="section-11.4">
+        <h3 id="name-coap-option-numbers-registr">
+<a href="#section-11.4" class="section-number selfRef">11.4. </a><a href="#name-coap-option-numbers-registr" class="section-name selfRef">CoAP Option Numbers Registry</a>
+        </h3>
+<p id="section-11.4-1">In the "CoAP Option Numbers" registry in the "CoRE Parameters" registry group <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>,
+IANA is requested to register the CoAP Option Numbers
+as described in <a href="#tab-iana-options" class="auto internal xref">Table 5</a> and defined in <a href="#coap-options" class="auto internal xref">Section 8.2</a>.<a href="#section-11.4-1" class="pilcrow">¶</a></p>
+<span id="name-new-coap-option-numbers"></span><div id="tab-iana-options">
+<table class="center" id="table-5">
+          <caption>
+<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#name-new-coap-option-numbers" class="selfRef">New CoAP Option Numbers</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">No.</th>
+              <th class="text-left" rowspan="1" colspan="1">Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TBD235</td>
+              <td class="text-left" rowspan="1" colspan="1">Proxy-Cri</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">TBD239</td>
+              <td class="text-left" rowspan="1" colspan="1">Proxy-Scheme-Number</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-11.4-3"><span class="cref" id="replace-xxxx_2">RFC Ed.: throughout this section, please replace
+RFC-XXXX with the RFC number of this specification and remove this
+note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
-<section id="section-11">
+<section id="section-12">
       <h2 id="name-references">
-<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
 <div id="sec-normative-references">
-<section id="section-11.1">
+<section id="section-12.1">
         <h3 id="name-normative-references">
-<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="BCP26">[BCP26]</dt>
         <dd>
-<span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <span class="seriesInfo">DOI 10.17487/RFC8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8126">https://www.rfc-editor.org/rfc/rfc8126</a>&gt;</span>. </dd>
+<div class="refInstance" id="RFC8126">
+            <span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>. </div>
+<span>&lt;<a href="https://www.rfc-editor.org/info/bcp26">https://www.rfc-editor.org/info/bcp26</a>&gt;</span>
+</dd>
 <dd class="break"></dd>
 <dt id="I-D.carpenter-6man-rfc6874bis">[I-D.carpenter-6man-rfc6874bis]</dt>
         <dd>
@@ -2631,14 +3090,14 @@ note.</span><a href="#section-10.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-informative-references">
-<section id="section-11.2">
+<section id="section-12.2">
         <h3 id="name-informative-references">
-<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-12.2" class="section-number selfRef">12.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-06</span>, <time datetime="2023-11-20" class="refDate">20 November 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-06">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-07</span>, <time datetime="2023-12-21" class="refDate">21 December 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-07">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4180">[RFC4180]</dt>
         <dd>
@@ -2651,6 +3110,10 @@ note.</span><a href="#section-10.3-3" class="pilcrow">¶</a></p>
 <dt id="RFC7252">[RFC7252]</dt>
         <dd>
 <span class="refAuthor">Shelby, Z.</span>, <span class="refAuthor">Hartke, K.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"The Constrained Application Protocol (CoAP)"</span>, <span class="seriesInfo">RFC 7252</span>, <span class="seriesInfo">DOI 10.17487/RFC7252</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7252">https://www.rfc-editor.org/rfc/rfc7252</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7942">[RFC7942]</dt>
+        <dd>
+<span class="refAuthor">Sheffer, Y.</span> and <span class="refAuthor">A. Farrel</span>, <span class="refTitle">"Improving Awareness of Running Code: The Implementation Status Section"</span>, <span class="seriesInfo">BCP 205</span>, <span class="seriesInfo">RFC 7942</span>, <span class="seriesInfo">DOI 10.17487/RFC7942</span>, <time datetime="2016-07" class="refDate">July 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7942">https://www.rfc-editor.org/rfc/rfc7942</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8141">[RFC8141]</dt>
         <dd>
@@ -2681,15 +3144,15 @@ note.</span><a href="#section-10.3-3" class="pilcrow">¶</a></p>
       <h2 id="name-mapping-scheme-numbers-to-s">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-mapping-scheme-numbers-to-s" class="section-name selfRef">Mapping Scheme Numbers to Scheme Names</a>
       </h2>
-<p id="appendix-A-1"><span class="cref" id="replace-xxxx_2">RFC Ed.: throughout this section, please replace
+<p id="appendix-A-1"><span class="cref" id="replace-xxxx_3">RFC Ed.: throughout this section, please replace
 RFC-XXXX with the RFC number of this specification and remove this
 note.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2"><a href="#tab-numbers" class="auto internal xref">Table 2</a> defines the initial mapping from CRI scheme numbers to
+<p id="appendix-A-2"><a href="#tab-numbers" class="auto internal xref">Table 6</a> defines the initial mapping from CRI scheme numbers to
 URI scheme names.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <span id="name-mapping-scheme-numbers-to-sc"></span><div id="tab-numbers">
-<table class="center" id="table-2">
+<table class="center" id="table-6">
         <caption>
-<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-mapping-scheme-numbers-to-sc" class="selfRef">Mapping Scheme Numbers to Scheme Names</a>
         </caption>
 <thead>
@@ -4695,7 +5158,7 @@ Diagnostic Notation (EDN), as originally introduced in <span><a href="https://rf
 Among others, it provides an extension point for
 "application-extension identifiers" that can be used to notate CBOR
 data items in application-specific ways.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
-<p id="appendix-C-2">The present document defines and registers (<a href="#cri-iana" class="auto internal xref">Section 10.3</a>) the
+<p id="appendix-C-2">The present document defines and registers (<a href="#cri-iana" class="auto internal xref">Section 11.3</a>) the
 application-extension identifier "<code>cri</code>", which can be used to notate
 an EDN literal for a CRI reference as defined in this document.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <p id="appendix-C-3">The text of the literal is a URI Reference as per <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> or an IRI
@@ -4848,7 +5311,7 @@ authority that do not have a path component)<a href="#appendix-D-3.2.1" class="p
           <p id="appendix-D-3.3.1">Generalize <a href="#extending" class="auto internal xref">Section 7</a>, discuss PET (percent-encoded text) extension in more detail<a href="#appendix-D-3.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-3.4">
-          <p id="appendix-D-3.4.1">Add registry of URI scheme numbers (<a href="#sec-numbers" class="auto internal xref">Appendix A</a>, <a href="#iana-considerations" class="auto internal xref">Section 10</a>)<a href="#appendix-D-3.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-3.4.1">Add registry of URI scheme numbers (<a href="#sec-numbers" class="auto internal xref">Appendix A</a>, <a href="#iana-considerations" class="auto internal xref">Section 11</a>)<a href="#appendix-D-3.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-3.5">
           <p id="appendix-D-3.5.1">Add user information to the authority ("userinfo" feature)<a href="#appendix-D-3.5.1" class="pilcrow">¶</a></p>
@@ -4869,7 +5332,12 @@ CRI-Reference (<a href="#colon" class="auto internal xref">Section 6.1, Paragrap
           <p id="appendix-D-3.9.1">Add Christian Amsüss as contributor<a href="#appendix-D-3.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-3.10">
-          <p id="appendix-D-3.10.1">Add CBOR EDN application-extension "<code>cri</code>" (see <a href="#edn-cri" class="auto internal xref">Appendix C</a> and <a href="#cri-iana" class="auto internal xref">Section 10.3</a>).<a href="#appendix-D-3.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-3.10.1">Add CBOR EDN application-extension "<code>cri</code>" (see <a href="#edn-cri" class="auto internal xref">Appendix C</a> and
+<a href="#cri-iana" class="auto internal xref">Section 11.3</a>).<a href="#appendix-D-3.10.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-3.11">
+          <p id="appendix-D-3.11.1">Add Section on CoAP integration (and new CoAP Options Proxy-Cri and
+Proxy-Scheme-Number).<a href="#appendix-D-3.11.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="appendix-D-4">Changes from -08 to -09<a href="#appendix-D-4" class="pilcrow">¶</a></p>
