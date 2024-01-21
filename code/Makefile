@@ -1,4 +1,4 @@
-schemes-numbers.md: schemes-numbers.rb
+schemes-numbers.md: schemes-numbers.rb uri-schemes.xml
 	ruby $< > $@.new
 	mv $@.new $@
 
