@@ -1306,9 +1306,9 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    2.  Translate the scheme-id into a URI scheme name as per
        Section 5.1.1 and Table 1; if a scheme-id that corresponds to a
-       scheme number not in this list is being used, fail this
-       algorithm.  Remember the specific variant of CoAP to be used
-       based on this URI scheme name.
+       scheme number not in this list is being used, or if a scheme-name
+       is being used, fail this algorithm.  Remember the specific
+       variant of CoAP to be used based on this URI scheme name.
 
    3.  If »cri« has a fragment component, then fail this algorithm.
 
@@ -1439,16 +1439,16 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    represented as a CoAP unsigned integer.  It is used analogously to
    Proxy-Scheme as defined in Section 5.10.2 of [RFC7252].
 
-   Since CoAP Options are only defined as one of empty, (text) string,
-   opaque (byte string), or unsigned integer, the Option carries an
-   unsigned integer that represents the CRI scheme-number (which relates
-   to a CRI scheme-id as defined in Section 5.1.1).  For instance, the
-   scheme name "coap" has the scheme-number 0 and is represented as an
-   unsigned integer by a zero-length CoAP Option value.
+   As per Section 3.2 of [RFC7252], CoAP Options are only defined as one
+   of empty, (text) string, opaque (byte string), or uint (unsigned
+   integer).  The Option therefore carries an unsigned integer that
+   represents the CRI scheme-number (which relates to a CRI scheme-id as
+   defined in Section 5.1.1).  For instance, the scheme name "coap" has
+   the scheme-number 0 and is represented as an unsigned integer by a
+   zero-length CoAP Option value.
 
 
    // TO DO: Discuss the need for a location-scheme-numeric option?
-
 
 
 
@@ -1570,7 +1570,7 @@ Bormann & Birkholz        Expires 24 July 2024                 [Page 28]
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-   CRI scheme number value:
+   CRI scheme number:
       An unsigned integer unique in this registry
 
    URI scheme name:

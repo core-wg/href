@@ -2607,7 +2607,8 @@ algorithm.<a href="#section-8.1.1-3.1.1" class="pilcrow">¶</a></p>
               <p id="section-8.1.1-3.2.1">Translate the scheme-id into a URI scheme name as per
 <a href="#scheme-id" class="auto internal xref">Section 5.1.1</a> and
 <a href="#scheme-map" class="auto internal xref">Table 1</a>; if a scheme-id that corresponds to a scheme
-number not in this list is being used,
+number not in this list is being used, or if a scheme-name is
+being used,
 fail this algorithm.
 Remember the specific variant of CoAP to be used based on this
 URI scheme name.<a href="#section-8.1.1-3.2.1" class="pilcrow">¶</a></p>
@@ -2813,8 +2814,9 @@ included in a request containing the Proxy-Cri Option).<a href="#section-8.2.1-2
 <p id="section-8.2.2-2">The Proxy-Scheme-Number Option carries a CRI Scheme Number represented as a
 CoAP unsigned integer.
 It is used analogously to Proxy-Scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc7252#section-5.10.2" class="relref">Section 5.10.2</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.<a href="#section-8.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-8.2.2-3">Since CoAP Options are only defined as one of empty, (text) string,
-opaque (byte string), or unsigned integer, the Option carries an
+<p id="section-8.2.2-3">As per <span><a href="https://rfc-editor.org/rfc/rfc7252#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>, CoAP Options are only defined as one of empty, (text) string,
+opaque (byte string), or uint (unsigned integer).
+The Option therefore carries an
 unsigned integer that represents the CRI scheme-number (which relates to
 a CRI scheme-id as defined in <a href="#scheme-id" class="auto internal xref">Section 5.1.1</a>).
 For instance, the scheme name "coap" has the scheme-number 0 and is
@@ -2933,7 +2935,7 @@ a time-limited discussion.<a href="#section-11.1.1-5" class="pilcrow">¶</a></p>
           </h4>
 <p id="section-11.1.2-1">Each entry in the registry must include:<a href="#section-11.1.2-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlNewline" id="section-11.1.2-2">
-            <dt id="section-11.1.2-2.1">CRI scheme number value:</dt>
+            <dt id="section-11.1.2-2.1">CRI scheme number:</dt>
             <dd style="margin-left: 1.5em" id="section-11.1.2-2.2">
               <p id="section-11.1.2-2.2.1">An unsigned integer unique in this registry<a href="#section-11.1.2-2.2.1" class="pilcrow">¶</a></p>
 </dd>
