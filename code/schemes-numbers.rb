@@ -65,15 +65,15 @@ puts "| %17s | %16s | \\[RFC-XXXX] |"  % [value, scheme]
 end
 
 __END__
-| CRI scheme number | URI scheme | Reference   |
-|-------------------|------------|-------------|
-|                 0 | coap       | \[RFC-XXXX] |
-|                 1 | coaps      | \[RFC-XXXX] |
-|                 2 | http       | \[RFC-XXXX] |
-|                 3 | https      | \[RFC-XXXX] |
-|                 4 | urn        | \[RFC-XXXX] |
-|                 5 | did        | \[RFC-XXXX] |
-|                 6 | coap+tcp   | \[RFC-XXXX] |
-|                 7 | coaps+tcp  | \[RFC-XXXX] |
-|                 8 | coap+ws    | \[RFC-XXXX] |
-|                 9 | coaps+ws   | \[RFC-XXXX] |
+| CRI scheme number | URI scheme name | Reference   |
+|-------------------|-----------------|-------------|
+|                 0 | coap            | \[RFC-XXXX] |
+|                 1 | coaps           | \[RFC-XXXX] |
+|                 2 | http            | \[RFC-XXXX] |
+|                 3 | https           | \[RFC-XXXX] |
+|                 4 | urn             | \[RFC-XXXX] |
+|                 5 | did             | \[RFC-XXXX] |
+|                 6 | coap+tcp        | \[RFC-XXXX] |
+|                 7 | coaps+tcp       | \[RFC-XXXX] |
+|                 8 | coap+ws         | \[RFC-XXXX] |
+|                 9 | coaps+ws        | \[RFC-XXXX] |

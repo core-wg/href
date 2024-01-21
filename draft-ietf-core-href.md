@@ -1023,7 +1023,8 @@ value from a data item in the CRI, the presence of any
    2.  Translate the scheme-id into a URI scheme name as per
        {{scheme-id}} and
        {{scheme-map}}; if a scheme-id that corresponds to a scheme
-       number not in this list is being used,
+       number not in this list is being used, or if a scheme-name is
+       being used,
        fail this algorithm.
        Remember the specific variant of CoAP to be used based on this
        URI scheme name.
@@ -1142,8 +1143,9 @@ CoAP unsigned integer.
 It is used analogously to Proxy-Scheme as defined in {{Section 5.10.2
 of -coap}}.
 
-Since CoAP Options are only defined as one of empty, (text) string,
-opaque (byte string), or unsigned integer, the Option carries an
+As per {{Section 3.2 of -coap}}, CoAP Options are only defined as one of empty, (text) string,
+opaque (byte string), or uint (unsigned integer).
+The Option therefore carries an
 unsigned integer that represents the CRI scheme-number (which relates to
 a CRI scheme-id as defined in {{scheme-id}}).
 For instance, the scheme name "coap" has the scheme-number 0 and is
@@ -1231,7 +1233,7 @@ a time-limited discussion.
 Each entry in the registry must include:
 
 {:vspace}
-CRI scheme number value:
+CRI scheme number:
 : An unsigned integer unique in this registry
 
 URI scheme name:
