@@ -451,6 +451,27 @@ indefinite length encoding (see
 specifications that embed CRIs into an encompassing CBOR
 representation that does provide for indefinite length encoding.
 
+### `scheme-name` and `scheme-id` {#scheme-id}
+
+In the scheme section, a CRI scheme can be given by its `scheme-name`
+(a text string giving the scheme name as in URIs' scheme section,
+mapped to lower case), or as a negative integer `scheme-id` derived
+from the *scheme number*.
+Scheme numbers are unsigned integers that are mapped to and from URI
+scheme names by the "CRI Scheme Numbers" registry ({{cri-reg}}).
+The relationship of a scheme number to its `scheme-id` is as follows:
+
+~~~ math
+scheme\text{-}id = -1 - scheme\text{-}number
+\\
+scheme\text{-}number = -1 - scheme\text{-}id
+~~~
+
+For example, the scheme-name `coap` has the (unsigned integer)
+scheme-number `0` which is represented in a (negative integer)
+scheme-id `-1`.
+
+
 ### The `discard` Section
 
 The `discard` section can be used in a CRI reference when neither a
@@ -493,7 +514,7 @@ This visualization does not go into the details of the elements.
 ### Examples
 
 ~~~~ cbor-diag
-[-1,             / scheme -- equivalent to "coap" /
+[-1,             / scheme-id -- equivalent to "coap" /
  [h'C6336401',   / host /
   61616],        / port /
  [".well-known", / path /
@@ -509,7 +530,7 @@ This visualization does not go into the details of the elements.
 ~~~~
 
 ~~~~ cbor-diag
-[-6,             / scheme -- equivalent to "did" /
+[-6,             / scheme-id -- equivalent to "did" /
  true,           / authority = NOAUTH-ROOTLESS /
  ["web:alice:bob"] / path /
 ]
@@ -706,7 +727,7 @@ scheme
   component of the URI reference consists of the value of that
   section, if text (`scheme-name`); or, if a negative integer is given
   (`scheme-id`), the lower case scheme name corresponding to the
-  scheme number as per the CRI Scheme Numbers registry ({{cri-reg}}).
+  scheme-id as per {{scheme-id}}.
   Otherwise, the scheme component is unset.
 
 authority
@@ -972,18 +993,18 @@ This section provides an analogue to {{Sections 6.4 and 6.5 of -coap}}:
 Computing a set of CoAP options from a request CRI {{decompose-coap}} and computing a
 request CRI from a set of COAP options {{compose-coap}}.
 
-This section makes use of the mapping between CRI scheme ids
+This section makes use of the mapping between CRI scheme numbers
 and URI scheme names shown in {{scheme-map}}:
 
-| CRI scheme id | URI scheme |
-|---------------|------------|
-|            -1 | coap       |
-|            -2 | coaps      |
-|            -7 | coap+tcp   |
-|            -8 | coaps+tcp  |
-|            -9 | coap+ws    |
-|           -10 | coaps+ws   |
-{: #scheme-map title="Mapping CRI scheme ids and URI scheme names"}
+| CRI scheme number | URI scheme name |
+|-------------------+-----------------|
+|                 0 | coap            |
+|                 1 | coaps           |
+|                 6 | coap+tcp        |
+|                 7 | coaps+tcp       |
+|                 8 | coap+ws         |
+|                 9 | coaps+ws        |
+{: #scheme-map title="Mapping CRI scheme numbers and URI scheme names"}
 
 
 ### Decomposing a Request CRI into a set of CoAP Options {#decompose-coap}
@@ -1000,8 +1021,10 @@ value from a data item in the CRI, the presence of any
    1.  If »cri« is not an absolute CRI reference, then fail this
        algorithm.
 
-   2.  Translate the scheme id into a URI scheme name as per
-       {{scheme-map}}; if a scheme id not in this list is being used,
+   2.  Translate the scheme-id into a URI scheme name as per
+       {{scheme-id}} and
+       {{scheme-map}}; if a scheme-id that corresponds to a scheme
+       number not in this list is being used,
        fail this algorithm.
        Remember the specific variant of CoAP to be used based on this
        URI scheme name.
@@ -1045,8 +1068,8 @@ value from a data item in the CRI, the presence of any
 
 
    1.   Based on the variant of CoAP used in the request, choose a
-        `scheme-id` as per table {{scheme-map}}.  Use that as the first
-        value in the resulting CRI array.
+        `scheme-id` as per {{scheme-id}} and table {{scheme-map}}.  Use
+        that as the first value in the resulting CRI array.
 
    2.   If the request includes a Uri-Host Option, insert an
         `authority` with its value determined as follows:
@@ -1090,7 +1113,7 @@ of CoAP Options, two additional CoAP Options are defined in {{Section
 * its more lightweight variant, Proxy-Scheme
 
 This section defines analogues of these that employ CRIs and the URI
-Scheme numering provided by the present specification.
+Scheme numbering provided by the present specification.
 
 ### Proxy-CRI
 
@@ -1115,25 +1138,17 @@ included in a request containing the Proxy-Cri Option).
    | TBD239 | x | x | - |   | Proxy-Scheme-Number | uint   |    0-3 | (none)  |
 {: #tab-proxy-scheme-number title="Proxy-Scheme-Number CoAP Option"}
 
-The Proxy-Scheme-Number Option carries a URI Scheme Number represented as a
+The Proxy-Scheme-Number Option carries a CRI Scheme Number represented as a
 CoAP unsigned integer.
 It is used analogously to Proxy-Scheme as defined in {{Section 5.10.2
 of -coap}}.
 
-Since CoAP Options are only defined as empty, (text) string, opaque
-(byte string), or unsigned integer, the Option carries an unsigned
-integer that gives the 1's complement of the URI Scheme Number, i.e.:
-
-~~~ math
-option value = -1 - scheme number
-~~~
-
-[^scheme-negative]
-
-[^scheme-negative]: DISCUSS: Should the scheme registry simply use
-    unsigned numbers so it can be used here right away and the 1's
-    complement form is only used specifically for the nint that
-    `scheme-id` at the start of CRIs is?
+Since CoAP Options are only defined as one of empty, (text) string,
+opaque (byte string), or unsigned integer, the Option carries an
+unsigned integer that represents the CRI scheme-number (which relates to
+a CRI scheme-id as defined in {{scheme-id}}).
+For instance, the scheme name "coap" has the scheme-number 0 and is
+represented as an unsigned integer by a zero-length CoAP Option value.
 
 [^location-scheme]
 
@@ -1180,15 +1195,17 @@ place of URI scheme names.
 
 ### Instructions for the Designated Expert {#de-instructions}
 
-The expert is instructed to be frugal in the allocation of CRI values
-with short representations (1+0 and 1+1 encoding), keeping them in
+The expert is instructed to be frugal in the allocation of CRI scheme
+number values whose scheme-id values ({{scheme-id}}) have short
+representations (1+0 and 1+1 encoding), keeping them in
 reserve for applications that are likely to enjoy wide use and can
 make good use of their shortness.
 
 When the expert notices that a registration has been made in the
 Uniform Resource Identifier (URI) Schemes registry (see also {{upd}}),
 the expert is requested to initiate a parallel registration in the CRI
-Scheme Numbers registry.  CRI values in the range between 1000 and
+Scheme Numbers registry.
+CRI scheme number values in the range between 1000 and
 20000 (inclusive) should be assigned unless a shorter representation
 in CRIs appears desirable.
 
@@ -1215,8 +1232,8 @@ a time-limited discussion.
 Each entry in the registry must include:
 
 {:vspace}
-CRI value:
-: A negative integer unique in this registry
+CRI scheme number value:
+: An unsigned integer unique in this registry
 
 URI scheme name:
 : a text string that would be acceptable for registration as a URI
@@ -1506,6 +1523,11 @@ title="ABNF Definition of URI Representation of a CRI"
 
 # Change Log
 {:removeinrfc}
+
+Changes from -14 to -15
+
+* Make scheme numbers unsigned and map them to negative numbers used
+  as scheme-id values
 
 Changes from -09 to -14
 
