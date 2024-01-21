@@ -15,7 +15,10 @@ def get_one(el, xp)
   v.first
 end
 
-# /iana/uri-schemes/
+# code/uri-schemes.xml
+# needs to be a (symlink to a) copy of
+# https://www.iana.org/assignments/uri-schemes/uri-schemes.xml
+
 schemes = REXML::Document.new(File.read("uri-schemes.xml"))
 
 a = REXML::XPath.each(schemes.root, "//record").map do |rec|
