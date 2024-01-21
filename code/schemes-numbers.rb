@@ -15,7 +15,8 @@ def get_one(el, xp)
   v.first
 end
 
-schemes = REXML::Document.new(File.read("/Users/cabo/std/iana/uri-schemes/uri-schemes.xml"))
+# /iana/uri-schemes/
+schemes = REXML::Document.new(File.read("uri-schemes.xml"))
 
 a = REXML::XPath.each(schemes.root, "//record").map do |rec|
   get_one(rec, "value")
