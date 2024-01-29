@@ -5,8 +5,8 @@
 CoRE Working Group                                       C. Bormann, Ed.
 Internet-Draft                                    Universität Bremen TZI
 Intended status: Standards Track                             H. Birkholz
-Expires: 24 July 2024                                     Fraunhofer SIT
-                                                         21 January 2024
+Expires: 1 August 2024                                    Fraunhofer SIT
+                                                         29 January 2024
 
 
                     Constrained Resource Identifiers
@@ -23,12 +23,10 @@ Abstract
 
 
    // (This "cref" paragraph will be removed by the RFC editor:) The
-   // present revision –14 of this draft picks up comments from the
-   // shepherd review and adds sections on CoAP integration and on cri
-   // application-oriented literals for the Extended Diagnostic
-   // Notation.  This revision still contains open issues and is
-   // intended to serve as a snapshot while the processing of the
-   // shepherd review is being completed.
+   // present revision –15 of this draft continues -14 by picking up
+   // more comments, such as moving to a CRI scheme number registration
+   // system based on unsigned numbers.  This revision still contains
+   // open issues and is intended to serve as a snapshot.
 
 About This Document
 
@@ -53,7 +51,9 @@ Status of This Memo
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                  [Page 1]
+
+
+Bormann & Birkholz        Expires 1 August 2024                 [Page 1]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -68,7 +68,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 July 2024.
+   This Internet-Draft will expire on 1 August 2024.
 
 Copyright Notice
 
@@ -94,56 +94,57 @@ Table of Contents
    4.  Comparison  . . . . . . . . . . . . . . . . . . . . . . . . .   9
    5.  CRI References  . . . . . . . . . . . . . . . . . . . . . . .   9
      5.1.  CBOR Representation . . . . . . . . . . . . . . . . . . .  10
-       5.1.1.  The discard Section . . . . . . . . . . . . . . . . .  12
-       5.1.2.  Visualization . . . . . . . . . . . . . . . . . . . .  13
-       5.1.3.  Examples  . . . . . . . . . . . . . . . . . . . . . .  13
-       5.1.4.  Specific Terminology  . . . . . . . . . . . . . . . .  14
+       5.1.1.  scheme-name and scheme-id . . . . . . . . . . . . . .  12
+       5.1.2.  The discard Section . . . . . . . . . . . . . . . . .  13
+       5.1.3.  Visualization . . . . . . . . . . . . . . . . . . . .  13
+       5.1.4.  Examples  . . . . . . . . . . . . . . . . . . . . . .  14
+       5.1.5.  Specific Terminology  . . . . . . . . . . . . . . . .  14
      5.2.  Ingesting and encoding a CRI Reference  . . . . . . . . .  14
        5.2.1.  Error handling and extensibility  . . . . . . . . . .  15
      5.3.  Reference Resolution  . . . . . . . . . . . . . . . . . .  16
    6.  Relationship between CRIs, URIs, and IRIs . . . . . . . . . .  17
-     6.1.  Converting CRIs to URIs . . . . . . . . . . . . . . . . .  17
+     6.1.  Converting CRIs to URIs . . . . . . . . . . . . . . . . .  18
    7.  Extending CRIs  . . . . . . . . . . . . . . . . . . . . . . .  20
      7.1.  Extended CRI: Accommodating Percent Encoding (PET)  . . .  21
-   8.  CoAP Integration  . . . . . . . . . . . . . . . . . . . . . .  22
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                  [Page 2]
+Bormann & Birkholz        Expires 1 August 2024                 [Page 2]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     8.1.  Converting Between CoAP CRIs and Sets of CoAP Options . .  22
+   8.  CoAP Integration  . . . . . . . . . . . . . . . . . . . . . .  23
+     8.1.  Converting Between CoAP CRIs and Sets of CoAP Options . .  23
        8.1.1.  Decomposing a Request CRI into a set of CoAP
-               Options . . . . . . . . . . . . . . . . . . . . . . .  23
-       8.1.2.  Composing a Request CRI from a Set of CoAP Options  .  24
+               Options . . . . . . . . . . . . . . . . . . . . . . .  24
+       8.1.2.  Composing a Request CRI from a Set of CoAP Options  .  25
      8.2.  CoAP Options for Forward-Proxies  . . . . . . . . . . . .  25
-       8.2.1.  Proxy-CRI . . . . . . . . . . . . . . . . . . . . . .  25
+       8.2.1.  Proxy-CRI . . . . . . . . . . . . . . . . . . . . . .  26
        8.2.2.  Proxy-Scheme-Number . . . . . . . . . . . . . . . . .  26
-   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  26
+   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  27
    10. Security Considerations . . . . . . . . . . . . . . . . . . .  27
    11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  27
-     11.1.  CRI Scheme Numbers Registry  . . . . . . . . . . . . . .  27
-       11.1.1.  Instructions for the Designated Expert . . . . . . .  27
+     11.1.  CRI Scheme Numbers Registry  . . . . . . . . . . . . . .  28
+       11.1.1.  Instructions for the Designated Expert . . . . . . .  28
        11.1.2.  Structure of Entries . . . . . . . . . . . . . . . .  28
-       11.1.3.  Initial Registrations  . . . . . . . . . . . . . . .  28
+       11.1.3.  Initial Registrations  . . . . . . . . . . . . . . .  29
      11.2.  Update to "Uniform Resource Identifier (URI) Schemes"
             Registry . . . . . . . . . . . . . . . . . . . . . . . .  29
      11.3.  CBOR Diagnostic Notation Application-extension Identifiers
             Registry . . . . . . . . . . . . . . . . . . . . . . . .  29
-     11.4.  CoAP Option Numbers Registry . . . . . . . . . . . . . .  29
+     11.4.  CoAP Option Numbers Registry . . . . . . . . . . . . . .  30
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  30
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  30
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  31
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  32
    Appendix A.  Mapping Scheme Numbers to Scheme Names . . . . . . .  33
    Appendix B.  The Small Print  . . . . . . . . . . . . . . . . . .  49
    Appendix C.  CBOR Extended Diagnostic Notation (EDN): The "cri"
-           Extension . . . . . . . . . . . . . . . . . . . . . . . .  50
-     C.1.  cri: ABNF Definition of URI Representation of a CRI . . .  51
+           Extension . . . . . . . . . . . . . . . . . . . . . . . .  51
+     C.1.  cri: ABNF Definition of URI Representation of a CRI . . .  52
    Appendix D.  Change Log . . . . . . . . . . . . . . . . . . . . .  53
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  56
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  56
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  57
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  57
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  57
 
 1.  Introduction
@@ -164,8 +165,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
 
-
-Bormann & Birkholz        Expires 24 July 2024                  [Page 3]
+Bormann & Birkholz        Expires 1 August 2024                 [Page 3]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -221,7 +221,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                  [Page 4]
+Bormann & Birkholz        Expires 1 August 2024                 [Page 4]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -277,7 +277,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                  [Page 5]
+Bormann & Birkholz        Expires 1 August 2024                 [Page 5]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -333,7 +333,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                  [Page 6]
+Bormann & Birkholz        Expires 1 August 2024                 [Page 6]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -389,7 +389,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                  [Page 7]
+Bormann & Birkholz        Expires 1 August 2024                 [Page 7]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -445,7 +445,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                  [Page 8]
+Bormann & Birkholz        Expires 1 August 2024                 [Page 8]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -501,7 +501,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                  [Page 9]
+Bormann & Birkholz        Expires 1 August 2024                 [Page 9]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -557,7 +557,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 10]
+Bormann & Birkholz        Expires 1 August 2024                [Page 10]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -585,7 +585,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    scheme      = scheme-name / scheme-id
    scheme-name = text .regexp "[a-z][a-z0-9+.-]*"
-   scheme-id   = nint
+   scheme-id   = nint              ; -1 - scheme-number
 
    no-authority = NOAUTH-ROOTBASED / NOAUTH-ROOTLESS
    NOAUTH-ROOTBASED = null .feature "no-authority"
@@ -613,7 +613,7 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 11]
+Bormann & Birkholz        Expires 1 August 2024                [Page 11]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
@@ -645,7 +645,36 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    encompassing CBOR representation that does provide for indefinite
    length encoding.
 
-5.1.1.  The discard Section
+5.1.1.  scheme-name and scheme-id
+
+   In the scheme section, a CRI scheme can be given by its scheme-name
+   (a text string giving the scheme name as in URIs' scheme section,
+   mapped to lower case), or as a negative integer scheme-id derived
+   from the _scheme number_. Scheme numbers are unsigned integers that
+   are mapped to and from URI scheme names by the "CRI Scheme Numbers"
+   registry (Section 11.1).  The relationship of a scheme number to its
+   scheme-id is as follows:
+
+   scheme-id = -1 - scheme-number
+   scheme-number = -1 - scheme-id
+
+   For example, the scheme-name coap has the (unsigned integer) scheme-
+   number 0 which is represented in a (negative integer) scheme-id -1.
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 12]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
+5.1.2.  The discard Section
 
    The discard section can be used in a CRI reference when neither a
    scheme nor an authority is present.  It then expresses the operations
@@ -666,21 +695,13 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    Most URI references that Section 4.2 of [RFC3986] calls "relative
    references" (i.e., references that need to undergo a resolution
    process to obtain a URI) correspond to the CRI reference form that
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 12]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
    starts with discard.  The exception are relative references with an
    authority (called a "network-path reference" in Section 4.2 of
    [RFC3986]), which discard the entire path of the base CRI.  These CRI
    references never carry a discard section: the value of discard
    defaults to true.
 
-5.1.2.  Visualization
+5.1.3.  Visualization
 
    The structure of a CRI reference is visualized using the somewhat
    limited means of a railroad diagram:
@@ -701,9 +722,17 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    This visualization does not go into the details of the elements.
 
-5.1.3.  Examples
 
-   [-1,             / scheme -- equivalent to "coap" /
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 13]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
+5.1.4.  Examples
+
+   [-1,             / scheme-id -- equivalent to "coap" /
     [h'C6336401',   / host /
      61616],        / port /
     [".well-known", / path /
@@ -715,22 +744,12 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
      "core"],
     ["rt=temperature-c"]]  / query /
 
-   [-6,             / scheme -- equivalent to "did" /
+   [-6,             / scheme-id -- equivalent to "did" /
     true,           / authority = NOAUTH-ROOTLESS /
     ["web:alice:bob"] / path /
    ]
 
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 13]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
-5.1.4.  Specific Terminology
+5.1.5.  Specific Terminology
 
    A CRI reference is considered _well-formed_ if it matches the
    structure as expressed in Figure 1 in CDDL, with the additional
@@ -760,6 +779,13 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    *  If the array is entirely empty, replace it with [0].
 
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 14]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    *  If discard is present in the transfer form (i.e., the outer array
       starts with true or an unsigned integer), set scheme and authority
       to null.
@@ -775,16 +801,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    transferred.  Trailing null values are removed from the array.  As a
    special case, an empty array is sent in place for a remaining [0]
    (URI "").
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 14]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
 5.2.1.  Error handling and extensibility
 
@@ -812,6 +828,20 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    bounded memory for CRIs that do not use indefinite length encoding,
    as mandated in Section 5.1.)
 
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 15]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    The unprocessable CRI is treated as an opaque identifier that is
    distinct from all processable CRIs, and distinct from all
    unprocessable CRIs with different CBOR representations.  It is up to
@@ -827,20 +857,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    some of which use the "no-authority" feature, an application
    consuming that collection that does not support that feature can
    still offer the supported interaction targets.
-
-
-
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 15]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
    The duty of checking validity is with the recipients that rely on
    this validity.  An intermediary that does not use the detailed
@@ -875,6 +891,13 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
        many elements from the end of the path array; if it is non-zero,
        unset query and fragment.
 
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 16]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
        Set discard to true in the buffer.
 
    4.  If the path section is set in the CRI reference, append all
@@ -887,16 +910,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
        fragment in the buffer if query is non-null in the CRI reference.
 
    6.  Return the sections in the buffer as the resolved CRI.
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 16]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
 6.  Relationship between CRIs, URIs, and IRIs
 
@@ -933,6 +946,14 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
       as described in Section 3.2 of [RFC3987].
 
    IRI to CRI
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 17]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
       An IRI can be converted to a CRI by first converting it to a URI
       as described in Section 3.1 of [RFC3987], and then converting the
       URI to a CRI as described above.
@@ -947,20 +968,13 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    following steps and then recomposing the components to a URI
    reference string as specified in Section 5.3 of [RFC3986].
 
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 17]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
    scheme
       If the CRI reference contains a scheme section, the scheme
       component of the URI reference consists of the value of that
       section, if text (scheme-name); or, if a negative integer is given
       (scheme-id), the lower case scheme name corresponding to the
-      scheme number as per the CRI Scheme Numbers registry
-      (Section 11.1).  Otherwise, the scheme component is unset.
+      scheme-id as per Section 5.1.1.  Otherwise, the scheme component
+      is unset.
 
    authority
       If the CRI reference contains a host-name or host-ip item, the
@@ -988,6 +1002,14 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
       to represent such elements, as normalization would turn the
       percent-encoding back to the unreserved character that a dot is.)
 
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 18]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
       The value of a host-ip item MUST be represented as a string that
       matches the "IPv4address" or "IP-literal" rule (Section 3.2.2 of
       [RFC3986]).  Any zone-id is appended to the string, separated by
@@ -1002,14 +1024,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
       both omitted.
 
    path
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 18]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
       If the CRI reference contains a discard item of value true, the
       path component is considered _rooted_.  If it contains a discard
       item of value 0 and the path item is present, the conversion
@@ -1042,6 +1056,16 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
       path component does not match the "path-abempty" rule (Section 3.3
       of [RFC3986]), the conversion fails.
 
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 19]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
       If the authority component is not present, but the scheme
       component is, and the path component does not match the "path-
       absolute", "path-rootless" (authority == true) or "path-empty"
@@ -1057,14 +1081,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
       component of the URI reference consists of the value of each item,
       separated by an ampersand ("&") character.  Otherwise, the query
       component is unset.
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 19]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
       Any character in the value of a query item that is not in the set
       of unreserved characters or "sub-delims" or a colon (":"),
@@ -1099,6 +1115,13 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    E.g., the URI
 
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 20]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    https://alice/3%2f4-inch
 
    is represented by the basic CRI
@@ -1113,14 +1136,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    Extended forms of CRIs may be defined to enable these applications.
    They will generally extend the potential values of text components of
    URIs, such as userinfo, hostnames, paths, queries, and fragments.
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 20]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
    One such extended form is described in the following Section 7.1.
    Consumers of CRIs will generally notice when an extended form is in
@@ -1148,6 +1163,21 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    are replaced with
 
+
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 21]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    userinfo    = (false, text-or-pet .feature "userinfo")
    host-name   = (*text-or-pet)
    path        = [*text-or-pet]
@@ -1171,13 +1201,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    retain the special semantics of percent-encoded text without actually
    being percent-encoded.
 
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 21]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
    The above DID URI can now be represented as:
 
    [-6, true, [["web:alice:7", ':', "1-balun"]]]
@@ -1200,6 +1223,16 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    the byte string and inserting a new text string with this character,
    all while preserving the order of the bytes.  (Note that the
    properties of UTF-8 make this a simple linear process.)
+
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 22]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
 
       |  Unlike the text elements of a path or a query, which through
       |  CoAP's heritage are designed to be processable element by
@@ -1225,37 +1258,37 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    Section 8.1.1 and computing a request CRI from a set of COAP options
    Section 8.1.2.
 
+   This section makes use of the mapping between CRI scheme numbers and
+   URI scheme names shown in Table 1:
+
+                  +===================+=================+
+                  | CRI scheme number | URI scheme name |
+                  +===================+=================+
+                  | 0                 | coap            |
+                  +-------------------+-----------------+
+                  | 1                 | coaps           |
+                  +-------------------+-----------------+
+                  | 6                 | coap+tcp        |
+                  +-------------------+-----------------+
+                  | 7                 | coaps+tcp       |
+                  +-------------------+-----------------+
+                  | 8                 | coap+ws         |
+                  +-------------------+-----------------+
+                  | 9                 | coaps+ws        |
+                  +-------------------+-----------------+
+
+                    Table 1: Mapping CRI scheme numbers
+                            and URI scheme names
 
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 22]
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 23]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
-
-   This section makes use of the mapping between CRI scheme ids and URI
-   scheme names shown in Table 1:
-
-                      +===============+============+
-                      | CRI scheme id | URI scheme |
-                      +===============+============+
-                      | -1            | coap       |
-                      +---------------+------------+
-                      | -2            | coaps      |
-                      +---------------+------------+
-                      | -7            | coap+tcp   |
-                      +---------------+------------+
-                      | -8            | coaps+tcp  |
-                      +---------------+------------+
-                      | -9            | coap+ws    |
-                      +---------------+------------+
-                      | -10           | coaps+ws   |
-                      +---------------+------------+
-
-                           Table 1: Mapping CRI
-                        scheme ids and URI scheme
-                                  names
 
 8.1.1.  Decomposing a Request CRI into a set of CoAP Options
 
@@ -1271,24 +1304,17 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    1.  If »cri« is not an absolute CRI reference, then fail this
        algorithm.
 
-   2.  Translate the scheme id into a URI scheme name as per Table 1; if
-       a scheme id not in this list is being used, fail this algorithm.
-       Remember the specific variant of CoAP to be used based on this
-       URI scheme name.
+   2.  Translate the scheme-id into a URI scheme name as per
+       Section 5.1.1 and Table 1; if a scheme-id that corresponds to a
+       scheme number not in this list is being used, or if a scheme-name
+       is being used, fail this algorithm.  Remember the specific
+       variant of CoAP to be used based on this URI scheme name.
 
    3.  If »cri« has a fragment component, then fail this algorithm.
 
    4.  If the host component of »cri« is a host-name, include a Uri-Host
        Option and let that option's value be the text string value of
        the host-name.
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 23]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
        If the host component of »cri« is a host-ip, check whether the IP
        address given represents the request's destination IP address
@@ -1311,6 +1337,15 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
        Uri-Path Option and let that option's value be the text string
        value of that element.
 
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 24]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    8.  If »cri« has a query component, then, for each element in the
        query component, include a Uri-Query Option and let that option's
        value be the be the text string value of that element.
@@ -1321,8 +1356,8 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    These steps either result in a CRI or they fail.
 
    1.  Based on the variant of CoAP used in the request, choose a
-       scheme-id as per table Table 1.  Use that as the first value in
-       the resulting CRI array.
+       scheme-id as per Section 5.1.1 and table Table 1.  Use that as
+       the first value in the resulting CRI array.
 
    2.  If the request includes a Uri-Host Option, insert an authority
        with its value determined as follows: If the value of the Uri-
@@ -1336,15 +1371,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
        authority with host-ip being the byte string that represents the
        request's destination IP address and, if one is present in the
        request's destination, add a zone-id.
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 24]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
    3.  If the request includes a Uri-Port Option, let »port« be that
        option's value.  Otherwise, let »port« be the request's
@@ -1368,10 +1394,18 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    *  Proxy-Uri, and
 
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 25]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    *  its more lightweight variant, Proxy-Scheme
 
    This section defines analogues of these that employ CRIs and the URI
-   Scheme numering provided by the present specification.
+   Scheme numbering provided by the present specification.
 
 8.2.1.  Proxy-CRI
 
@@ -1391,17 +1425,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    of which MUST NOT be included in a request containing the Proxy-Cri
    Option).
 
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 25]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
 8.2.2.  Proxy-Scheme-Number
 
    +========+=+=+=+=+=====================+========+========+=========+
@@ -1412,24 +1435,28 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
                  Table 3: Proxy-Scheme-Number CoAP Option
 
-   The Proxy-Scheme-Number Option carries a URI Scheme Number
+   The Proxy-Scheme-Number Option carries a CRI Scheme Number
    represented as a CoAP unsigned integer.  It is used analogously to
    Proxy-Scheme as defined in Section 5.10.2 of [RFC7252].
 
-   Since CoAP Options are only defined as empty, (text) string, opaque
-   (byte string), or unsigned integer, the Option carries an unsigned
-   integer that gives the 1's complement of the URI Scheme Number, i.e.:
-
-   option value = -1 - scheme number
-
-
-   // DISCUSS: Should the scheme registry simply use unsigned numbers so
-   // it can be used here right away and the 1's complement form is only
-   // used specifically for the nint that scheme-id at the start of CRIs
-   // is?
+   As per Section 3.2 of [RFC7252], CoAP Options are only defined as one
+   of empty, (text) string, opaque (byte string), or uint (unsigned
+   integer).  The Option therefore carries an unsigned integer that
+   represents the CRI scheme-number (which relates to a CRI scheme-id as
+   defined in Section 5.1.1).  For instance, the scheme name "coap" has
+   the scheme-number 0 and is represented as an unsigned integer by a
+   zero-length CoAP Option value.
 
 
    // TO DO: Discuss the need for a location-scheme-numeric option?
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 26]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
 
 9.  Implementation Status
 
@@ -1447,16 +1474,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    be construed to be, a catalog of available implementations or their
    features.  Readers are advised to note that other implementations may
    exist.
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 26]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
    According to [RFC7942], "this will allow reviewers and working groups
    to assign due consideration to documents that have the benefit of
@@ -1486,6 +1503,17 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 11.  IANA Considerations
 
+
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 27]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
 11.1.  CRI Scheme Numbers Registry
 
    This specification defines a new "CRI Scheme Numbers" sub-registry in
@@ -1499,27 +1527,18 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
 11.1.1.  Instructions for the Designated Expert
 
-   The expert is instructed to be frugal in the allocation of CRI values
-   with short representations (1+0 and 1+1 encoding), keeping them in
-   reserve for applications that are likely to enjoy wide use and can
-   make good use of their shortness.
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 27]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
+   The expert is instructed to be frugal in the allocation of CRI scheme
+   number values whose scheme-id values (Section 5.1.1) have short
+   representations (1+0 and 1+1 encoding), keeping them in reserve for
+   applications that are likely to enjoy wide use and can make good use
+   of their shortness.
 
    When the expert notices that a registration has been made in the
    Uniform Resource Identifier (URI) Schemes registry (see also
    Section 11.2), the expert is requested to initiate a parallel
-   registration in the CRI Scheme Numbers registry.  CRI values in the
-   range between 1000 and 20000 (inclusive) should be assigned unless a
-   shorter representation in CRIs appears desirable.
+   registration in the CRI Scheme Numbers registry.  CRI scheme number
+   values in the range between 1000 and 20000 (inclusive) should be
+   assigned unless a shorter representation in CRIs appears desirable.
 
    The expert exceptionally also may make such a registration for text
    strings that have not been registered in the Uniform Resource
@@ -1543,8 +1562,16 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    Each entry in the registry must include:
 
-   CRI value:
-      A negative integer unique in this registry
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 28]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
+   CRI scheme number:
+      An unsigned integer unique in this registry
 
    URI scheme name:
       a text string that would be acceptable for registration as a URI
@@ -1558,17 +1585,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    The initial registrations for the CRI Scheme Numbers registry are
    provided in Table 6 in Appendix A.
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 28]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
 11.2.  Update to "Uniform Resource Identifier (URI) Schemes" Registry
 
@@ -1603,6 +1619,13 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
                  Application-extension Identifier for CRI
 
 
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 29]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    // RFC Ed.: throughout this section, please replace RFC-XXXX with the
    // RFC number of this specification and remove this note.
 
@@ -1612,19 +1635,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    registry group [IANA.core-parameters], IANA is requested to register
    the CoAP Option Numbers as described in Table 5 and defined in
    Section 8.2.
-
-
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 29]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
                +========+=====================+===========+
                | No.    | Name                | Reference |
@@ -1663,6 +1673,15 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
               Parameters",
               <http://www.iana.org/assignments/core-parameters>.
 
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 30]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    [IANA.uri-schemes]
               IANA, "Uniform Resource Identifier (URI) Schemes",
               <http://www.iana.org/assignments/uri-schemes>.
@@ -1671,16 +1690,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 30]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
@@ -1721,6 +1730,14 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
               DOI 10.17487/RFC9165, December 2021,
               <https://www.rfc-editor.org/rfc/rfc9165>.
 
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 31]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    [Unicode]  The Unicode Consortium, "The Unicode Standard, Version
               13.0.0", ISBN 978-1-936213-26-9, March 2020,
               <https://www.unicode.org/versions/Unicode13.0.0/>.
@@ -1730,14 +1747,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN):
               Application-Oriented Literals, ABNF, and Media Type", Work
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 31]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
               in Progress, Internet-Draft, draft-ietf-cbor-edn-literals-
               07, 21 December 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
@@ -1775,6 +1784,16 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
               RFC 8820, DOI 10.17487/RFC8820, June 2020,
               <https://www.rfc-editor.org/rfc/rfc8820>.
 
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 32]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    [RFC9110]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
               Ed., "HTTP Semantics", STD 97, RFC 9110,
               DOI 10.17487/RFC9110, June 2022,
@@ -1787,13 +1806,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
               December 2017,
               <https://www.w3.org/TR/2017/REC-html52-20171214/>.
 
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 32]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
 Appendix A.  Mapping Scheme Numbers to Scheme Names
 
 
@@ -1803,894 +1815,896 @@ Appendix A.  Mapping Scheme Numbers to Scheme Names
    Table 6 defines the initial mapping from CRI scheme numbers to URI
    scheme names.
 
-     +===========+======================================+============+
-     | CRI value | URI scheme                           | Reference  |
-     +===========+======================================+============+
-     | -1        | coap                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2        | coaps                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3        | http                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4        | https                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5        | urn                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6        | did                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7        | coap+tcp                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8        | coaps+tcp                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9        | coap+ws                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10       | coaps+ws                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1059     | ms-gamingoverlay                     | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1165     | snmp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1220     | cast                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1242     | openid                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1319     | z39.50                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1328     | dweb                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1466     | psyc                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1528     | ms-people                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +============+======================================+============+
+    | CRI scheme | URI scheme                           | Reference  |
+    | number     |                                      |            |
+    +============+======================================+============+
+    | 0          | coap                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1          | coaps                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2          | http                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3          | https                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4          | urn                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5          | did                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6          | coap+tcp                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7          | coaps+tcp                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8          | coap+ws                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9          | coaps+ws                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1059       | ms-gamingoverlay                     | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1165       | snmp                                 | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 33]
+Bormann & Birkholz        Expires 1 August 2024                [Page 33]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -1578     | jar                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1658     | wpid                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1762     | payment                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1895     | news                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1905     | irc6                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1926     | turns                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1946     | data                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -1982     | ens                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2154     | things                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2284     | resource                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2326     | skype                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2406     | videotex                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2442     | dpp                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2747     | upt                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2754     | platform                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2790     | ed2k                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2796     | taler                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2806     | fm                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -2945     | ms-newsandinterests                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3005     | xmlrpc.beep                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3018     | ark                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3119     | wss                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3143     | tel                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3255     | vscode-insiders                      | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 1220       | cast                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1242       | openid                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1319       | z39.50                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1328       | dweb                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1466       | psyc                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1528       | ms-people                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1578       | jar                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1658       | wpid                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1762       | payment                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1895       | news                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1905       | irc6                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1926       | turns                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1946       | data                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 1982       | ens                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2154       | things                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2284       | resource                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2326       | skype                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2406       | videotex                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2442       | dpp                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2747       | upt                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2754       | platform                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2790       | ed2k                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2796       | taler                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 2806       | fm                                   | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 34]
+Bormann & Birkholz        Expires 1 August 2024                [Page 34]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -3342     | geo                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3348     | rtmfp                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3358     | mtqp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3365     | filesystem                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3503     | proxy                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3524     | sms                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3634     | jms                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3646     | mid                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3690     | ms-calculator                        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3775     | gitoid                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3783     | calculator                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3786     | about                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3795     | facetime                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3837     | ymsgr                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3886     | dict                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3906     | ldaps                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3920     | rtmp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -3959     | ms-settings-proximity                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4053     | fax                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4102     | ms-drive-to                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4153     | res                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4183     | webcal                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4193     | embedded                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4315     | xftp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 2945       | ms-newsandinterests                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3005       | xmlrpc.beep                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3018       | ark                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3119       | wss                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3143       | tel                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3255       | vscode-insiders                      | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3342       | geo                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3348       | rtmfp                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3358       | mtqp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3365       | filesystem                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3503       | proxy                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3524       | sms                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3634       | jms                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3646       | mid                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3690       | ms-calculator                        | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3775       | gitoid                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3783       | calculator                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3786       | about                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3795       | facetime                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3837       | ymsgr                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3886       | dict                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3906       | ldaps                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3920       | rtmp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 3959       | ms-settings-proximity                | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 35]
+Bormann & Birkholz        Expires 1 August 2024                [Page 35]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -4327     | browserext                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4355     | session                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4373     | dav                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4419     | ipps                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4515     | uuid-in-package                      | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4549     | dhttp                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4559     | web3                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4590     | iris.lwz                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4598     | diaspora                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4619     | rtsps                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4674     | beshare                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4709     | gtalk                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4714     | hxxps                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4747     | xrcp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4882     | sgn                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4929     | eid                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -4951     | submit                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5099     | ar                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5109     | ms-settings-airplanemode             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5134     | steam                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5150     | adt                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5152     | ms-appinstaller                      | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5188     | bb                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5217     | udp                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 4053       | fax                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4102       | ms-drive-to                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4153       | res                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4183       | webcal                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4193       | embedded                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4315       | xftp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4327       | browserext                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4355       | session                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4373       | dav                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4419       | ipps                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4515       | uuid-in-package                      | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4549       | dhttp                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4559       | web3                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4590       | iris.lwz                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4598       | diaspora                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4619       | rtsps                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4674       | beshare                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4709       | gtalk                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4714       | hxxps                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4747       | xrcp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4882       | sgn                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4929       | eid                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 4951       | submit                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5099       | ar                                   | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 36]
+Bormann & Birkholz        Expires 1 August 2024                [Page 36]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -5296     | example                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5347     | ms-remotedesktop                     | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5410     | ms-sttoverlay                        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5425     | irc                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5472     | sieve                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5480     | lvlt                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5492     | sftp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5536     | ms-excel                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5557     | dlna-playcontainer                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5705     | go                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5717     | fido                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5728     | chrome                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5823     | shc                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5825     | swidpath                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5883     | microsoft.windows.camera.picker      | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -5990     | crid                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6007     | at                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6024     | hcp                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6030     | content-type                         | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6109     | jabber                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6144     | dlna-playsingle                      | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6189     | ms-spd                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6341     | opaquelocktoken                      | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6349     | soldat                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 5109       | ms-settings-airplanemode             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5134       | steam                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5150       | adt                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5152       | ms-appinstaller                      | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5188       | bb                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5217       | udp                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5296       | example                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5347       | ms-remotedesktop                     | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5410       | ms-sttoverlay                        | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5425       | irc                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5472       | sieve                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5480       | lvlt                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5492       | sftp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5536       | ms-excel                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5557       | dlna-playcontainer                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5705       | go                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5717       | fido                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5728       | chrome                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5823       | shc                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5825       | swidpath                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5883       | microsoft.windows.camera.picker      | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 5990       | crid                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6007       | at                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6024       | hcp                                  | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 37]
+Bormann & Birkholz        Expires 1 August 2024                [Page 37]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -6380     | z39.50s                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6388     | ms-media-stream-id                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6411     | ms-mixedrealitycapture               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6462     | quic-transport                       | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6503     | ham                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6516     | nfs                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6609     | ut2004                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6632     | hydrazone                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6634     | adiumxtra                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6651     | tip                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6658     | lpa                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6730     | cstr                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6755     | ms-settings-screenrotation           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6774     | dab                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6792     | ms-inputapp                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6808     | moz                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6840     | acd                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6863     | ms-access                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6883     | im                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6903     | pttp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6924     | teamspeak                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -6992     | payto                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7074     | secret-token                         | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7126     | iax                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 6030       | content-type                         | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6109       | jabber                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6144       | dlna-playsingle                      | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6189       | ms-spd                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6341       | opaquelocktoken                      | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6349       | soldat                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6380       | z39.50s                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6388       | ms-media-stream-id                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6411       | ms-mixedrealitycapture               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6462       | quic-transport                       | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6503       | ham                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6516       | nfs                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6609       | ut2004                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6632       | hydrazone                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6634       | adiumxtra                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6651       | tip                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6658       | lpa                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6730       | cstr                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6755       | ms-settings-screenrotation           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6774       | dab                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6792       | ms-inputapp                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6808       | moz                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6840       | acd                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6863       | ms-access                            | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 38]
+Bormann & Birkholz        Expires 1 August 2024                [Page 38]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -7225     | isostore                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7226     | bitcoincash                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7285     | smb                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7364     | appdata                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7456     | dtn                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7520     | feed                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7667     | ssh                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7743     | ms-transit-to                        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7809     | ms-help                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7812     | vscode                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7856     | apt                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7868     | ms-settings-notifications            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7874     | shttp (OBSOLETE)                     | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7913     | ethereum                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7923     | tv                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -7942     | microsoft.windows.camera.multipicker | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8041     | msnim                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8085     | ms-remotedesktop-launch              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8093     | spiffe                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8099     | redis                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8159     | z39.50r                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8251     | brid                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8300     | tftp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8387     | content                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 6883       | im                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6903       | pttp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6924       | teamspeak                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 6992       | payto                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7074       | secret-token                         | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7126       | iax                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7225       | isostore                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7226       | bitcoincash                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7285       | smb                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7364       | appdata                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7456       | dtn                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7520       | feed                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7667       | ssh                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7743       | ms-transit-to                        | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7809       | ms-help                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7812       | vscode                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7856       | apt                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7868       | ms-settings-notifications            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7874       | shttp (OBSOLETE)                     | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7913       | ethereum                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7923       | tv                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 7942       | microsoft.windows.camera.multipicker | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8041       | msnim                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8085       | ms-remotedesktop-launch              | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 39]
+Bormann & Birkholz        Expires 1 August 2024                [Page 39]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -8454     | wais                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8506     | view-source                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8519     | soap.beep                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8577     | attachment                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8601     | gopher                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8687     | ircs                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8713     | callto                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8765     | bolo                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8766     | notes                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8775     | ipn                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -8830     | ms-infopath                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9075     | ms-settings                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9136     | ms-useractivityset                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9154     | modem                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9186     | bitcoin                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9198     | ms-settings-privacy                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9204     | cap                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9278     | com-eventbrite-attendee              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9312     | pkcs11                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9318     | ipp                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9338     | rediss                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9444     | grd                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9453     | ms-screensketch                      | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9487     | matrix                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 8093       | spiffe                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8099       | redis                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8159       | z39.50r                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8251       | brid                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8300       | tftp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8387       | content                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8454       | wais                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8506       | view-source                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8519       | soap.beep                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8577       | attachment                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8601       | gopher                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8687       | ircs                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8713       | callto                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8765       | bolo                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8766       | notes                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8775       | ipn                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 8830       | ms-infopath                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9075       | ms-settings                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9136       | ms-useractivityset                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9154       | modem                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9186       | bitcoin                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9198       | ms-settings-privacy                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9204       | cap                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9278       | com-eventbrite-attendee              | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 40]
+Bormann & Birkholz        Expires 1 August 2024                [Page 40]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -9520     | xcon-userid                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9535     | sips                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9544     | simpleledger                         | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9585     | mvn                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9770     | keyparc                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9805     | magnet                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9816     | vsls                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9859     | drm                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9875     | hcap                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9910     | wtai                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9965     | num                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -9981     | ms-settings-language                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10119    | imap                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10147    | query                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10176    | ves                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10196    | acr                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10225    | barion                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10229    | acct                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10238    | palm                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10241    | ocf                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10247    | lid                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10317    | h323                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10327    | aim                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10333    | turn                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 9312       | pkcs11                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9318       | ipp                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9338       | rediss                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9444       | grd                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9453       | ms-screensketch                      | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9487       | matrix                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9520       | xcon-userid                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9535       | sips                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9544       | simpleledger                         | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9585       | mvn                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9770       | keyparc                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9805       | magnet                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9816       | vsls                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9859       | drm                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9875       | hcap                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9910       | wtai                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9965       | num                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 9981       | ms-settings-language                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10119      | imap                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10147      | query                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10176      | ves                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10196      | acr                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10225      | barion                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10229      | acct                                 | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 41]
+Bormann & Birkholz        Expires 1 August 2024                [Page 41]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -10361    | ms-stickers                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10373    | ms-settings-location                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10380    | dvb                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10467    | xcon                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10518    | ms-screenclip                        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10551    | pop                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10583    | dat                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10591    | ms-settings-nfctransactions          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10640    | ms-settings-cloudstorage             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10687    | afs                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10740    | mqtt                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10744    | gizmoproject                         | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10831    | amss                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10868    | mailserver                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10926    | ni                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -10995    | telnet                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11055    | gg                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11060    | blob                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11072    | ms-settings-emailandaccounts         | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11130    | ms-project                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11255    | xri                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11315    | msrp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11351    | ms-settings-connectabledevices       | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11393    | cabal                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 10238      | palm                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10241      | ocf                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10247      | lid                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10317      | h323                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10327      | aim                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10333      | turn                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10361      | ms-stickers                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10373      | ms-settings-location                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10380      | dvb                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10467      | xcon                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10518      | ms-screenclip                        | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10551      | pop                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10583      | dat                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10591      | ms-settings-nfctransactions          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10640      | ms-settings-cloudstorage             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10687      | afs                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10740      | mqtt                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10744      | gizmoproject                         | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10831      | amss                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10868      | mailserver                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10926      | ni                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 10995      | telnet                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11055      | gg                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11060      | blob                                 | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 42]
+Bormann & Birkholz        Expires 1 August 2024                [Page 42]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -11428    | nih                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11467    | ms-whiteboard                        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11533    | smp                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11537    | vnc                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11583    | graph                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11645    | dvx                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11718    | lorawan                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11742    | lastfm                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11799    | w3                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11804    | mumble                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11824    | feedready                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11857    | microsoft.windows.camera             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11892    | wcr                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11945    | ms-mobileplans                       | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11950    | ms-settings-lock                     | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11962    | ws                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -11999    | rtspu                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12029    | ms-settings-displays-topology        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12068    | file                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12102    | mailto                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12174    | ms-launchremotedesktop               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12242    | cvs                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12337    | mms                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12400    | ssb                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 11072      | ms-settings-emailandaccounts         | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11130      | ms-project                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11255      | xri                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11315      | msrp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11351      | ms-settings-connectabledevices       | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11393      | cabal                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11428      | nih                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11467      | ms-whiteboard                        | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11533      | smp                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11537      | vnc                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11583      | graph                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11645      | dvx                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11718      | lorawan                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11742      | lastfm                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11799      | w3                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11804      | mumble                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11824      | feedready                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11857      | microsoft.windows.camera             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11892      | wcr                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11945      | ms-mobileplans                       | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11950      | ms-settings-lock                     | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11962      | ws                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 11999      | rtspu                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12029      | ms-settings-displays-topology        | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 43]
+Bormann & Birkholz        Expires 1 August 2024                [Page 43]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -12422    | iris.xpc                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12458    | starknet                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12478    | qb                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12493    | mss                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12502    | ventrilo                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12525    | ms-lockscreencomponent-config        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12566    | icap                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12569    | mupdate                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12599    | paparazzi                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12634    | fish                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12644    | sip                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12699    | mt                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12705    | acap                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12718    | casts                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12726    | reload                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12732    | spotify                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12806    | fuchsia-pkg                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12823    | ms-gamebarservices                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12876    | hyper                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -12932    | dns                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13014    | doi                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13026    | ms-settings-power                    | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13068    | git                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13094    | openpgp4fpr                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 12068      | file                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12102      | mailto                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12174      | ms-launchremotedesktop               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12242      | cvs                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12337      | mms                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12400      | ssb                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12422      | iris.xpc                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12458      | starknet                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12478      | qb                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12493      | mss                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12502      | ventrilo                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12525      | ms-lockscreencomponent-config        | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12566      | icap                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12569      | mupdate                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12599      | paparazzi                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12634      | fish                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12644      | sip                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12699      | mt                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12705      | acap                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12718      | casts                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12726      | reload                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12732      | spotify                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12806      | fuchsia-pkg                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12823      | ms-gamebarservices                   | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 44]
+Bormann & Birkholz        Expires 1 August 2024                [Page 44]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -13098    | ms-secondary-screen-controller       | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13285    | snews                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13340    | smtp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13348    | pack                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13362    | teliaeid                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13372    | mongodb                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13404    | afp                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13440    | msrps                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13442    | ldap                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13499    | nntp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13608    | onenote                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13650    | sarif                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13680    | elsi                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13829    | otpauth                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13846    | info                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13862    | aaa                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13923    | svn                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -13986    | iris                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14010    | lbry                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14034    | ms-search                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14090    | ms-browser-extension                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14153    | maps                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14162    | swid                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14168    | ms-officeapp                         | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 12876      | hyper                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 12932      | dns                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13014      | doi                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13026      | ms-settings-power                    | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13068      | git                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13094      | openpgp4fpr                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13098      | ms-secondary-screen-controller       | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13285      | snews                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13340      | smtp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13348      | pack                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13362      | teliaeid                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13372      | mongodb                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13404      | afp                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13440      | msrps                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13442      | ldap                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13499      | nntp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13608      | onenote                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13650      | sarif                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13680      | elsi                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13829      | otpauth                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13846      | info                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13862      | aaa                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13923      | svn                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 13986      | iris                                 | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 45]
+Bormann & Birkholz        Expires 1 August 2024                [Page 45]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -14180    | ms-settings-bluetooth                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14310    | ms-enrollment                        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14347    | dntp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14364    | ms-walk-to                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14366    | ms-getoffice                         | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14367    | thismessage                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14460    | message                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14477    | prospero                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14526    | aaas                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14595    | market                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14627    | stun                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14667    | chrome-extension                     | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14830    | itms                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14860    | ms-whiteboard-cmd                    | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14867    | wifi                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14868    | icon                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14878    | ftp                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14901    | stuns                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14906    | mqtts                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14936    | ms-settings-workplace                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14962    | tn3270                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14972    | pres                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -14982    | p1                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15061    | android                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 14010      | lbry                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14034      | ms-search                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14090      | ms-browser-extension                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14153      | maps                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14162      | swid                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14168      | ms-officeapp                         | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14180      | ms-settings-bluetooth                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14310      | ms-enrollment                        | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14347      | dntp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14364      | ms-walk-to                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14366      | ms-getoffice                         | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14367      | thismessage                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14460      | message                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14477      | prospero                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14526      | aaas                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14595      | market                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14627      | stun                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14667      | chrome-extension                     | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14830      | itms                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14860      | ms-whiteboard-cmd                    | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14867      | wifi                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14868      | icon                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14878      | ftp                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14901      | stuns                                | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 46]
+Bormann & Birkholz        Expires 1 August 2024                [Page 46]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -15118    | simplex                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15163    | ms-visio                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15202    | cid                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15206    | unreal                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15230    | tool                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15254    | ms-secondary-screen-setup            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15267    | rtsp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15306    | xfire                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15358    | xmpp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15361    | ms-settings-cellular                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15579    | v-event                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15639    | iris.beep                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15641    | wyciwyg                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15645    | ms-meetnow                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15679    | ms-search-repair                     | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15773    | ms-settings-camera                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15776    | ms-virtualtouchpad                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15805    | xmlrpc.beeps                         | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15972    | ipfs                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -15994    | ms-settings-wifi                     | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16051    | aw                                   | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16069    | first-run-pen-experience             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16079    | oid                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16134    | iris.xpcs                            | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 14906      | mqtts                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14936      | ms-settings-workplace                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14962      | tn3270                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14972      | pres                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 14982      | p1                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15061      | android                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15118      | simplex                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15163      | ms-visio                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15202      | cid                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15206      | unreal                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15230      | tool                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15254      | ms-secondary-screen-setup            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15267      | rtsp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15306      | xfire                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15358      | xmpp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15361      | ms-settings-cellular                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15579      | v-event                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15639      | iris.beep                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15641      | wyciwyg                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15645      | ms-meetnow                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15679      | ms-search-repair                     | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15773      | ms-settings-camera                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15776      | ms-virtualtouchpad                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15805      | xmlrpc.beeps                         | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 47]
+Bormann & Birkholz        Expires 1 August 2024                [Page 47]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-     | -16138    | drop                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16194    | ms-publisher                         | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16281    | leaptofrogans                        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16292    | rmi                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16300    | soap.beeps                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16377    | tag                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16585    | ms-word                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16632    | onenote-cmd                          | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16645    | ms-powerpoint                        | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16728    | hxxp                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16729    | secondlife                           | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16884    | rsync                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16918    | vemmi                                | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -16933    | ipns                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17039    | swh                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17068    | pwid                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17097    | dtmi                                 | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17134    | dis                                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17170    | iotdisco                             | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17175    | ms-restoretabcompanion               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17264    | service                              | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17315    | finger                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17361    | web+ap                               | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
-     | -17381    | ms-eyecontrolspeech                  | [RFC-XXXX] |
-     +-----------+--------------------------------------+------------+
+    +------------+--------------------------------------+------------+
+    | 15972      | ipfs                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 15994      | ms-settings-wifi                     | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16051      | aw                                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16069      | first-run-pen-experience             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16079      | oid                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16134      | iris.xpcs                            | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16138      | drop                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16194      | ms-publisher                         | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16281      | leaptofrogans                        | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16292      | rmi                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16300      | soap.beeps                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16377      | tag                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16585      | ms-word                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16632      | onenote-cmd                          | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16645      | ms-powerpoint                        | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16728      | hxxp                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16729      | secondlife                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16884      | rsync                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16918      | vemmi                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 16933      | ipns                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 17039      | swh                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 17068      | pwid                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 17097      | dtmi                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 17134      | dis                                  | [RFC-XXXX] |
 
 
 
-Bormann & Birkholz        Expires 24 July 2024                 [Page 48]
+Bormann & Birkholz        Expires 1 August 2024                [Page 48]
 
 Internet-Draft      Constrained Resource Identifiers        January 2024
 
 
-              Table 6: Mapping Scheme Numbers to Scheme Names
+    +------------+--------------------------------------+------------+
+    | 17170      | iotdisco                             | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 17175      | ms-restoretabcompanion               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 17264      | service                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 17315      | finger                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 17361      | web+ap                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+    | 17381      | ms-eyecontrolspeech                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
+
+             Table 6: Mapping Scheme Numbers to Scheme Names
 
    The assignments from this table can be extracted from the XML form of
    this document (when stored in a file "this.xml") into CSV form
@@ -2722,6 +2736,16 @@ Appendix B.  The Small Print
    |  In general, a URI that uses the generic syntax for authority with
    |  an empty path should be normalized to a path of "/".
 
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 49]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    *  _Leading empty path segments without authority_: Somewhat related,
       note also that URIs and URI references that do not carry an
       authority cannot represent initial empty path segments (i.e., that
@@ -2738,13 +2762,6 @@ Appendix B.  The Small Print
          by example:
 
          *  https://host%ffname, https://example.com/x?data=%ff
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 49]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
             All URI components must, after percent decoding, be valid
             UTF-8 encoded text.  Bytes that are not valid UTF-8 show up,
@@ -2774,6 +2791,17 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
          *  https://alice@example.com/
 
+
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 50]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
             The user information can be expressed in CRIs if the
             "userinfo" feature is present.  The URI https://@example.com
             is represented as [-4, [false, "", "example", "com"]]; the
@@ -2793,14 +2821,6 @@ Appendix C.  CBOR Extended Diagnostic Notation (EDN): The "cri"
    [RFC8610].  Among others, it provides an extension point for
    "application-extension identifiers" that can be used to notate CBOR
    data items in application-specific ways.
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 50]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
    The present document defines and registers (Section 11.3) the
    application-extension identifier "cri", which can be used to notate
@@ -2827,6 +2847,17 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    See Appendix C.1 for an ABNF definition for the content of cri
    literals.
 
+
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 51]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
 C.1.  cri: ABNF Definition of URI Representation of a CRI
 
    The syntax of the content of cri literals can be described by the
@@ -2849,14 +2880,6 @@ C.1.  cri: ABNF Definition of URI Representation of a CRI
    absolute-URI  = scheme ":" hier-part [ "?" query ]
 
    relative-ref  = relative-part [ "?" query ] [ "#" fragment ]
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 51]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
    relative-part = "//" authority path-abempty
                     / path-absolute
@@ -2884,6 +2907,13 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
                     / [ *5( h16 ":" ) h16 ] "::"              h16
                     / [ *6( h16 ":" ) h16 ] "::"
 
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 52]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
    h16           = 1*4HEXDIG
    ls32          = ( h16 ":" h16 ) / IPv4address
    IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
@@ -2906,13 +2936,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    path-noscheme = segment-nz-nc *( "/" segment )
    path-rootless = segment-nz *( "/" segment )
    path-empty    = 0<pchar>
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 52]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
 
    segment       = *pchar
    segment-nz    = 1*pchar
@@ -2939,6 +2962,19 @@ Appendix D.  Change Log
 
    This section is to be removed before publishing as an RFC.
 
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 53]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
+
+   Changes from -14 to -15
+
+   *  Make scheme numbers unsigned and map them to negative numbers used
+      as scheme-id values
+
    Changes from -09 to -14
 
    *  Editorial changes; move some examples to Appendix B, break up
@@ -2963,13 +2999,6 @@ Appendix D.  Change Log
 
    *  Discuss Error handling and extensibility (Section 5.2.1)
 
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 53]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
    *  Conversion to URI: Handle : in first pathname component of a CRI-
       Reference (Section 6.1, Paragraph 2.6.1)
 
@@ -2988,6 +3017,14 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    *  Clarify that well-formedness requires removing trailing nulls.
 
    *  Fragments can contain PET.
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 54]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
 
    *  Percent-encoded text in PET is treated as byte strings.
 
@@ -3017,15 +3054,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    *  Add PET
 
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 54]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
    *  Remove hopeless attempt to encode "remote trailing nulls" rule in
       CDDL (which is not a transformation language).
 
@@ -3046,6 +3074,13 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
       -  split reg-names at dots;
 
       -  add optional zone identifiers [RFC6874] to IP addresses
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 55]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
 
    Changes from -04 to -05
 
@@ -3075,13 +3110,6 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
 
    *  Removed the append-relation path.type option (#41).
 
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 55]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
    *  Renumbered the remaining path.types.
 
    *  Renumbered the option numbers.
@@ -3100,6 +3128,15 @@ Internet-Draft      Constrained Resource Identifiers        January 2024
    Changes from -00 to -01:
 
    *  None.
+
+
+
+
+
+Bormann & Birkholz        Expires 1 August 2024                [Page 56]
+
+Internet-Draft      Constrained Resource Identifiers        January 2024
+
 
 Acknowledgements
 
@@ -3129,15 +3166,6 @@ Contributors
    Email: christian@amsuess.com
 
 
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 56]
-
-Internet-Draft      Constrained Resource Identifiers        January 2024
-
-
 Authors' Addresses
 
    Carsten Bormann (editor)
@@ -3161,32 +3189,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 24 July 2024                 [Page 57]
+Bormann & Birkholz        Expires 1 August 2024                [Page 57]
