@@ -84,7 +84,7 @@ normative:
 
 The Constrained Resource Identifier (CRI) is a complement to the Uniform
 Resource Identifier (URI) that represents the URI components in Concise
-Binary Object Representation (CBOR) instead of a sequence of characters.
+Binary Object Representation (CBOR) instead of in a sequence of characters.
 This simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
@@ -171,7 +171,7 @@ The components are subject to the following constraints:
 {: type="C%d."}
 1. {:#c-scheme} The scheme name can be any Unicode string (see
    Definition D80 in {{Unicode}}) that matches the syntax of a URI
-   scheme (see {{Section 3.1 of RFC3986}}, which constrains schemes to
+   scheme (see {{Section 3.1 of RFC3986}}, which constrains scheme names to
    ASCII) and is lowercase (see Definition D139 in {{Unicode}}).
    The scheme is always present.
 
@@ -355,7 +355,8 @@ fail gracefully in the face of malicious inputs.)
 # Comparison
 
 One of the most common operations on CRIs is comparison: determining
-whether two CRIs are equivalent, without dereferencing the CRIs (using
+whether two CRIs are equivalent, without dereferencing the CRIs (i.e.,
+using
 them to access their respective resource(s)).
 
 Determination of equivalence or difference of CRIs is based on simple
@@ -386,7 +387,7 @@ represented resource and the resource identified by the CRI.
 
 This section defines the representation of CRIs in
 [Concise Binary Object Representation (CBOR)](#RFC8949).
-When reduced representation size is desired, CRIs are not represented directly.
+When reduced representation size is desired, CRIs are often not represented directly.
 Instead, CRIs are indirectly referenced through *CRI references*.
 These take advantage of hierarchical locality and provide a very compact
 encoding.
@@ -476,7 +477,7 @@ scheme-id `-1`.
 The `discard` section can be used in a CRI reference when neither a
 scheme nor an authority is present.
 It then expresses the operations performed on a base CRI by CRI references that
-are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.
+are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.\\
 "." and ".." are not available in CRIs and are therefore expressed
 using `discard` after a normalization step, as is the presence or absence of a leading "/".
 
@@ -529,9 +530,9 @@ This visualization does not go into the details of the elements.
 ~~~~
 
 ~~~~ cbor-diag
-[-6,             / scheme-id -- equivalent to "did" /
- true,           / authority = NOAUTH-ROOTLESS /
- ["web:alice:bob"] / path /
+[-6,                / scheme-id -- equivalent to "did" /
+ true,              / authority = NOAUTH-ROOTLESS /
+ ["web:alice:bob"]  / path /
 ]
 ~~~~
 
@@ -579,14 +580,14 @@ they are both null, they are both left out and only discard is
 transferred.
 Trailing null values are removed from the array.
 As a special case, an empty array is sent in place for a remaining
-`[0]` (URI "").
+`[0]` (URI reference "").
 
 ### Error handling and extensibility {#unprocessable}
 
 It is recommended that specifications that describe the use of CRIs in CBOR-based protocols
 use the error handling mechanisms outlined in this section.
 Implementations of this document MUST adhere to these rules
-unless the containing document overrides them.
+unless a containing document overrides them.
 
 When encountering a CRI that is well-formed in terms of CBOR, but that
 
@@ -610,7 +611,7 @@ that is distinct from all processable CRIs,
 and distinct from all unprocessable CRIs with different CBOR representations.
 It is up to implementation whether unprocessable CRIs with identical representations
 are treated as identical to each other or not.
-Unprocessable CRIs can not be dereferenced,
+Unprocessable CRIs cannot be dereferenced,
 and it is an error to query any of their components.
 
 This mechanism ensures that CRI extensions
@@ -989,8 +990,8 @@ of the CoAP protocol {{-coap}}.
 ## Converting Between CoAP CRIs and Sets of CoAP Options
 
 This section provides an analogue to {{Sections 6.4 and 6.5 of -coap}}:
-Computing a set of CoAP options from a request CRI {{decompose-coap}} and computing a
-request CRI from a set of COAP options {{compose-coap}}.
+Computing a set of CoAP options from a request CRI ({{decompose-coap}}) and computing a
+request CRI from a set of COAP options ({{compose-coap}}).
 
 This section makes use of the mapping between CRI scheme numbers
 and URI scheme names shown in {{scheme-map}}:
