@@ -158,9 +158,16 @@ In this specification, the term "byte" is used in its now customary
 sense as a synonym for "octet".
 
 Terms defined in this document appear in *cursive* where they
-are introduced (rendered in plain text as the new term surrounded by
-underscores).
+are introduced (in the plaintext form of this document, they are
+rendered as the new term surrounded by underscores).
 
+The general structure of data items is shown in the [Concise Data Definition
+Language (CDDL)](#RFC8610) [including its control
+extensions](#RFC9165).
+Specific examples are notated in CBOR Extended
+Diagnostic Notation (EDN), as originally introduced in {{Section 8 of
+-cbor}} and extended in {{Appendix G of -cddl}}.
+({{-edn}} more rigorously defines and further extends EDN.)
 
 
 # Constraints {#constraints}
@@ -418,9 +425,9 @@ resolved to their respective CRI before comparison.
 
 [^replace-xxxx]
 
-A CRI or CRI reference is encoded as a CBOR array {{RFC8949}}, with the
-structure as described in the [Concise Data Definition Language
-(CDDL)](#RFC8610) [including its control extensions](#RFC9165) as follows:
+A CRI or CRI reference is encoded as a CBOR array (Major type 4 in
+{{Section 3.1 of RFC8949}}), with the structure described in CDDL as
+follows:
 
 ~~~~ cddl
 {::include cddl/cri.cddl}
