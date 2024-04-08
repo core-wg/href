@@ -293,7 +293,7 @@ Examples of this are:
 * `[0, null, []]`: leaves the path alone but unsets the query and the fragment
 
 (Full) CRIs that do not correspond to a valid URI are not valid on their own, and cannot be used.
-Normatively they are characterized by the {{cri-to-uri}} process producing a valid and syntax-normalized URI.
+Normatively they are characterized by the {{cri-to-uri}} process not producing a valid and syntax-normalized URI.
 For easier understanding, they are listed here:
 
 * CRIs (and CRI references) containing a path component "." or "..".
