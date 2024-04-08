@@ -57,6 +57,7 @@ informative:
   RFC8820: lawn
   W3C.REC-html52-20171214:
   I-D.ietf-cbor-edn-literals: edn
+  I-D.carpenter-6man-rfc6874bis: zonebis
 normative:
   RFC3986: uri
   RFC3987: iri
@@ -67,7 +68,6 @@ normative:
     -: ianacons
 #    =: RFC8126
   IANA.core-parameters:
-  I-D.carpenter-6man-rfc6874bis: zonebis
   RFC8610: cddl
   Unicode:
     target: https://www.unicode.org/versions/Unicode13.0.0/
@@ -765,9 +765,11 @@ authority
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
-  Any zone-id is appended to the string, separated by "%25" as
-  defined in {{Section 2 of -zone}}, or as specified in a superseding
-  zone-id specification document {{-zonebis}}; this also leads to a modified
+  Any zone-id is appended to the string; the details for how this is
+  done are currently in flux in the URI specification: {{Section 2 of
+  -zone}} uses percent-encoding and a separator of "%25", while
+  proposals for a future superseding zone-id specification document
+  (such as {{-zonebis}}) are being prepared; this also leads to a modified
   "IP-literal" rule as specified in these documents.
 
   If the CRI reference contains a `port` item, the port
