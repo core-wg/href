@@ -7,6 +7,7 @@ submissiontype: IETF
 consensus: true
 lang: en
 title: Constrained Resource Identifiers
+updates: 7595
 wg: CoRE Working Group
 
 author:
