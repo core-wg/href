@@ -1,15 +1,15 @@
-| CRI scheme number | URI scheme | Reference   |
-|-------------------|------------|-------------|
-|                 0 | coap       | \[RFC-XXXX] |
-|                 1 | coaps      | \[RFC-XXXX] |
-|                 2 | http       | \[RFC-XXXX] |
-|                 3 | https      | \[RFC-XXXX] |
-|                 4 | urn        | \[RFC-XXXX] |
-|                 5 | did        | \[RFC-XXXX] |
-|                 6 | coap+tcp   | \[RFC-XXXX] |
-|                 7 | coaps+tcp  | \[RFC-XXXX] |
-|                 8 | coap+ws    | \[RFC-XXXX] |
-|                 9 | coaps+ws   | \[RFC-XXXX] |
+| CRI scheme number | URI scheme name | Reference   |
+|-------------------|-----------------|-------------|
+|                 0 | coap            | \[RFC-XXXX] |
+|                 1 | coaps           | \[RFC-XXXX] |
+|                 2 | http            | \[RFC-XXXX] |
+|                 3 | https           | \[RFC-XXXX] |
+|                 4 | urn             | \[RFC-XXXX] |
+|                 5 | did             | \[RFC-XXXX] |
+|                 6 | coap+tcp        | \[RFC-XXXX] |
+|                 7 | coaps+tcp       | \[RFC-XXXX] |
+|                 8 | coap+ws         | \[RFC-XXXX] |
+|                 9 | coaps+ws        | \[RFC-XXXX] |
 |              1059 | ms-gamingoverlay | \[RFC-XXXX] |
 |              1165 |             snmp | \[RFC-XXXX] |
 |              1220 |             cast | \[RFC-XXXX] |
@@ -95,6 +95,7 @@
 |              5410 |    ms-sttoverlay | \[RFC-XXXX] |
 |              5425 |              irc | \[RFC-XXXX] |
 |              5472 |            sieve | \[RFC-XXXX] |
+|              5477 | machineProvisioningProgressReporter | \[RFC-XXXX] |
 |              5480 |             lvlt | \[RFC-XXXX] |
 |              5492 |             sftp | \[RFC-XXXX] |
 |              5536 |         ms-excel | \[RFC-XXXX] |
@@ -283,6 +284,7 @@
 |             13068 |              git | \[RFC-XXXX] |
 |             13094 |      openpgp4fpr | \[RFC-XXXX] |
 |             13098 | ms-secondary-screen-controller | \[RFC-XXXX] |
+|             13228 |            mvrps | \[RFC-XXXX] |
 |             13285 |            snews | \[RFC-XXXX] |
 |             13340 |             smtp | \[RFC-XXXX] |
 |             13348 |             pack | \[RFC-XXXX] |
@@ -291,6 +293,7 @@
 |             13404 |              afp | \[RFC-XXXX] |
 |             13440 |            msrps | \[RFC-XXXX] |
 |             13442 |             ldap | \[RFC-XXXX] |
+|             13451 |             mvrp | \[RFC-XXXX] |
 |             13499 |             nntp | \[RFC-XXXX] |
 |             13608 |          onenote | \[RFC-XXXX] |
 |             13650 |            sarif | \[RFC-XXXX] |
