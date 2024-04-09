@@ -1445,8 +1445,9 @@ See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
 ## cri: ABNF Definition of URI Representation of a CRI {#cri-grammar}
 
 The syntax of the content of `cri` literals can be described by the
-ABNF for `URI-reference` in {{Section 4.1 of RFC3986@-uri}}, as reproduced
-in {{abnf-grammar-cri}}.
+ABNF for `URI-reference` in {{Section 4.1 of RFC3986@-uri}} with certain
+re-arrangements taken from {{figure-5 (Figure 5)<I-D.ietf-cbor-edn-literals}} of {{I-D.ietf-cbor-edn-literals}};
+these are reproduced in {{abnf-grammar-cri}}.
 If the content is not ASCII only (i.e., for IRIs), first apply
 {{Section 3.1 of RFC3987}} and apply this grammar to the result.
 
@@ -1483,24 +1484,31 @@ IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
 
 IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
 
+; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged for
+; PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
+
 IPv6address   =                            6( h16 ":" ) ls32
-                 /                       "::" 5( h16 ":" ) ls32
-                 / [               h16 ] "::" 4( h16 ":" ) ls32
-                 / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
-                 / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
-                 / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
-                 / [ *4( h16 ":" ) h16 ] "::"              ls32
-                 / [ *5( h16 ":" ) h16 ] "::"              h16
-                 / [ *6( h16 ":" ) h16 ] "::"
+              /                       "::" 5( h16 ":" ) ls32
+              / [ h16               ] "::" 4( h16 ":" ) ls32
+              / [ h16 *1( ":" h16 ) ] "::" 3( h16 ":" ) ls32
+              / [ h16 *2( ":" h16 ) ] "::" 2( h16 ":" ) ls32
+              / [ h16 *3( ":" h16 ) ] "::"    h16 ":"   ls32
+              / [ h16 *4( ":" h16 ) ] "::"              ls32
+              / [ h16 *5( ":" h16 ) ] "::"              h16
+              / [ h16 *6( ":" h16 ) ] "::"
 
 h16           = 1*4HEXDIG
 ls32          = ( h16 ":" h16 ) / IPv4address
 IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
-dec-octet     = DIGIT                 ; 0-9
-                 / %x31-39 DIGIT         ; 10-99
-                 / "1" 2DIGIT            ; 100-199
-                 / "2" %x30-34 DIGIT     ; 200-249
-                 / "25" %x30-35          ; 250-255
+dec-octet     = "25" %x30-35         ; 250-255
+              / "2" %x30-34 DIGIT    ; 200-249
+              / "1" 2DIGIT           ; 100-199
+              / %x31-39 DIGIT        ; 10-99
+              / DIGIT                ; 0-9
+ALPHA         = %x41-5a / %x61-7a
+DIGIT         = %x30-39
+HEXDIG        = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+; case insensitive matching, i.e., including lower case
 
 reg-name      = *( unreserved / pct-encoded / sub-delims )
 
