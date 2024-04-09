@@ -5300,8 +5300,9 @@ cri'https://example.com/bottarga/shaved'
 <a href="#appendix-C.1" class="section-number selfRef">C.1. </a><a href="#name-cri-abnf-definition-of-uri-" class="section-name selfRef">cri: ABNF Definition of URI Representation of a CRI</a>
         </h3>
 <p id="appendix-C.1-1">The syntax of the content of <code>cri</code> literals can be described by the
-ABNF for <code>URI-reference</code> in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-4.1" class="relref">4.1</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>, as reproduced
-in <a href="#abnf-grammar-cri" class="auto internal xref">Figure 2</a>.
+ABNF for <code>URI-reference</code> in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-4.1" class="relref">4.1</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> with certain
+re-arrangements taken from <a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-08#figure-5" class="relref">Figure 5</a> of <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>;
+these are reproduced in <a href="#abnf-grammar-cri" class="auto internal xref">Figure 2</a>.
 If the content is not ASCII only (i.e., for IRIs), first apply
 <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> and apply this grammar to the result.<a href="#appendix-C.1-1" class="pilcrow">¶</a></p>
 <span id="name-abnf-definition-of-uri-repr"></span><div id="abnf-grammar-cri">
@@ -5340,24 +5341,31 @@ IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
 
 IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
 
+; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged for
+; PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
+
 IPv6address   =                            6( h16 ":" ) ls32
-                 /                       "::" 5( h16 ":" ) ls32
-                 / [               h16 ] "::" 4( h16 ":" ) ls32
-                 / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
-                 / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
-                 / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
-                 / [ *4( h16 ":" ) h16 ] "::"              ls32
-                 / [ *5( h16 ":" ) h16 ] "::"              h16
-                 / [ *6( h16 ":" ) h16 ] "::"
+              /                       "::" 5( h16 ":" ) ls32
+              / [ h16               ] "::" 4( h16 ":" ) ls32
+              / [ h16 *1( ":" h16 ) ] "::" 3( h16 ":" ) ls32
+              / [ h16 *2( ":" h16 ) ] "::" 2( h16 ":" ) ls32
+              / [ h16 *3( ":" h16 ) ] "::"    h16 ":"   ls32
+              / [ h16 *4( ":" h16 ) ] "::"              ls32
+              / [ h16 *5( ":" h16 ) ] "::"              h16
+              / [ h16 *6( ":" h16 ) ] "::"
 
 h16           = 1*4HEXDIG
 ls32          = ( h16 ":" h16 ) / IPv4address
 IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
-dec-octet     = DIGIT                 ; 0-9
-                 / %x31-39 DIGIT         ; 10-99
-                 / "1" 2DIGIT            ; 100-199
-                 / "2" %x30-34 DIGIT     ; 200-249
-                 / "25" %x30-35          ; 250-255
+dec-octet     = "25" %x30-35         ; 250-255
+              / "2" %x30-34 DIGIT    ; 200-249
+              / "1" 2DIGIT           ; 100-199
+              / %x31-39 DIGIT        ; 10-99
+              / DIGIT                ; 0-9
+ALPHA         = %x41-5a / %x61-7a
+DIGIT         = %x30-39
+HEXDIG        = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+; case insensitive matching, i.e., including lower case
 
 reg-name      = *( unreserved / pct-encoded / sub-delims )
 
