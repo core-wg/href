@@ -59,7 +59,8 @@ informative:
   I-D.ietf-cbor-edn-literals: edn
   I-D.carpenter-6man-rfc6874bis: zonebis
 normative:
-  RFC3986: uri
+  STD66: uri
+# RFC 3986
   RFC3987: iri
   RFC6874: zone
   RFC7595: schemes
@@ -110,7 +111,7 @@ memory size.
 
 # Introduction
 
-The [Uniform Resource Identifier (URI)](#RFC3986) and its most common
+The [Uniform Resource Identifier (URI)](#STD66) and its most common
 usage, the URI reference, are the Internet standard for linking to
 resources in hypertext formats such as [HTML](#W3C.REC-html52-20171214)
 or the [HTTP "Link" header field](#RFC8288).
@@ -131,7 +132,7 @@ This can be a problem especially in [constrained environments](#RFC7228),
 where nodes often have severe code size and memory size limitations.
 As a result, many implementations in such environments support only an
 ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
-half of {{RFC3986}}.
+half of {{STD66}}.
 
 This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
@@ -142,7 +143,7 @@ comparison, and reference resolution (including all corner cases) to be
 implemented in a comparatively small amount of code.
 
 As a result of simplification, however, CRIs are not capable of
-expressing all URIs permitted by the generic syntax of {{RFC3986}} (hence
+expressing all URIs permitted by the generic syntax of {{STD66}} (hence
 the "constrained" in "Constrained Resource Identifier").
 The supported subset includes all URIs of the
 [Constrained Application Protocol (CoAP)](#RFC7252), most URIs of the
@@ -179,7 +180,7 @@ The components are subject to the following constraints:
 {: type="C%d."}
 1. {:#c-scheme} The scheme name can be any Unicode string (see
    Definition D80 in {{Unicode}}) that matches the syntax of a URI
-   scheme (see {{Section 3.1 of RFC3986}}, which constrains scheme names to
+   scheme (see {{Section 3.1 of RFC3986@-uri}}, which constrains scheme names to
    ASCII) and is lowercase (see Definition D139 in {{Unicode}}).
    The scheme is always present.
 
@@ -188,7 +189,7 @@ The components are subject to the following constraints:
    and optionally preceded by user information.
 
    Alternatively, the authority can be absent; the two cases for this
-   defined in {{Section 3.3 of RFC3986}} are modeled by two different
+   defined in {{Section 3.3 of RFC3986@-uri}} are modeled by two different
    values used in place of an absent authority:
 
    * the path can be root-based (zero or more path components that are
@@ -200,8 +201,8 @@ The components are subject to the following constraints:
    not all CRI implementations will support authority-less URIs.)
 
 3. {:#c-userinfo} A userinfo is a text string built out of unreserved
-  characters ({{Section 2.3 of RFC3986}}) or "sub-delims" ({{Section 2.2
-  of RFC3986}}); any other character needs to be percent-encoded ({{pet}}).
+  characters ({{Section 2.3 of RFC3986@-uri}}) or "sub-delims" ({{Section 2.2
+  of RFC3986@-uri}}); any other character needs to be percent-encoded ({{pet}}).
    Note that this excludes the ":" character, which is commonly
    deprecated as a way to delimit a cleartext password in a userinfo.
 
@@ -217,12 +218,12 @@ The components are subject to the following constraints:
    result in a Unicode string that is lowercase and in Unicode
    Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
    (The syntax may be further restricted by the scheme.
-   As per {{Section 3.2.2 of -uri}}, a registered name can be empty, for
+   As per {{Section 3.2.2 of RFC3986@-uri}}, a registered name can be empty, for
    which case a scheme can define a default for the host.)
 
 6. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
    Ports outside this range, empty ports (port subcomponents with no
-   digits, see {{Section 3.2.3 of RFC3986}}), or ports with redundant
+   digits, see {{Section 3.2.3 of RFC3986@-uri}}), or ports with redundant
    leading zeros, are not supported.
 
 7. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
@@ -236,8 +237,8 @@ The components are subject to the following constraints:
    this is considered equivalent to a path of zero path segments by
    HTTP and CoAP, but this equivalence does not hold for CRIs in general as they only perform
    normalization on the Syntax-Based Normalization level ({{Section
-   6.2.2 of -uri}}), not on the scheme-specific Scheme-Based
-   Normalization level ({{Section 6.2.3 of -uri}}).
+   6.2.2 of RFC3986@-uri}}), not on the scheme-specific Scheme-Based
+   Normalization level ({{Section 6.2.3 of RFC3986@-uri}}).
 
    (A CRI implementation may want to offer scheme-cognizant
    interfaces, performing this scheme-specific normalization for
@@ -305,7 +306,7 @@ For easier understanding, they are listed here:
 
 * CRIs (and CRI references) containing a path component "." or "..".
 
-  These would be removed by the remove_dot_segments algorithm of {{RFC3986}},
+  These would be removed by the remove_dot_segments algorithm of {{STD66}},
   and thus never produce a normalized URI after resolution.
 
   (In CRI references, the `discard` value is used to afford segment removal,
@@ -497,11 +498,11 @@ and "/foo" removes all segments, represented in the `discard` section as the val
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
 
-Most URI references that {{Section 4.2 of RFC3986}} calls "relative
+Most URI references that {{Section 4.2 of RFC3986@-uri}} calls "relative
 references" (i.e., references that need to undergo a resolution
 process to obtain a URI) correspond to the CRI reference form that starts with
 `discard`.  The exception are relative references with an `authority`
-(called a "network-path reference" in {{Section 4.2 of RFC3986}}), which
+(called a "network-path reference" in {{Section 4.2 of RFC3986@-uri}}), which
 discard the entire path of the base CRI.
 These CRI references never carry a `discard` section: the value of
 `discard` defaults to `true`.
@@ -680,7 +681,7 @@ an absolute CRI reference:
 
 # Relationship between CRIs, URIs, and IRIs
 
-CRIs are meant to replace both [Uniform Resource Identifiers (URIs)](#RFC3986)
+CRIs are meant to replace both [Uniform Resource Identifiers (URIs)](#STD66)
 and [Internationalized Resource Identifiers (IRIs)](#RFC3987)
 in [constrained environments](#RFC7228).
 Applications in these environments may never need to use URIs and IRIs
@@ -727,7 +728,7 @@ references, and IRI references.
 Applications MUST convert a CRI reference to a URI
 reference by determining the components of the URI reference according
 to the following steps and then recomposing the components to a URI
-reference string as specified in {{Section 5.3 of RFC3986}}.
+reference string as specified in {{Section 5.3 of RFC3986@-uri}}.
 
 {:vspace}
 scheme
@@ -753,15 +754,15 @@ authority
   appending a "@".  Otherwise, both the subcomponent and the "@" sign
   are omitted.
   Any character in the value of the `userinfo` elements that is not in
-  the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
-  "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
+  the set of unreserved characters ({{Section 2.3 of RFC3986@-uri}}) or
+  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) MUST be
   percent-encoded.
 
   The `host-name` is turned into a single string by joining the
   elements separated by dots (".").
   Any character in the elements of a `host-name` item that is not in
-  the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
-  "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
+  the set of unreserved characters ({{Section 2.3 of RFC3986@-uri}}) or
+  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) MUST be
   percent-encoded.
   If there are dots (".") in such elements, the conversion fails
   (percent-encoding is not able to represent such elements, as
@@ -771,7 +772,7 @@ authority
   {: #host-ip-to-uri}
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
-  "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
+  "IP-literal" rule ({{Section 3.2.2 of RFC3986@-uri}}).
   Any zone-id is appended to the string; the details for how this is
   done are currently in flux in the URI specification: {{Section 2 of
   -zone}} uses percent-encoding and a separator of "%25", while
@@ -795,7 +796,7 @@ path
   one indicates.  If the discard value is `1` and the first element of
   the path contains a `:`, the path component is prefixed by "./"
   (this avoids the first element to appear as supplying a URI scheme;
-  compare `path-noscheme` in {{Section 4.2 of -uri}}).
+  compare `path-noscheme` in {{Section 4.2 of RFC3986@-uri}}).
   {:#colon}
 
   If the discard item is not present and the CRI reference contains an
@@ -822,16 +823,16 @@ path
 
   If the authority component is present (not `null` or `true`) and the
   path component does not match the "path-abempty" rule ({{Section 3.3
-  of RFC3986}}), the conversion fails.
+  of RFC3986@-uri}}), the conversion fails.
 
   If the authority component is not present, but the scheme component
   is, and the path component does not match the "path-absolute",
   "path-rootless" (authority == `true`) or "path-empty" rule ({{Section
-  3.3 of RFC3986}}), the conversion fails.
+  3.3 of RFC3986@-uri}}), the conversion fails.
 
   If neither the authority component nor the scheme component are
   present, and the path component does not match the "path-absolute",
-  "path-noscheme" or "path-empty" rule ({{Section 3.3 of RFC3986}}), the
+  "path-noscheme" or "path-empty" rule ({{Section 3.3 of RFC3986@-uri}}), the
   conversion fails.
 
 query
@@ -869,7 +870,7 @@ It should be sufficient for all applications that use the CoAP
 protocol, as well as most other protocols employing URIs.
 
 However, Basic CRIs have one limitation: They do not support URI
-components that *require* percent-encoding ({{Section 2.1 of -uri}}) to
+components that *require* percent-encoding ({{Section 2.1 of RFC3986@-uri}}) to
 represent them in the URI syntax, except where that percent-encoding
 is used to escape the main delimiter in use.
 
@@ -1188,7 +1189,7 @@ items) or exhaustion of the call stack (stack overflow).
 See {{Section 10 of RFC8949}} for additional
 security considerations relating to CBOR.
 
-The security considerations discussed in {{Section 7 of RFC3986}} and
+The security considerations discussed in {{Section 7 of RFC3986@-uri}} and
 {{Section 8 of RFC3987}} for URIs and IRIs also apply to CRIs.
 
 
@@ -1345,7 +1346,7 @@ representative of the normal operation of CRIs.
   without Uri-Path Options from the other URI-related CoAP Options
   produces `s://x/`, not `s://x` -- CoAP prefers the lone empty path
   segment form.
-  Similarly, after discussing HTTP semantics, {{Section 6.2.3 of -uri}} states:
+  Similarly, after discussing HTTP semantics, {{Section 6.2.3 of RFC3986@-uri}} states:
 
   {:quote}
   > In general, a URI that uses the generic syntax for authority with an
@@ -1439,7 +1440,7 @@ See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
 ## cri: ABNF Definition of URI Representation of a CRI {#cri-grammar}
 
 The syntax of the content of `cri` literals can be described by the
-ABNF for `URI-reference` in {{Section 4.1 of -uri}}, as reproduced
+ABNF for `URI-reference` in {{Section 4.1 of RFC3986@-uri}}, as reproduced
 in {{abnf-grammar-cri}}.
 If the content is not ASCII only (i.e., for IRIs), first apply
 {{Section 3.1 of RFC3987}} and apply this grammar to the result.
@@ -1594,7 +1595,7 @@ Changes from -08 to -09
   following the updated rules of {{cri-to-uri}}.
   Schemes like http and coap do not distinguish between the empty path
   and the path containing a single slash when an authority is set (as
-  recommended in {{RFC3986}}).
+  recommended in {{STD66}}).
   For these schemes, that equivalence allows implementations to
   convert the just-a-slash URI to a CRI with a zero length path array
   (which, however, when converted back, does not produce a slash after
