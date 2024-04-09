@@ -54,7 +54,9 @@ informative:
   RFC7252: coap
   RFC8141: urn
   RFC8288: web-linking
-  RFC8820: lawn
+  BCP190: lawn
+#  BCP205:
+  # RFC8820
   W3C.REC-html52-20171214:
   I-D.ietf-cbor-edn-literals: edn
   I-D.carpenter-6man-rfc6874bis: zonebis
@@ -63,7 +65,8 @@ normative:
 # RFC 3986
   RFC3987: iri
   RFC6874: zone
-  RFC7595: schemes
+  BCP35: schemes
+# RFC7595
   IANA.uri-schemes:
   BCP26:
     -: ianacons
@@ -153,7 +156,7 @@ The exact constraints are defined in {{constraints}}.
 
 ## Notational Conventions
 
-{::boilerplate bcp14-tagged}
+{::boilerplate bcp14-tagged-bcp}
 
 In this specification, the term "byte" is used in its now customary
 sense as a synonym for "octet".
@@ -330,7 +333,7 @@ of a resource under a particular resource identifier.
 
 A Constrained Resource Identifier SHOULD be created by
 the naming authority that governs the namespace of the resource
-identifier (see also {{RFC8820}}).
+identifier (see also {{BCP190}}).
 For example, for the resources of an HTTP origin server,
 that server is responsible for creating the CRIs for those resources.
 
@@ -1264,7 +1267,7 @@ provided in {{tab-numbers}} in {{sec-numbers}}.
 
 ## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
 
-{{-schemes}} is updated to add the following note in the "Uniform
+{{RFC7595@-schemes}} is updated to add the following note in the "Uniform
 Resource Identifier (URI) Schemes" Registry {{IANA.uri-schemes}}:
 
 {:quote}
