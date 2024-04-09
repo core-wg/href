@@ -50,7 +50,8 @@ venue:
 
 informative:
   RFC7228: term
-  RFC9110: http
+  STD97: http
+# RFC9110
   RFC7252: coap
   RFC8141: urn
   RFC8288: web-linking
@@ -81,7 +82,8 @@ normative:
     date: 2020-03
     seriesinfo:
       ISBN: 978-1-936213-26-9
-  RFC8949: cbor
+  STD94: cbor
+# RFC8949
   RFC9165: cddlcontrol
 
 --- abstract
@@ -139,7 +141,7 @@ half of {{STD66}}.
 
 This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
-components in [Concise Binary Object Representation (CBOR)](#RFC8949)
+components in [Concise Binary Object Representation (CBOR)](#STD94)
 instead of a sequence of characters.
 This allows typical operations on URI references such as parsing,
 comparison, and reference resolution (including all corner cases) to be
@@ -150,7 +152,7 @@ expressing all URIs permitted by the generic syntax of {{STD66}} (hence
 the "constrained" in "Constrained Resource Identifier").
 The supported subset includes all URIs of the
 [Constrained Application Protocol (CoAP)](#RFC7252), most URIs of the
-[Hypertext Transfer Protocol (HTTP)](#RFC9110),
+[Hypertext Transfer Protocol (HTTP)](#STD97),
 [Uniform Resource Names (URNs)](#RFC8141), and other similar URIs.
 The exact constraints are defined in {{constraints}}.
 
@@ -170,7 +172,7 @@ Language (CDDL)](#RFC8610) [including its control
 extensions](#RFC9165).
 Specific examples are notated in CBOR Extended
 Diagnostic Notation (EDN), as originally introduced in {{Section 8 of
--cbor}} and extended in {{Appendix G of -cddl}}.
+RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
 ({{-edn}} more rigorously defines and further extends EDN.)
 
 
@@ -398,7 +400,7 @@ it in resource representations, e.g., to express a hyperlink between the
 represented resource and the resource identified by the CRI.
 
 This section defines the representation of CRIs in
-[Concise Binary Object Representation (CBOR)](#RFC8949).
+[Concise Binary Object Representation (CBOR)](#STD94).
 When reduced representation size is desired, CRIs are often not represented directly.
 Instead, CRIs are indirectly referenced through *CRI references*.
 These take advantage of hierarchical locality and provide a very compact
@@ -430,7 +432,7 @@ resolved to their respective CRI before comparison.
 [^replace-xxxx]
 
 A CRI or CRI reference is encoded as a CBOR array (Major type 4 in
-{{Section 3.1 of RFC8949}}), with the structure described in CDDL as
+{{Section 3.1 of RFC8949@-cbor}}), with the structure described in CDDL as
 follows:
 
 ~~~~ cddl
@@ -459,7 +461,7 @@ references:
 
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
-{{Section 3.2 of RFC8949}}); this requirement is relaxed for
+{{Section 3.2 of RFC8949@-cbor}}); this requirement is relaxed for
 specifications that embed CRIs into an encompassing CBOR
 representation that does provide for indefinite length encoding.
 
@@ -1189,7 +1191,7 @@ in the face of malicious inputs.
 Additionally, parsers MUST be prepared to deal with
 resource exhaustion (e.g., resulting from the allocation of big data
 items) or exhaustion of the call stack (stack overflow).
-See {{Section 10 of RFC8949}} for additional
+See {{Section 10 of RFC8949@-cbor}} for additional
 security considerations relating to CBOR.
 
 The security considerations discussed in {{Section 7 of RFC3986@-uri}} and
@@ -1406,7 +1408,7 @@ representative of the normal operation of CRIs.
 
 {{-edn}} more rigorously defines and further extends the CBOR Extended
 Diagnostic Notation (EDN), as originally introduced in {{Section 8 of
--cbor}} and extended in {{Appendix G of -cddl}}.
+RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
 Among others, it provides an extension point for
 "application-extension identifiers" that can be used to notate CBOR
 data items in application-specific ways.
