@@ -1484,8 +1484,8 @@ IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
 
 IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
 
-; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged for
-; PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
+; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged
+; for PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
 
 IPv6address   =                            6( h16 ":" ) ls32
               /                       "::" 5( h16 ":" ) ls32
