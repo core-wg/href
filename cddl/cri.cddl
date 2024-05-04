@@ -21,7 +21,7 @@ CRI-Reference = [
 
 scheme      = scheme-name / scheme-id
 scheme-name = text .regexp "[a-z][a-z0-9+.-]*"
-scheme-id   = nint
+scheme-id   = nint              ; -1 - scheme-number
 
 no-authority = NOAUTH-ROOTBASED / NOAUTH-ROOTLESS
 NOAUTH-ROOTBASED = null .feature "no-authority"

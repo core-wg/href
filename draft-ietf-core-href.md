@@ -7,6 +7,7 @@ submissiontype: IETF
 consensus: true
 lang: en
 title: Constrained Resource Identifiers
+updates: 7595
 wg: CoRE Working Group
 
 author:
@@ -49,22 +50,29 @@ venue:
 
 informative:
   RFC7228: term
-  RFC9110: http
+  STD97: http
+# RFC9110
   RFC7252: coap
   RFC8141: urn
   RFC8288: web-linking
-  RFC8820: lawn
+  BCP190: lawn
+#  BCP205:
+  # RFC8820
   W3C.REC-html52-20171214:
+  I-D.ietf-cbor-edn-literals: edn
+  I-D.carpenter-6man-rfc6874bis: zonebis
 normative:
-  RFC3986: uri
+  STD66: uri
+# RFC 3986
   RFC3987: iri
   RFC6874: zone
-  RFC7595: schemes
+  BCP35: schemes
+# RFC7595
   IANA.uri-schemes:
   BCP26:
     -: ianacons
-    =: RFC8126
-  I-D.carpenter-6man-rfc6874bis: zonebis
+#    =: RFC8126
+  IANA.core-parameters:
   RFC8610: cddl
   Unicode:
     target: https://www.unicode.org/versions/Unicode13.0.0/
@@ -74,7 +82,8 @@ normative:
     date: 2020-03
     seriesinfo:
       ISBN: 978-1-936213-26-9
-  RFC8949: cbor
+  STD94: cbor
+# RFC8949
   RFC9165: cddlcontrol
 
 --- abstract
@@ -82,7 +91,7 @@ normative:
 
 The Constrained Resource Identifier (CRI) is a complement to the Uniform
 Resource Identifier (URI) that represents the URI components in Concise
-Binary Object Representation (CBOR) instead of a sequence of characters.
+Binary Object Representation (CBOR) instead of in a sequence of characters.
 This simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
@@ -90,7 +99,12 @@ memory size.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –14 of this draft picks up comments from the shepherd review.
+    The present revision –15 of this draft continues -14 by picking up
+    more comments, such as moving to a CRI scheme number registration
+    system based on unsigned numbers.
+    \\
+    This revision still contains open issues and is intended to serve
+    as a snapshot.
 
 --- middle
 
@@ -102,7 +116,7 @@ memory size.
 
 # Introduction
 
-The [Uniform Resource Identifier (URI)](#RFC3986) and its most common
+The [Uniform Resource Identifier (URI)](#STD66) and its most common
 usage, the URI reference, are the Internet standard for linking to
 resources in hypertext formats such as [HTML](#W3C.REC-html52-20171214)
 or the [HTTP "Link" header field](#RFC8288).
@@ -123,36 +137,43 @@ This can be a problem especially in [constrained environments](#RFC7228),
 where nodes often have severe code size and memory size limitations.
 As a result, many implementations in such environments support only an
 ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
-half of {{RFC3986}}.
+half of {{STD66}}.
 
 This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
-components in [Concise Binary Object Representation (CBOR)](#RFC8949)
+components in [Concise Binary Object Representation (CBOR)](#STD94)
 instead of a sequence of characters.
 This allows typical operations on URI references such as parsing,
 comparison, and reference resolution (including all corner cases) to be
 implemented in a comparatively small amount of code.
 
 As a result of simplification, however, CRIs are not capable of
-expressing all URIs permitted by the generic syntax of {{RFC3986}} (hence
+expressing all URIs permitted by the generic syntax of {{STD66}} (hence
 the "constrained" in "Constrained Resource Identifier").
 The supported subset includes all URIs of the
 [Constrained Application Protocol (CoAP)](#RFC7252), most URIs of the
-[Hypertext Transfer Protocol (HTTP)](#RFC9110),
+[Hypertext Transfer Protocol (HTTP)](#STD97),
 [Uniform Resource Names (URNs)](#RFC8141), and other similar URIs.
 The exact constraints are defined in {{constraints}}.
 
 ## Notational Conventions
 
-{::boilerplate bcp14-tagged}
+{::boilerplate bcp14-tagged-bcp}
 
 In this specification, the term "byte" is used in its now customary
 sense as a synonym for "octet".
 
 Terms defined in this document appear in *cursive* where they
-are introduced (rendered in plain text as the new term surrounded by
-underscores).
+are introduced (in the plaintext form of this document, they are
+rendered as the new term surrounded by underscores).
 
+The general structure of data items is shown in the [Concise Data Definition
+Language (CDDL)](#RFC8610) [including its control
+extensions](#RFC9165).
+Specific examples are notated in CBOR Extended
+Diagnostic Notation (EDN), as originally introduced in {{Section 8 of
+RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
+({{-edn}} more rigorously defines and further extends EDN.)
 
 
 # Constraints {#constraints}
@@ -164,7 +185,7 @@ The components are subject to the following constraints:
 {: type="C%d."}
 1. {:#c-scheme} The scheme name can be any Unicode string (see
    Definition D80 in {{Unicode}}) that matches the syntax of a URI
-   scheme (see {{Section 3.1 of RFC3986}}, which constrains schemes to
+   scheme (see {{Section 3.1 of RFC3986@-uri}}, which constrains scheme names to
    ASCII) and is lowercase (see Definition D139 in {{Unicode}}).
    The scheme is always present.
 
@@ -173,7 +194,7 @@ The components are subject to the following constraints:
    and optionally preceded by user information.
 
    Alternatively, the authority can be absent; the two cases for this
-   defined in {{Section 3.3 of RFC3986}} are modeled by two different
+   defined in {{Section 3.3 of RFC3986@-uri}} are modeled by two different
    values used in place of an absent authority:
 
    * the path can be root-based (zero or more path components that are
@@ -185,8 +206,8 @@ The components are subject to the following constraints:
    not all CRI implementations will support authority-less URIs.)
 
 3. {:#c-userinfo} A userinfo is a text string built out of unreserved
-  characters ({{Section 2.3 of RFC3986}}) or "sub-delims" ({{Section 2.2
-  of RFC3986}}); any other character needs to be percent-encoded ({{pet}}).
+  characters ({{Section 2.3 of RFC3986@-uri}}) or "sub-delims" ({{Section 2.2
+  of RFC3986@-uri}}); any other character needs to be percent-encoded ({{pet}}).
    Note that this excludes the ":" character, which is commonly
    deprecated as a way to delimit a cleartext password in a userinfo.
 
@@ -202,12 +223,12 @@ The components are subject to the following constraints:
    result in a Unicode string that is lowercase and in Unicode
    Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
    (The syntax may be further restricted by the scheme.
-   As per {{Section 3.2.2 of -uri}}, a registered name can be empty, for
+   As per {{Section 3.2.2 of RFC3986@-uri}}, a registered name can be empty, for
    which case a scheme can define a default for the host.)
 
 6. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
    Ports outside this range, empty ports (port subcomponents with no
-   digits, see {{Section 3.2.3 of RFC3986}}), or ports with redundant
+   digits, see {{Section 3.2.3 of RFC3986@-uri}}), or ports with redundant
    leading zeros, are not supported.
 
 7. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
@@ -221,8 +242,8 @@ The components are subject to the following constraints:
    this is considered equivalent to a path of zero path segments by
    HTTP and CoAP, but this equivalence does not hold for CRIs in general as they only perform
    normalization on the Syntax-Based Normalization level ({{Section
-   6.2.2 of -uri}}), not on the scheme-specific Scheme-Based
-   Normalization level ({{Section 6.2.3 of -uri}}).
+   6.2.2 of RFC3986@-uri}}), not on the scheme-specific Scheme-Based
+   Normalization level ({{Section 6.2.3 of RFC3986@-uri}}).
 
    (A CRI implementation may want to offer scheme-cognizant
    interfaces, performing this scheme-specific normalization for
@@ -285,12 +306,12 @@ Examples of this are:
 * `[0, null, []]`: leaves the path alone but unsets the query and the fragment
 
 (Full) CRIs that do not correspond to a valid URI are not valid on their own, and cannot be used.
-Normatively they are characterized by the {{cri-to-uri}} process producing a valid and syntax-normalized URI.
+Normatively they are characterized by the {{cri-to-uri}} process not producing a valid and syntax-normalized URI.
 For easier understanding, they are listed here:
 
 * CRIs (and CRI references) containing a path component "." or "..".
 
-  These would be removed by the remove_dot_segments algorithm of {{RFC3986}},
+  These would be removed by the remove_dot_segments algorithm of {{STD66}},
   and thus never produce a normalized URI after resolution.
 
   (In CRI references, the `discard` value is used to afford segment removal,
@@ -302,7 +323,7 @@ For easier understanding, they are listed here:
   When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
   and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
 
-* CRIs without authority that are rootless and do not have a path
+* {:#naked-rootless} CRIs without authority that are rootless and do not have a path
   component (e.g., `["a", true]`), which would be indistinguishable
   from its root-based equivalent (`["a"]`) as both would have the URI `a:`.
 
@@ -314,7 +335,7 @@ of a resource under a particular resource identifier.
 
 A Constrained Resource Identifier SHOULD be created by
 the naming authority that governs the namespace of the resource
-identifier (see also {{RFC8820}}).
+identifier (see also {{BCP190}}).
 For example, for the resources of an HTTP origin server,
 that server is responsible for creating the CRIs for those resources.
 
@@ -348,7 +369,8 @@ fail gracefully in the face of malicious inputs.)
 # Comparison
 
 One of the most common operations on CRIs is comparison: determining
-whether two CRIs are equivalent, without dereferencing the CRIs (using
+whether two CRIs are equivalent, without dereferencing the CRIs (i.e.,
+using
 them to access their respective resource(s)).
 
 Determination of equivalence or difference of CRIs is based on simple
@@ -378,8 +400,8 @@ it in resource representations, e.g., to express a hyperlink between the
 represented resource and the resource identified by the CRI.
 
 This section defines the representation of CRIs in
-[Concise Binary Object Representation (CBOR)](#RFC8949).
-When reduced representation size is desired, CRIs are not represented directly.
+[Concise Binary Object Representation (CBOR)](#STD94).
+When reduced representation size is desired, CRIs are often not represented directly.
 Instead, CRIs are indirectly referenced through *CRI references*.
 These take advantage of hierarchical locality and provide a very compact
 encoding.
@@ -409,9 +431,9 @@ resolved to their respective CRI before comparison.
 
 [^replace-xxxx]
 
-A CRI or CRI reference is encoded as a CBOR array {{RFC8949}}, with the
-structure as described in the [Concise Data Definition Language
-(CDDL)](#RFC8610) [including its control extensions](#RFC9165) as follows:
+A CRI or CRI reference is encoded as a CBOR array (Major type 4 in
+{{Section 3.1 of RFC8949@-cbor}}), with the structure described in CDDL as
+follows:
 
 ~~~~ cddl
 {::include cddl/cri.cddl}
@@ -422,6 +444,7 @@ The rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the (sub‑)components of a CRI, as described in
 {{constraints}}, with the addition of the `discard` section.
 
+{:#prose}
 This CDDL specification is simplified for exposition and needs to be
 augmented by the following rules for interchange of CRIs and CRI
 references:
@@ -438,16 +461,37 @@ references:
 
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
-{{Section 3.2 of RFC8949}}); this requirement is relaxed for
+{{Section 3.2 of RFC8949@-cbor}}); this requirement is relaxed for
 specifications that embed CRIs into an encompassing CBOR
 representation that does provide for indefinite length encoding.
+
+### `scheme-name` and `scheme-id` {#scheme-id}
+
+In the scheme section, a CRI scheme can be given by its `scheme-name`
+(a text string giving the scheme name as in URIs' scheme section,
+mapped to lower case), or as a negative integer `scheme-id` derived
+from the *scheme number*.
+Scheme numbers are unsigned integers that are mapped to and from URI
+scheme names by the "CRI Scheme Numbers" registry ({{cri-reg}}).
+The relationship of a scheme number to its `scheme-id` is as follows:
+
+~~~ math
+scheme\text{-}id = -1 - scheme\text{-}number
+\\
+scheme\text{-}number = -1 - scheme\text{-}id
+~~~
+
+For example, the scheme-name `coap` has the (unsigned integer)
+scheme-number `0` which is represented in a (negative integer)
+scheme-id `-1`.
+
 
 ### The `discard` Section
 
 The `discard` section can be used in a CRI reference when neither a
 scheme nor an authority is present.
 It then expresses the operations performed on a base CRI by CRI references that
-are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.
+are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.\\
 "." and ".." are not available in CRIs and are therefore expressed
 using `discard` after a normalization step, as is the presence or absence of a leading "/".
 
@@ -459,11 +503,11 @@ and "/foo" removes all segments, represented in the `discard` section as the val
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
 
-Most URI references that {{Section 4.2 of RFC3986}} calls "relative
+Most URI references that {{Section 4.2 of RFC3986@-uri}} calls "relative
 references" (i.e., references that need to undergo a resolution
 process to obtain a URI) correspond to the CRI reference form that starts with
 `discard`.  The exception are relative references with an `authority`
-(called a "network-path reference" in {{Section 4.2 of RFC3986}}), which
+(called a "network-path reference" in {{Section 4.2 of RFC3986@-uri}}), which
 discard the entire path of the base CRI.
 These CRI references never carry a `discard` section: the value of
 `discard` defaults to `true`.
@@ -484,7 +528,7 @@ This visualization does not go into the details of the elements.
 ### Examples
 
 ~~~~ cbor-diag
-[-1,             / scheme -- equivalent to "coap" /
+[-1,             / scheme-id -- equivalent to "coap" /
  [h'C6336401',   / host /
   61616],        / port /
  [".well-known", / path /
@@ -500,9 +544,9 @@ This visualization does not go into the details of the elements.
 ~~~~
 
 ~~~~ cbor-diag
-[-6,             / scheme -- equivalent to "did" /
- true,           / authority = NOAUTH-ROOTLESS /
- ["web:alice:bob"] / path /
+[-6,                / scheme-id -- equivalent to "did" /
+ true,              / authority = NOAUTH-ROOTLESS /
+ ["web:alice:bob"]  / path /
 ]
 ~~~~
 
@@ -550,14 +594,14 @@ they are both null, they are both left out and only discard is
 transferred.
 Trailing null values are removed from the array.
 As a special case, an empty array is sent in place for a remaining
-`[0]` (URI "").
+`[0]` (URI reference "").
 
 ### Error handling and extensibility {#unprocessable}
 
 It is recommended that specifications that describe the use of CRIs in CBOR-based protocols
 use the error handling mechanisms outlined in this section.
 Implementations of this document MUST adhere to these rules
-unless the containing document overrides them.
+unless a containing document overrides them.
 
 When encountering a CRI that is well-formed in terms of CBOR, but that
 
@@ -581,7 +625,7 @@ that is distinct from all processable CRIs,
 and distinct from all unprocessable CRIs with different CBOR representations.
 It is up to implementation whether unprocessable CRIs with identical representations
 are treated as identical to each other or not.
-Unprocessable CRIs can not be dereferenced,
+Unprocessable CRIs cannot be dereferenced,
 and it is an error to query any of their components.
 
 This mechanism ensures that CRI extensions
@@ -642,7 +686,7 @@ an absolute CRI reference:
 
 # Relationship between CRIs, URIs, and IRIs
 
-CRIs are meant to replace both [Uniform Resource Identifiers (URIs)](#RFC3986)
+CRIs are meant to replace both [Uniform Resource Identifiers (URIs)](#STD66)
 and [Internationalized Resource Identifiers (IRIs)](#RFC3987)
 in [constrained environments](#RFC7228).
 Applications in these environments may never need to use URIs and IRIs
@@ -689,7 +733,7 @@ references, and IRI references.
 Applications MUST convert a CRI reference to a URI
 reference by determining the components of the URI reference according
 to the following steps and then recomposing the components to a URI
-reference string as specified in {{Section 5.3 of RFC3986}}.
+reference string as specified in {{Section 5.3 of RFC3986@-uri}}.
 
 {:vspace}
 scheme
@@ -697,7 +741,7 @@ scheme
   component of the URI reference consists of the value of that
   section, if text (`scheme-name`); or, if a negative integer is given
   (`scheme-id`), the lower case scheme name corresponding to the
-  scheme number as per the CRI Scheme Numbers registry ({{cri-reg}}).
+  scheme-id as per {{scheme-id}}.
   Otherwise, the scheme component is unset.
 
 authority
@@ -715,27 +759,30 @@ authority
   appending a "@".  Otherwise, both the subcomponent and the "@" sign
   are omitted.
   Any character in the value of the `userinfo` elements that is not in
-  the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
-  "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
+  the set of unreserved characters ({{Section 2.3 of RFC3986@-uri}}) or
+  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) MUST be
   percent-encoded.
 
   The `host-name` is turned into a single string by joining the
   elements separated by dots (".").
   Any character in the elements of a `host-name` item that is not in
-  the set of unreserved characters ({{Section 2.3 of RFC3986}}) or
-  "sub-delims" ({{Section 2.2 of RFC3986}}) MUST be
+  the set of unreserved characters ({{Section 2.3 of RFC3986@-uri}}) or
+  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) MUST be
   percent-encoded.
   If there are dots (".") in such elements, the conversion fails
   (percent-encoding is not able to represent such elements, as
   normalization would turn the percent-encoding back to the unreserved
   character that a dot is.)
 
+  {: #host-ip-to-uri}
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
-  "IP-literal" rule ({{Section 3.2.2 of RFC3986}}).
-  Any zone-id is appended to the string, separated by "%25" as
-  defined in {{Section 2 of -zone}}, or as specified in a superseding
-  zone-id specification document {{-zonebis}}; this also leads to a modified
+  "IP-literal" rule ({{Section 3.2.2 of RFC3986@-uri}}).
+  Any zone-id is appended to the string; the details for how this is
+  done are currently in flux in the URI specification: {{Section 2 of
+  -zone}} uses percent-encoding and a separator of "%25", while
+  proposals for a future superseding zone-id specification document
+  (such as {{-zonebis}}) are being prepared; this also leads to a modified
   "IP-literal" rule as specified in these documents.
 
   If the CRI reference contains a `port` item, the port
@@ -754,7 +801,8 @@ path
   one indicates.  If the discard value is `1` and the first element of
   the path contains a `:`, the path component is prefixed by "./"
   (this avoids the first element to appear as supplying a URI scheme;
-  compare `path-noscheme` in {{Section 4.2 of -uri}}).
+  compare `path-noscheme` in {{Section 4.2 of RFC3986@-uri}}).
+  {:#colon}
 
   If the discard item is not present and the CRI reference contains an
   authority that is `true`, the path component of the URI reference is
@@ -780,16 +828,16 @@ path
 
   If the authority component is present (not `null` or `true`) and the
   path component does not match the "path-abempty" rule ({{Section 3.3
-  of RFC3986}}), the conversion fails.
+  of RFC3986@-uri}}), the conversion fails.
 
   If the authority component is not present, but the scheme component
   is, and the path component does not match the "path-absolute",
   "path-rootless" (authority == `true`) or "path-empty" rule ({{Section
-  3.3 of RFC3986}}), the conversion fails.
+  3.3 of RFC3986@-uri}}), the conversion fails.
 
   If neither the authority component nor the scheme component are
   present, and the path component does not match the "path-absolute",
-  "path-noscheme" or "path-empty" rule ({{Section 3.3 of RFC3986}}), the
+  "path-noscheme" or "path-empty" rule ({{Section 3.3 of RFC3986@-uri}}), the
   conversion fails.
 
 query
@@ -816,7 +864,7 @@ fragment
   (":"), commercial at ("@"), slash ("/") or question mark ("?")
   character MUST be percent-encoded.
 
-# Extending CRIs
+# Extending CRIs {#extending}
 
 CRIs have been designed to relieve implementations operating on CRIs
 from string scanning, which both helps constrained implementations and
@@ -827,7 +875,7 @@ It should be sufficient for all applications that use the CoAP
 protocol, as well as most other protocols employing URIs.
 
 However, Basic CRIs have one limitation: They do not support URI
-components that *require* percent-encoding ({{Section 2.1 of -uri}}) to
+components that *require* percent-encoding ({{Section 2.1 of RFC3986@-uri}}) to
 represent them in the URI syntax, except where that percent-encoding
 is used to escape the main delimiter in use.
 
@@ -950,7 +998,184 @@ properties of UTF-8 make this a simple linear process.)
 > text-pet-sequence elements for their representation typically need
 > to process them byte by byte.
 
+# CoAP Integration
+
+This section discusses ways in which CRIs can be used in the context
+of the CoAP protocol {{-coap}}.
+
+## Converting Between CoAP CRIs and Sets of CoAP Options
+
+This section provides an analogue to {{Sections 6.4 and 6.5 of -coap}}:
+Computing a set of CoAP options from a request CRI ({{decompose-coap}}) and computing a
+request CRI from a set of COAP options ({{compose-coap}}).
+
+This section makes use of the mapping between CRI scheme numbers
+and URI scheme names shown in {{scheme-map}}:
+
+| CRI scheme number | URI scheme name |
+|-------------------+-----------------|
+|                 0 | coap            |
+|                 1 | coaps           |
+|                 6 | coap+tcp        |
+|                 7 | coaps+tcp       |
+|                 8 | coap+ws         |
+|                 9 | coaps+ws        |
+{: #scheme-map title="Mapping CRI scheme numbers and URI scheme names"}
+
+
+### Decomposing a Request CRI into a set of CoAP Options {#decompose-coap}
+
+   The steps to parse a request's options from a CRI »cri« are as
+   follows.  These steps either result in zero or more of the Uri-Host,
+   Uri-Port, Uri-Path, and Uri-Query Options being included in the
+   request or they fail.
+
+Where the following speaks of deriving a text-string for a CoAP Option
+value from a data item in the CRI, the presence of any
+`text-pet-sequence` subitem ({{pet}}) in this item fails this algorithm.
+
+   1.  If »cri« is not an absolute CRI reference, then fail this
+       algorithm.
+
+   2.  Translate the scheme-id into a URI scheme name as per
+       {{scheme-id}} and
+       {{scheme-map}}; if a scheme-id that corresponds to a scheme
+       number not in this list is being used, or if a scheme-name is
+       being used,
+       fail this algorithm.
+       Remember the specific variant of CoAP to be used based on this
+       URI scheme name.
+
+   3.  If »cri« has a `fragment` component, then fail this algorithm.
+
+   4.  If the `host` component of »cri« is a `host-name`, include a
+       Uri-Host Option and let that option's value be the text string
+       value of the `host-name`.
+
+       If the `host` component of »cri« is a `host-ip`, check whether
+       the IP address given represents the request's
+       destination IP address (and, if present, zone-id).
+       Only if it does not, include a Uri-Host Option, and let that
+       option's value be the text value of the URI representation of
+       the IP address, as derived in {{host-ip-to-uri}}.
+
+   5.  If »cri« has a `port` component, then let »port« be that
+       component's unsigned integer value; otherwise, let »port« be
+       the default port number for the scheme.
+
+   6.  If »port« does not equal the request's destination UDP port,
+       include a Uri-Port Option and let that option's value be »port«.
+
+   7.  If the value of the `path` component of »cri« is empty or
+       consists of a single empty string, then move to the next step.
+
+       Otherwise, for each element in the »path« component, include a
+       Uri-Path Option and let that option's value be the text string
+       value of that element.
+
+   8.  If »cri« has a `query` component, then, for each element in the
+       `query` component, include a Uri-Query Option and let that
+       option's value be the be the text string
+       value of that element.
+
+### Composing a Request CRI from a Set of CoAP Options {#compose-coap}
+
+   The steps to construct a CRI from a request's options are as follows.
+   These steps either result in a CRI or they fail.
+
+
+   1.   Based on the variant of CoAP used in the request, choose a
+        `scheme-id` as per {{scheme-id}} and table {{scheme-map}}.  Use
+        that as the first value in the resulting CRI array.
+
+   2.   If the request includes a Uri-Host Option, insert an
+        `authority` with its value determined as follows:
+        If the value of the  Uri-Host Option is a `reg-name`, include
+        this as the `host-name`.
+        If the value is an IP-literal or IPv4address, extract any
+        `zone-id`, and represent the IP address as a byte string of
+        the correct length in `host-ip`, followed by any `zone-id`
+        extracted if present.
+        If the value is none of the three, fail this algorithm.
+
+        If the request does not include a Uri-Host Option, insert an
+        `authority` with `host-ip` being the byte string that
+        represents the request's destination IP address and,
+        if one is present in the request's destination, add a `zone-id`.
+
+   3.   If the request includes a Uri-Port Option, let »port« be that
+        option's value.  Otherwise, let »port« be the request's
+        destination UDP port.
+        If »port« is not the default port for the scheme, then insert
+        the integer value of »port« as the value of `port` in the
+        authority.
+        Otherwise, elide the `port`.
+
+   4.   Insert a `path` component that contains an array built from
+        the text string values of the Uri-Path Options in the request,
+        or an empty array if no such options are present.
+
+   5.   Insert a `query` component that contains an array built from
+        the text string values of the Uri-Query Options in the request,
+        or an empty array if no such options are present.
+
+
+## CoAP Options for Forward-Proxies {#coap-options}
+
+Apart from the above procedures to convert CoAP CRIs to and from sets
+of CoAP Options, two additional CoAP Options are defined in {{Section
+5.10.2 of -coap}} that support requests to forward-proxies:
+
+* Proxy-Uri, and
+* its more lightweight variant, Proxy-Scheme
+
+This section defines analogues of these that employ CRIs and the URI
+Scheme numbering provided by the present specification.
+
+### Proxy-CRI
+
+   | No.    | C | U | N | R | Name         | Format | Length | Default |
+   | TBD235 | x | x | - |   | Proxy-Cri    | opaque | 1-1023 | (none)  |
+{: #tab-proxy-cri title="Proxy-Cri CoAP Option"}
+
+The Proxy-CRI Option carries an encoded CBOR data item that represents
+an absolute CRI reference.
+It is used analogously to Proxy-Uri as defined in {{Section 5.10.2
+of -coap}}.
+The Proxy-Cri Option MUST take precedence over any of the Uri-Host,
+Uri-Port, Uri-Path or Uri-Query options, as well as over any
+Proxy-Uri Option (each of which MUST NOT be
+included in a request containing the Proxy-Cri Option).
+
+
+### Proxy-Scheme-Number
+
+
+   | No.    | C | U | N | R | Name                | Format | Length | Default |
+   | TBD239 | x | x | - |   | Proxy-Scheme-Number | uint   |    0-3 | (none)  |
+{: #tab-proxy-scheme-number title="Proxy-Scheme-Number CoAP Option"}
+
+The Proxy-Scheme-Number Option carries a CRI Scheme Number represented as a
+CoAP unsigned integer.
+It is used analogously to Proxy-Scheme as defined in {{Section 5.10.2
+of -coap}}.
+
+As per {{Section 3.2 of -coap}}, CoAP Options are only defined as one of empty, (text) string,
+opaque (byte string), or uint (unsigned integer).
+The Option therefore carries an
+unsigned integer that represents the CRI scheme-number (which relates to
+a CRI scheme-id as defined in {{scheme-id}}).
+For instance, the scheme name "coap" has the scheme-number 0 and is
+represented as an unsigned integer by a zero-length CoAP Option value.
+
+[^location-scheme]
+
+[^location-scheme]: TO DO: Discuss the need for a
+    location-scheme-numeric option?
+
 # Implementation Status {#impl}
+
+{::boilerplate rfc7942info}
 
 With the exception of the authority=true fix, host-names split into
 labels, and {{pet}}, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
@@ -966,10 +1191,10 @@ in the face of malicious inputs.
 Additionally, parsers MUST be prepared to deal with
 resource exhaustion (e.g., resulting from the allocation of big data
 items) or exhaustion of the call stack (stack overflow).
-See {{Section 10 of RFC8949}} for additional
+See {{Section 10 of RFC8949@-cbor}} for additional
 security considerations relating to CBOR.
 
-The security considerations discussed in {{Section 7 of RFC3986}} and
+The security considerations discussed in {{Section 7 of RFC3986@-uri}} and
 {{Section 8 of RFC3987}} for URIs and IRIs also apply to CRIs.
 
 
@@ -978,8 +1203,8 @@ The security considerations discussed in {{Section 7 of RFC3986}} and
 ## CRI Scheme Numbers Registry {#cri-reg}
 
 This specification defines a new "CRI Scheme Numbers" sub-registry in
-the "CoRE Parameters" registry {{!IANA.core-parameters}}, with the
-policy "Expert Review" ({{Section 4.5 of -ianacons}}).
+the "CoRE Parameters" registry {{IANA.core-parameters}}, with the
+policy "Expert Review" ({{Section 4.5 of RFC8126@-ianacons}}).
 The objective is to have CRI scheme number values registered for all
 registered URI schemes (Uniform Resource Identifier (URI) Schemes
 registry), as well as exceptionally for certain text strings that the
@@ -988,15 +1213,17 @@ place of URI scheme names.
 
 ### Instructions for the Designated Expert {#de-instructions}
 
-The expert is instructed to be frugal in the allocation of CRI values
-with short representations (1+0 and 1+1 encoding), keeping them in
+The expert is instructed to be frugal in the allocation of CRI scheme
+number values whose scheme-id values ({{scheme-id}}) have short
+representations (1+0 and 1+1 encoding), keeping them in
 reserve for applications that are likely to enjoy wide use and can
 make good use of their shortness.
 
 When the expert notices that a registration has been made in the
 Uniform Resource Identifier (URI) Schemes registry (see also {{upd}}),
 the expert is requested to initiate a parallel registration in the CRI
-Scheme Numbers registry.  CRI values in the range between 1000 and
+Scheme Numbers registry.
+CRI scheme number values in the range between 1000 and
 20000 (inclusive) should be assigned unless a shorter representation
 in CRIs appears desirable.
 
@@ -1023,8 +1250,8 @@ a time-limited discussion.
 Each entry in the registry must include:
 
 {:vspace}
-CRI value:
-: A negative integer unique in this registry
+CRI scheme number:
+: An unsigned integer unique in this registry
 
 URI scheme name:
 : a text string that would be acceptable for registration as a URI
@@ -1039,9 +1266,10 @@ Reference:
 The initial registrations for the CRI Scheme Numbers registry are
 provided in {{tab-numbers}} in {{sec-numbers}}.
 
+
 ## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
 
-{{-schemes}} is updated to add the following note in the "Uniform
+{{RFC7595@-schemes}} is updated to add the following note in the "Uniform
 Resource Identifier (URI) Schemes" Registry {{IANA.uri-schemes}}:
 
 {:quote}
@@ -1053,6 +1281,34 @@ are requested to make a parallel registration in the CRI Scheme
 Numbers registry.
 The number for this registration will be assigned by the Designated
 Expert for that registry.
+
+
+## CBOR Diagnostic Notation Application-extension Identifiers Registry {#cri-iana}
+
+In the "Application-Extension Identifiers" registry in the "CBOR
+Diagnostic Notation" registry group \[IANA.cbor-diagnostic-notation],
+IANA is requested to register the application-extension identifier
+`cri` as described in {{tab-iana}} and defined in {{edn-cri}}.
+
+| Application-extension Identifier | Description                     | Change Controller | Reference         |
+|----------------------------------|---------------------------------|-------------------|-------------------|
+| cri                              | Constrained Resource Identifier | IETF              | RFC-XXXX, {{edn-cri}} |
+{: #tab-iana title="CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI"}
+
+[^replace-xxxx]
+
+## CoAP Option Numbers Registry
+
+In the "CoAP Option Numbers" registry in the "CoRE Parameters" registry group [IANA.core-parameters],
+IANA is requested to register the CoAP Option Numbers
+as described in {{tab-iana-options}} and defined in {{coap-options}}.
+
+   | No.    | Name                | Reference |
+   | TBD235 | Proxy-Cri           | RFC-XXXX  |
+   | TBD239 | Proxy-Scheme-Number | RFC-XXXX  |
+{: #tab-iana-options title="New CoAP Option Numbers"}
+
+[^replace-xxxx]
 
 --- back
 
@@ -1095,7 +1351,7 @@ representative of the normal operation of CRIs.
   without Uri-Path Options from the other URI-related CoAP Options
   produces `s://x/`, not `s://x` -- CoAP prefers the lone empty path
   segment form.
-  Similarly, after discussing HTTP semantics, {{Section 6.2.3 of -uri}} states:
+  Similarly, after discussing HTTP semantics, {{Section 6.2.3 of RFC3986@-uri}} states:
 
   {:quote}
   > In general, a URI that uses the generic syntax for authority with an
@@ -1148,12 +1404,189 @@ representative of the normal operation of CRIs.
      The rules do not cater for unencoded ":" in userinfo, which is
      commonly considered a deprecated inclusion of a literal password.
 
+# CBOR Extended Diagnostic Notation (EDN): The "cri" Extension {#edn-cri}
+
+{{-edn}} more rigorously defines and further extends the CBOR Extended
+Diagnostic Notation (EDN), as originally introduced in {{Section 8 of
+RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
+Among others, it provides an extension point for
+"application-extension identifiers" that can be used to notate CBOR
+data items in application-specific ways.
+
+The present document defines and registers ({{cri-iana}}) the
+application-extension identifier "`cri`", which can be used to notate
+an EDN literal for a CRI reference as defined in this document.
+
+The text of the literal is a URI Reference as per {{-uri}} or an IRI
+Reference as per {{-iri}}.
+
+The value of the literal is a CRI reference that can be converted to
+the text of the literal using the procedure of {{cri-to-uri}}.
+Note that there may be more than one CRI reference that can be
+converted to the URI/IRI reference given; implementations are expected
+to favor the simplest variant available and make non-surprising
+choices otherwise.
+
+As an example, the CBOR diagnostic notation
+
+~~~ cbor-diag
+cri'https://example.com/bottarga/shaved'
+~~~
+
+is equivalent to
+
+~~~ cbor-diag
+[-4, ["example", "com"], ["bottarga", "shaved"]]
+~~~
+
+See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
+
+
+## cri: ABNF Definition of URI Representation of a CRI {#cri-grammar}
+
+The syntax of the content of `cri` literals can be described by the
+ABNF for `URI-reference` in {{Section 4.1 of RFC3986@-uri}} with certain
+re-arrangements taken from {{figure-5 (Figure 5)<I-D.ietf-cbor-edn-literals}} of {{I-D.ietf-cbor-edn-literals}};
+these are reproduced in {{abnf-grammar-cri}}.
+If the content is not ASCII only (i.e., for IRIs), first apply
+{{Section 3.1 of RFC3987}} and apply this grammar to the result.
+
+~~~ abnf
+app-string-cri = URI-reference
+; ABNF from RFC 3986:
+
+URI           = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
+
+hier-part     = "//" authority path-abempty
+                 / path-absolute
+                 / path-rootless
+                 / path-empty
+
+URI-reference = URI / relative-ref
+
+absolute-URI  = scheme ":" hier-part [ "?" query ]
+
+relative-ref  = relative-part [ "?" query ] [ "#" fragment ]
+
+relative-part = "//" authority path-abempty
+                 / path-absolute
+                 / path-noscheme
+                 / path-empty
+
+scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+
+authority     = [ userinfo "@" ] host [ ":" port ]
+userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
+host          = IP-literal / IPv4address / reg-name
+port          = *DIGIT
+
+IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
+
+IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
+
+; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged
+; for PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
+
+IPv6address   =                            6( h16 ":" ) ls32
+              /                       "::" 5( h16 ":" ) ls32
+              / [ h16               ] "::" 4( h16 ":" ) ls32
+              / [ h16 *1( ":" h16 ) ] "::" 3( h16 ":" ) ls32
+              / [ h16 *2( ":" h16 ) ] "::" 2( h16 ":" ) ls32
+              / [ h16 *3( ":" h16 ) ] "::"    h16 ":"   ls32
+              / [ h16 *4( ":" h16 ) ] "::"              ls32
+              / [ h16 *5( ":" h16 ) ] "::"              h16
+              / [ h16 *6( ":" h16 ) ] "::"
+
+h16           = 1*4HEXDIG
+ls32          = ( h16 ":" h16 ) / IPv4address
+IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
+dec-octet     = "25" %x30-35         ; 250-255
+              / "2" %x30-34 DIGIT    ; 200-249
+              / "1" 2DIGIT           ; 100-199
+              / %x31-39 DIGIT        ; 10-99
+              / DIGIT                ; 0-9
+ALPHA         = %x41-5a / %x61-7a
+DIGIT         = %x30-39
+HEXDIG        = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+; case insensitive matching, i.e., including lower case
+
+reg-name      = *( unreserved / pct-encoded / sub-delims )
+
+path          = path-abempty    ; begins with "/" or is empty
+                 / path-absolute   ; begins with "/" but not "//"
+                 / path-noscheme   ; begins with a non-colon segment
+                 / path-rootless   ; begins with a segment
+                 / path-empty      ; zero characters
+
+path-abempty  = *( "/" segment )
+path-absolute = "/" [ segment-nz *( "/" segment ) ]
+path-noscheme = segment-nz-nc *( "/" segment )
+path-rootless = segment-nz *( "/" segment )
+path-empty    = 0<pchar>
+
+segment       = *pchar
+segment-nz    = 1*pchar
+segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
+                 ; non-zero-length segment without any colon ":"
+
+pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+
+query         = *( pchar / "/" / "?" )
+
+fragment      = *( pchar / "/" / "?" )
+
+pct-encoded   = "%" HEXDIG HEXDIG
+
+unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+reserved      = gen-delims / sub-delims
+gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+                 / "*" / "+" / "," / ";" / "="
+~~~
+{: #abnf-grammar-cri sourcecode-name="cbor-edn-cri.abnf"
+title="ABNF Definition of URI Representation of a CRI"
+}
+
 # Change Log
 {:removeinrfc}
 
+Changes from -14 to -15
+
+* Make scheme numbers unsigned and map them to negative numbers used
+  as scheme-id values
+
 Changes from -09 to -14
 
+* Editorial changes; move some examples to {{the-small-print}}, break up
+  railroad diagram; mention commonalities with (and tiny difference
+  from) CoAP Options; mention failure of percent-encoding for dots in
+  host-name components
 
+* Explicitly mention invalid case in {{naked-rootless}} (rootless CRIs without
+  authority that do not have a path component)
+
+* Generalize {{extending}}, discuss PET (percent-encoded text) extension in more detail
+
+* Add registry of URI scheme numbers ({{sec-numbers}}, {{iana-considerations}})
+
+* Add user information to the authority ("userinfo" feature)
+
+* {{cddl}}: Use separate rule for CRI, allow `[]` for query in CRI
+  Reference; generalize scheme numbers, add userinfo; add list of
+  additional requirements in prose ({{prose}})
+
+* Discuss {{<<unprocessable}} ({{unprocessable}})
+
+* Conversion to URI: Handle `:` in first pathname component of a
+  CRI-Reference ({{colon}})
+
+* Add Christian Amsüss as contributor
+
+* Add CBOR EDN application-extension "`cri`" (see {{edn-cri}} and
+  {{cri-iana}}).
+
+* Add Section on CoAP integration (and new CoAP Options Proxy-Cri and
+  Proxy-Scheme-Number).
 
 Changes from -08 to -09
 
@@ -1175,7 +1608,7 @@ Changes from -08 to -09
   following the updated rules of {{cri-to-uri}}.
   Schemes like http and coap do not distinguish between the empty path
   and the path containing a single slash when an authority is set (as
-  recommended in {{RFC3986}}).
+  recommended in {{STD66}}).
   For these schemes, that equivalence allows implementations to
   convert the just-a-slash URI to a CRI with a zero length path array
   (which, however, when converted back, does not produce a slash after

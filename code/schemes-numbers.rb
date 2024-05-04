@@ -15,7 +15,11 @@ def get_one(el, xp)
   v.first
 end
 
-schemes = REXML::Document.new(File.read("/Users/cabo/std/iana/uri-schemes/uri-schemes.xml"))
+# code/uri-schemes.xml
+# needs to be a (symlink to a) copy of
+# https://www.iana.org/assignments/uri-schemes/uri-schemes.xml
+
+schemes = REXML::Document.new(File.read("uri-schemes.xml"))
 
 a = REXML::XPath.each(schemes.root, "//record").map do |rec|
   get_one(rec, "value")
@@ -27,7 +31,7 @@ warn a.count
 
 prefill = DATA.read
 prefill.each_line do |li|
-  if /-[0-9]+\s+\|\s+([a-z][a-z0-9+.-]*)\s+\|/ =~ li
+  if /\|\s+[0-9]+\s+\|\s+([a-z][a-z0-9+.-]*)\s+\|/ =~ li
     a.delete($1)
   end
 end
@@ -43,10 +47,10 @@ result = (0...240).each do |start|
     a.each do |v, s|
       dig = Digest::SHA256.digest v
       n = (dig.vlb >> start & endmask) + offset
-      if n == 0 || reg[-n]
-        fail [start, v, n, reg[-n]].inspect
+      if reg[n]
+        fail [start, v, n, reg[n]].inspect
       end
-      reg[-n] = v
+      reg[n] = v
     end
     warn [:OK, start].inspect
     # result = reg
@@ -56,21 +60,20 @@ result = (0...240).each do |start|
   end
 end
 puts prefill
-result.sort {|a, b| b <=> a}.each do |value, scheme|
-puts "| %9s | %16s | \\[RFC-XXXX] |"  % [value, scheme]
+result.sort.each do |value, scheme|
+puts "| %17s | %16s | \\[RFC-XXXX] |"  % [value, scheme]
 end
 
 __END__
-
-| CRI value | URI scheme | Reference   |
-|-----------|------------|-------------|
-|        -1 | coap       | \[RFC-XXXX] |
-|        -2 | coaps      | \[RFC-XXXX] |
-|        -3 | http       | \[RFC-XXXX] |
-|        -4 | https      | \[RFC-XXXX] |
-|        -5 | urn        | \[RFC-XXXX] |
-|        -6 | did        | \[RFC-XXXX] |
-|        -7 | coap+tcp   | \[RFC-XXXX] |
-|        -8 | coaps+tcp  | \[RFC-XXXX] |
-|        -9 | coap+ws    | \[RFC-XXXX] |
-|       -10 | coaps+ws   | \[RFC-XXXX] |
+| CRI scheme number | URI scheme name | Reference   |
+|-------------------|-----------------|-------------|
+|                 0 | coap            | \[RFC-XXXX] |
+|                 1 | coaps           | \[RFC-XXXX] |
+|                 2 | http            | \[RFC-XXXX] |
+|                 3 | https           | \[RFC-XXXX] |
+|                 4 | urn             | \[RFC-XXXX] |
+|                 5 | did             | \[RFC-XXXX] |
+|                 6 | coap+tcp        | \[RFC-XXXX] |
+|                 7 | coaps+tcp       | \[RFC-XXXX] |
+|                 8 | coap+ws         | \[RFC-XXXX] |
+|                 9 | coaps+ws        | \[RFC-XXXX] |
