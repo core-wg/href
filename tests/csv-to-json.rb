@@ -48,23 +48,23 @@ seen = Set[]
 
 CSV.read("tests.csv", col_sep: ";", quote_char: "|", quote_empty: false).each do |row|
   case row
-  in ["type", "uri", "cri", "red", "resolved_uri", "resolved_cri", "cri_hex", "resolved_cri_hex"]
+  in ["type", "uri", "cri", "red", "resolved_uri", "resolved_cri", "cri_hex", "resolved_cri_hex", "comment"]
   in ["base", baseuri, basecri_diag, *_foo]
     test_data["base-uri"] = baseuri
     test_data["base-cri"] = diag_to_hex(basecri_diag)
     test_data["test-vectors"] = tv
-  in ["rt" | "red", uri_in, cri_in_diag, uri_from_cri_opt, resolved_uri, resolved_cri_diag, cri_hex_in, resolved_cri_hex_in]
+  in ["rt" | "red", uri_in, cri_in_diag, uri_from_cri_opt, resolved_uri, resolved_cri_diag, cri_hex_in, resolved_cri_hex_in, comment]
     cri_hex = diag_to_hex(cri_in_diag)
     check "** CRI_HEX", cri_hex_in, cri_hex
     resolved_cri_hex = diag_to_hex(resolved_cri_diag)
     check "** RESOLVED_CRI_HEX", resolved_cri_hex_in, resolved_cri_hex
     val = {
+      "description" => comment || "",
       "uri" => uri_in || "",
       "cri" => cri_hex,
       "uri-from-cri" => uri_from_cri_opt || uri_in || "",
       "resolved-cri" => diag_to_hex(resolved_cri_diag),
       "resolved-uri" => resolved_uri,
-      # XXX check assigned cri_hex, resolved_cri_hex
     }
     valdet = val.cbor_prepare_deterministic.to_cbor
     unless seen === valdet

@@ -54,7 +54,7 @@ result = CSV.generate(col_sep: ";", quote_char: "|", quote_empty: false) do |csv
 
   csv << ["type", "uri", "cri", "red",
           "resolved_uri", "resolved_cri",
-          "cri_hex", "resolved_cri_hex"]
+          "cri_hex", "resolved_cri_hex", "comment"]
 
   baseuri = test_data["base-uri"]
   basecri_hex = test_data["base-cri"]
@@ -76,7 +76,7 @@ result = CSV.generate(col_sep: ";", quote_char: "|", quote_empty: false) do |csv
     cri_in_hex = td["cri"].downcase
     cri_in = hex_to_cri(cri_in_hex)
     cri_in_diag = cri_in.item_diag
-    check("hex cri_in", cri_in_hex, cri_in.to_item.to_cbor.hexi, true)
+    check("hex cri_in", cri_in_hex, cri_in.to_item.to_cbor.hexi) # ,true
 
     uri_from_cri = td["uri-from-cri"]
     red = uri_from_cri != uri_in
@@ -88,10 +88,10 @@ result = CSV.generate(col_sep: ";", quote_char: "|", quote_empty: false) do |csv
     # warn "resolved: #{hex_to_diag(td["resolved-cri"])}"
     resolved_uri = td["resolved-uri"]
 
-    cri_out = CBOR::CRI.from_uri(uri_in)
+    cri_out = CBOR::CRI.from_uri(uri_in) if uri_in
     # w cri_out.item_diag
-    check :_CRI_IN_OUT, cri_in, cri_out
-    uri_out = cri_out.to_uri
+    check :_CRI_IN_OUT, cri_in, cri_out if uri_in
+    uri_out = cri_out.to_uri if uri_in
     check :_URI_IN_OUT, uri_out, uri_from_cri
     check :_RES_IN_URI,  resolved_uri, resolved_cri.to_uri
     my_resolved_cri = basecri.merge(cri_in)
@@ -101,10 +101,12 @@ result = CSV.generate(col_sep: ";", quote_char: "|", quote_empty: false) do |csv
     my_resolved_uri_cri = CBOR::CRI.from_uri(resolved_uri)
     check :_RES_URI_CRI, my_resolved_uri_cri, resolved_cri
 
+    comment = td["description"] || ""
+
     item = [red ? "red" : "rt", 
             uri_in, cri_in_diag, red ? uri_from_cri : "",
             resolved_uri, resolved_cri.item_diag,
-            cri_in_hex, resolved_cri_hex]
+            cri_in_hex, resolved_cri_hex, comment]
     unless seen === item
       csv << item
       seen << item

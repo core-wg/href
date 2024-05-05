@@ -38,15 +38,16 @@ the extant examples.)
 
 The columns are:
 
-| Key Name            | Description                                                                                      |
-| ---                 | ---                                                                                              |
-| `type`              | kind of test: `ok`, `rt` (round-trip), `red` (normalized on roundtrip); special value `base`   |
-| `uri`               | a URI reference                                                                                  |
-| `cri`               | EDN CBOR representation of the CRI reference corresponding to `uri`              |
-| `red`       | `uri` reference after normalization if type=red, empty otherwise     |
-| `resolved-cri`      | EDN CBOR representation of the resolved CRI reference relative to the [base CRI](#bases) |
-| `cri_hex` | `cri` in CBOR hexdump format                                                  |
-| `resolved_cri_hex`  | `resolved_cri` in CBOR hexdump format              |
+| Key Name           | Description                                                                             |
+| ---                | ---                                                                                     |
+| `type`             | kind of test: `ok`, `rt` (round-trip), `red` (normalized on roundtrip); special value `base` |
+| `uri`              | a URI reference                                                                         |
+| `cri`              | EDN CBOR representation of the CRI reference corresponding to `uri`                     |
+| `red`              | `uri` reference after normalization if type=red, empty otherwise                        |
+| `resolved-cri`     | EDN CBOR representation of the resolved CRI reference relative to the [base CRI](#bases) |
+| `cri_hex`          | `cri` in CBOR hexdump format                                                            |
+| `resolved_cri_hex` | `resolved_cri` in CBOR hexdump format                                                   |
+| `description`      | comment                                                                                 |
 
 An initial line with type `base` gives the base URI and CRI applied, see above.
 

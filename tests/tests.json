@@ -3,6 +3,7 @@
   "base-cri": "85218263666f6f19126782627061627468816571756572796466726167",
   "test-vectors": [
     {
+      "description": "",
       "uri": "",
       "cri": "8100",
       "uri-from-cri": "",
@@ -10,6 +11,7 @@
       "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
     },
     {
+      "description": "",
       "uri": "//a",
       "cri": "82f6816161",
       "uri-from-cri": "//a",
@@ -17,6 +19,7 @@
       "resolved-uri": "coaps://a"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97",
       "cri": "82f68144c0a80061",
       "uri-from-cri": "//192.168.0.97",
@@ -24,6 +27,7 @@
       "resolved-uri": "coaps://192.168.0.97"
     },
     {
+      "description": "",
       "uri": "/",
       "cri": "82f58160",
       "uri-from-cri": "/",
@@ -31,6 +35,7 @@
       "resolved-uri": "coaps://foo:4711/"
     },
     {
+      "description": "",
       "uri": "/a",
       "cri": "82f5816161",
       "uri-from-cri": "/a",
@@ -38,6 +43,7 @@
       "resolved-uri": "coaps://foo:4711/a"
     },
     {
+      "description": "",
       "uri": "?a",
       "cri": "8300f6816161",
       "uri-from-cri": "?a",
@@ -45,6 +51,7 @@
       "resolved-uri": "coaps://foo:4711/pa/th?a"
     },
     {
+      "description": "",
       "uri": "#a",
       "cri": "8400f6f66161",
       "uri-from-cri": "#a",
@@ -52,6 +59,7 @@
       "resolved-uri": "coaps://foo:4711/pa/th?query#a"
     },
     {
+      "description": "",
       "uri": "a",
       "cri": "8201816161",
       "uri-from-cri": "a",
@@ -59,6 +67,7 @@
       "resolved-uri": "coaps://foo:4711/pa/a"
     },
     {
+      "description": "",
       "uri": "a/b",
       "cri": "82018261616162",
       "uri-from-cri": "a/b",
@@ -66,6 +75,7 @@
       "resolved-uri": "coaps://foo:4711/pa/a/b"
     },
     {
+      "description": "",
       "uri": "a/./b",
       "cri": "82018261616162",
       "uri-from-cri": "a/b",
@@ -73,6 +83,7 @@
       "resolved-uri": "coaps://foo:4711/pa/a/b"
     },
     {
+      "description": "",
       "uri": "./a/b",
       "cri": "82018261616162",
       "uri-from-cri": "a/b",
@@ -80,6 +91,7 @@
       "resolved-uri": "coaps://foo:4711/pa/a/b"
     },
     {
+      "description": "",
       "uri": "../a",
       "cri": "8202816161",
       "uri-from-cri": "../a",
@@ -87,6 +99,7 @@
       "resolved-uri": "coaps://foo:4711/a"
     },
     {
+      "description": "",
       "uri": "../a/b/../c/.",
       "cri": "82028261616163",
       "uri-from-cri": "../a/c",
@@ -94,6 +107,7 @@
       "resolved-uri": "coaps://foo:4711/a/c"
     },
     {
+      "description": "",
       "uri": "a://b",
       "cri": "826161816162",
       "uri-from-cri": "a://b",
@@ -101,6 +115,7 @@
       "resolved-uri": "a://b"
     },
     {
+      "description": "",
       "uri": "a://192.168.0.98",
       "cri": "8261618144c0a80062",
       "uri-from-cri": "a://192.168.0.98",
@@ -108,6 +123,7 @@
       "resolved-uri": "a://192.168.0.98"
     },
     {
+      "description": "",
       "uri": "a:",
       "cri": "816161",
       "uri-from-cri": "a:",
@@ -115,6 +131,7 @@
       "resolved-uri": "a:"
     },
     {
+      "description": "",
       "uri": "a:b",
       "cri": "836161f5816162",
       "uri-from-cri": "a:b",
@@ -122,6 +139,7 @@
       "resolved-uri": "a:b"
     },
     {
+      "description": "",
       "uri": "a:?b",
       "cri": "846161f6f6816162",
       "uri-from-cri": "a:?b",
@@ -129,6 +147,7 @@
       "resolved-uri": "a:?b"
     },
     {
+      "description": "",
       "uri": "a:/b",
       "cri": "836161f6816162",
       "uri-from-cri": "a:/b",
@@ -136,6 +155,7 @@
       "resolved-uri": "a:/b"
     },
     {
+      "description": "",
       "uri": "a:#b",
       "cri": "856161f6f6f66162",
       "uri-from-cri": "a:#b",
@@ -143,6 +163,7 @@
       "resolved-uri": "a:#b"
     },
     {
+      "description": "",
       "uri": "//a:25186",
       "cri": "82f6826161196262",
       "uri-from-cri": "//a:25186",
@@ -150,6 +171,7 @@
       "resolved-uri": "coaps://a:25186"
     },
     {
+      "description": "",
       "uri": "//a/",
       "cri": "83f68161618160",
       "uri-from-cri": "//a/",
@@ -157,6 +179,7 @@
       "resolved-uri": "coaps://a/"
     },
     {
+      "description": "",
       "uri": "//a/b",
       "cri": "83f6816161816162",
       "uri-from-cri": "//a/b",
@@ -164,6 +187,7 @@
       "resolved-uri": "coaps://a/b"
     },
     {
+      "description": "",
       "uri": "//a?b",
       "cri": "84f6816161f6816162",
       "uri-from-cri": "//a?b",
@@ -171,6 +195,7 @@
       "resolved-uri": "coaps://a?b"
     },
     {
+      "description": "",
       "uri": "//a#b",
       "cri": "85f6816161f6f66162",
       "uri-from-cri": "//a#b",
@@ -178,6 +203,7 @@
       "resolved-uri": "coaps://a#b"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97:25186",
       "cri": "82f68244c0a80061196262",
       "uri-from-cri": "//192.168.0.97:25186",
@@ -185,6 +211,7 @@
       "resolved-uri": "coaps://192.168.0.97:25186"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97/",
       "cri": "83f68144c0a800618160",
       "uri-from-cri": "//192.168.0.97/",
@@ -192,6 +219,7 @@
       "resolved-uri": "coaps://192.168.0.97/"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97/b",
       "cri": "83f68144c0a80061816162",
       "uri-from-cri": "//192.168.0.97/b",
@@ -199,6 +227,7 @@
       "resolved-uri": "coaps://192.168.0.97/b"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97?b",
       "cri": "84f68144c0a80061f6816162",
       "uri-from-cri": "//192.168.0.97?b",
@@ -206,6 +235,7 @@
       "resolved-uri": "coaps://192.168.0.97?b"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97#b",
       "cri": "85f68144c0a80061f6f66162",
       "uri-from-cri": "//192.168.0.97#b",
@@ -213,6 +243,7 @@
       "resolved-uri": "coaps://192.168.0.97#b"
     },
     {
+      "description": "",
       "uri": "/?b",
       "cri": "83f58160816162",
       "uri-from-cri": "/?b",
@@ -220,6 +251,7 @@
       "resolved-uri": "coaps://foo:4711/?b"
     },
     {
+      "description": "",
       "uri": "/#b",
       "cri": "84f58160f66162",
       "uri-from-cri": "/#b",
@@ -227,6 +259,7 @@
       "resolved-uri": "coaps://foo:4711/#b"
     },
     {
+      "description": "",
       "uri": "/a/",
       "cri": "82f582616160",
       "uri-from-cri": "/a/",
@@ -234,6 +267,7 @@
       "resolved-uri": "coaps://foo:4711/a/"
     },
     {
+      "description": "",
       "uri": "/a/b",
       "cri": "82f58261616162",
       "uri-from-cri": "/a/b",
@@ -241,6 +275,7 @@
       "resolved-uri": "coaps://foo:4711/a/b"
     },
     {
+      "description": "",
       "uri": "/a?b",
       "cri": "83f5816161816162",
       "uri-from-cri": "/a?b",
@@ -248,6 +283,7 @@
       "resolved-uri": "coaps://foo:4711/a?b"
     },
     {
+      "description": "",
       "uri": "/a#b",
       "cri": "84f5816161f66162",
       "uri-from-cri": "/a#b",
@@ -255,6 +291,7 @@
       "resolved-uri": "coaps://foo:4711/a#b"
     },
     {
+      "description": "",
       "uri": "?a&b",
       "cri": "8300f68261616162",
       "uri-from-cri": "?a&b",
@@ -262,6 +299,7 @@
       "resolved-uri": "coaps://foo:4711/pa/th?a&b"
     },
     {
+      "description": "",
       "uri": "?a#b",
       "cri": "8400f68161616162",
       "uri-from-cri": "?a#b",
@@ -269,6 +307,7 @@
       "resolved-uri": "coaps://foo:4711/pa/th?a#b"
     },
     {
+      "description": "",
       "uri": "a://b:25443",
       "cri": "826161826162196363",
       "uri-from-cri": "a://b:25443",
@@ -276,6 +315,7 @@
       "resolved-uri": "a://b:25443"
     },
     {
+      "description": "",
       "uri": "a://b/",
       "cri": "8361618161628160",
       "uri-from-cri": "a://b/",
@@ -283,6 +323,7 @@
       "resolved-uri": "a://b/"
     },
     {
+      "description": "",
       "uri": "a://b/c",
       "cri": "836161816162816163",
       "uri-from-cri": "a://b/c",
@@ -290,6 +331,7 @@
       "resolved-uri": "a://b/c"
     },
     {
+      "description": "",
       "uri": "a://b?c",
       "cri": "846161816162f6816163",
       "uri-from-cri": "a://b?c",
@@ -297,6 +339,7 @@
       "resolved-uri": "a://b?c"
     },
     {
+      "description": "",
       "uri": "a://b#c",
       "cri": "856161816162f6f66163",
       "uri-from-cri": "a://b#c",
@@ -304,6 +347,7 @@
       "resolved-uri": "a://b#c"
     },
     {
+      "description": "",
       "uri": "a://192.168.0.98:25443",
       "cri": "8261618244c0a80062196363",
       "uri-from-cri": "a://192.168.0.98:25443",
@@ -311,6 +355,7 @@
       "resolved-uri": "a://192.168.0.98:25443"
     },
     {
+      "description": "",
       "uri": "a://192.168.0.98/",
       "cri": "8361618144c0a800628160",
       "uri-from-cri": "a://192.168.0.98/",
@@ -318,6 +363,7 @@
       "resolved-uri": "a://192.168.0.98/"
     },
     {
+      "description": "",
       "uri": "a://192.168.0.98/c",
       "cri": "8361618144c0a80062816163",
       "uri-from-cri": "a://192.168.0.98/c",
@@ -325,6 +371,7 @@
       "resolved-uri": "a://192.168.0.98/c"
     },
     {
+      "description": "",
       "uri": "a://192.168.0.98?c",
       "cri": "8461618144c0a80062f6816163",
       "uri-from-cri": "a://192.168.0.98?c",
@@ -332,6 +379,7 @@
       "resolved-uri": "a://192.168.0.98?c"
     },
     {
+      "description": "",
       "uri": "a://192.168.0.98#c",
       "cri": "8561618144c0a80062f6f66163",
       "uri-from-cri": "a://192.168.0.98#c",
@@ -339,6 +387,7 @@
       "resolved-uri": "a://192.168.0.98#c"
     },
     {
+      "description": "",
       "uri": "a:?c",
       "cri": "846161f6f6816163",
       "uri-from-cri": "a:?c",
@@ -346,6 +395,7 @@
       "resolved-uri": "a:?c"
     },
     {
+      "description": "",
       "uri": "a:#c",
       "cri": "856161f6f6f66163",
       "uri-from-cri": "a:#c",
@@ -353,6 +403,7 @@
       "resolved-uri": "a:#c"
     },
     {
+      "description": "",
       "uri": "a:b/",
       "cri": "836161f582616260",
       "uri-from-cri": "a:b/",
@@ -360,6 +411,7 @@
       "resolved-uri": "a:b/"
     },
     {
+      "description": "",
       "uri": "a:b/c",
       "cri": "836161f58261626163",
       "uri-from-cri": "a:b/c",
@@ -367,6 +419,7 @@
       "resolved-uri": "a:b/c"
     },
     {
+      "description": "",
       "uri": "a:b%3Fc",
       "cri": "836161f58163623f63",
       "uri-from-cri": "a:b%3Fc",
@@ -374,6 +427,7 @@
       "resolved-uri": "a:b%3Fc"
     },
     {
+      "description": "",
       "uri": "a:b?c",
       "cri": "846161f5816162816163",
       "uri-from-cri": "a:b?c",
@@ -381,6 +435,7 @@
       "resolved-uri": "a:b?c"
     },
     {
+      "description": "",
       "uri": "a:b#c",
       "cri": "856161f5816162f66163",
       "uri-from-cri": "a:b#c",
@@ -388,6 +443,7 @@
       "resolved-uri": "a:b#c"
     },
     {
+      "description": "",
       "uri": "a:?b&c",
       "cri": "846161f6f68261626163",
       "uri-from-cri": "a:?b&c",
@@ -395,6 +451,7 @@
       "resolved-uri": "a:?b&c"
     },
     {
+      "description": "",
       "uri": "a:?b#c",
       "cri": "856161f6f68161626163",
       "uri-from-cri": "a:?b#c",
@@ -402,6 +459,7 @@
       "resolved-uri": "a:?b#c"
     },
     {
+      "description": "",
       "uri": "//a:25186/",
       "cri": "83f68261611962628160",
       "uri-from-cri": "//a:25186/",
@@ -409,6 +467,7 @@
       "resolved-uri": "coaps://a:25186/"
     },
     {
+      "description": "",
       "uri": "//a:25186/c",
       "cri": "83f6826161196262816163",
       "uri-from-cri": "//a:25186/c",
@@ -416,6 +475,7 @@
       "resolved-uri": "coaps://a:25186/c"
     },
     {
+      "description": "",
       "uri": "//a:25186?c",
       "cri": "84f6826161196262f6816163",
       "uri-from-cri": "//a:25186?c",
@@ -423,6 +483,7 @@
       "resolved-uri": "coaps://a:25186?c"
     },
     {
+      "description": "",
       "uri": "//a:25186#c",
       "cri": "85f6826161196262f6f66163",
       "uri-from-cri": "//a:25186#c",
@@ -430,6 +491,7 @@
       "resolved-uri": "coaps://a:25186#c"
     },
     {
+      "description": "",
       "uri": "//a/?c",
       "cri": "84f68161618160816163",
       "uri-from-cri": "//a/?c",
@@ -437,6 +499,7 @@
       "resolved-uri": "coaps://a/?c"
     },
     {
+      "description": "",
       "uri": "//a/#c",
       "cri": "85f68161618160f66163",
       "uri-from-cri": "//a/#c",
@@ -444,6 +507,7 @@
       "resolved-uri": "coaps://a/#c"
     },
     {
+      "description": "",
       "uri": "//a/b/",
       "cri": "83f681616182616260",
       "uri-from-cri": "//a/b/",
@@ -451,6 +515,7 @@
       "resolved-uri": "coaps://a/b/"
     },
     {
+      "description": "",
       "uri": "//a/b/c",
       "cri": "83f68161618261626163",
       "uri-from-cri": "//a/b/c",
@@ -458,6 +523,7 @@
       "resolved-uri": "coaps://a/b/c"
     },
     {
+      "description": "",
       "uri": "//a/b?c",
       "cri": "84f6816161816162816163",
       "uri-from-cri": "//a/b?c",
@@ -465,6 +531,7 @@
       "resolved-uri": "coaps://a/b?c"
     },
     {
+      "description": "",
       "uri": "//a/b#c",
       "cri": "85f6816161816162f66163",
       "uri-from-cri": "//a/b#c",
@@ -472,6 +539,7 @@
       "resolved-uri": "coaps://a/b#c"
     },
     {
+      "description": "",
       "uri": "//a?b&c",
       "cri": "84f6816161f68261626163",
       "uri-from-cri": "//a?b&c",
@@ -479,6 +547,7 @@
       "resolved-uri": "coaps://a?b&c"
     },
     {
+      "description": "",
       "uri": "//a?b#c",
       "cri": "85f6816161f68161626163",
       "uri-from-cri": "//a?b#c",
@@ -486,6 +555,7 @@
       "resolved-uri": "coaps://a?b#c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97:25186/",
       "cri": "83f68244c0a800611962628160",
       "uri-from-cri": "//192.168.0.97:25186/",
@@ -493,6 +563,7 @@
       "resolved-uri": "coaps://192.168.0.97:25186/"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97:25186/c",
       "cri": "83f68244c0a80061196262816163",
       "uri-from-cri": "//192.168.0.97:25186/c",
@@ -500,6 +571,7 @@
       "resolved-uri": "coaps://192.168.0.97:25186/c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97:25186?c",
       "cri": "84f68244c0a80061196262f6816163",
       "uri-from-cri": "//192.168.0.97:25186?c",
@@ -507,6 +579,7 @@
       "resolved-uri": "coaps://192.168.0.97:25186?c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97:25186#c",
       "cri": "85f68244c0a80061196262f6f66163",
       "uri-from-cri": "//192.168.0.97:25186#c",
@@ -514,6 +587,7 @@
       "resolved-uri": "coaps://192.168.0.97:25186#c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97/?c",
       "cri": "84f68144c0a800618160816163",
       "uri-from-cri": "//192.168.0.97/?c",
@@ -521,6 +595,7 @@
       "resolved-uri": "coaps://192.168.0.97/?c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97/#c",
       "cri": "85f68144c0a800618160f66163",
       "uri-from-cri": "//192.168.0.97/#c",
@@ -528,6 +603,7 @@
       "resolved-uri": "coaps://192.168.0.97/#c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97/b/",
       "cri": "83f68144c0a8006182616260",
       "uri-from-cri": "//192.168.0.97/b/",
@@ -535,6 +611,7 @@
       "resolved-uri": "coaps://192.168.0.97/b/"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97/b/c",
       "cri": "83f68144c0a800618261626163",
       "uri-from-cri": "//192.168.0.97/b/c",
@@ -542,6 +619,7 @@
       "resolved-uri": "coaps://192.168.0.97/b/c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97/b?c",
       "cri": "84f68144c0a80061816162816163",
       "uri-from-cri": "//192.168.0.97/b?c",
@@ -549,6 +627,7 @@
       "resolved-uri": "coaps://192.168.0.97/b?c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97/b#c",
       "cri": "85f68144c0a80061816162f66163",
       "uri-from-cri": "//192.168.0.97/b#c",
@@ -556,6 +635,7 @@
       "resolved-uri": "coaps://192.168.0.97/b#c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97?b&c",
       "cri": "84f68144c0a80061f68261626163",
       "uri-from-cri": "//192.168.0.97?b&c",
@@ -563,6 +643,7 @@
       "resolved-uri": "coaps://192.168.0.97?b&c"
     },
     {
+      "description": "",
       "uri": "//192.168.0.97?b#c",
       "cri": "85f68144c0a80061f68161626163",
       "uri-from-cri": "//192.168.0.97?b#c",
@@ -570,6 +651,7 @@
       "resolved-uri": "coaps://192.168.0.97?b#c"
     },
     {
+      "description": "",
       "uri": "/?b&c",
       "cri": "83f581608261626163",
       "uri-from-cri": "/?b&c",
@@ -577,6 +659,7 @@
       "resolved-uri": "coaps://foo:4711/?b&c"
     },
     {
+      "description": "",
       "uri": "/?b#c",
       "cri": "84f581608161626163",
       "uri-from-cri": "/?b#c",
@@ -584,6 +667,7 @@
       "resolved-uri": "coaps://foo:4711/?b#c"
     },
     {
+      "description": "",
       "uri": "/a//",
       "cri": "82f58361616060",
       "uri-from-cri": "/a//",
@@ -591,6 +675,7 @@
       "resolved-uri": "coaps://foo:4711/a//"
     },
     {
+      "description": "",
       "uri": "/a//c",
       "cri": "82f5836161606163",
       "uri-from-cri": "/a//c",
@@ -598,6 +683,7 @@
       "resolved-uri": "coaps://foo:4711/a//c"
     },
     {
+      "description": "",
       "uri": "/a/?c",
       "cri": "83f582616160816163",
       "uri-from-cri": "/a/?c",
@@ -605,6 +691,7 @@
       "resolved-uri": "coaps://foo:4711/a/?c"
     },
     {
+      "description": "",
       "uri": "/a/#c",
       "cri": "84f582616160f66163",
       "uri-from-cri": "/a/#c",
@@ -612,6 +699,7 @@
       "resolved-uri": "coaps://foo:4711/a/#c"
     },
     {
+      "description": "",
       "uri": "/a/b/",
       "cri": "82f5836161616260",
       "uri-from-cri": "/a/b/",
@@ -619,6 +707,7 @@
       "resolved-uri": "coaps://foo:4711/a/b/"
     },
     {
+      "description": "",
       "uri": "/a/b/c",
       "cri": "82f583616161626163",
       "uri-from-cri": "/a/b/c",
@@ -626,6 +715,7 @@
       "resolved-uri": "coaps://foo:4711/a/b/c"
     },
     {
+      "description": "",
       "uri": "/a/b?c",
       "cri": "83f58261616162816163",
       "uri-from-cri": "/a/b?c",
@@ -633,6 +723,7 @@
       "resolved-uri": "coaps://foo:4711/a/b?c"
     },
     {
+      "description": "",
       "uri": "/a/b#c",
       "cri": "84f58261616162f66163",
       "uri-from-cri": "/a/b#c",
@@ -640,6 +731,7 @@
       "resolved-uri": "coaps://foo:4711/a/b#c"
     },
     {
+      "description": "",
       "uri": "/a?b&c",
       "cri": "83f58161618261626163",
       "uri-from-cri": "/a?b&c",
@@ -647,6 +739,7 @@
       "resolved-uri": "coaps://foo:4711/a?b&c"
     },
     {
+      "description": "",
       "uri": "/a?b#c",
       "cri": "84f58161618161626163",
       "uri-from-cri": "/a?b#c",
@@ -654,11 +747,173 @@
       "resolved-uri": "coaps://foo:4711/a?b#c"
     },
     {
+      "description": "",
       "uri": "?a&b&c",
       "cri": "8300f683616161626163",
       "uri-from-cri": "?a&b&c",
       "resolved-cri": "84218263666f6f1912678262706162746883616161626163",
       "resolved-uri": "coaps://foo:4711/pa/th?a&b&c"
+    },
+    {
+      "description": "Empty CRI",
+      "uri": "",
+      "cri": "80",
+      "uri-from-cri": "",
+      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
+      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
+    },
+    {
+      "description": "Dotted host name",
+      "uri": "//a.b",
+      "cri": "82f68261616162",
+      "uri-from-cri": "//a.b",
+      "resolved-cri": "82218261616162",
+      "resolved-uri": "coaps://a.b"
+    },
+    {
+      "description": "Weird non-PET in host",
+      "uri": "//a%2Ea",
+      "cri": "82f68163612e61",
+      "uri-from-cri": "//a%2Ea",
+      "resolved-cri": "82218163612e61",
+      "resolved-uri": "coaps://a%2Eb",
+      "invalid": "The dot ('.') is unreserved, and thus never percent encoded, and thus (when used with a delimiter) not legal in the strings of the host"
+    },
+    {
+      "description": "PET (':') in host",
+      "uri": "//a%3Aa",
+      "cri": "82f681836161413a6161",
+      "uri-from-cri": "//a%3Aa",
+      "resolved-cri": "822181836161413a6161",
+      "resolved-uri": "coaps://a%3Aa"
+    },
+    {
+      "description": "Non-PET in path",
+      "uri": "/a%2Fa%25a",
+      "cri": "82f58165612f612561",
+      "uri-from-cri": "/a%2Fa%25a",
+      "resolved-cri": "83218263666F6F1912678165612F612561",
+      "resolved-uri": "coaps://foo:4711/a%2Fa%25a"
+    },
+    {
+      "description": "Semicolon in path (pretty tame, but contrasting the next example)",
+      "uri": "/a;a",
+      "cri": "82f58163613b61",
+      "uri-from-cri": "/a;a",
+      "resolved-cri": "83218263666F6F1912678163613B61",
+      "resolved-uri": "coaps://foo:4711/a;a"
+    },
+    {
+      "description": "PET in path",
+      "uri": "/a%3Ba",
+      "cri": "82f581836161413b6161",
+      "uri-from-cri": "/a%3Ba",
+      "resolved-cri": "83218263666F6F19126781836161413B6161",
+      "resolved-uri": "coaps://foo:4711/a%3Ba"
+    },
+    {
+      "description": "escaped non-PET in query (discarding path without empty trailing)",
+      "uri": null,
+      "cri": "83f5808163612661",
+      "uri-from-cri": null,
+      "resolved-cri": "84218263666F6F191267808163612661",
+      "resolved-uri": "coaps://foo:4711?a%26a"
+    },
+    {
+      "description": "escaped non-PET in query (discarding path but restoring an empty trailing path component)",
+      "uri": "/?a%26a",
+      "cri": "83F581608163612661",
+      "uri-from-cri": "/?a%26a",
+      "resolved-cri": "84218263666F6F19126781608163612661",
+      "resolved-uri": "coaps://foo:4711/?a%26a"
+    },
+    {
+      "description": "PET in query",
+      "uri": "/?a%23a",
+      "cri": "83F581608183616141236161",
+      "uri-from-cri": "/?a%23a",
+      "resolved-cri": "84218263666F6F19126781608183616141236161",
+      "resolved-uri": "coaps://foo:4711/?a%23a"
+    },
+    {
+      "description": "unescaped non-PET (but delimiter) in fragment",
+      "uri": "#/",
+      "cri": "8400F6F6612F",
+      "uri-from-cri": "#/",
+      "resolved-cri": "85218263666F6F1912678262706162746881657175657279612F",
+      "resolved-uri": "coaps://foo:4711/pa/th?query#/"
+    },
+    {
+      "description": "escaped non-PET in fragment",
+      "uri": "#%5B%5D",
+      "cri": "8400f6f6625b5d",
+      "uri-from-cri": "#%5B%5D",
+      "resolved-cri": "85218263666F6F1912678262706162746881657175657279625B5D",
+      "resolved-uri": "coaps://foo:4711/pa/th?query#%5B%5D"
+    },
+    {
+      "description": "PET in fragment",
+      "uri": "#%2F",
+      "cri": "8400F6F681412F",
+      "uri-from-cri": "#%2F",
+      "resolved-cri": "85218263666F6F191267826270616274688165717565727981412F",
+      "resolved-uri": "coaps://foo:4711/pa/th?query#%2F"
+    },
+    {
+      "description": "escaped non-PET in host",
+      "uri": "//non%3Aport.x",
+      "cri": "82f682686E6F6E3A706F72746178",
+      "uri-from-cri": "//non%3Aport.x",
+      "resolved-cri": "822182686E6F6E3A706F72746178",
+      "resolved-uri": "coaps://non%3Aport.x"
+    },
+    {
+      "description": "unescaped non-PET (but delimiter) in host",
+      "uri": "//non!port.x",
+      "cri": "82F68281686E6F6E21706F72746178",
+      "uri-from-cri": "//non!port.x",
+      "resolved-cri": "82218281686E6F6E21706F72746178",
+      "resolved-uri": "coaps://non!port.x"
+    },
+    {
+      "description": "PET in host",
+      "uri": "//non%21port.x",
+      "cri": "82F68283636E6F6E412164706F72746178",
+      "uri-from-cri": "//non%21port.x",
+      "resolved-cri": "82218283636E6F6E412164706F72746178",
+      "resolved-uri": "coaps://non%21port.x"
+    },
+    {
+      "description": "escaped non-PET in userinfo",
+      "uri": "//alice%40example.com@example.com",
+      "cri": "82f684f471616c696365406578616d706c652e636f6d676578616d706c6563636f6d",
+      "uri-from-cri": "//alice%40example.com@example.com",
+      "resolved-cri": "822184F471616C696365406578616D706C652E636F6D676578616D706C6563636F6D",
+      "resolved-uri": "coaps://alice%40example.com@example.com"
+    },
+    {
+      "description": "escaped and unescaped delimiter in userinfo",
+      "uri": "//c+%2B@example.com",
+      "cri": "82F684F48262632B412B676578616D706C6563636F6D",
+      "uri-from-cri": "//c+%2B@example.com",
+      "resolved-cri": "822184F48262632B412B676578616D706C6563636F6D",
+      "resolved-uri": "coaps://c+%2B@example.com"
+    },
+    {
+      "description": "colon in first URI path needs to be preserved to disambiguate against full URIs",
+      "uri": "./foo:bar",
+      "cri": "82018167666F6F3A626172",
+      "uri-from-cri": "./foo:bar",
+      "resolved-cri": "83218263666F6F1912678262706167666F6F3A626172",
+      "resolved-uri": "coaps://foo:4711/pa/foo:bar"
+    },
+    {
+      "description": "PET in contrast to unescaped subdelim in hostname",
+      "uri": "math://equation=E%3Dmc%C2%B2/",
+      "cri": "83646D61746881836A6571756174696F6E3D45413D646D63C2B28160",
+      "uri-from-cri": "math://equation=E%3Dmc%C2%B2/",
+      "resolved-cri": "83646D61746881836A6571756174696F6E3D45413D646D63C2B28160",
+      "resolved-uri": "math://equation=E%3Dmc%C2%B2/"
     }
   ]
 }
