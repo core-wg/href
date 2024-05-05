@@ -24,13 +24,6 @@
       "resolved-uri": "coaps://192.168.0.97"
     },
     {
-      "uri": "",
-      "cri": "8100",
-      "uri-from-cri": "",
-      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
-      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
-    },
-    {
       "uri": "/",
       "cri": "82f58160",
       "uri-from-cri": "/",
@@ -99,13 +92,6 @@
       "uri-from-cri": "../a/c",
       "resolved-cri": "83218263666f6f1912678261616163",
       "resolved-uri": "coaps://foo:4711/a/c"
-    },
-    {
-      "uri": "",
-      "cri": "8100",
-      "uri-from-cri": "",
-      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
-      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
     },
     {
       "uri": "a://b",
@@ -225,13 +211,6 @@
       "uri-from-cri": "//192.168.0.97#b",
       "resolved-cri": "85218144c0a80061f6f66162",
       "resolved-uri": "coaps://192.168.0.97#b"
-    },
-    {
-      "uri": "",
-      "cri": "8100",
-      "uri-from-cri": "",
-      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
-      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
     },
     {
       "uri": "/?b",
@@ -360,13 +339,6 @@
       "resolved-uri": "a://192.168.0.98#c"
     },
     {
-      "uri": "",
-      "cri": "8100",
-      "uri-from-cri": "",
-      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
-      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
-    },
-    {
       "uri": "a:?c",
       "cri": "846161f6f6816163",
       "uri-from-cri": "a:?c",
@@ -458,13 +430,6 @@
       "resolved-uri": "coaps://a:25186#c"
     },
     {
-      "uri": "",
-      "cri": "8100",
-      "uri-from-cri": "",
-      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
-      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
-    },
-    {
       "uri": "//a/?c",
       "cri": "84f68161618160816163",
       "uri-from-cri": "//a/?c",
@@ -549,13 +514,6 @@
       "resolved-uri": "coaps://192.168.0.97:25186#c"
     },
     {
-      "uri": "",
-      "cri": "8100",
-      "uri-from-cri": "",
-      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
-      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
-    },
-    {
       "uri": "//192.168.0.97/?c",
       "cri": "84f68144c0a800618160816163",
       "uri-from-cri": "//192.168.0.97/?c",
@@ -610,13 +568,6 @@
       "uri-from-cri": "//192.168.0.97?b#c",
       "resolved-cri": "85218144c0a80061f68161626163",
       "resolved-uri": "coaps://192.168.0.97?b#c"
-    },
-    {
-      "uri": "",
-      "cri": "8100",
-      "uri-from-cri": "",
-      "resolved-cri": "85218263666f6f19126782627061627468816571756572796466726167",
-      "resolved-uri": "coaps://foo:4711/pa/th?query#frag"
     },
     {
       "uri": "/?b&c",
