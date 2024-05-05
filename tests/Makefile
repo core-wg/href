@@ -15,5 +15,5 @@ tests.json: tests.csv
 new-tests.csv: tests.json
 	ruby json-to-csv.rb $< >$@.new
 	mv $@.new $@
-	-diff $@ tests.csv
+	-diff tests.csv $@
 
