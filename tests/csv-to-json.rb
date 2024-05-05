@@ -1,4 +1,5 @@
 require 'cbor-diagnostic'
+require 'cbor-deterministic'
 require 'treetop'
 require 'cbor-diag-parser'
 require 'sid-csv'               # steal from sid-csv gem
@@ -29,24 +30,47 @@ def diag_to_hex(d)
   parser.parse(d).to_rb.to_cbor.hexi
 end
 
+def check(sym, a, b, strict = false)
+  unless a == b
+    w [sym, a.item_diag, b.item_diag]
+    fail if strict
+  end
+end
+
+def w(x)
+  warn x.inspect
+end
+
 test_data = {}
 
 tv = []
+seen = Set[]
 
-CSV.read("tests.csv").each do |row|
+CSV.read("tests.csv", col_sep: ";", quote_char: "|", quote_empty: false).each do |row|
   case row
-  in ["base", baseuri, basecri_diag]
+  in ["type", "uri", "cri", "red", "resolved_uri", "resolved_cri", "cri_hex", "resolved_cri_hex"]
+  in ["base", baseuri, basecri_diag, *_foo]
     test_data["base-uri"] = baseuri
     test_data["base-cri"] = diag_to_hex(basecri_diag)
     test_data["test-vectors"] = tv
-  in ["ok", uri_in, cri_in_diag, uri_from_cri_opt, resolved_cri_diag, resolved_uri]
-    tv << {
-      "uri" => uri_in,
-      "cri" => diag_to_hex(cri_in_diag),
-      "uri-from-cri" => (uri_from_cri_opt == "=" ? uri_in : uri_from_cri_opt),
+  in ["rt" | "red", uri_in, cri_in_diag, uri_from_cri_opt, resolved_uri, resolved_cri_diag, cri_hex_in, resolved_cri_hex_in]
+    cri_hex = diag_to_hex(cri_in_diag)
+    check "** CRI_HEX", cri_hex_in, cri_hex
+    resolved_cri_hex = diag_to_hex(resolved_cri_diag)
+    check "** RESOLVED_CRI_HEX", resolved_cri_hex_in, resolved_cri_hex
+    val = {
+      "uri" => uri_in || "",
+      "cri" => cri_hex,
+      "uri-from-cri" => uri_from_cri_opt || uri_in || "",
       "resolved-cri" => diag_to_hex(resolved_cri_diag),
       "resolved-uri" => resolved_uri,
+      # XXX check assigned cri_hex, resolved_cri_hex
     }
+    valdet = val.cbor_prepare_deterministic.to_cbor
+    unless seen === valdet
+      tv << val
+      seen << valdet
+    end
   end
 end
 
