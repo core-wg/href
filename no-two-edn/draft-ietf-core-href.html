@@ -22,17 +22,17 @@ system based on unsigned numbers.
 This revision still contains open issues and is intended to serve
 as a snapshot. 
     ' name="description">
-<meta content="xml2rfc 3.20.1" name="generator">
+<meta content="xml2rfc 3.21.0" name="generator">
 <meta content="draft-ietf-core-href-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.20.1
-    Python 3.11.8
+  xml2rfc 3.21.0
+    Python 3.11.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 4.2.0
+    platformdirs 4.2.1
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
@@ -1037,11 +1037,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Constrained Resource Identifiers</td>
-<td class="right">April 2024</td>
+<td class="right">June 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 11 October 2024</td>
+<td class="center">Expires 3 December 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1057,12 +1057,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc7595" class="eref">7595</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-04-09" class="published">9 April 2024</time>
+<time datetime="2024-06-01" class="published">1 June 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-10-11">11 October 2024</time></dd>
+<dd class="expires"><time datetime="2024-12-03">3 December 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1128,7 +1128,7 @@ as a snapshot.</span><a href="#section-abstract-2" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 October 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2510,10 +2510,14 @@ Both the following examples are therefore not valid:<a href="#section-7.1-10" cl
 <div class="lang-cbor-diag sourcecode" id="section-7.1-11">
 <pre>
 [-6, true, [["web:alice:", '7:', "1-balun"]]]
-[-6, true, [["web:alice:7", ':1', "-balun"]]]
 </pre><a href="#section-7.1-11" class="pilcrow">¶</a>
 </div>
-<p id="section-7.1-12">An algorithm for constructing a valid <code>text-pet-sequence</code> might
+<div class="lang-cbor-diag sourcecode" id="section-7.1-12">
+<pre>
+[-6, true, [["web:alice:7", ':1', "-balun"]]]
+</pre><a href="#section-7.1-12" class="pilcrow">¶</a>
+</div>
+<p id="section-7.1-13">An algorithm for constructing a valid <code>text-pet-sequence</code> might
 repeatedly examine the byte sequences in each byte string; if such a
 sequence stands for an unreserved ASCII character, or constitutes a
 valid UTF-8 character ≥ U+0080, move this character over into a text
@@ -2521,9 +2525,9 @@ string by appending it to the end of the preceding text string,
 prepending it to the start of the following text string, or splitting
 the byte string and inserting a new text string with this character,
 all while preserving the order of the bytes.  (Note that the
-properties of UTF-8 make this a simple linear process.)<a href="#section-7.1-12" class="pilcrow">¶</a></p>
-<aside id="section-7.1-13">
-          <p id="section-7.1-13.1">Unlike the text elements of a path or a query, which through CoAP's
+properties of UTF-8 make this a simple linear process.)<a href="#section-7.1-13" class="pilcrow">¶</a></p>
+<aside id="section-7.1-14">
+          <p id="section-7.1-14.1">Unlike the text elements of a path or a query, which through CoAP's
 heritage are designed to be processable element by element, a
 text-pet-sequence does not usually produce a semantically meaningful
 division into array elements.
@@ -2534,7 +2538,7 @@ Applications designed for using CRIs will generally avoid using the
 extended-cri feature.
 Applications using existing URI structures that require
 text-pet-sequence elements for their representation typically need
-to process them byte by byte.<a href="#section-7.1-13.1" class="pilcrow">¶</a></p>
+to process them byte by byte.<a href="#section-7.1-14.1" class="pilcrow">¶</a></p>
 </aside>
 </section>
 </div>
@@ -3179,7 +3183,7 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-08</span>, <time datetime="2024-02-01" class="refDate">1 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-08">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-08</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-09</span>, <time datetime="2024-05-18" class="refDate">18 May 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-09">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-09</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4180">[RFC4180]</dt>
         <dd>
@@ -5301,7 +5305,7 @@ cri'https://example.com/bottarga/shaved'
         </h3>
 <p id="appendix-C.1-1">The syntax of the content of <code>cri</code> literals can be described by the
 ABNF for <code>URI-reference</code> in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-4.1" class="relref">4.1</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> with certain
-re-arrangements taken from <a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-08#figure-5" class="relref">Figure 5</a> of <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>;
+re-arrangements taken from <a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-09#figure-5" class="relref">Figure 5</a> of <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>;
 these are reproduced in <a href="#abnf-grammar-cri" class="auto internal xref">Figure 2</a>.
 If the content is not ASCII only (i.e., for IRIs), first apply
 <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> and apply this grammar to the result.<a href="#appendix-C.1-1" class="pilcrow">¶</a></p>
@@ -5341,8 +5345,8 @@ IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
 
 IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
 
-; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged for
-; PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
+; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged
+; for PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
 
 IPv6address   =                            6( h16 ":" ) ls32
               /                       "::" 5( h16 ":" ) ls32
