@@ -971,6 +971,8 @@ Both the following examples are therefore not valid:
 
 ~~~ cbor-diag
 [-6, true, [["web:alice:", '7:', "1-balun"]]]
+~~~
+~~~ cbor-diag
 [-6, true, [["web:alice:7", ':1', "-balun"]]]
 ~~~
 
