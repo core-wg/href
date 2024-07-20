@@ -1234,8 +1234,17 @@ strings that have not been registered in the Uniform Resource
 Identifier (URI) Schemes registry if and only if the expert considers
 them to be in wide use in place of URI scheme names in constrained
 applications.
-(Note that the initial registrations in {{tab-numbers}} in {{sec-numbers}} already include
-such registrations for the text strings "mqtt" and "mqtts".)
+(Note that registrations in the CRI Scheme Numbers registry are
+oblivious to the details of any URI Schemes registry registration, so
+if a registration is later made in the URI Schemes registry that uses
+such a previously unregistered text string as a name, the CRI Scheme
+Numbers registration simply stays in place, even if the URI Schemes
+registration happens to be for something different from what the
+expert had in mind at the time for the CRI Scheme Numbers
+registration.
+Also note that the initial registrations in {{tab-numbers}} in
+{{sec-numbers}} already include such registrations for the text strings
+"mqtt" and "mqtts".)
 
 A registration in the CRI Scheme Numbers registry does not imply that
 a URI scheme under this name exists or has been registered in the
