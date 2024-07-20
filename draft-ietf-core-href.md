@@ -99,9 +99,8 @@ memory size.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –15 of this draft continues -14 by picking up
-    more comments, such as moving to a CRI scheme number registration
-    system based on unsigned numbers.
+    The present revision –16 of this draft continues -15 by picking up
+    more comments; it was made specifically for IETF 120.
     \\
     This revision still contains open issues and is intended to serve
     as a snapshot.
@@ -1560,6 +1559,11 @@ title="ABNF Definition of URI Representation of a CRI"
 
 # Change Log
 {:removeinrfc}
+
+Changes from -15 to -16
+
+* Add note that CRI Scheme Number registrations are oblivious of the
+  actual URI Scheme registrations (if any).
 
 Changes from -14 to -15
 
