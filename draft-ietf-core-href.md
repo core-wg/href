@@ -99,9 +99,8 @@ memory size.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –15 of this draft continues -14 by picking up
-    more comments, such as moving to a CRI scheme number registration
-    system based on unsigned numbers.
+    The present revision –16 of this draft continues -15 by picking up
+    more comments; it was made specifically for IETF 120.
     \\
     This revision still contains open issues and is intended to serve
     as a snapshot.
@@ -1234,8 +1233,17 @@ strings that have not been registered in the Uniform Resource
 Identifier (URI) Schemes registry if and only if the expert considers
 them to be in wide use in place of URI scheme names in constrained
 applications.
-(Note that the initial registrations in {{tab-numbers}} in {{sec-numbers}} already include
-such registrations for the text strings "mqtt" and "mqtts".)
+(Note that registrations in the CRI Scheme Numbers registry are
+oblivious to the details of any URI Schemes registry registration, so
+if a registration is later made in the URI Schemes registry that uses
+such a previously unregistered text string as a name, the CRI Scheme
+Numbers registration simply stays in place, even if the URI Schemes
+registration happens to be for something different from what the
+expert had in mind at the time for the CRI Scheme Numbers
+registration.
+Also note that the initial registrations in {{tab-numbers}} in
+{{sec-numbers}} already include such registrations for the text strings
+"mqtt" and "mqtts".)
 
 A registration in the CRI Scheme Numbers registry does not imply that
 a URI scheme under this name exists or has been registered in the
@@ -1551,6 +1559,11 @@ title="ABNF Definition of URI Representation of a CRI"
 
 # Change Log
 {:removeinrfc}
+
+Changes from -15 to -16
+
+* Add note that CRI Scheme Number registrations are oblivious of the
+  actual URI Scheme registrations (if any).
 
 Changes from -14 to -15
 
