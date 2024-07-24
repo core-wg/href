@@ -6,7 +6,7 @@ CoRE Working Group                                       C. Bormann, Ed.
 Internet-Draft                                    Universität Bremen TZI
 Updates: 7595 (if approved)                                  H. Birkholz
 Intended status: Standards Track                          Fraunhofer SIT
-Expires: 23 January 2025                                    22 July 2024
+Expires: 25 January 2025                                    24 July 2024
 
 
                     Constrained Resource Identifiers
@@ -20,6 +20,10 @@ Abstract
    sequence of characters.  This simplifies parsing, comparison, and
    reference resolution in environments with severe limitations on
    processing power, code size, and memory size.
+
+   This RFC updates RFC 7595 to add a note on how the URI Schemes
+   registry RFC 7595 describes cooperates with the CRI Scheme Numbers
+   registry created by the present RFC.
 
 
    // (This "cref" paragraph will be removed by the RFC editor:) The
@@ -43,20 +47,21 @@ About This Document
    Source for this draft and an issue tracker can be found at
    https://github.com/core-wg/href.
 
+
+
+
+
+
+
+Bormann & Birkholz       Expires 25 January 2025                [Page 1]
+
+Internet-Draft      Constrained Resource Identifiers           July 2024
+
+
 Status of This Memo
 
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
-
-
-
-
-
-
-Bormann & Birkholz       Expires 23 January 2025                [Page 1]
-
-Internet-Draft      Constrained Resource Identifiers           July 2024
-
 
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
@@ -68,7 +73,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 January 2025.
+   This Internet-Draft will expire on 25 January 2025.
 
 Copyright Notice
 
@@ -92,7 +97,7 @@ Table of Contents
      2.1.  Constraints not expressed by the data model . . . . . . .   7
    3.  Creation and Normalization  . . . . . . . . . . . . . . . . .   8
    4.  Comparison  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-   5.  CRI References  . . . . . . . . . . . . . . . . . . . . . . .   9
+   5.  CRI References  . . . . . . . . . . . . . . . . . . . . . . .  10
      5.1.  CBOR Representation . . . . . . . . . . . . . . . . . . .  10
        5.1.1.  scheme-name and scheme-id . . . . . . . . . . . . . .  12
        5.1.2.  The discard Section . . . . . . . . . . . . . . . . .  13
@@ -101,19 +106,19 @@ Table of Contents
        5.1.5.  Specific Terminology  . . . . . . . . . . . . . . . .  14
      5.2.  Ingesting and encoding a CRI Reference  . . . . . . . . .  14
        5.2.1.  Error handling and extensibility  . . . . . . . . . .  15
+
+
+
+Bormann & Birkholz       Expires 25 January 2025                [Page 2]
+
+Internet-Draft      Constrained Resource Identifiers           July 2024
+
+
      5.3.  Reference Resolution  . . . . . . . . . . . . . . . . . .  16
    6.  Relationship between CRIs, URIs, and IRIs . . . . . . . . . .  17
      6.1.  Converting CRIs to URIs . . . . . . . . . . . . . . . . .  18
    7.  Extending CRIs  . . . . . . . . . . . . . . . . . . . . . . .  20
      7.1.  Extended CRI: Accommodating Percent Encoding (PET)  . . .  21
-
-
-
-Bormann & Birkholz       Expires 23 January 2025                [Page 2]
-
-Internet-Draft      Constrained Resource Identifiers           July 2024
-
-
    8.  CoAP Integration  . . . . . . . . . . . . . . . . . . . . . .  23
      8.1.  Converting Between CoAP CRIs and Sets of CoAP Options . .  23
        8.1.1.  Decomposing a Request CRI into a set of CoAP
@@ -145,7 +150,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
    Appendix D.  Change Log . . . . . . . . . . . . . . . . . . . . .  55
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  58
    Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  58
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  58
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  59
 
 1.  Introduction
 
@@ -154,25 +159,17 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
    resources in hypertext formats such as HTML [W3C.REC-html52-20171214]
    or the HTTP "Link" header field [RFC8288].
 
+   A URI reference is a sequence of characters chosen from the
+   repertoire of US-ASCII characters.  The individual components of a
+   URI reference are delimited by a number of reserved characters, which
 
 
 
-
-
-
-
-
-
-
-
-Bormann & Birkholz       Expires 23 January 2025                [Page 3]
+Bormann & Birkholz       Expires 25 January 2025                [Page 3]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
-   A URI reference is a sequence of characters chosen from the
-   repertoire of US-ASCII characters.  The individual components of a
-   URI reference are delimited by a number of reserved characters, which
    necessitates the use of a character escape mechanism called "percent-
    encoding" when these reserved characters are used in a non-delimiting
    function.  The resolution of URI references involves parsing a
@@ -204,27 +201,34 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
    Protocol (HTTP) [STD97], Uniform Resource Names (URNs) [RFC8141], and
    other similar URIs.  The exact constraints are defined in Section 2.
 
+   This RFC creates a "CRI Scheme Numbers" registry and updates RFC 7595
+   to add a note on how this new registry cooperates with the URI
+   Schemes registry that RFC 7595 describes.
+
 1.1.  Notational Conventions
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [BCP14] when, and only when, they appear in all capitals, as
-   shown here.
+   [BCP14] (RFC2119) (RFC8174) when, and only when, they appear in all
+   capitals, as shown here.
 
    In this specification, the term "byte" is used in its now customary
    sense as a synonym for "octet".
 
-   Terms defined in this document appear in _cursive_ where they are
-   introduced (in the plaintext form of this document, they are rendered
-   as the new term surrounded by underscores).
 
 
 
-Bormann & Birkholz       Expires 23 January 2025                [Page 4]
+
+
+Bormann & Birkholz       Expires 25 January 2025                [Page 4]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
+
+   Terms defined in this document appear in _cursive_ where they are
+   introduced (in the plaintext form of this document, they are rendered
+   as the new term surrounded by underscores).
 
    The general structure of data items is shown in the Concise Data
    Definition Language (CDDL) [RFC8610] including its control extensions
@@ -265,22 +269,25 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
          as not all CRI implementations will support authority-less
          URIs.)
 
+
+
+
+
+
+
+
+
+Bormann & Birkholz       Expires 25 January 2025                [Page 5]
+
+Internet-Draft      Constrained Resource Identifiers           July 2024
+
+
    C3.   A userinfo is a text string built out of unreserved characters
          (Section 2.3 of RFC 3986 [STD66]) or "sub-delims" (Section 2.2
          of RFC 3986 [STD66]); any other character needs to be percent-
          encoded (Section 7.1).  Note that this excludes the ":"
          character, which is commonly deprecated as a way to delimit a
          cleartext password in a userinfo.
-
-
-
-
-
-
-Bormann & Birkholz       Expires 23 January 2025                [Page 5]
-
-Internet-Draft      Constrained Resource Identifiers           July 2024
-
 
    C4.   An IP address can be either an IPv4 address or an IPv6 address,
          optionally with a zone identifier [RFC6874].  Future versions
@@ -324,19 +331,19 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
          i.e., from performing the check and jump in item 8 of
          Section 6.4 of [RFC7252].  See also SP1 in Appendix B.)
 
+
+
+Bormann & Birkholz       Expires 25 January 2025                [Page 6]
+
+Internet-Draft      Constrained Resource Identifiers           July 2024
+
+
    C9.   A path segment can be any Unicode string that is in NFC, with
          the exception of the special "." and ".." complete path
          segments.  Note that this includes the zero-length string.
 
          If no authority is present in a CRI, the leading path segment
          cannot be empty.  (See also SP1 in Appendix B.)
-
-
-
-Bormann & Birkholz       Expires 23 January 2025                [Page 6]
-
-Internet-Draft      Constrained Resource Identifiers           July 2024
-
 
    C10.  A query always consists of one or more query parameters.  A
          query parameter can be any Unicode string that is in NFC.  It
@@ -380,19 +387,15 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
    *  [0, ["p"]]: appends a slash and the path segment "p" to its base
       (and unsets the query and the fragment)
 
-   *  [0, null, []]: leaves the path alone but unsets the query and the
-      fragment
 
 
-
-
-
-
-
-Bormann & Birkholz       Expires 23 January 2025                [Page 7]
+Bormann & Birkholz       Expires 25 January 2025                [Page 7]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
+
+   *  [0, null, []]: leaves the path alone but unsets the query and the
+      fragment
 
    (Full) CRIs that do not correspond to a valid URI are not valid on
    their own, and cannot be used.  Normatively they are characterized by
@@ -438,17 +441,18 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
    constraints defined in Section 2.  The creation of a CRI fails if the
    CRI cannot be validated to satisfy all of the constraints.
 
-   If a naming authority creates a CRI from user input, it MAY apply the
-   following (and only the following) normalizations to get the CRI more
-   likely to validate:
 
 
 
 
-Bormann & Birkholz       Expires 23 January 2025                [Page 8]
+Bormann & Birkholz       Expires 25 January 2025                [Page 8]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
+
+   If a naming authority creates a CRI from user input, it MAY apply the
+   following (and only the following) normalizations to get the CRI more
+   likely to validate:
 
    *  map the scheme name to lowercase (C1);
 
@@ -491,20 +495,23 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
    retrieval of a representation, fragment components (if any) should be
    excluded from the comparison.
 
+
+
+
+
+
+
+Bormann & Birkholz       Expires 25 January 2025                [Page 9]
+
+Internet-Draft      Constrained Resource Identifiers           July 2024
+
+
 5.  CRI References
 
    The most common usage of a Constrained Resource Identifier is to
    embed it in resource representations, e.g., to express a hyperlink
    between the represented resource and the resource identified by the
    CRI.
-
-
-
-
-Bormann & Birkholz       Expires 23 January 2025                [Page 9]
-
-Internet-Draft      Constrained Resource Identifiers           July 2024
-
 
    This section defines the representation of CRIs in Concise Binary
    Object Representation (CBOR) [STD94].  When reduced representation
@@ -550,14 +557,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-
-
-
-
-
-
-
-Bormann & Birkholz       Expires 23 January 2025               [Page 10]
+Bormann & Birkholz       Expires 25 January 2025               [Page 10]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -613,7 +613,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 11]
+Bormann & Birkholz       Expires 25 January 2025               [Page 11]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -669,7 +669,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 12]
+Bormann & Birkholz       Expires 25 January 2025               [Page 12]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -725,7 +725,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 13]
+Bormann & Birkholz       Expires 25 January 2025               [Page 13]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -781,7 +781,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 14]
+Bormann & Birkholz       Expires 25 January 2025               [Page 14]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -837,7 +837,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 15]
+Bormann & Birkholz       Expires 25 January 2025               [Page 15]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -893,7 +893,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 16]
+Bormann & Birkholz       Expires 25 January 2025               [Page 16]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -949,7 +949,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 17]
+Bormann & Birkholz       Expires 25 January 2025               [Page 17]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 18]
+Bormann & Birkholz       Expires 25 January 2025               [Page 18]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1061,7 +1061,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 19]
+Bormann & Birkholz       Expires 25 January 2025               [Page 19]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1117,7 +1117,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 20]
+Bormann & Birkholz       Expires 25 January 2025               [Page 20]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 21]
+Bormann & Birkholz       Expires 25 January 2025               [Page 21]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1229,7 +1229,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 22]
+Bormann & Birkholz       Expires 25 January 2025               [Page 22]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1285,7 +1285,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 23]
+Bormann & Birkholz       Expires 25 January 2025               [Page 23]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1341,7 +1341,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 24]
+Bormann & Birkholz       Expires 25 January 2025               [Page 24]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1397,7 +1397,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 25]
+Bormann & Birkholz       Expires 25 January 2025               [Page 25]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1453,7 +1453,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 26]
+Bormann & Birkholz       Expires 25 January 2025               [Page 26]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1509,7 +1509,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 27]
+Bormann & Birkholz       Expires 25 January 2025               [Page 27]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1565,7 +1565,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 28]
+Bormann & Birkholz       Expires 25 January 2025               [Page 28]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1621,7 +1621,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 29]
+Bormann & Birkholz       Expires 25 January 2025               [Page 29]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1677,7 +1677,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 30]
+Bormann & Birkholz       Expires 25 January 2025               [Page 30]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1733,7 +1733,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 31]
+Bormann & Birkholz       Expires 25 January 2025               [Page 31]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1789,7 +1789,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 32]
+Bormann & Birkholz       Expires 25 January 2025               [Page 32]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1845,7 +1845,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 33]
+Bormann & Birkholz       Expires 25 January 2025               [Page 33]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1901,7 +1901,7 @@ Appendix A.  Mapping Scheme Numbers to Scheme Names
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 34]
+Bormann & Birkholz       Expires 25 January 2025               [Page 34]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -1957,7 +1957,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 35]
+Bormann & Birkholz       Expires 25 January 2025               [Page 35]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2013,7 +2013,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 36]
+Bormann & Birkholz       Expires 25 January 2025               [Page 36]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2069,7 +2069,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 37]
+Bormann & Birkholz       Expires 25 January 2025               [Page 37]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2125,7 +2125,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 38]
+Bormann & Birkholz       Expires 25 January 2025               [Page 38]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2181,7 +2181,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 39]
+Bormann & Birkholz       Expires 25 January 2025               [Page 39]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2237,7 +2237,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 40]
+Bormann & Birkholz       Expires 25 January 2025               [Page 40]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2293,7 +2293,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 41]
+Bormann & Birkholz       Expires 25 January 2025               [Page 41]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2349,7 +2349,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 42]
+Bormann & Birkholz       Expires 25 January 2025               [Page 42]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2405,7 +2405,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 43]
+Bormann & Birkholz       Expires 25 January 2025               [Page 43]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2461,7 +2461,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 44]
+Bormann & Birkholz       Expires 25 January 2025               [Page 44]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2517,7 +2517,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 45]
+Bormann & Birkholz       Expires 25 January 2025               [Page 45]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2573,7 +2573,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 46]
+Bormann & Birkholz       Expires 25 January 2025               [Page 46]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2629,7 +2629,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 47]
+Bormann & Birkholz       Expires 25 January 2025               [Page 47]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2685,7 +2685,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 48]
+Bormann & Birkholz       Expires 25 January 2025               [Page 48]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2741,7 +2741,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 49]
+Bormann & Birkholz       Expires 25 January 2025               [Page 49]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2797,7 +2797,7 @@ Appendix B.  The Small Print
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 50]
+Bormann & Birkholz       Expires 25 January 2025               [Page 50]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2853,7 +2853,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 51]
+Bormann & Birkholz       Expires 25 January 2025               [Page 51]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2909,7 +2909,7 @@ Appendix C.  CBOR Extended Diagnostic Notation (EDN): The "cri"
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 52]
+Bormann & Birkholz       Expires 25 January 2025               [Page 52]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -2965,7 +2965,7 @@ C.1.  cri: ABNF Definition of URI Representation of a CRI
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 53]
+Bormann & Birkholz       Expires 25 January 2025               [Page 53]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -3021,7 +3021,7 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-Bormann & Birkholz       Expires 23 January 2025               [Page 54]
+Bormann & Birkholz       Expires 25 January 2025               [Page 54]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
@@ -3040,6 +3040,9 @@ Appendix D.  Change Log
 
    *  Add note that CRI Scheme Number registrations are oblivious of the
       actual URI Scheme registrations (if any).
+
+   *  Add information about how this RFC updates RFC7595 to abstract and
+      introduction.
 
    Changes from -14 to -15
 
@@ -3070,17 +3073,19 @@ Appendix D.  Change Log
 
    *  Discuss Error handling and extensibility (Section 5.2.1)
 
+
+
+
+
+Bormann & Birkholz       Expires 25 January 2025               [Page 55]
+
+Internet-Draft      Constrained Resource Identifiers           July 2024
+
+
    *  Conversion to URI: Handle : in first pathname component of a CRI-
       Reference (Section 6.1, Paragraph 2.6.1)
 
    *  Add Christian Amsüss as contributor
-
-
-
-Bormann & Birkholz       Expires 23 January 2025               [Page 55]
-
-Internet-Draft      Constrained Resource Identifiers           July 2024
-
 
    *  Add CBOR EDN application-extension "cri" (see Appendix C and
       Section 11.3).
@@ -3124,19 +3129,19 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
    *  Add PET
 
+
+
+
+
+Bormann & Birkholz       Expires 25 January 2025               [Page 56]
+
+Internet-Draft      Constrained Resource Identifiers           July 2024
+
+
    *  Remove hopeless attempt to encode "remote trailing nulls" rule in
       CDDL (which is not a transformation language).
 
    Changes from -06 to -07
-
-
-
-
-
-Bormann & Birkholz       Expires 23 January 2025               [Page 56]
-
-Internet-Draft      Constrained Resource Identifiers           July 2024
-
 
    *  More explicitly discuss constraints (Section 2), add examples
       (Appendix B, Paragraph 6, Item 1).
@@ -3182,17 +3187,16 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
    *  Removed the append-relation path.type option (#41).
 
-   *  Renumbered the remaining path.types.
-
-   *  Renumbered the option numbers.
 
 
-
-
-Bormann & Birkholz       Expires 23 January 2025               [Page 57]
+Bormann & Birkholz       Expires 25 January 2025               [Page 57]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
+
+   *  Renumbered the remaining path.types.
+
+   *  Renumbered the option numbers.
 
    *  Restructured the document.
 
@@ -3237,18 +3241,16 @@ Contributors
    Email: christian@amsuess.com
 
 
-Authors' Addresses
 
 
 
 
-
-
-
-Bormann & Birkholz       Expires 23 January 2025               [Page 58]
+Bormann & Birkholz       Expires 25 January 2025               [Page 58]
 
 Internet-Draft      Constrained Resource Identifiers           July 2024
 
+
+Authors' Addresses
 
    Carsten Bormann (editor)
    Universität Bremen TZI
@@ -3299,6 +3301,4 @@ Internet-Draft      Constrained Resource Identifiers           July 2024
 
 
 
-
-
-Bormann & Birkholz       Expires 23 January 2025               [Page 59]
+Bormann & Birkholz       Expires 25 January 2025               [Page 59]
