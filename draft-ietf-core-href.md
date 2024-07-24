@@ -96,6 +96,10 @@ This simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
+This RFC updates RFC 7595 to add a note on how the URI Schemes
+registry RFC 7595 describes cooperates with the CRI Scheme Numbers
+registry created by the present RFC.
+
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
@@ -155,9 +159,14 @@ The supported subset includes all URIs of the
 [Uniform Resource Names (URNs)](#RFC8141), and other similar URIs.
 The exact constraints are defined in {{constraints}}.
 
+This RFC creates a "CRI Scheme Numbers" registry and updates RFC 7595
+to add a note on how this new registry cooperates with the URI Schemes
+registry that RFC 7595 describes.
+
+
 ## Notational Conventions
 
-{::boilerplate bcp14-tagged-bcp}
+{::boilerplate bcp14-tagged-bcp14}
 
 In this specification, the term "byte" is used in its now customary
 sense as a synonym for "octet".
@@ -1564,6 +1573,9 @@ Changes from -15 to -16
 
 * Add note that CRI Scheme Number registrations are oblivious of the
   actual URI Scheme registrations (if any).
+
+* Add information about how this RFC updates RFC7595 to abstract and
+  introduction.
 
 Changes from -14 to -15
 
