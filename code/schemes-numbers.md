@@ -14,6 +14,7 @@
 |              1165 |             snmp | \[RFC-XXXX] |
 |              1220 |             cast | \[RFC-XXXX] |
 |              1242 |           openid | \[RFC-XXXX] |
+|              1273 |             hs20 | \[RFC-XXXX] |
 |              1319 |           z39.50 | \[RFC-XXXX] |
 |              1328 |             dweb | \[RFC-XXXX] |
 |              1466 |             psyc | \[RFC-XXXX] |
@@ -202,6 +203,7 @@
 |             10119 |             imap | \[RFC-XXXX] |
 |             10147 |            query | \[RFC-XXXX] |
 |             10176 |              ves | \[RFC-XXXX] |
+|             10183 |        ms-recall | \[RFC-XXXX] |
 |             10196 |              acr | \[RFC-XXXX] |
 |             10225 |           barion | \[RFC-XXXX] |
 |             10229 |             acct | \[RFC-XXXX] |
@@ -245,6 +247,7 @@
 |             11742 |           lastfm | \[RFC-XXXX] |
 |             11799 |               w3 | \[RFC-XXXX] |
 |             11804 |           mumble | \[RFC-XXXX] |
+|             11820 |             thzp | \[RFC-XXXX] |
 |             11824 |        feedready | \[RFC-XXXX] |
 |             11857 | microsoft.windows.camera | \[RFC-XXXX] |
 |             11892 |              wcr | \[RFC-XXXX] |
