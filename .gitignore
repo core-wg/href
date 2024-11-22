@@ -4,6 +4,7 @@
 *.redxml
 *.swp
 *.txt
+*.xml
 *.upload
 *~
 .refcache
