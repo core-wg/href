@@ -19,6 +19,7 @@
 |              1328 |             dweb | \[RFC-XXXX] |
 |              1466 |             psyc | \[RFC-XXXX] |
 |              1528 |        ms-people | \[RFC-XXXX] |
+|              1562 |   ms-personacard | \[RFC-XXXX] |
 |              1578 |              jar | \[RFC-XXXX] |
 |              1658 |             wpid | \[RFC-XXXX] |
 |              1762 |          payment | \[RFC-XXXX] |
@@ -256,6 +257,7 @@
 |             11962 |               ws | \[RFC-XXXX] |
 |             11999 |            rtspu | \[RFC-XXXX] |
 |             12029 | ms-settings-displays-topology | \[RFC-XXXX] |
+|             12052 |        bluetooth | \[RFC-XXXX] |
 |             12068 |             file | \[RFC-XXXX] |
 |             12102 |           mailto | \[RFC-XXXX] |
 |             12174 | ms-launchremotedesktop | \[RFC-XXXX] |
@@ -346,6 +348,7 @@
 |             15306 |            xfire | \[RFC-XXXX] |
 |             15358 |             xmpp | \[RFC-XXXX] |
 |             15361 | ms-settings-cellular | \[RFC-XXXX] |
+|             15461 |          shelter | \[RFC-XXXX] |
 |             15579 |          v-event | \[RFC-XXXX] |
 |             15639 |        iris.beep | \[RFC-XXXX] |
 |             15641 |          wyciwyg | \[RFC-XXXX] |
