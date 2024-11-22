@@ -11,7 +11,10 @@ end
 
 def get_one(el, xp)
   v = REXML::XPath.each(el, xp).map {|el| el.text()}
-  fail if v.size != 1
+  if v.size != 1
+    warn [:GET_ONE, v, el.to_s, xp].inspect
+    fail
+  end
   v.first
 end
 
@@ -21,7 +24,7 @@ end
 
 schemes = REXML::Document.new(File.read("uri-schemes.xml"))
 
-a = REXML::XPath.each(schemes.root, "//record").map do |rec|
+a = REXML::XPath.each(schemes.root, "//registry[@id=\"uri-schemes-1\"]/record").map do |rec|
   get_one(rec, "value")
 end
 warn a.count
