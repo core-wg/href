@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-05T01:58:46.880522+00:00",
+  "timestamp": "2024-12-08T02:06:01.048069+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -1145,6 +1145,48 @@
       "updatedAt": "2024-11-22T16:20:21Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 92,
+      "id": "I_kwDOFyeisM6iUe21",
+      "title": "Add example (appendix?) on CRIs in AIF",
+      "url": "https://github.com/core-wg/href/issues/92",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "chrysn"
+      ],
+      "labels": [],
+      "body": "AIF's Toid have a default value of URIs; could use CRIs there too.\r\n\r\nI can provide text on that.\r\n\r\nnb: New AIF parameters are specification-required; if we add the example here it'd have to register too.",
+      "createdAt": "2024-12-06T15:09:27Z",
+      "updatedAt": "2024-12-06T15:09:27Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 93,
+      "id": "I_kwDOFyeisM6iUg3L",
+      "title": "Composability",
+      "url": "https://github.com/core-wg/href/issues/93",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "We discussed composability of CRIs.\r\n\r\nWhile there are dozens of ways to embed a URI in another URI, there's one straightforward way for CRIs:\r\n\r\nFor something that's vaguely URI template-ish `http://compare-texts.example.com/{first}/{second}/?html`:\r\n\r\n```edn\r\n[e'http', [\"compare-texts\", \"example\", \"com\"], [cri'urn:document1', cri'https://example.net/doc2'], [\"html\"]]\r\n```\r\n\r\nexpands to\r\n\r\n```edn\r\n[e'http', [\"compare-texts\", \"example\", \"com\"], [\"urn:document1\", \"https://example.net/doc2\"], [\"html\"]]\r\n```\r\n\r\nor eventually\r\n\r\n```\r\nhttp://compare-texts.example.com/urn:document1/https:%2F%2Fexample.net%2Fdoc2/?html\r\n```\r\n\r\n(but can be well-usable in the top form)\r\n\r\nSpinning off there, this would indicate that CRI templates are way easier to do \u2013 possibly with less flexibility thatn URI templates, but then also easier to use. A possible expression is using packed: `[e'http', [\"compare-texts\", \"example\", \"com\"], [simple(0), simple(1)], [\"html\"]]`.",
+      "createdAt": "2024-12-06T15:13:34Z",
+      "updatedAt": "2024-12-06T16:03:59Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "A caveat is that composability of this style only works when there are no constraints on the characters permissible in a component, and there is no normalization on that component.\r\n\r\nPersonally I'd love if there was a straightforward way to put a URI into the authority component (no matter whether inner URI is than a DID, a nih or any other identifier), but those strings are subject to lowercasing, can't have inner dots (not sure about other characters) and (in some implementations) severe length limits.\r\n\r\nAlso, this doesn't work easily for the fragment (like I've used in single page web apps): only one string can be expanded into that.",
+          "createdAt": "2024-12-06T16:03:57Z",
+          "updatedAt": "2024-12-06T16:03:57Z"
+        }
+      ]
     }
   ],
   "pulls": [
