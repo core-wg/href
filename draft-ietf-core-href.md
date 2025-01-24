@@ -102,9 +102,10 @@ registry created by the present RFC.
 
 [^status]
 
-[^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –16 of this draft continues -15 by picking up
-    more comments; it was made specifically for IETF 120.
+[^status]: (This "cref" paragraph will be removed by the RFC
+    editor:)\\ The present revision –17 integrates changes from active
+    pull requests, it was made specifically for discussion at the CoRE
+    interim on 2025-01-29.
     \\
     This revision still contains open issues and is intended to serve
     as a snapshot.
@@ -1568,6 +1569,10 @@ title="ABNF Definition of URI Representation of a CRI"
 
 # Change Log
 {:removeinrfc}
+
+Changes from -16 to -17
+
+(Provisional integration of active PRs, please see github.)
 
 Changes from -15 to -16
 
