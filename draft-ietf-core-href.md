@@ -160,9 +160,9 @@ The supported subset includes all URIs of the
 [Uniform Resource Names (URNs)](#RFC8141), and other similar URIs.
 The exact constraints are defined in {{constraints}}.
 
-This RFC creates a "CRI Scheme Numbers" registry and updates RFC 7595
+This RFC creates a "CRI Scheme Numbers" registry and updates {{RFC7595}}
 to add a note on how this new registry cooperates with the URI Schemes
-registry that RFC 7595 describes.
+registry that {{RFC7595}} describes.
 
 
 ## Notational Conventions
@@ -1579,7 +1579,7 @@ Changes from -15 to -16
 * Add note that CRI Scheme Number registrations are oblivious of the
   actual URI Scheme registrations (if any).
 
-* Add information about how this RFC updates RFC7595 to abstract and
+* Add information about how this RFC updates {{RFC7595}} to abstract and
   introduction.
 
 Changes from -14 to -15
