@@ -49,6 +49,7 @@ venue:
   github: core-wg/href
 
 informative:
+  RFC3490: toascii
   RFC7228: term
   STD97: http
 # RFC9110
@@ -723,7 +724,7 @@ URI to CRI
   See {{<sp-initial-empty}} in {{the-small-print}} for more details.
 
 CRI to IRI
-: A CRI can be converted to an IRI by first converting it to a URI as
+: {:#critoiri} A CRI can be converted to an IRI by first converting it to a URI as
   specified in {{cri-to-uri}}, and then converting the URI
   to an IRI as described in {{Section 3.2 of RFC3987}}.
 
@@ -782,6 +783,13 @@ authority
   (percent-encoding is not able to represent such elements, as
   normalization would turn the percent-encoding back to the unreserved
   character that a dot is.)
+
+  {:aside}
+  > Implementations with scheme-specific knowledge MAY convert
+    individual elements by using the ToASCII procedure {{Section 4.1 of
+    -toascii}} as discussed in more detail in {{Section 3.1 of -iri}}.
+    This should not be done if the next step of conversion is to an
+    IRI as defined in {{critoiri}} (CRI to IRI).
 
   {: #host-ip-to-uri}
   The value of a `host-ip` item MUST be
