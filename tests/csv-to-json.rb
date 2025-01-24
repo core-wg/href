@@ -37,6 +37,12 @@ def check(sym, a, b, strict = false)
   end
 end
 
+class Object
+  def item_diag
+    inspect
+  end
+end
+
 def w(x)
   warn x.inspect
 end
