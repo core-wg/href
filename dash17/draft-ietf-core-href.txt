@@ -201,9 +201,9 @@ Internet-Draft      Constrained Resource Identifiers        January 2025
    Protocol (HTTP) [STD97], Uniform Resource Names (URNs) [RFC8141], and
    other similar URIs.  The exact constraints are defined in Section 2.
 
-   This RFC creates a "CRI Scheme Numbers" registry and updates RFC 7595
+   This RFC creates a "CRI Scheme Numbers" registry and updates RFC7595
    to add a note on how this new registry cooperates with the URI
-   Schemes registry that RFC 7595 describes.
+   Schemes registry that RFC7595 describes.
 
 1.1.  Notational Conventions
 
