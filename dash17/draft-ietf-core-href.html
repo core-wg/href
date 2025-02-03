@@ -1486,7 +1486,7 @@ deprecated as a way to delimit a cleartext password in a userinfo.<a href="#sect
 <div id="c-ip-address">
           <p id="section-2-2.4.1">An IP address can be either an IPv4 address or an
 IPv6 address (optionally with a zone identifier <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span>; see
-<a href="#zone-id-issue" class="auto internal xref">Section 6.1, Paragraph 2.4.6</a>).
+<a href="#zone-id-issue" class="auto internal xref">Section 6.1, Paragraph 2.4.7</a>).
 Future versions of IP are not supported (it is likely that a binary
 mapping would be strongly desirable, and that cannot be designed
 ahead of time, so these versions need to be added as a future
@@ -2291,12 +2291,14 @@ See <a href="#sp-initial-empty" class="auto internal xref">SP1</a> in <a href="#
 </dd>
         <dd class="break"></dd>
 <dt id="section-6-3.5">CRI to IRI</dt>
-        <dd style="margin-left: 1.5em" id="section-6-3.6">
+        <dd id="section-6-3.6" style="margin-left: 1.5em">
+<div id="critoiri">
           <p id="section-6-3.6.1">A CRI can be converted to an IRI by first converting it to a URI as
 specified in <a href="#cri-to-uri" class="auto internal xref">Section 6.1</a>, and then converting the URI
 to an IRI as described in <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>.<a href="#section-6-3.6.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
+</div>
+        </dd>
+<dd class="break"></dd>
 <dt id="section-6-3.7">IRI to CRI</dt>
         <dd style="margin-left: 1.5em" id="section-6-3.8">
           <p id="section-6-3.8.1">An IRI can be converted to a CRI by first converting it to a URI as
@@ -2354,13 +2356,19 @@ If there are dots (".") in such elements, the conversion fails
 (percent-encoding is not able to represent such elements, as
 normalization would turn the percent-encoding back to the unreserved
 character that a dot is.)<a href="#section-6.1-2.4.4" class="pilcrow">¶</a></p>
+<aside id="section-6.1-2.4.5">
+              <p id="section-6.1-2.4.5.1">Implementations with scheme-specific knowledge <span class="bcp14">MAY</span> convert
+  individual elements by using the ToASCII procedure <span><a href="https://rfc-editor.org/rfc/rfc3490#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC3490" class="cite xref">RFC3490</a>]</span> as discussed in more detail in <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>.
+  This should not be done if the next step of conversion is to an
+  IRI as defined in <a href="#critoiri" class="auto internal xref">Section 6</a> (CRI to IRI).<a href="#section-6.1-2.4.5.1" class="pilcrow">¶</a></p>
+</aside>
 <div id="host-ip-to-uri">
-<p id="section-6.1-2.4.5">The value of a <code>host-ip</code> item <span class="bcp14">MUST</span> be
+<p id="section-6.1-2.4.6">The value of a <code>host-ip</code> item <span class="bcp14">MUST</span> be
 represented as a string that matches the "IPv4address" or
-"IP-literal" rule (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).<a href="#section-6.1-2.4.5" class="pilcrow">¶</a></p>
+"IP-literal" rule (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).<a href="#section-6.1-2.4.6" class="pilcrow">¶</a></p>
 </div>
 <div id="zone-id-issue">
-<p id="section-6.1-2.4.6">Any zone-id is appended to the string; the details for how this is
+<p id="section-6.1-2.4.7">Any zone-id is appended to the string; the details for how this is
 done are currently in flux in the URI specification: <span><a href="https://rfc-editor.org/rfc/rfc6874#section-2" class="relref">Section 2</a> of [<a href="#RFC6874" class="cite xref">RFC6874</a>]</span> uses percent-encoding and a separator of "%25", while
 proposals for a future superseding zone-id specification document
 (such as <span>[<a href="#I-D.carpenter-6man-rfc6874bis" class="cite xref">I-D.carpenter-6man-rfc6874bis</a>]</span>) are being prepared; this also leads to a modified
@@ -2374,13 +2382,13 @@ syntax level.
 The assumption is that the present specification (1) either will be
 updated eventually to obtain consistent URI conversion of zone-id
 information (2) or there will be no representation of zone-id
-information in URIs.<a href="#section-6.1-2.4.6" class="pilcrow">¶</a></p>
+information in URIs.<a href="#section-6.1-2.4.7" class="pilcrow">¶</a></p>
 </div>
-<p id="section-6.1-2.4.7">If the CRI reference contains a <code>port</code> item, the port
+<p id="section-6.1-2.4.8">If the CRI reference contains a <code>port</code> item, the port
 subcomponent consists of the value of that item in decimal
 notation.
 Otherwise, the colon (":") character and the port subcomponent are
-both omitted.<a href="#section-6.1-2.4.7" class="pilcrow">¶</a></p>
+both omitted.<a href="#section-6.1-2.4.8" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-6.1-2.5">path</dt>
@@ -2689,7 +2697,7 @@ the IP address given represents the request's
 destination IP address (and, if present, zone-id).
 Only if it does not, include a Uri-Host Option, and let that
 option's value be the text value of the URI representation of
-the IP address, as derived in <a href="#host-ip-to-uri" class="auto internal xref">Section 6.1, Paragraph 2.4.5</a>.<a href="#section-8.1.1-3.4.2" class="pilcrow">¶</a></p>
+the IP address, as derived in <a href="#host-ip-to-uri" class="auto internal xref">Section 6.1, Paragraph 2.4.6</a>.<a href="#section-8.1.1-3.4.2" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.5">
               <p id="section-8.1.1-3.5.1">If »cri« has a <code>port</code> component, then let »port« be that
@@ -3242,6 +3250,10 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-16</span>, <time datetime="2025-01-08" class="refDate">8 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3490">[RFC3490]</dt>
+        <dd>
+<span class="refAuthor">Faltstrom, P.</span>, <span class="refAuthor">Hoffman, P.</span>, and <span class="refAuthor">A. Costello</span>, <span class="refTitle">"Internationalizing Domain Names in Applications (IDNA)"</span>, <span class="seriesInfo">RFC 3490</span>, <span class="seriesInfo">DOI 10.17487/RFC3490</span>, <time datetime="2003-03" class="refDate">March 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3490">https://www.rfc-editor.org/rfc/rfc3490</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4180">[RFC4180]</dt>
         <dd>
