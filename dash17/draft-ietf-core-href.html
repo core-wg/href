@@ -1863,11 +1863,19 @@ as per <a href="#ingest" class="auto internal xref">Section 5.2</a> equivalent t
 base CRI).<a href="#section-5.1-6.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-7">For interchange as separate encoded data items, CRIs <span class="bcp14">MUST NOT</span> use
+<p id="section-5.1-7">Application specifications that use CRIs may explicitly enable the use
+of "stand-in" items (tags or simple values), i.e., items used in place
+of original representation items such as strings or arrays, where the
+tag or simple value is defined to evaluate to the original item that
+it is standing in place of.
+Examples would be tags such as 21 to 23 (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.4.5.2" class="relref">3.4.5.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>), which might be used to represent text string
+components by employing more compact byte strings, or reference tags and
+simple values as defined in <span>[<a href="#I-D.ietf-cbor-packed" class="cite xref">I-D.ietf-cbor-packed</a>]</span>.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
+<p id="section-5.1-8">For interchange as separate encoded data items, CRIs <span class="bcp14">MUST NOT</span> use
 indefinite length encoding (see
 Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.2" class="relref">3.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>); this requirement is relaxed for
 specifications that embed CRIs into an encompassing CBOR
-representation that does provide for indefinite length encoding.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
+representation that does provide for indefinite length encoding.<a href="#section-5.1-8" class="pilcrow">¶</a></p>
 <div id="scheme-id">
 <section id="section-5.1.1">
           <h4 id="name-scheme-name-and-scheme-id">
@@ -3181,6 +3189,10 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
 <div class="refInstance" id="RFC7595">
             <span class="refAuthor">Thaler, D., Ed.</span>, <span class="refAuthor">Hansen, T.</span>, and <span class="refAuthor">T. Hardie</span>, <span class="refTitle">"Guidelines and Registration Procedures for URI Schemes"</span>, <span class="seriesInfo">BCP 35</span>, <span class="seriesInfo">RFC 7595</span>, <span class="seriesInfo">DOI 10.17487/RFC7595</span>, <time datetime="2015-06" class="refDate">June 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7595">https://www.rfc-editor.org/info/rfc7595</a>&gt;</span>. </div>
 </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-cbor-packed">[I-D.ietf-cbor-packed]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">M. Gütschow</span>, <span class="refTitle">"Packed CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-packed-13</span>, <time datetime="2024-09-01" class="refDate">1 September 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-13">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-13</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IANA.core-parameters">[IANA.core-parameters]</dt>
         <dd>
