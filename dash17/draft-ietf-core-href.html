@@ -1257,7 +1257,7 @@ as a snapshot.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-coap-integration" class="internal xref">CoAP Integration</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-integration-into-coap-and-a" class="internal xref">Integration into CoAP and ACE</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
                 <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-converting-between-coap-cri" class="internal xref">Converting Between CoAP CRIs and Sets of CoAP Options</a></p>
@@ -1280,6 +1280,9 @@ as a snapshot.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
                     <p id="section-toc.1-1.8.2.2.2.2.1"><a href="#section-8.2.2" class="auto internal xref">8.2.2</a>.  <a href="#name-proxy-scheme-number" class="internal xref">Proxy-Scheme-Number</a></p>
 </li>
                 </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-ace-aif" class="internal xref">ACE AIF</a></p>
 </li>
             </ul>
 </li>
@@ -1314,6 +1317,12 @@ as a snapshot.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
                 <p id="section-toc.1-1.11.2.4.1"><a href="#section-11.4" class="auto internal xref">11.4</a>.  <a href="#name-coap-option-numbers-registr" class="internal xref">CoAP Option Numbers Registry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
+                <p id="section-toc.1-1.11.2.5.1"><a href="#section-11.5" class="auto internal xref">11.5</a>.  <a href="#name-media-type-subparameters-fo" class="internal xref">Media-Type subparameters for ACE AIF</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.6">
+                <p id="section-toc.1-1.11.2.6.1"><a href="#section-11.6" class="auto internal xref">11.6</a>.  <a href="#name-content-format-for-cri-in-a" class="internal xref">Content-Format for CRI in AIF</a></p>
 </li>
             </ul>
 </li>
@@ -2608,13 +2617,15 @@ to process them byte by byte.<a href="#section-7.1-14.1" class="pilcrow">¶</a><
 </div>
 </section>
 </div>
-<div id="coap-integration">
+<div id="integration-into-coap-and-ace">
 <section id="section-8">
-      <h2 id="name-coap-integration">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-coap-integration" class="section-name selfRef">CoAP Integration</a>
+      <h2 id="name-integration-into-coap-and-a">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-integration-into-coap-and-a" class="section-name selfRef">Integration into CoAP and ACE</a>
       </h2>
 <p id="section-8-1">This section discusses ways in which CRIs can be used in the context
-of the CoAP protocol <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
+of the CoAP protocol <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span> and of Authorization for Constrained
+Environments (ACE), specifically the Authorization Information Format
+(AIF) <span>[<a href="#RFC9237" class="cite xref">RFC9237</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <div id="converting-between-coap-cris-and-sets-of-coap-options">
 <section id="section-8.1">
         <h3 id="name-converting-between-coap-cri">
@@ -2906,6 +2917,35 @@ location-scheme-numeric option?</span><a href="#section-8.2.2-4" class="pilcrow"
 </div>
 </section>
 </div>
+<div id="toid">
+<section id="section-8.3">
+        <h3 id="name-ace-aif">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-ace-aif" class="section-name selfRef">ACE AIF</a>
+        </h3>
+<p id="section-8.3-1">The AIF (Authorization Information Format, <span>[<a href="#RFC9237" class="cite xref">RFC9237</a>]</span>) defined by ACE by
+default uses the local part of a URI to identify a resource for which
+authorization is indicated.
+The type and target of this information is an extension point, briefly
+called <em>Toid</em> (Type of object identifier).
+<a href="#toidreg" class="auto internal xref">Section 11.5</a> registers "CRI-local-part" as a Toid.
+Together with <em>Tperm</em>, an extension point for a way to indicate
+individual access rights (permissions), <span><a href="https://rfc-editor.org/rfc/rfc9237#section-2" class="relref">Section 2</a> of [<a href="#RFC9237" class="cite xref">RFC9237</a>]</span>
+defines its general Information Model as:<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-8.3-2">
+<pre>
+AIF-Generic&lt;Toid, Tperm&gt; = [* [Toid, Tperm]]
+</pre><a href="#section-8.3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-8.3-3">Using the definitions in <a href="#cddl" class="auto internal xref">Figure 1</a>, this information model can be
+specialized as in:<a href="#section-8.3-3" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-8.3-4">
+<pre>
+CRI-local-part = [path / null, ?query]
+AIF-CRI = AIF-Generic&lt;CRI-local-part, uint&gt;
+</pre><a href="#section-8.3-4" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="impl">
@@ -3003,7 +3043,7 @@ Numbers registration simply stays in place, even if the URI Schemes
 registration happens to be for something different from what the
 expert had in mind at the time for the CRI Scheme Numbers
 registration.
-Also note that the initial registrations in <a href="#tab-numbers" class="auto internal xref">Table 6</a> in
+Also note that the initial registrations in <a href="#tab-numbers" class="auto internal xref">Table 8</a> in
 <a href="#sec-numbers" class="auto internal xref">Appendix A</a> already include such registrations for the text strings
 "mqtt" and "mqtts".)<a href="#section-11.1.1-3" class="pilcrow">¶</a></p>
 <p id="section-11.1.1-4">A registration in the CRI Scheme Numbers registry does not imply that
@@ -3049,7 +3089,7 @@ registry<a href="#section-11.1.2-2.4.1" class="pilcrow">¶</a></p>
 <a href="#section-11.1.3" class="section-number selfRef">11.1.3. </a><a href="#name-initial-registrations" class="section-name selfRef">Initial Registrations</a>
           </h4>
 <p id="section-11.1.3-1">The initial registrations for the CRI Scheme Numbers registry are
-provided in <a href="#tab-numbers" class="auto internal xref">Table 6</a> in <a href="#sec-numbers" class="auto internal xref">Appendix A</a>.<a href="#section-11.1.3-1" class="pilcrow">¶</a></p>
+provided in <a href="#tab-numbers" class="auto internal xref">Table 8</a> in <a href="#sec-numbers" class="auto internal xref">Appendix A</a>.<a href="#section-11.1.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3151,6 +3191,83 @@ RFC-XXXX with the RFC number of this specification and remove this
 note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="toidreg">
+<section id="section-11.5">
+        <h3 id="name-media-type-subparameters-fo">
+<a href="#section-11.5" class="section-number selfRef">11.5. </a><a href="#name-media-type-subparameters-fo" class="section-name selfRef">Media-Type subparameters for ACE AIF</a>
+        </h3>
+<p id="section-11.5-1">In the "Sub-Parameter Registry for application/aif+cbor and
+application/aif+json" in the "Media Type Sub-Parameter Registries"
+registry group <span>[<a href="#IANA.media-type-sub-parameters" class="cite xref">IANA.media-type-sub-parameters</a>]</span>, IANA is requested to
+register:<a href="#section-11.5-1" class="pilcrow">¶</a></p>
+<span id="name-ace-aif-toid-for-cri"></span><div id="tab-iana-toid">
+<table class="center" id="table-6">
+          <caption>
+<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#name-ace-aif-toid-for-cri" class="selfRef">ACE AIF Toid for CRI</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Parameter</th>
+              <th class="text-left" rowspan="1" colspan="1">Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Description/Specification</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Toid</td>
+              <td class="text-left" rowspan="1" colspan="1">CRI-local-part</td>
+              <td class="text-left" rowspan="1" colspan="1">local-part of CRI</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#toid" class="auto internal xref">Section 8.3</a> of RFC-XXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-11.5-3"><span class="cref" id="replace-xxxx_3">RFC Ed.: throughout this section, please replace
+RFC-XXXX with the RFC number of this specification and remove this
+note.</span><a href="#section-11.5-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="content-format-for-cri-in-aif">
+<section id="section-11.6">
+        <h3 id="name-content-format-for-cri-in-a">
+<a href="#section-11.6" class="section-number selfRef">11.6. </a><a href="#name-content-format-for-cri-in-a" class="section-name selfRef">Content-Format for CRI in AIF</a>
+        </h3>
+<p id="section-11.6-1">IANA is requested to register a Content-Format number in the "CoAP
+Content-Formats" registry (range 256-999), within the "Constrained
+RESTful Environments (CoRE) Parameters" registry group
+<span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, as follows:<a href="#section-11.6-1" class="pilcrow">¶</a></p>
+<span id="name-content-format-for-ace-aif-"></span><div id="tab-iana-toid-ct">
+<table class="center" id="table-7">
+          <caption>
+<a href="#table-7" class="selfRef">Table 7</a>:
+<a href="#name-content-format-for-ace-aif-" class="selfRef">Content-Format for ACE AIF with CRI-local-part Toid</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Media Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Encoding</th>
+              <th class="text-left" rowspan="1" colspan="1">ID</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">application/aif+cbor; Toid=CRI-local-part</td>
+              <td class="text-left" rowspan="1" colspan="1">-</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-11.6-3"><span class="cref" id="replace-xxxx_4">RFC Ed.: throughout this section, please replace
+RFC-XXXX with the RFC number of this specification and remove this
+note.</span><a href="#section-11.6-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -3198,6 +3315,10 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"Constrained RESTful Environments (CoRE) Parameters"</span>, <span>&lt;<a href="https://www.iana.org/assignments/core-parameters">https://www.iana.org/assignments/core-parameters</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="IANA.media-type-sub-parameters">[IANA.media-type-sub-parameters]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Media Type Sub-Parameter Registries"</span>, <span>&lt;<a href="https://www.iana.org/assignments/media-type-sub-parameters">https://www.iana.org/assignments/media-type-sub-parameters</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="IANA.uri-schemes">[IANA.uri-schemes]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"Uniform Resource Identifier (URI) Schemes"</span>, <span>&lt;<a href="https://www.iana.org/assignments/uri-schemes">https://www.iana.org/assignments/uri-schemes</a>&gt;</span>. </dd>
@@ -3217,6 +3338,10 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
 <dt id="RFC9165">[RFC9165]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Additional Control Operators for the Concise Data Definition Language (CDDL)"</span>, <span class="seriesInfo">RFC 9165</span>, <span class="seriesInfo">DOI 10.17487/RFC9165</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9165">https://www.rfc-editor.org/rfc/rfc9165</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9237">[RFC9237]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"An Authorization Information Format (AIF) for Authentication and Authorization for Constrained Environments (ACE)"</span>, <span class="seriesInfo">RFC 9237</span>, <span class="seriesInfo">DOI 10.17487/RFC9237</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9237">https://www.rfc-editor.org/rfc/rfc9237</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="STD66">[STD66]</dt>
         <dd>
@@ -3313,15 +3438,15 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
       <h2 id="name-mapping-scheme-numbers-to-s">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-mapping-scheme-numbers-to-s" class="section-name selfRef">Mapping Scheme Numbers to Scheme Names</a>
       </h2>
-<p id="appendix-A-1"><span class="cref" id="replace-xxxx_3">RFC Ed.: throughout this section, please replace
+<p id="appendix-A-1"><span class="cref" id="replace-xxxx_5">RFC Ed.: throughout this section, please replace
 RFC-XXXX with the RFC number of this specification and remove this
 note.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2"><a href="#tab-numbers" class="auto internal xref">Table 6</a> defines the initial mapping from CRI scheme numbers to
+<p id="appendix-A-2"><a href="#tab-numbers" class="auto internal xref">Table 8</a> defines the initial mapping from CRI scheme numbers to
 URI scheme names.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <span id="name-mapping-scheme-numbers-to-sc"></span><div id="tab-numbers">
-<table class="center" id="table-6">
+<table class="center" id="table-8">
         <caption>
-<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#table-8" class="selfRef">Table 8</a>:
 <a href="#name-mapping-scheme-numbers-to-sc" class="selfRef">Mapping Scheme Numbers to Scheme Names</a>
         </caption>
 <thead>
