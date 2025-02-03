@@ -221,7 +221,8 @@ The components are subject to the following constraints:
    deprecated as a way to delimit a cleartext password in a userinfo.
 
 4. {:#c-ip-address} An IP address can be either an IPv4 address or an
-   IPv6 address, optionally with a zone identifier {{-zone}}.
+   IPv6 address (optionally with a zone identifier {{-zone}}; see
+   {{zone-id-issue}}).
    Future versions of IP are not supported (it is likely that a binary
    mapping would be strongly desirable, and that cannot be designed
    ahead of time, so these versions need to be added as a future
@@ -787,12 +788,24 @@ authority
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986@-uri}}).
+
+  {: #zone-id-issue}
   Any zone-id is appended to the string; the details for how this is
   done are currently in flux in the URI specification: {{Section 2 of
   -zone}} uses percent-encoding and a separator of "%25", while
   proposals for a future superseding zone-id specification document
   (such as {{-zonebis}}) are being prepared; this also leads to a modified
   "IP-literal" rule as specified in these documents.
+  While the discussion about the representation of zone-id information
+  in URIs is ongoing, CRIs maintain a position in the grammar for it
+  (`zone-id`).
+  This can be used by consenting implementations to exchange zone
+  information without being concerned by the ambiguity at the URI
+  syntax level.
+  The assumption is that the present specification (1) either will be
+  updated eventually to obtain consistent URI conversion of zone-id
+  information (2) or there will be no representation of zone-id
+  information in URIs.
 
   If the CRI reference contains a `port` item, the port
   subcomponent consists of the value of that item in decimal
