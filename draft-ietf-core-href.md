@@ -375,6 +375,13 @@ assumption that the CRI is appropriately pre-normalized.
 transferred, recipients must operate on as-good-as untrusted input and
 fail gracefully in the face of malicious inputs.)
 
+CRIs have been designed with the objective that, after the above
+normalization, conversion of two distinct (absolute) CRIs to URIs do
+not yield the "same" URI, including equivalence under syntax-based
+normalization ({{Section 6.2.2 of RFC3986@-uri}}), but not including
+protocol-based normalization.
+(This is not an objective for CRI references, which may lead to
+equivalent URIs or not depending on the base used for resolving them.)
 
 # Comparison
 
