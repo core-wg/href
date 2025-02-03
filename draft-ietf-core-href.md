@@ -49,6 +49,7 @@ venue:
   github: core-wg/href
 
 informative:
+  RFC3490: toascii
   RFC7228: term
   STD97: http
 # RFC9110
@@ -72,6 +73,8 @@ normative:
   BCP26:
     -: ianacons
 #    =: RFC8126
+  IANA.media-type-sub-parameters: mtsub
+  RFC9237: aif
   IANA.core-parameters:
   RFC8610: cddl
   Unicode:
@@ -85,6 +88,7 @@ normative:
   STD94: cbor
 # RFC8949
   RFC9165: cddlcontrol
+  I-D.ietf-cbor-packed: packed
 
 --- abstract
 
@@ -102,9 +106,10 @@ registry created by the present RFC.
 
 [^status]
 
-[^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –16 of this draft continues -15 by picking up
-    more comments; it was made specifically for IETF 120.
+[^status]: (This "cref" paragraph will be removed by the RFC
+    editor:)\\ The present revision –17 integrates changes from active
+    pull requests, it was made specifically for discussion at the CoRE
+    interim on 2025-01-29.
     \\
     This revision still contains open issues and is intended to serve
     as a snapshot.
@@ -159,9 +164,9 @@ The supported subset includes all URIs of the
 [Uniform Resource Names (URNs)](#RFC8141), and other similar URIs.
 The exact constraints are defined in {{constraints}}.
 
-This RFC creates a "CRI Scheme Numbers" registry and updates RFC 7595
+This RFC creates a "CRI Scheme Numbers" registry and updates {{RFC7595}}
 to add a note on how this new registry cooperates with the URI Schemes
-registry that RFC 7595 describes.
+registry that {{RFC7595}} describes.
 
 
 ## Notational Conventions
@@ -220,7 +225,8 @@ The components are subject to the following constraints:
    deprecated as a way to delimit a cleartext password in a userinfo.
 
 4. {:#c-ip-address} An IP address can be either an IPv4 address or an
-   IPv6 address, optionally with a zone identifier {{-zone}}.
+   IPv6 address (optionally with a zone identifier {{-zone}}; see
+   {{zone-id-issue}}).
    Future versions of IP are not supported (it is likely that a binary
    mapping would be strongly desirable, and that cannot be designed
    ahead of time, so these versions need to be added as a future
@@ -373,6 +379,13 @@ assumption that the CRI is appropriately pre-normalized.
 transferred, recipients must operate on as-good-as untrusted input and
 fail gracefully in the face of malicious inputs.)
 
+CRIs have been designed with the objective that, after the above
+normalization, conversion of two distinct (absolute) CRIs to URIs do
+not yield the "same" URI, including equivalence under syntax-based
+normalization ({{Section 6.2.2 of RFC3986@-uri}}), but not including
+protocol-based normalization.
+(This is not an objective for CRI references, which may lead to
+equivalent URIs or not depending on the base used for resolving them.)
 
 # Comparison
 
@@ -466,6 +479,16 @@ references:
 * an entirely empty outer array is not a valid CRI (but a valid CRI reference,
   as per {{ingest}} equivalent to `[0]`, which essentially copies the
   base CRI).
+
+Application specifications that use CRIs may explicitly enable the use
+of "stand-in" items (tags or simple values), i.e., items used in place
+of original representation items such as strings or arrays, where the
+tag or simple value is defined to evaluate to the original item that
+it is standing in place of.
+Examples would be tags such as 21 to 23 ({{Section 3.4.5.2 of
+RFC8949@-cbor}}), which might be used to represent text string
+components by employing more compact byte strings, or reference tags and
+simple values as defined in {{-packed}}.
 
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
@@ -722,7 +745,7 @@ URI to CRI
   See {{<sp-initial-empty}} in {{the-small-print}} for more details.
 
 CRI to IRI
-: A CRI can be converted to an IRI by first converting it to a URI as
+: {:#critoiri} A CRI can be converted to an IRI by first converting it to a URI as
   specified in {{cri-to-uri}}, and then converting the URI
   to an IRI as described in {{Section 3.2 of RFC3987}}.
 
@@ -782,16 +805,35 @@ authority
   normalization would turn the percent-encoding back to the unreserved
   character that a dot is.)
 
+  {:aside}
+  > Implementations with scheme-specific knowledge MAY convert
+    individual elements by using the ToASCII procedure {{Section 4.1 of
+    -toascii}} as discussed in more detail in {{Section 3.1 of -iri}}.
+    This should not be done if the next step of conversion is to an
+    IRI as defined in {{critoiri}} (CRI to IRI).
+
   {: #host-ip-to-uri}
   The value of a `host-ip` item MUST be
   represented as a string that matches the "IPv4address" or
   "IP-literal" rule ({{Section 3.2.2 of RFC3986@-uri}}).
+
+  {: #zone-id-issue}
   Any zone-id is appended to the string; the details for how this is
   done are currently in flux in the URI specification: {{Section 2 of
   -zone}} uses percent-encoding and a separator of "%25", while
   proposals for a future superseding zone-id specification document
   (such as {{-zonebis}}) are being prepared; this also leads to a modified
   "IP-literal" rule as specified in these documents.
+  While the discussion about the representation of zone-id information
+  in URIs is ongoing, CRIs maintain a position in the grammar for it
+  (`zone-id`).
+  This can be used by consenting implementations to exchange zone
+  information without being concerned by the ambiguity at the URI
+  syntax level.
+  The assumption is that the present specification (1) either will be
+  updated eventually to obtain consistent URI conversion of zone-id
+  information (2) or there will be no representation of zone-id
+  information in URIs.
 
   If the CRI reference contains a `port` item, the port
   subcomponent consists of the value of that item in decimal
@@ -1008,10 +1050,12 @@ properties of UTF-8 make this a simple linear process.)
 > text-pet-sequence elements for their representation typically need
 > to process them byte by byte.
 
-# CoAP Integration
+# Integration into CoAP and ACE
 
 This section discusses ways in which CRIs can be used in the context
-of the CoAP protocol {{-coap}}.
+of the CoAP protocol {{-coap}} and of Authorization for Constrained
+Environments (ACE), specifically the Authorization Information Format
+(AIF) {{-aif}}.
 
 ## Converting Between CoAP CRIs and Sets of CoAP Options
 
@@ -1183,6 +1227,30 @@ represented as an unsigned integer by a zero-length CoAP Option value.
 [^location-scheme]: TO DO: Discuss the need for a
     location-scheme-numeric option?
 
+## ACE AIF {#toid}
+
+The AIF (Authorization Information Format, {{-aif}}) defined by ACE by
+default uses the local part of a URI to identify a resource for which
+authorization is indicated.
+The type and target of this information is an extension point, briefly
+called *Toid* (Type of object identifier).
+{{toidreg}} registers "CRI-local-part" as a Toid.
+Together with *Tperm*, an extension point for a way to indicate
+individual access rights (permissions), {{Section 2 of -aif}}
+defines its general Information Model as:
+
+~~~ cddl
+AIF-Generic<Toid, Tperm> = [* [Toid, Tperm]]
+~~~
+
+Using the definitions in {{cddl}}, this information model can be
+specialized as in:
+
+~~~ cddl
+CRI-local-part = [path / null, ?query]
+AIF-CRI = AIF-Generic<CRI-local-part, uint>
+~~~
+
 # Implementation Status {#impl}
 
 {::boilerplate rfc7942info}
@@ -1328,6 +1396,36 @@ as described in {{tab-iana-options}} and defined in {{coap-options}}.
 {: #tab-iana-options title="New CoAP Option Numbers"}
 
 [^replace-xxxx]
+
+## Media-Type subparameters for ACE AIF {#toidreg}
+
+In the "Sub-Parameter Registry for application/aif+cbor and
+application/aif+json" in the "Media Type Sub-Parameter Registries"
+registry group {{IANA.media-type-sub-parameters}}, IANA is requested to
+register:
+
+| Parameter | Name           | Description/Specification | Reference           |
+|-----------|----------------|---------------------------|---------------------|
+| Toid      | CRI-local-part | local-part of CRI         | {{toid}} of RFC-XXXX  |
+{: #tab-iana-toid title="ACE AIF Toid for CRI"}
+
+
+[^replace-xxxx]
+
+
+## Content-Format for CRI in AIF
+
+IANA is requested to register a Content-Format number in the "CoAP
+Content-Formats" registry (range 256-999), within the "Constrained
+RESTful Environments (CoRE) Parameters" registry group
+[IANA.core-parameters], as follows:
+
+| Media Type                                | Encoding | ID  | Reference |
+| application/aif+cbor; Toid=CRI-local-part | -        | TBD | RFC-XXXX  |
+{: #tab-iana-toid-ct title="Content-Format for ACE AIF with CRI-local-part Toid"}
+
+[^replace-xxxx]
+
 
 --- back
 
@@ -1569,12 +1667,16 @@ title="ABNF Definition of URI Representation of a CRI"
 # Change Log
 {:removeinrfc}
 
+Changes from -16 to -17
+
+(Provisional integration of active PRs, please see github.)
+
 Changes from -15 to -16
 
 * Add note that CRI Scheme Number registrations are oblivious of the
   actual URI Scheme registrations (if any).
 
-* Add information about how this RFC updates RFC7595 to abstract and
+* Add information about how this RFC updates {{RFC7595}} to abstract and
   introduction.
 
 Changes from -14 to -15

@@ -48,6 +48,7 @@
 |              3348 |            rtmfp | \[RFC-XXXX] |
 |              3358 |             mtqp | \[RFC-XXXX] |
 |              3365 |       filesystem | \[RFC-XXXX] |
+|              3375 |          teapots | \[RFC-XXXX] |
 |              3503 |            proxy | \[RFC-XXXX] |
 |              3524 |              sms | \[RFC-XXXX] |
 |              3634 |              jms | \[RFC-XXXX] |
@@ -337,6 +338,7 @@
 |             14962 |           tn3270 | \[RFC-XXXX] |
 |             14972 |             pres | \[RFC-XXXX] |
 |             14982 |               p1 | \[RFC-XXXX] |
+|             15026 |           teapot | \[RFC-XXXX] |
 |             15061 |          android | \[RFC-XXXX] |
 |             15118 |          simplex | \[RFC-XXXX] |
 |             15163 |         ms-visio | \[RFC-XXXX] |
