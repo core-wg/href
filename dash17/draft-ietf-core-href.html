@@ -1485,7 +1485,8 @@ deprecated as a way to delimit a cleartext password in a userinfo.<a href="#sect
 <dd id="section-2-2.4">
 <div id="c-ip-address">
           <p id="section-2-2.4.1">An IP address can be either an IPv4 address or an
-IPv6 address, optionally with a zone identifier <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span>.
+IPv6 address (optionally with a zone identifier <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span>; see
+<a href="#zone-id-issue" class="auto internal xref">Section 6.1, Paragraph 2.4.6</a>).
 Future versions of IP are not supported (it is likely that a binary
 mapping would be strongly desirable, and that cannot be designed
 ahead of time, so these versions need to be added as a future
@@ -2349,18 +2350,30 @@ character that a dot is.)<a href="#section-6.1-2.4.4" class="pilcrow">¶</a></p>
 <div id="host-ip-to-uri">
 <p id="section-6.1-2.4.5">The value of a <code>host-ip</code> item <span class="bcp14">MUST</span> be
 represented as a string that matches the "IPv4address" or
-"IP-literal" rule (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).
-Any zone-id is appended to the string; the details for how this is
+"IP-literal" rule (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).<a href="#section-6.1-2.4.5" class="pilcrow">¶</a></p>
+</div>
+<div id="zone-id-issue">
+<p id="section-6.1-2.4.6">Any zone-id is appended to the string; the details for how this is
 done are currently in flux in the URI specification: <span><a href="https://rfc-editor.org/rfc/rfc6874#section-2" class="relref">Section 2</a> of [<a href="#RFC6874" class="cite xref">RFC6874</a>]</span> uses percent-encoding and a separator of "%25", while
 proposals for a future superseding zone-id specification document
 (such as <span>[<a href="#I-D.carpenter-6man-rfc6874bis" class="cite xref">I-D.carpenter-6man-rfc6874bis</a>]</span>) are being prepared; this also leads to a modified
-"IP-literal" rule as specified in these documents.<a href="#section-6.1-2.4.5" class="pilcrow">¶</a></p>
+"IP-literal" rule as specified in these documents.
+While the discussion about the representation of zone-id information
+in URIs is ongoing, CRIs maintain a position in the grammar for it
+(<code>zone-id</code>).
+This can be used by consenting implementations to exchange zone
+information without being concerned by the ambiguity at the URI
+syntax level.
+The assumption is that the present specification (1) either will be
+updated eventually to obtain consistent URI conversion of zone-id
+information (2) or there will be no representation of zone-id
+information in URIs.<a href="#section-6.1-2.4.6" class="pilcrow">¶</a></p>
 </div>
-<p id="section-6.1-2.4.6">If the CRI reference contains a <code>port</code> item, the port
+<p id="section-6.1-2.4.7">If the CRI reference contains a <code>port</code> item, the port
 subcomponent consists of the value of that item in decimal
 notation.
 Otherwise, the colon (":") character and the port subcomponent are
-both omitted.<a href="#section-6.1-2.4.6" class="pilcrow">¶</a></p>
+both omitted.<a href="#section-6.1-2.4.7" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-6.1-2.5">path</dt>
