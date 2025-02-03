@@ -1244,13 +1244,16 @@ defines its general Information Model as:
 AIF-Generic<Toid, Tperm> = [* [Toid, Tperm]]
 ~~~
 
-Using the definitions in {{cddl}}, this information model can be
-specialized as in:
+Using the definitions in {{cddl}} together with the {{-aif}} default TPerm
+choice `REST-method-set`, this information model can be specialized as
+in:
 
 ~~~ cddl
 CRI-local-part = [path / null, ?query]
-AIF-CRI = AIF-Generic<CRI-local-part, uint>
+AIF-CRI = AIF-Generic<CRI-local-part, REST-method-set>
 ~~~
+
+<!-- cddlc -irfc9237 -sAIF-CRI -r2u -tcddl - -->
 
 # Implementation Status {#impl}
 
