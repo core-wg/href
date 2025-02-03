@@ -482,13 +482,14 @@ references:
   base CRI).
 
 Application specifications that use CRIs may explicitly enable the use
-of "stand-in" items (tags or simple values), i.e., items used in place
-of original representation items such as strings or arrays, where the
-tag or simple value is defined to evaluate to the original item that
-it is standing in place of.
+of "stand-in" items (tags or simple values).
+These are data items used in place of original representation items
+such as strings or arrays, where the tag or simple value is defined to
+stand for a data item that can be used in the position of the stand-in
+item.
 Examples would be tags such as 21 to 23 ({{Section 3.4.5.2 of
-RFC8949@-cbor}}), which might be used to represent text string
-components by employing more compact byte strings, or reference tags and
+RFC8949@-cbor}}), which stand for text string components but internally
+employ more compact byte string representations, or reference tags and
 simple values as defined in {{-packed}}.
 
 For interchange as separate encoded data items, CRIs MUST NOT use
