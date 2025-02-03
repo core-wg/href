@@ -73,6 +73,8 @@ normative:
   BCP26:
     -: ianacons
 #    =: RFC8126
+  IANA.media-type-sub-parameters: mtsub
+  RFC9237: aif
   IANA.core-parameters:
   RFC8610: cddl
   Unicode:
@@ -1048,10 +1050,12 @@ properties of UTF-8 make this a simple linear process.)
 > text-pet-sequence elements for their representation typically need
 > to process them byte by byte.
 
-# CoAP Integration
+# Integration into CoAP and ACE
 
 This section discusses ways in which CRIs can be used in the context
-of the CoAP protocol {{-coap}}.
+of the CoAP protocol {{-coap}} and of Authorization for Constrained
+Environments (ACE), specifically the Authorization Information Format
+(AIF) {{-aif}}.
 
 ## Converting Between CoAP CRIs and Sets of CoAP Options
 
@@ -1223,6 +1227,30 @@ represented as an unsigned integer by a zero-length CoAP Option value.
 [^location-scheme]: TO DO: Discuss the need for a
     location-scheme-numeric option?
 
+## ACE AIF {#toid}
+
+The AIF (Authorization Information Format, {{-aif}}) defined by ACE by
+default uses the local part of a URI to identify a resource for which
+authorization is indicated.
+The type and target of this information is an extension point, briefly
+called *Toid* (Type of object identifier).
+{{toidreg}} registers "CRI-local-part" as a Toid.
+Together with *Tperm*, an extension point for a way to indicate
+individual access rights (permissions), {{Section 2 of -aif}}
+defines its general Information Model as:
+
+~~~ cddl
+AIF-Generic<Toid, Tperm> = [* [Toid, Tperm]]
+~~~
+
+Using the definitions in {{cddl}}, this information model can be
+specialized as in:
+
+~~~ cddl
+CRI-local-part = [path / null, ?query]
+AIF-CRI = AIF-Generic<CRI-local-part, uint>
+~~~
+
 # Implementation Status {#impl}
 
 {::boilerplate rfc7942info}
@@ -1368,6 +1396,36 @@ as described in {{tab-iana-options}} and defined in {{coap-options}}.
 {: #tab-iana-options title="New CoAP Option Numbers"}
 
 [^replace-xxxx]
+
+## Media-Type subparameters for ACE AIF {#toidreg}
+
+In the "Sub-Parameter Registry for application/aif+cbor and
+application/aif+json" in the "Media Type Sub-Parameter Registries"
+registry group {{IANA.media-type-sub-parameters}}, IANA is requested to
+register:
+
+| Parameter | Name           | Description/Specification | Reference           |
+|-----------|----------------|---------------------------|---------------------|
+| Toid      | CRI-local-part | local-part of CRI         | {{toid}} of RFC-XXXX  |
+{: #tab-iana-toid title="ACE AIF Toid for CRI"}
+
+
+[^replace-xxxx]
+
+
+## Content-Format for CRI in AIF
+
+IANA is requested to register a Content-Format number in the "CoAP
+Content-Formats" registry (range 256-999), within the "Constrained
+RESTful Environments (CoRE) Parameters" registry group
+[IANA.core-parameters], as follows:
+
+| Media Type                                | Encoding | ID  | Reference |
+| application/aif+cbor; Toid=CRI-local-part | -        | TBD | RFC-XXXX  |
+{: #tab-iana-toid-ct title="Content-Format for ACE AIF with CRI-local-part Toid"}
+
+[^replace-xxxx]
+
 
 --- back
 
