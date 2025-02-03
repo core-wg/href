@@ -107,7 +107,8 @@ registry created by the present RFC.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC
-    editor:)\\ The present revision –17 integrates changes from active
+    editor:)\\
+    The present revision –17 integrates changes from active
     pull requests, it was made specifically for discussion at the CoRE
     interim on 2025-01-29.
     \\
