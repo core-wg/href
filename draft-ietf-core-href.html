@@ -17,26 +17,27 @@ memory size.
        This RFC updates RFC 7595 to add a note on how the URI Schemes
 registry RFC 7595 describes cooperates with the CRI Scheme Numbers
 registry created by the present RFC. 
-       (This "cref" paragraph will be removed by the RFC editor:) 
-The present revision –16 of this draft continues -15 by picking up
-more comments; it was made specifically for IETF 120.
+       (This "cref" paragraph will be removed by the RFC
+editor:)\ The present revision –17 integrates changes from active
+pull requests, it was made specifically for discussion at the CoRE
+interim on 2025-01-29.
  
 This revision still contains open issues and is intended to serve
 as a snapshot. 
     ' name="description">
-<meta content="xml2rfc 3.24.0" name="generator">
+<meta content="xml2rfc 3.26.0" name="generator">
 <meta content="draft-ietf-core-href-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.24.0
-    Python 3.12.7
+  xml2rfc 3.26.0
+    Python 3.12.8
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.4
+    Jinja2 3.1.5
     lxml 5.3.0
     platformdirs 4.3.6
-    pycountry 22.3.5
-    PyYAML 6.0.1
+    pycountry 24.6.1
+    PyYAML 6.0.2
     requests 2.32.3
     setuptools 70.3.0
     wcwidth 0.2.13
@@ -548,7 +549,11 @@ figcaption, caption {
   }
   pre, svg {
     display: inline-block;
-    overflow-x: auto;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
   }
   pre {
     max-width: 100%;
@@ -1054,11 +1059,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Constrained Resource Identifiers</td>
-<td class="right">November 2024</td>
+<td class="right">February 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 26 May 2025</td>
+<td class="center">Expires 7 August 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1074,12 +1079,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc7595" class="eref">7595</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-11-22" class="published">22 November 2024</time>
+<time datetime="2025-02-03" class="published">3 February 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-05-26">26 May 2025</time></dd>
+<dd class="expires"><time datetime="2025-08-07">7 August 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1106,9 +1111,10 @@ memory size.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">This RFC updates RFC 7595 to add a note on how the URI Schemes
 registry RFC 7595 describes cooperates with the CRI Scheme Numbers
 registry created by the present RFC.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
-<p id="section-abstract-3"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC editor:)<br>
-The present revision –16 of this draft continues -15 by picking up
-more comments; it was made specifically for IETF 120.
+<p id="section-abstract-3"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC
+editor:)\ The present revision –17 integrates changes from active
+pull requests, it was made specifically for discussion at the CoRE
+interim on 2025-01-29.
 <br>
 This revision still contains open issues and is intended to serve
 as a snapshot.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
@@ -1147,7 +1153,7 @@ as a snapshot.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 May 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 August 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1156,7 +1162,7 @@ as a snapshot.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2024 IETF Trust and the persons identified as the
+            Copyright (c) 2025 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1251,7 +1257,7 @@ as a snapshot.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-coap-integration" class="internal xref">CoAP Integration</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-integration-into-coap-and-a" class="internal xref">Integration into CoAP and ACE</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
                 <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-converting-between-coap-cri" class="internal xref">Converting Between CoAP CRIs and Sets of CoAP Options</a></p>
@@ -1274,6 +1280,9 @@ as a snapshot.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
                     <p id="section-toc.1-1.8.2.2.2.2.1"><a href="#section-8.2.2" class="auto internal xref">8.2.2</a>.  <a href="#name-proxy-scheme-number" class="internal xref">Proxy-Scheme-Number</a></p>
 </li>
                 </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-ace-aif" class="internal xref">ACE AIF</a></p>
 </li>
             </ul>
 </li>
@@ -1308,6 +1317,12 @@ as a snapshot.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
                 <p id="section-toc.1-1.11.2.4.1"><a href="#section-11.4" class="auto internal xref">11.4</a>.  <a href="#name-coap-option-numbers-registr" class="internal xref">CoAP Option Numbers Registry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
+                <p id="section-toc.1-1.11.2.5.1"><a href="#section-11.5" class="auto internal xref">11.5</a>.  <a href="#name-media-type-subparameters-fo" class="internal xref">Media-Type subparameters for ACE AIF</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.6">
+                <p id="section-toc.1-1.11.2.6.1"><a href="#section-11.6" class="auto internal xref">11.6</a>.  <a href="#name-content-format-for-cri-in-a" class="internal xref">Content-Format for CRI in AIF</a></p>
 </li>
             </ul>
 </li>
@@ -1392,9 +1407,9 @@ The supported subset includes all URIs of the
 <span><a href="#STD97" class="internal xref">Hypertext Transfer Protocol (HTTP)</a> [<a href="#STD97" class="cite xref">STD97</a>]</span>,
 <span><a href="#RFC8141" class="internal xref">Uniform Resource Names (URNs)</a> [<a href="#RFC8141" class="cite xref">RFC8141</a>]</span>, and other similar URIs.
 The exact constraints are defined in <a href="#constraints" class="auto internal xref">Section 2</a>.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">This RFC creates a "CRI Scheme Numbers" registry and updates RFC 7595
+<p id="section-1-6">This RFC creates a "CRI Scheme Numbers" registry and updates <a href="#RFC7595" class="auto internal xref">RFC7595</a>
 to add a note on how this new registry cooperates with the URI Schemes
-registry that RFC 7595 describes.<a href="#section-1-6" class="pilcrow">¶</a></p>
+registry that <a href="#RFC7595" class="auto internal xref">RFC7595</a> describes.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <div id="notational-conventions">
 <section id="section-1.1">
         <h3 id="name-notational-conventions">
@@ -1479,7 +1494,8 @@ deprecated as a way to delimit a cleartext password in a userinfo.<a href="#sect
 <dd id="section-2-2.4">
 <div id="c-ip-address">
           <p id="section-2-2.4.1">An IP address can be either an IPv4 address or an
-IPv6 address, optionally with a zone identifier <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span>.
+IPv6 address (optionally with a zone identifier <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span>; see
+<a href="#zone-id-issue" class="auto internal xref">Section 6.1, Paragraph 2.4.7</a>).
 Future versions of IP are not supported (it is likely that a binary
 mapping would be strongly desirable, and that cannot be designed
 ahead of time, so these versions need to be added as a future
@@ -1696,6 +1712,13 @@ assumption that the CRI is appropriately pre-normalized.
 (This does not contradict the requirement that when CRIs are
 transferred, recipients must operate on as-good-as untrusted input and
 fail gracefully in the face of malicious inputs.)<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-7">CRIs have been designed with the objective that, after the above
+normalization, conversion of two distinct (absolute) CRIs to URIs do
+not yield the "same" URI, including equivalence under syntax-based
+normalization (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.2" class="relref">6.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), but not including
+protocol-based normalization.
+(This is not an objective for CRI references, which may lead to
+equivalent URIs or not depending on the base used for resolving them.)<a href="#section-3-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="comparison">
@@ -1849,11 +1872,19 @@ as per <a href="#ingest" class="auto internal xref">Section 5.2</a> equivalent t
 base CRI).<a href="#section-5.1-6.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-7">For interchange as separate encoded data items, CRIs <span class="bcp14">MUST NOT</span> use
+<p id="section-5.1-7">Application specifications that use CRIs may explicitly enable the use
+of "stand-in" items (tags or simple values), i.e., items used in place
+of original representation items such as strings or arrays, where the
+tag or simple value is defined to evaluate to the original item that
+it is standing in place of.
+Examples would be tags such as 21 to 23 (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.4.5.2" class="relref">3.4.5.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>), which might be used to represent text string
+components by employing more compact byte strings, or reference tags and
+simple values as defined in <span>[<a href="#I-D.ietf-cbor-packed" class="cite xref">I-D.ietf-cbor-packed</a>]</span>.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
+<p id="section-5.1-8">For interchange as separate encoded data items, CRIs <span class="bcp14">MUST NOT</span> use
 indefinite length encoding (see
 Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.2" class="relref">3.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>); this requirement is relaxed for
 specifications that embed CRIs into an encompassing CBOR
-representation that does provide for indefinite length encoding.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
+representation that does provide for indefinite length encoding.<a href="#section-5.1-8" class="pilcrow">¶</a></p>
 <div id="scheme-id">
 <section id="section-5.1.1">
           <h4 id="name-scheme-name-and-scheme-id">
@@ -2277,12 +2308,14 @@ See <a href="#sp-initial-empty" class="auto internal xref">SP1</a> in <a href="#
 </dd>
         <dd class="break"></dd>
 <dt id="section-6-3.5">CRI to IRI</dt>
-        <dd style="margin-left: 1.5em" id="section-6-3.6">
+        <dd id="section-6-3.6" style="margin-left: 1.5em">
+<div id="critoiri">
           <p id="section-6-3.6.1">A CRI can be converted to an IRI by first converting it to a URI as
 specified in <a href="#cri-to-uri" class="auto internal xref">Section 6.1</a>, and then converting the URI
 to an IRI as described in <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>.<a href="#section-6-3.6.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
+</div>
+        </dd>
+<dd class="break"></dd>
 <dt id="section-6-3.7">IRI to CRI</dt>
         <dd style="margin-left: 1.5em" id="section-6-3.8">
           <p id="section-6-3.8.1">An IRI can be converted to a CRI by first converting it to a URI as
@@ -2340,21 +2373,39 @@ If there are dots (".") in such elements, the conversion fails
 (percent-encoding is not able to represent such elements, as
 normalization would turn the percent-encoding back to the unreserved
 character that a dot is.)<a href="#section-6.1-2.4.4" class="pilcrow">¶</a></p>
+<aside id="section-6.1-2.4.5">
+              <p id="section-6.1-2.4.5.1">Implementations with scheme-specific knowledge <span class="bcp14">MAY</span> convert
+  individual elements by using the ToASCII procedure <span><a href="https://rfc-editor.org/rfc/rfc3490#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC3490" class="cite xref">RFC3490</a>]</span> as discussed in more detail in <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>.
+  This should not be done if the next step of conversion is to an
+  IRI as defined in <a href="#critoiri" class="auto internal xref">Section 6</a> (CRI to IRI).<a href="#section-6.1-2.4.5.1" class="pilcrow">¶</a></p>
+</aside>
 <div id="host-ip-to-uri">
-<p id="section-6.1-2.4.5">The value of a <code>host-ip</code> item <span class="bcp14">MUST</span> be
+<p id="section-6.1-2.4.6">The value of a <code>host-ip</code> item <span class="bcp14">MUST</span> be
 represented as a string that matches the "IPv4address" or
-"IP-literal" rule (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).
-Any zone-id is appended to the string; the details for how this is
+"IP-literal" rule (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).<a href="#section-6.1-2.4.6" class="pilcrow">¶</a></p>
+</div>
+<div id="zone-id-issue">
+<p id="section-6.1-2.4.7">Any zone-id is appended to the string; the details for how this is
 done are currently in flux in the URI specification: <span><a href="https://rfc-editor.org/rfc/rfc6874#section-2" class="relref">Section 2</a> of [<a href="#RFC6874" class="cite xref">RFC6874</a>]</span> uses percent-encoding and a separator of "%25", while
 proposals for a future superseding zone-id specification document
 (such as <span>[<a href="#I-D.carpenter-6man-rfc6874bis" class="cite xref">I-D.carpenter-6man-rfc6874bis</a>]</span>) are being prepared; this also leads to a modified
-"IP-literal" rule as specified in these documents.<a href="#section-6.1-2.4.5" class="pilcrow">¶</a></p>
+"IP-literal" rule as specified in these documents.
+While the discussion about the representation of zone-id information
+in URIs is ongoing, CRIs maintain a position in the grammar for it
+(<code>zone-id</code>).
+This can be used by consenting implementations to exchange zone
+information without being concerned by the ambiguity at the URI
+syntax level.
+The assumption is that the present specification (1) either will be
+updated eventually to obtain consistent URI conversion of zone-id
+information (2) or there will be no representation of zone-id
+information in URIs.<a href="#section-6.1-2.4.7" class="pilcrow">¶</a></p>
 </div>
-<p id="section-6.1-2.4.6">If the CRI reference contains a <code>port</code> item, the port
+<p id="section-6.1-2.4.8">If the CRI reference contains a <code>port</code> item, the port
 subcomponent consists of the value of that item in decimal
 notation.
 Otherwise, the colon (":") character and the port subcomponent are
-both omitted.<a href="#section-6.1-2.4.6" class="pilcrow">¶</a></p>
+both omitted.<a href="#section-6.1-2.4.8" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-6.1-2.5">path</dt>
@@ -2566,13 +2617,15 @@ to process them byte by byte.<a href="#section-7.1-14.1" class="pilcrow">¶</a><
 </div>
 </section>
 </div>
-<div id="coap-integration">
+<div id="integration-into-coap-and-ace">
 <section id="section-8">
-      <h2 id="name-coap-integration">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-coap-integration" class="section-name selfRef">CoAP Integration</a>
+      <h2 id="name-integration-into-coap-and-a">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-integration-into-coap-and-a" class="section-name selfRef">Integration into CoAP and ACE</a>
       </h2>
 <p id="section-8-1">This section discusses ways in which CRIs can be used in the context
-of the CoAP protocol <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
+of the CoAP protocol <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span> and of Authorization for Constrained
+Environments (ACE), specifically the Authorization Information Format
+(AIF) <span>[<a href="#RFC9237" class="cite xref">RFC9237</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <div id="converting-between-coap-cris-and-sets-of-coap-options">
 <section id="section-8.1">
         <h3 id="name-converting-between-coap-cri">
@@ -2663,7 +2716,7 @@ the IP address given represents the request's
 destination IP address (and, if present, zone-id).
 Only if it does not, include a Uri-Host Option, and let that
 option's value be the text value of the URI representation of
-the IP address, as derived in <a href="#host-ip-to-uri" class="auto internal xref">Section 6.1, Paragraph 2.4.5</a>.<a href="#section-8.1.1-3.4.2" class="pilcrow">¶</a></p>
+the IP address, as derived in <a href="#host-ip-to-uri" class="auto internal xref">Section 6.1, Paragraph 2.4.6</a>.<a href="#section-8.1.1-3.4.2" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.5">
               <p id="section-8.1.1-3.5.1">If »cri« has a <code>port</code> component, then let »port« be that
@@ -2864,6 +2917,35 @@ location-scheme-numeric option?</span><a href="#section-8.2.2-4" class="pilcrow"
 </div>
 </section>
 </div>
+<div id="toid">
+<section id="section-8.3">
+        <h3 id="name-ace-aif">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-ace-aif" class="section-name selfRef">ACE AIF</a>
+        </h3>
+<p id="section-8.3-1">The AIF (Authorization Information Format, <span>[<a href="#RFC9237" class="cite xref">RFC9237</a>]</span>) defined by ACE by
+default uses the local part of a URI to identify a resource for which
+authorization is indicated.
+The type and target of this information is an extension point, briefly
+called <em>Toid</em> (Type of object identifier).
+<a href="#toidreg" class="auto internal xref">Section 11.5</a> registers "CRI-local-part" as a Toid.
+Together with <em>Tperm</em>, an extension point for a way to indicate
+individual access rights (permissions), <span><a href="https://rfc-editor.org/rfc/rfc9237#section-2" class="relref">Section 2</a> of [<a href="#RFC9237" class="cite xref">RFC9237</a>]</span>
+defines its general Information Model as:<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-8.3-2">
+<pre>
+AIF-Generic&lt;Toid, Tperm&gt; = [* [Toid, Tperm]]
+</pre><a href="#section-8.3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-8.3-3">Using the definitions in <a href="#cddl" class="auto internal xref">Figure 1</a>, this information model can be
+specialized as in:<a href="#section-8.3-3" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-8.3-4">
+<pre>
+CRI-local-part = [path / null, ?query]
+AIF-CRI = AIF-Generic&lt;CRI-local-part, uint&gt;
+</pre><a href="#section-8.3-4" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="impl">
@@ -2961,7 +3043,7 @@ Numbers registration simply stays in place, even if the URI Schemes
 registration happens to be for something different from what the
 expert had in mind at the time for the CRI Scheme Numbers
 registration.
-Also note that the initial registrations in <a href="#tab-numbers" class="auto internal xref">Table 6</a> in
+Also note that the initial registrations in <a href="#tab-numbers" class="auto internal xref">Table 8</a> in
 <a href="#sec-numbers" class="auto internal xref">Appendix A</a> already include such registrations for the text strings
 "mqtt" and "mqtts".)<a href="#section-11.1.1-3" class="pilcrow">¶</a></p>
 <p id="section-11.1.1-4">A registration in the CRI Scheme Numbers registry does not imply that
@@ -3007,7 +3089,7 @@ registry<a href="#section-11.1.2-2.4.1" class="pilcrow">¶</a></p>
 <a href="#section-11.1.3" class="section-number selfRef">11.1.3. </a><a href="#name-initial-registrations" class="section-name selfRef">Initial Registrations</a>
           </h4>
 <p id="section-11.1.3-1">The initial registrations for the CRI Scheme Numbers registry are
-provided in <a href="#tab-numbers" class="auto internal xref">Table 6</a> in <a href="#sec-numbers" class="auto internal xref">Appendix A</a>.<a href="#section-11.1.3-1" class="pilcrow">¶</a></p>
+provided in <a href="#tab-numbers" class="auto internal xref">Table 8</a> in <a href="#sec-numbers" class="auto internal xref">Appendix A</a>.<a href="#section-11.1.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3109,6 +3191,83 @@ RFC-XXXX with the RFC number of this specification and remove this
 note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="toidreg">
+<section id="section-11.5">
+        <h3 id="name-media-type-subparameters-fo">
+<a href="#section-11.5" class="section-number selfRef">11.5. </a><a href="#name-media-type-subparameters-fo" class="section-name selfRef">Media-Type subparameters for ACE AIF</a>
+        </h3>
+<p id="section-11.5-1">In the "Sub-Parameter Registry for application/aif+cbor and
+application/aif+json" in the "Media Type Sub-Parameter Registries"
+registry group <span>[<a href="#IANA.media-type-sub-parameters" class="cite xref">IANA.media-type-sub-parameters</a>]</span>, IANA is requested to
+register:<a href="#section-11.5-1" class="pilcrow">¶</a></p>
+<span id="name-ace-aif-toid-for-cri"></span><div id="tab-iana-toid">
+<table class="center" id="table-6">
+          <caption>
+<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#name-ace-aif-toid-for-cri" class="selfRef">ACE AIF Toid for CRI</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Parameter</th>
+              <th class="text-left" rowspan="1" colspan="1">Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Description/Specification</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Toid</td>
+              <td class="text-left" rowspan="1" colspan="1">CRI-local-part</td>
+              <td class="text-left" rowspan="1" colspan="1">local-part of CRI</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#toid" class="auto internal xref">Section 8.3</a> of RFC-XXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-11.5-3"><span class="cref" id="replace-xxxx_3">RFC Ed.: throughout this section, please replace
+RFC-XXXX with the RFC number of this specification and remove this
+note.</span><a href="#section-11.5-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="content-format-for-cri-in-aif">
+<section id="section-11.6">
+        <h3 id="name-content-format-for-cri-in-a">
+<a href="#section-11.6" class="section-number selfRef">11.6. </a><a href="#name-content-format-for-cri-in-a" class="section-name selfRef">Content-Format for CRI in AIF</a>
+        </h3>
+<p id="section-11.6-1">IANA is requested to register a Content-Format number in the "CoAP
+Content-Formats" registry (range 256-999), within the "Constrained
+RESTful Environments (CoRE) Parameters" registry group
+<span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, as follows:<a href="#section-11.6-1" class="pilcrow">¶</a></p>
+<span id="name-content-format-for-ace-aif-"></span><div id="tab-iana-toid-ct">
+<table class="center" id="table-7">
+          <caption>
+<a href="#table-7" class="selfRef">Table 7</a>:
+<a href="#name-content-format-for-ace-aif-" class="selfRef">Content-Format for ACE AIF with CRI-local-part Toid</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Media Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Encoding</th>
+              <th class="text-left" rowspan="1" colspan="1">ID</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">application/aif+cbor; Toid=CRI-local-part</td>
+              <td class="text-left" rowspan="1" colspan="1">-</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-11.6-3"><span class="cref" id="replace-xxxx_4">RFC Ed.: throughout this section, please replace
+RFC-XXXX with the RFC number of this specification and remove this
+note.</span><a href="#section-11.6-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -3148,9 +3307,17 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
             <span class="refAuthor">Thaler, D., Ed.</span>, <span class="refAuthor">Hansen, T.</span>, and <span class="refAuthor">T. Hardie</span>, <span class="refTitle">"Guidelines and Registration Procedures for URI Schemes"</span>, <span class="seriesInfo">BCP 35</span>, <span class="seriesInfo">RFC 7595</span>, <span class="seriesInfo">DOI 10.17487/RFC7595</span>, <time datetime="2015-06" class="refDate">June 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7595">https://www.rfc-editor.org/info/rfc7595</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
+<dt id="I-D.ietf-cbor-packed">[I-D.ietf-cbor-packed]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">M. Gütschow</span>, <span class="refTitle">"Packed CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-packed-13</span>, <time datetime="2024-09-01" class="refDate">1 September 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-13">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-13</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="IANA.core-parameters">[IANA.core-parameters]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"Constrained RESTful Environments (CoRE) Parameters"</span>, <span>&lt;<a href="https://www.iana.org/assignments/core-parameters">https://www.iana.org/assignments/core-parameters</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.media-type-sub-parameters">[IANA.media-type-sub-parameters]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Media Type Sub-Parameter Registries"</span>, <span>&lt;<a href="https://www.iana.org/assignments/media-type-sub-parameters">https://www.iana.org/assignments/media-type-sub-parameters</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IANA.uri-schemes">[IANA.uri-schemes]</dt>
         <dd>
@@ -3171,6 +3338,10 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
 <dt id="RFC9165">[RFC9165]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Additional Control Operators for the Concise Data Definition Language (CDDL)"</span>, <span class="seriesInfo">RFC 9165</span>, <span class="seriesInfo">DOI 10.17487/RFC9165</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9165">https://www.rfc-editor.org/rfc/rfc9165</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9237">[RFC9237]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"An Authorization Information Format (AIF) for Authentication and Authorization for Constrained Environments (ACE)"</span>, <span class="seriesInfo">RFC 9237</span>, <span class="seriesInfo">DOI 10.17487/RFC9237</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9237">https://www.rfc-editor.org/rfc/rfc9237</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="STD66">[STD66]</dt>
         <dd>
@@ -3215,7 +3386,11 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-13</span>, <time datetime="2024-11-03" class="refDate">3 November 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-13">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-13</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-16</span>, <time datetime="2025-01-08" class="refDate">8 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3490">[RFC3490]</dt>
+        <dd>
+<span class="refAuthor">Faltstrom, P.</span>, <span class="refAuthor">Hoffman, P.</span>, and <span class="refAuthor">A. Costello</span>, <span class="refTitle">"Internationalizing Domain Names in Applications (IDNA)"</span>, <span class="seriesInfo">RFC 3490</span>, <span class="seriesInfo">DOI 10.17487/RFC3490</span>, <time datetime="2003-03" class="refDate">March 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3490">https://www.rfc-editor.org/rfc/rfc3490</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4180">[RFC4180]</dt>
         <dd>
@@ -3263,15 +3438,15 @@ note.</span><a href="#section-11.4-3" class="pilcrow">¶</a></p>
       <h2 id="name-mapping-scheme-numbers-to-s">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-mapping-scheme-numbers-to-s" class="section-name selfRef">Mapping Scheme Numbers to Scheme Names</a>
       </h2>
-<p id="appendix-A-1"><span class="cref" id="replace-xxxx_3">RFC Ed.: throughout this section, please replace
+<p id="appendix-A-1"><span class="cref" id="replace-xxxx_5">RFC Ed.: throughout this section, please replace
 RFC-XXXX with the RFC number of this specification and remove this
 note.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2"><a href="#tab-numbers" class="auto internal xref">Table 6</a> defines the initial mapping from CRI scheme numbers to
+<p id="appendix-A-2"><a href="#tab-numbers" class="auto internal xref">Table 8</a> defines the initial mapping from CRI scheme numbers to
 URI scheme names.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <span id="name-mapping-scheme-numbers-to-sc"></span><div id="tab-numbers">
-<table class="center" id="table-6">
+<table class="center" id="table-8">
         <caption>
-<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#table-8" class="selfRef">Table 8</a>:
 <a href="#name-mapping-scheme-numbers-to-sc" class="selfRef">Mapping Scheme Numbers to Scheme Names</a>
         </caption>
 <thead>
@@ -3520,6 +3695,11 @@ URI scheme names.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">3365</td>
             <td class="text-left" rowspan="1" colspan="1">filesystem</td>
+            <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">3375</td>
+            <td class="text-left" rowspan="1" colspan="1">teapots</td>
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
           </tr>
           <tr>
@@ -4968,6 +5148,11 @@ URI scheme names.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">15026</td>
+            <td class="text-left" rowspan="1" colspan="1">teapot</td>
+            <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
+          </tr>
+          <tr>
             <td class="text-left" rowspan="1" colspan="1">15061</td>
             <td class="text-left" rowspan="1" colspan="1">android</td>
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
@@ -5368,7 +5553,7 @@ cri'https://example.com/bottarga/shaved'
         </h3>
 <p id="appendix-C.1-1">The syntax of the content of <code>cri</code> literals can be described by the
 ABNF for <code>URI-reference</code> in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-4.1" class="relref">4.1</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> with certain
-re-arrangements taken from <a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-13#figure-5" class="relref">Figure 5</a> of <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>;
+re-arrangements taken from <a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16#figure-5" class="relref">Figure 5</a> of <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>;
 these are reproduced in <a href="#abnf-grammar-cri" class="auto internal xref">Figure 2</a>.
 If the content is not ASCII only (i.e., for IRIs), first apply
 <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> and apply this grammar to the result.<a href="#appendix-C.1-1" class="pilcrow">¶</a></p>
@@ -5482,88 +5667,90 @@ sub-delims    = "!" / "$" / "&amp;" / "'" / "(" / ")"
 <a href="#appendix-D" class="section-number selfRef">Appendix D. </a><a href="#name-change-log" class="section-name selfRef">Change Log</a>
       </h2>
 <p id="appendix-D-1">This section is to be removed before publishing as an RFC.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
-<p id="appendix-D-2">Changes from -15 to -16<a href="#appendix-D-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-D-3.1">
-          <p id="appendix-D-3.1.1">Add note that CRI Scheme Number registrations are oblivious of the
-actual URI Scheme registrations (if any).<a href="#appendix-D-3.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-3.2">
-          <p id="appendix-D-3.2.1">Add information about how this RFC updates RFC7595 to abstract and
-introduction.<a href="#appendix-D-3.2.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="appendix-D-4">Changes from -14 to -15<a href="#appendix-D-4" class="pilcrow">¶</a></p>
+<p id="appendix-D-2">Changes from -16 to -17<a href="#appendix-D-2" class="pilcrow">¶</a></p>
+<p id="appendix-D-3">(Provisional integration of active PRs, please see github.)<a href="#appendix-D-3" class="pilcrow">¶</a></p>
+<p id="appendix-D-4">Changes from -15 to -16<a href="#appendix-D-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-5.1">
-          <p id="appendix-D-5.1.1">Make scheme numbers unsigned and map them to negative numbers used
-as scheme-id values<a href="#appendix-D-5.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-5.1.1">Add note that CRI Scheme Number registrations are oblivious of the
+actual URI Scheme registrations (if any).<a href="#appendix-D-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-5.2">
+          <p id="appendix-D-5.2.1">Add information about how this RFC updates <a href="#RFC7595" class="auto internal xref">RFC7595</a> to abstract and
+introduction.<a href="#appendix-D-5.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-6">Changes from -09 to -14<a href="#appendix-D-6" class="pilcrow">¶</a></p>
+<p id="appendix-D-6">Changes from -14 to -15<a href="#appendix-D-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-7.1">
-          <p id="appendix-D-7.1.1">Editorial changes; move some examples to <a href="#the-small-print" class="auto internal xref">Appendix B</a>, break up
-railroad diagram; mention commonalities with (and tiny difference
-from) CoAP Options; mention failure of percent-encoding for dots in
-host-name components<a href="#appendix-D-7.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.2">
-          <p id="appendix-D-7.2.1">Explicitly mention invalid case in <a href="#naked-rootless" class="auto internal xref">Section 2.1, Paragraph 5, Item 3</a> (rootless CRIs without
-authority that do not have a path component)<a href="#appendix-D-7.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.3">
-          <p id="appendix-D-7.3.1">Generalize <a href="#extending" class="auto internal xref">Section 7</a>, discuss PET (percent-encoded text) extension in more detail<a href="#appendix-D-7.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.4">
-          <p id="appendix-D-7.4.1">Add registry of URI scheme numbers (<a href="#sec-numbers" class="auto internal xref">Appendix A</a>, <a href="#iana-considerations" class="auto internal xref">Section 11</a>)<a href="#appendix-D-7.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.5">
-          <p id="appendix-D-7.5.1">Add user information to the authority ("userinfo" feature)<a href="#appendix-D-7.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.6">
-          <p id="appendix-D-7.6.1"><a href="#cddl" class="auto internal xref">Figure 1</a>: Use separate rule for CRI, allow <code>[]</code> for query in CRI
-Reference; generalize scheme numbers, add userinfo; add list of
-additional requirements in prose (<a href="#prose" class="auto internal xref">Section 5.1, Paragraph 5</a>)<a href="#appendix-D-7.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.7">
-          <p id="appendix-D-7.7.1">Discuss <a href="#unprocessable" class="internal xref">Error handling and extensibility</a> (<a href="#unprocessable" class="auto internal xref">Section 5.2.1</a>)<a href="#appendix-D-7.7.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.8">
-          <p id="appendix-D-7.8.1">Conversion to URI: Handle <code>:</code> in first pathname component of a
-CRI-Reference (<a href="#colon" class="auto internal xref">Section 6.1, Paragraph 2.6.1</a>)<a href="#appendix-D-7.8.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.9">
-          <p id="appendix-D-7.9.1">Add Christian Amsüss as contributor<a href="#appendix-D-7.9.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.10">
-          <p id="appendix-D-7.10.1">Add CBOR EDN application-extension "<code>cri</code>" (see <a href="#edn-cri" class="auto internal xref">Appendix C</a> and
-<a href="#cri-iana" class="auto internal xref">Section 11.3</a>).<a href="#appendix-D-7.10.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-7.11">
-          <p id="appendix-D-7.11.1">Add Section on CoAP integration (and new CoAP Options Proxy-Cri and
-Proxy-Scheme-Number).<a href="#appendix-D-7.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-7.1.1">Make scheme numbers unsigned and map them to negative numbers used
+as scheme-id values<a href="#appendix-D-7.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-8">Changes from -08 to -09<a href="#appendix-D-8" class="pilcrow">¶</a></p>
+<p id="appendix-D-8">Changes from -09 to -14<a href="#appendix-D-8" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-9.1">
-          <p id="appendix-D-9.1.1">Identify more esoteric features with a CDDL ".feature".<a href="#appendix-D-9.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-9.1.1">Editorial changes; move some examples to <a href="#the-small-print" class="auto internal xref">Appendix B</a>, break up
+railroad diagram; mention commonalities with (and tiny difference
+from) CoAP Options; mention failure of percent-encoding for dots in
+host-name components<a href="#appendix-D-9.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-9.2">
-          <p id="appendix-D-9.2.1">Clarify that well-formedness requires removing trailing nulls.<a href="#appendix-D-9.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-9.2.1">Explicitly mention invalid case in <a href="#naked-rootless" class="auto internal xref">Section 2.1, Paragraph 5, Item 3</a> (rootless CRIs without
+authority that do not have a path component)<a href="#appendix-D-9.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-9.3">
-          <p id="appendix-D-9.3.1">Fragments can contain PET.<a href="#appendix-D-9.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-9.3.1">Generalize <a href="#extending" class="auto internal xref">Section 7</a>, discuss PET (percent-encoded text) extension in more detail<a href="#appendix-D-9.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-9.4">
-          <p id="appendix-D-9.4.1">Percent-encoded text in PET is treated as byte strings.<a href="#appendix-D-9.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-9.4.1">Add registry of URI scheme numbers (<a href="#sec-numbers" class="auto internal xref">Appendix A</a>, <a href="#iana-considerations" class="auto internal xref">Section 11</a>)<a href="#appendix-D-9.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-9.5">
-          <p id="appendix-D-9.5.1">URIs with an authority but a completely empty path (e.g.,
+          <p id="appendix-D-9.5.1">Add user information to the authority ("userinfo" feature)<a href="#appendix-D-9.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-9.6">
+          <p id="appendix-D-9.6.1"><a href="#cddl" class="auto internal xref">Figure 1</a>: Use separate rule for CRI, allow <code>[]</code> for query in CRI
+Reference; generalize scheme numbers, add userinfo; add list of
+additional requirements in prose (<a href="#prose" class="auto internal xref">Section 5.1, Paragraph 5</a>)<a href="#appendix-D-9.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-9.7">
+          <p id="appendix-D-9.7.1">Discuss <a href="#unprocessable" class="internal xref">Error handling and extensibility</a> (<a href="#unprocessable" class="auto internal xref">Section 5.2.1</a>)<a href="#appendix-D-9.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-9.8">
+          <p id="appendix-D-9.8.1">Conversion to URI: Handle <code>:</code> in first pathname component of a
+CRI-Reference (<a href="#colon" class="auto internal xref">Section 6.1, Paragraph 2.6.1</a>)<a href="#appendix-D-9.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-9.9">
+          <p id="appendix-D-9.9.1">Add Christian Amsüss as contributor<a href="#appendix-D-9.9.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-9.10">
+          <p id="appendix-D-9.10.1">Add CBOR EDN application-extension "<code>cri</code>" (see <a href="#edn-cri" class="auto internal xref">Appendix C</a> and
+<a href="#cri-iana" class="auto internal xref">Section 11.3</a>).<a href="#appendix-D-9.10.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-9.11">
+          <p id="appendix-D-9.11.1">Add Section on CoAP integration (and new CoAP Options Proxy-Cri and
+Proxy-Scheme-Number).<a href="#appendix-D-9.11.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-D-10">Changes from -08 to -09<a href="#appendix-D-10" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-11.1">
+          <p id="appendix-D-11.1.1">Identify more esoteric features with a CDDL ".feature".<a href="#appendix-D-11.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-11.2">
+          <p id="appendix-D-11.2.1">Clarify that well-formedness requires removing trailing nulls.<a href="#appendix-D-11.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-11.3">
+          <p id="appendix-D-11.3.1">Fragments can contain PET.<a href="#appendix-D-11.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-11.4">
+          <p id="appendix-D-11.4.1">Percent-encoded text in PET is treated as byte strings.<a href="#appendix-D-11.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-11.5">
+          <p id="appendix-D-11.5.1">URIs with an authority but a completely empty path (e.g.,
 <code>http://example.com</code>): CRIs with an authority component no longer
-always produce at least a slash in the path component.<a href="#appendix-D-9.5.1" class="pilcrow">¶</a></p>
-<p id="appendix-D-9.5.2">
+always produce at least a slash in the path component.<a href="#appendix-D-11.5.1" class="pilcrow">¶</a></p>
+<p id="appendix-D-11.5.2">
 For generic schemes, the conversion of <code>scheme://example.com</code> to a
 CRI is now possible
 because CRI produces a URI with an authority not followed by a slash
@@ -5574,122 +5761,122 @@ recommended in <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).
 For these schemes, that equivalence allows implementations to
 convert the just-a-slash URI to a CRI with a zero length path array
 (which, however, when converted back, does not produce a slash after
-the authority).<a href="#appendix-D-9.5.2" class="pilcrow">¶</a></p>
-<p id="appendix-D-9.5.3">
+the authority).<a href="#appendix-D-11.5.2" class="pilcrow">¶</a></p>
+<p id="appendix-D-11.5.3">
 (Add an appendix "the small print" for more detailed discussion of
-pesky corner cases like this.)<a href="#appendix-D-9.5.3" class="pilcrow">¶</a></p>
+pesky corner cases like this.)<a href="#appendix-D-11.5.3" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-10">Changes from -07 to -08<a href="#appendix-D-10" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-D-11.1">
-          <p id="appendix-D-11.1.1">Fix the encoding of NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH<a href="#appendix-D-11.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-11.2">
-          <p id="appendix-D-11.2.1">Add URN and DID schemes, add example.<a href="#appendix-D-11.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-11.3">
-          <p id="appendix-D-11.3.1">Add PET<a href="#appendix-D-11.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-11.4">
-          <p id="appendix-D-11.4.1">Remove hopeless attempt to encode "remote trailing nulls" rule in
-CDDL (which is not a transformation language).<a href="#appendix-D-11.4.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="appendix-D-12">Changes from -06 to -07<a href="#appendix-D-12" class="pilcrow">¶</a></p>
+<p id="appendix-D-12">Changes from -07 to -08<a href="#appendix-D-12" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-13.1">
-          <p id="appendix-D-13.1.1">More explicitly discuss constraints (<a href="#constraints" class="auto internal xref">Section 2</a>), add examples (<a href="#sp-constraints" class="auto internal xref">Appendix B, Paragraph 6, Item 1</a>).<a href="#appendix-D-13.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-13.1.1">Fix the encoding of NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH<a href="#appendix-D-13.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-13.2">
-          <p id="appendix-D-13.2.1">Make CDDL more explicit about special simple values.<a href="#appendix-D-13.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-13.2.1">Add URN and DID schemes, add example.<a href="#appendix-D-13.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-13.3">
-          <p id="appendix-D-13.3.1">Lots of gratuitous changes from XML2RFC redefinition of <code>&lt;tt&gt;</code>
-semantics.<a href="#appendix-D-13.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-13.3.1">Add PET<a href="#appendix-D-13.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-13.4">
+          <p id="appendix-D-13.4.1">Remove hopeless attempt to encode "remote trailing nulls" rule in
+CDDL (which is not a transformation language).<a href="#appendix-D-13.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-14">Changes from -05 to -06<a href="#appendix-D-14" class="pilcrow">¶</a></p>
+<p id="appendix-D-14">Changes from -06 to -07<a href="#appendix-D-14" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-15.1">
-          <p id="appendix-D-15.1.1">rework authority:<a href="#appendix-D-15.1.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-D-15.1.2.1">
-              <p id="appendix-D-15.1.2.1.1">split reg-names at dots;<a href="#appendix-D-15.1.2.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-15.1.1">More explicitly discuss constraints (<a href="#constraints" class="auto internal xref">Section 2</a>), add examples (<a href="#sp-constraints" class="auto internal xref">Appendix B, Paragraph 6, Item 1</a>).<a href="#appendix-D-15.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-D-15.1.2.2">
-              <p id="appendix-D-15.1.2.2.1">add optional zone identifiers <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span> to IP addresses<a href="#appendix-D-15.1.2.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-D-15.2">
+          <p id="appendix-D-15.2.1">Make CDDL more explicit about special simple values.<a href="#appendix-D-15.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-15.3">
+          <p id="appendix-D-15.3.1">Lots of gratuitous changes from XML2RFC redefinition of <code>&lt;tt&gt;</code>
+semantics.<a href="#appendix-D-15.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-D-16">Changes from -05 to -06<a href="#appendix-D-16" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-17.1">
+          <p id="appendix-D-17.1.1">rework authority:<a href="#appendix-D-17.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-17.1.2.1">
+              <p id="appendix-D-17.1.2.1.1">split reg-names at dots;<a href="#appendix-D-17.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-D-17.1.2.2">
+              <p id="appendix-D-17.1.2.2.1">add optional zone identifiers <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span> to IP addresses<a href="#appendix-D-17.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
       </ul>
-<p id="appendix-D-16">Changes from -04 to -05<a href="#appendix-D-16" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-D-17.1">
-          <p id="appendix-D-17.1.1">Simplify CBOR structure.<a href="#appendix-D-17.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-17.2">
-          <p id="appendix-D-17.2.1">Add implementation status section.<a href="#appendix-D-17.2.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="appendix-D-18">Changes from -03 to -04:<a href="#appendix-D-18" class="pilcrow">¶</a></p>
+<p id="appendix-D-18">Changes from -04 to -05<a href="#appendix-D-18" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-19.1">
-          <p id="appendix-D-19.1.1">Minor editorial improvements.<a href="#appendix-D-19.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-19.1.1">Simplify CBOR structure.<a href="#appendix-D-19.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-19.2">
-          <p id="appendix-D-19.2.1">Renamed path.type/path-type to discard.<a href="#appendix-D-19.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-19.3">
-          <p id="appendix-D-19.3.1">Renamed option to section, substructured into items.<a href="#appendix-D-19.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-19.4">
-          <p id="appendix-D-19.4.1">Simplified the table "resolution-variables".<a href="#appendix-D-19.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-19.5">
-          <p id="appendix-D-19.5.1">Use the CBOR structure inspired by Jim Schaad's proposals.<a href="#appendix-D-19.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-19.2.1">Add implementation status section.<a href="#appendix-D-19.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-20">Changes from -02 to -03:<a href="#appendix-D-20" class="pilcrow">¶</a></p>
+<p id="appendix-D-20">Changes from -03 to -04:<a href="#appendix-D-20" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-21.1">
-          <p id="appendix-D-21.1.1">Expanded the set of supported schemes (#3).<a href="#appendix-D-21.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-21.1.1">Minor editorial improvements.<a href="#appendix-D-21.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-21.2">
-          <p id="appendix-D-21.2.1">Specified creation, normalization and comparison (#9).<a href="#appendix-D-21.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-21.2.1">Renamed path.type/path-type to discard.<a href="#appendix-D-21.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-21.3">
-          <p id="appendix-D-21.3.1">Clarified the default value of the <code>path.type</code> option (#33).<a href="#appendix-D-21.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-21.3.1">Renamed option to section, substructured into items.<a href="#appendix-D-21.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-21.4">
-          <p id="appendix-D-21.4.1">Removed the <code>append-relation</code> path.type option (#41).<a href="#appendix-D-21.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-21.4.1">Simplified the table "resolution-variables".<a href="#appendix-D-21.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-21.5">
-          <p id="appendix-D-21.5.1">Renumbered the remaining path.types.<a href="#appendix-D-21.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-21.6">
-          <p id="appendix-D-21.6.1">Renumbered the option numbers.<a href="#appendix-D-21.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-21.7">
-          <p id="appendix-D-21.7.1">Restructured the document.<a href="#appendix-D-21.7.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-21.8">
-          <p id="appendix-D-21.8.1">Minor editorial improvements.<a href="#appendix-D-21.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-21.5.1">Use the CBOR structure inspired by Jim Schaad's proposals.<a href="#appendix-D-21.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-22">Changes from -01 to -02:<a href="#appendix-D-22" class="pilcrow">¶</a></p>
+<p id="appendix-D-22">Changes from -02 to -03:<a href="#appendix-D-22" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-23.1">
-          <p id="appendix-D-23.1.1">Changed the syntax of schemes to exclude upper case characters (#13).<a href="#appendix-D-23.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-23.1.1">Expanded the set of supported schemes (#3).<a href="#appendix-D-23.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-23.2">
-          <p id="appendix-D-23.2.1">Minor editorial improvements (#34 #37).<a href="#appendix-D-23.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-23.2.1">Specified creation, normalization and comparison (#9).<a href="#appendix-D-23.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-23.3">
+          <p id="appendix-D-23.3.1">Clarified the default value of the <code>path.type</code> option (#33).<a href="#appendix-D-23.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-23.4">
+          <p id="appendix-D-23.4.1">Removed the <code>append-relation</code> path.type option (#41).<a href="#appendix-D-23.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-23.5">
+          <p id="appendix-D-23.5.1">Renumbered the remaining path.types.<a href="#appendix-D-23.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-23.6">
+          <p id="appendix-D-23.6.1">Renumbered the option numbers.<a href="#appendix-D-23.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-23.7">
+          <p id="appendix-D-23.7.1">Restructured the document.<a href="#appendix-D-23.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-23.8">
+          <p id="appendix-D-23.8.1">Minor editorial improvements.<a href="#appendix-D-23.8.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-24">Changes from -00 to -01:<a href="#appendix-D-24" class="pilcrow">¶</a></p>
+<p id="appendix-D-24">Changes from -01 to -02:<a href="#appendix-D-24" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-25.1">
-          <p id="appendix-D-25.1.1">None.<a href="#appendix-D-25.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-25.1.1">Changed the syntax of schemes to exclude upper case characters (#13).<a href="#appendix-D-25.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-25.2">
+          <p id="appendix-D-25.2.1">Minor editorial improvements (#34 #37).<a href="#appendix-D-25.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-D-26">Changes from -00 to -01:<a href="#appendix-D-26" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-27.1">
+          <p id="appendix-D-27.1.1">None.<a href="#appendix-D-27.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
