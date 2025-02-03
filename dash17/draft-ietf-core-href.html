@@ -1703,6 +1703,13 @@ assumption that the CRI is appropriately pre-normalized.
 (This does not contradict the requirement that when CRIs are
 transferred, recipients must operate on as-good-as untrusted input and
 fail gracefully in the face of malicious inputs.)<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-7">CRIs have been designed with the objective that, after the above
+normalization, conversion of two distinct (absolute) CRIs to URIs do
+not yield the "same" URI, including equivalence under syntax-based
+normalization (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.2" class="relref">6.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), but not including
+protocol-based normalization.
+(This is not an objective for CRI references, which may lead to
+equivalent URIs or not depending on the base used for resolving them.)<a href="#section-3-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="comparison">
