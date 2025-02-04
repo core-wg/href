@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-02T01:50:30.247112+00:00",
+  "timestamp": "2025-02-04T01:46:37.248782+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -62,6 +62,11 @@
       "name": "test vectors",
       "description": "",
       "color": "1dd6db"
+    },
+    {
+      "name": "not in scope",
+      "description": "Not in scope of the current document",
+      "color": "576671"
     }
   ],
   "issues": [
@@ -1046,7 +1051,7 @@
       "id": "I_kwDOFyeisM58oAua",
       "title": "Determinism goals",
       "url": "https://github.com/core-wg/href/issues/82",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -1055,8 +1060,8 @@
       ],
       "body": "It's a goal of CRIs to be deterministic (I don't know off my head if we have any caveats to that).\r\n\r\nFor CRI references, we don't aspire to do that (as there are usually at least options of discarding more and re-populating it, and evaluation depends on the base anyway).",
       "createdAt": "2024-01-19T16:16:09Z",
-      "updatedAt": "2025-01-24T20:13:04Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-03T13:21:50Z",
+      "closedAt": "2025-02-03T13:21:50Z",
       "comments": [
         {
           "author": "chrysn",
@@ -1079,7 +1084,7 @@
       "id": "I_kwDOFyeisM6H4ngi",
       "title": "Add test vector for zone identifier",
       "url": "https://github.com/core-wg/href/issues/86",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -1088,8 +1093,8 @@
       ],
       "body": "The latest soon-to-be-merged test vectors do not contain a test for the zone identifier.\r\n\r\nNo need to include that there now. This issue exists to make sure we have something before release.",
       "createdAt": "2024-05-05T22:29:44Z",
-      "updatedAt": "2025-01-24T19:55:03Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-03T13:21:50Z",
+      "closedAt": "2025-02-03T13:21:50Z",
       "comments": []
     },
     {
@@ -1097,7 +1102,7 @@
       "id": "I_kwDOFyeisM6WmdkN",
       "title": "RFC6874 and 6874bis",
       "url": "https://github.com/core-wg/href/issues/89",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "becarpenter",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -1106,8 +1111,8 @@
       ],
       "body": "The 6man WG has abandoned the 6874bis draft and the current [draft-ietf-6man-zone-ui](https://datatracker.ietf.org/doc/draft-ietf-6man-zone-ui/) will, if approved, obsolete RFC 6874 without replacement. It seems that everything about Zone IDs needs to be revisited.",
       "createdAt": "2024-09-15T00:08:19Z",
-      "updatedAt": "2025-01-24T19:34:30Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-03T13:21:50Z",
+      "closedAt": "2025-02-03T13:21:50Z",
       "comments": []
     },
     {
@@ -1115,7 +1120,7 @@
       "id": "I_kwDOFyeisM6a0xd8",
       "title": "IDNA considerations",
       "url": "https://github.com/core-wg/href/issues/90",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -1124,8 +1129,8 @@
       ],
       "body": "I'm reading IDNA (rfc5890 and -bis) right now through an ART-ART assignment \u2026 wow, that's headaches.\r\n\r\nWe're currently describing labels to be turned into percent encoded URIs, so that a CRI that contains `\"\u00fcbergr\u00f6\u00dfentr\u00e4ger\", \"example\", \"com\"` as a host name would be converted to `http://%C3%BCbergr%C3%B6%C3%9Fentr%C3%A4ger.example.com/`.\r\n\r\nIDNA post-dates RFC3986 (even 3987) but still talks of URIs as not taking non-ASCII labels.\r\n\r\nI'd hate to see any punycode stuff creeping up on us here, so I hope that either\r\n* we find a reference that uses URIs in such a way so it's all fine, or\r\n* we find a place to say that our host components permit non-ASCII labels and are thus IDNA-aware for the purpose of IDNA. (The latter clause probably matters because not all uses of the URI hostname field are necessarily DNS backed, even if there are dots in it, and justifies passing them around without any larger concern for IDNA when not resolving).",
       "createdAt": "2024-10-18T13:29:24Z",
-      "updatedAt": "2025-01-24T20:54:34Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-03T13:21:51Z",
+      "closedAt": "2025-02-03T13:21:51Z",
       "comments": [
         {
           "author": "chrysn",
@@ -1141,7 +1146,7 @@
       "id": "I_kwDOFyeisM6f9rf2",
       "title": "Talk about packed / tags",
       "url": "https://github.com/core-wg/href/issues/91",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1152,8 +1157,8 @@
       ],
       "body": "In early phases of CRIs we talked about potential optimizations for particular URI patterns, eg. `coap+sms://001555112358132134` into a more binary friendly format, https://base32stuff.onion/foo/bar as actual binary data or encoding LwM2M's paths like /1/2/3/3/1/5. We postponed that until the final stages, which we are now in.\r\n\r\nAt very least we probably want to say something about that CBOR packed is expected to be used in combination with CRIs.\r\n\r\nI'm unsure on whether there will be many cases where there would be tags *inside* a CRI, especially because tags and packed don't do so well expanding to multiple items (although \u2026 could a packed table entry contain a CBOR sequence, and multiple items would expand like a CDDL group in an array? Wreaks havoc with parsers that use array length to decide content, but that's not how CDDL works).\r\n\r\nExamples:\r\n* `http://base32ofbinarystuff.onion/foo/bar` -> `12345(['binarystuff', [true, [\"foo\", \"bar\"]]])`, with a tag expanding the binary stuff to a base URI and then having a 2nd item that is a CRI reference relative to it, or `12345(['binarystuff', [\"foo\", \"bar\"]])` whose CDDL would reach deeper into the CRI reference syntax\r\n* `coap://[2001:db8::1]/1/1/2/3` -> `[0, ip'2001:db8::1', 64(h'01010203')]` reusing an allocated tag because it does just the right thing, at least when pulled into a stand-in for array-of-strings?",
       "createdAt": "2024-11-22T16:20:21Z",
-      "updatedAt": "2025-01-24T21:26:57Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-03T13:21:51Z",
+      "closedAt": "2025-02-03T13:21:51Z",
       "comments": [
         {
           "author": "chrysn",
@@ -1176,7 +1181,7 @@
       "id": "I_kwDOFyeisM6iUe21",
       "title": "Add example (appendix?) on CRIs in AIF",
       "url": "https://github.com/core-wg/href/issues/92",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1187,8 +1192,8 @@
       ],
       "body": "AIF's Toid have a default value of URIs; could use CRIs there too.\r\n\r\nI can provide text on that.\r\n\r\nnb: New AIF parameters are specification-required; if we add the example here it'd have to register too.",
       "createdAt": "2024-12-06T15:09:27Z",
-      "updatedAt": "2025-01-24T22:08:44Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-03T13:21:52Z",
+      "closedAt": "2025-02-03T13:21:52Z",
       "comments": []
     },
     {
@@ -1200,10 +1205,12 @@
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "not in scope"
+      ],
       "body": "We discussed composability of CRIs.\r\n\r\nWhile there are dozens of ways to embed a URI in another URI, there's one straightforward way for CRIs:\r\n\r\nFor something that's vaguely URI template-ish `http://compare-texts.example.com/{first}/{second}/?html`:\r\n\r\n```edn\r\n[e'http', [\"compare-texts\", \"example\", \"com\"], [cri'urn:document1', cri'https://example.net/doc2'], [\"html\"]]\r\n```\r\n\r\nexpands to\r\n\r\n```edn\r\n[e'http', [\"compare-texts\", \"example\", \"com\"], [\"urn:document1\", \"https://example.net/doc2\"], [\"html\"]]\r\n```\r\n\r\nor eventually\r\n\r\n```\r\nhttp://compare-texts.example.com/urn:document1/https:%2F%2Fexample.net%2Fdoc2/?html\r\n```\r\n\r\n(but can be well-usable in the top form)\r\n\r\nSpinning off there, this would indicate that CRI templates are way easier to do \u2013 possibly with less flexibility thatn URI templates, but then also easier to use. A possible expression is using packed: `[e'http', [\"compare-texts\", \"example\", \"com\"], [simple(0), simple(1)], [\"html\"]]`.",
       "createdAt": "2024-12-06T15:13:34Z",
-      "updatedAt": "2024-12-06T16:03:59Z",
+      "updatedAt": "2025-02-03T13:03:11Z",
       "closedAt": null,
       "comments": [
         {
@@ -1212,6 +1219,13 @@
           "body": "A caveat is that composability of this style only works when there are no constraints on the characters permissible in a component, and there is no normalization on that component.\r\n\r\nPersonally I'd love if there was a straightforward way to put a URI into the authority component (no matter whether inner URI is than a DID, a nih or any other identifier), but those strings are subject to lowercasing, can't have inner dots (not sure about other characters) and (in some implementations) severe length limits.\r\n\r\nAlso, this doesn't work easily for the fragment (like I've used in single page web apps): only one string can be expanded into that.",
           "createdAt": "2024-12-06T16:03:57Z",
           "updatedAt": "2024-12-06T16:03:57Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "We discussed this in the 2025-01-29 interim and determined that this discussion is interesting, but not in scope for the current document.",
+          "createdAt": "2025-02-03T13:02:51Z",
+          "updatedAt": "2025-02-03T13:02:51Z"
         }
       ]
     }
@@ -4342,24 +4356,26 @@
       "id": "PR_kwDOFyeisM6I8RUD",
       "title": "Close #89 (zoneids)",
       "url": "https://github.com/core-wg/href/pull/94",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-24T19:32:54Z",
-      "updatedAt": "2025-01-24T19:32:54Z",
+      "updatedAt": "2025-02-03T12:23:08Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "dash17",
       "baseRefOid": "e96ca0d64ceca5f774c2813f90464e8f4cd45fef",
       "headRepository": "core-wg/href",
       "headRefName": "address-89",
       "headRefOid": "bb5f338eab8e6d9d1fa7c812514361cfe7778037",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-03T12:23:06Z",
+      "mergedAt": "2025-02-03T12:23:06Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "b715529436d30c47aa2cd1473f2ef2d8837bd177"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4368,24 +4384,26 @@
       "id": "PR_kwDOFyeisM6I8X2X",
       "title": "Close #86: test vector for zone ids",
       "url": "https://github.com/core-wg/href/pull/95",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-24T19:54:06Z",
-      "updatedAt": "2025-01-24T20:55:39Z",
+      "updatedAt": "2025-02-03T12:22:42Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "dash17",
       "baseRefOid": "e96ca0d64ceca5f774c2813f90464e8f4cd45fef",
       "headRepository": "core-wg/href",
       "headRefName": "address86",
       "headRefOid": "172c08287618ee26dc7ac483b184b6c50b435179",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-03T12:22:40Z",
+      "mergedAt": "2025-02-03T12:22:40Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "6146ad1ad2bd7f390949825a0073ed8845236543"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4394,24 +4412,26 @@
       "id": "PR_kwDOFyeisM6I8dkj",
       "title": "Close #82: Mention determinism goals (without using the word)",
       "url": "https://github.com/core-wg/href/pull/96",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-24T20:12:38Z",
-      "updatedAt": "2025-01-24T20:12:38Z",
+      "updatedAt": "2025-02-03T12:24:02Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "dash17",
       "baseRefOid": "e96ca0d64ceca5f774c2813f90464e8f4cd45fef",
       "headRepository": "core-wg/href",
       "headRefName": "address82",
       "headRefOid": "ab5605ba988b830d0beb94c4ef4d1082db88c9da",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-03T12:24:00Z",
+      "mergedAt": "2025-02-03T12:24:00Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "a7c523c6e16f4dc81aceb625103a951dedc2fdbb"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4420,24 +4440,26 @@
       "id": "PR_kwDOFyeisM6I8p39",
       "title": "Close #90: Mention ToASCII and when it should not be used",
       "url": "https://github.com/core-wg/href/pull/97",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-24T20:54:06Z",
-      "updatedAt": "2025-01-24T20:54:06Z",
+      "updatedAt": "2025-02-03T13:17:38Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "dash17",
       "baseRefOid": "e96ca0d64ceca5f774c2813f90464e8f4cd45fef",
       "headRepository": "core-wg/href",
       "headRefName": "address90",
       "headRefOid": "8652d407a098cb535ac0a5dfc750c60e3b470ab6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-03T13:17:35Z",
+      "mergedAt": "2025-02-03T13:17:35Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "8f16b0ca8aa1b8cc268cbfe652715164586dcbf1"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4446,24 +4468,26 @@
       "id": "PR_kwDOFyeisM6I8zbP",
       "title": "Close #91: Mention stand-in items",
       "url": "https://github.com/core-wg/href/pull/98",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-24T21:26:26Z",
-      "updatedAt": "2025-01-24T21:26:26Z",
+      "updatedAt": "2025-02-03T13:18:02Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "dash17",
       "baseRefOid": "e96ca0d64ceca5f774c2813f90464e8f4cd45fef",
       "headRepository": "core-wg/href",
       "headRefName": "address91",
       "headRefOid": "7ba921037b870c17ef291470e7e0413f6be5ebd7",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-03T13:18:01Z",
+      "mergedAt": "2025-02-03T13:18:01Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "b95fb66fd73f1356427898c2b96e0c38a87bedeb"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4472,26 +4496,96 @@
       "id": "PR_kwDOFyeisM6I9Aw-",
       "title": "Close #92: Add ACE AIF Toid for CRI",
       "url": "https://github.com/core-wg/href/pull/99",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-24T22:08:03Z",
-      "updatedAt": "2025-01-24T22:08:03Z",
+      "updatedAt": "2025-02-03T13:18:46Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "dash17",
       "baseRefOid": "e96ca0d64ceca5f774c2813f90464e8f4cd45fef",
       "headRepository": "core-wg/href",
       "headRefName": "address92",
       "headRefOid": "244e6c58983e8b274687e94c8da264223f0512e7",
+      "closedAt": "2025-02-03T13:18:45Z",
+      "mergedAt": "2025-02-03T13:18:45Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "715384095b46380177d0f895e992d6a431b96a3e"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 100,
+      "id": "PR_kwDOFyeisM6J2VYW",
+      "title": "Merge Changes for dash17 to main",
+      "url": "https://github.com/core-wg/href/pull/100",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-03T13:19:16Z",
+      "updatedAt": "2025-02-03T13:21:51Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "ebcff416684689bc3dc5d77bc87ff4d9c2986861",
+      "headRepository": "core-wg/href",
+      "headRefName": "dash17",
+      "headRefOid": "715384095b46380177d0f895e992d6a431b96a3e",
+      "closedAt": "2025-02-03T13:21:48Z",
+      "mergedAt": "2025-02-03T13:21:48Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "f15f48e50a13de1489cabb830d2c63d640976b9a"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 101,
+      "id": "PR_kwDOFyeisM6J2k2H",
+      "title": "Editorial fixes from CoRE interim 2025-01-29 for dash18",
+      "url": "https://github.com/core-wg/href/pull/101",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-03T13:48:42Z",
+      "updatedAt": "2025-02-03T14:14:46Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "a0b194723b41b19e095547d115b0928d91e73f83",
+      "headRepository": "core-wg/href",
+      "headRefName": "dash18",
+      "headRefOid": "691882063c060ccdcc1c56c13a0756c2e6a4ed21",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6aYL6D",
+          "commit": {
+            "abbreviatedOid": "6918820"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-03T14:14:46Z",
+          "updatedAt": "2025-02-03T14:14:46Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
