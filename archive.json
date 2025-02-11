@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-09T01:52:19.101664+00:00",
+  "timestamp": "2025-02-11T01:47:56.817302+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -1228,6 +1228,22 @@
           "updatedAt": "2025-02-03T13:02:51Z"
         }
       ]
+    },
+    {
+      "number": 102,
+      "id": "I_kwDOFyeisM6pZDro",
+      "title": "Abstract sentence unclear: \"describes cooperates\" ?",
+      "url": "https://github.com/core-wg/href/issues/102",
+      "state": "OPEN",
+      "author": "EskoDijk",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "> This RFC updates RFC 7595 to add a note on how the URI Schemes registry RFC 7595 **describes cooperates** with the CRI Scheme Numbers registry created by the present RFC.\n\n",
+      "createdAt": "2025-02-10T10:01:57Z",
+      "updatedAt": "2025-02-10T10:01:57Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
