@@ -108,12 +108,8 @@ registry created by the present RFC.
 
 [^status]: (This "cref" paragraph will be removed by the RFC
     editor:)\\
-    The present revision –17 integrates changes from active
-    pull requests, it was made specifically for discussion at the CoRE
-    interim on 2025-01-29.
-    \\
-    This revision still contains open issues and is intended to serve
-    as a snapshot.
+    The present revision –18 integrates two small changes from the CoRE
+    interim on 2025-01-29 and should be ready for WGLC.
 
 --- middle
 
@@ -482,13 +478,14 @@ references:
   base CRI).
 
 Application specifications that use CRIs may explicitly enable the use
-of "stand-in" items (tags or simple values), i.e., items used in place
-of original representation items such as strings or arrays, where the
-tag or simple value is defined to evaluate to the original item that
-it is standing in place of.
+of "stand-in" items (tags or simple values).
+These are data items used in place of original representation items
+such as strings or arrays, where the tag or simple value is defined to
+stand for a data item that can be used in the position of the stand-in
+item.
 Examples would be tags such as 21 to 23 ({{Section 3.4.5.2 of
-RFC8949@-cbor}}), which might be used to represent text string
-components by employing more compact byte strings, or reference tags and
+RFC8949@-cbor}}), which stand for text string components but internally
+employ more compact byte string representations, or reference tags and
 simple values as defined in {{-packed}}.
 
 For interchange as separate encoded data items, CRIs MUST NOT use
@@ -1244,13 +1241,16 @@ defines its general Information Model as:
 AIF-Generic<Toid, Tperm> = [* [Toid, Tperm]]
 ~~~
 
-Using the definitions in {{cddl}}, this information model can be
-specialized as in:
+Using the definitions in {{cddl}} together with the {{-aif}} default TPerm
+choice `REST-method-set`, this information model can be specialized as
+in:
 
 ~~~ cddl
 CRI-local-part = [path / null, ?query]
-AIF-CRI = AIF-Generic<CRI-local-part, uint>
+AIF-CRI = AIF-Generic<CRI-local-part, REST-method-set>
 ~~~
+
+<!-- cddlc -irfc9237 -sAIF-CRI -r2u -tcddl - -->
 
 # Implementation Status {#impl}
 
