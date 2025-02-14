@@ -101,7 +101,7 @@ environments with severe limitations on processing power, code size, and
 memory size.
 
 This RFC updates RFC 7595 to add a note on how the URI Schemes
-registry RFC 7595 describes cooperates with the CRI Scheme Numbers
+registry RFC 7595 cooperates with the CRI Scheme Numbers
 registry created by the present RFC.
 
 [^status]
