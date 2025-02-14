@@ -108,12 +108,8 @@ registry created by the present RFC.
 
 [^status]: (This "cref" paragraph will be removed by the RFC
     editor:)\\
-    The present revision –17 integrates changes from active
-    pull requests, it was made specifically for discussion at the CoRE
-    interim on 2025-01-29.
-    \\
-    This revision still contains open issues and is intended to serve
-    as a snapshot.
+    The present revision –18 integrates two small changes from the CoRE
+    interim on 2025-01-29 and should be ready for WGLC.
 
 --- middle
 
