@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-13T01:48:44.745013+00:00",
+  "timestamp": "2025-02-16T01:55:40.402901+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -1244,6 +1244,83 @@
       "updatedAt": "2025-02-10T10:01:57Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 103,
+      "id": "I_kwDOFyeisM6qDc9j",
+      "title": "Section 8.2.2 in -18 has a \"TO DO\" line - needs to be removed",
+      "url": "https://github.com/core-wg/href/issues/103",
+      "state": "OPEN",
+      "author": "EskoDijk",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-14T08:45:34Z",
+      "updatedAt": "2025-02-14T08:45:34Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 104,
+      "id": "I_kwDOFyeisM6qDi0n",
+      "title": "Section 8.2.2 to add precedence rules for Proxy-Scheme / Proxy-Scheme-Number joint usage",
+      "url": "https://github.com/core-wg/href/issues/104",
+      "state": "OPEN",
+      "author": "EskoDijk",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Similar as in 8.2.1 normative rules.\n\nAlso for completeness we might indicate that a CoAP server that doesn't support the Proxy-CRI option, may well support the Proxy-Scheme-Number option on its own? I.e. as a quick and easy replacement for \"Proxy-Scheme\" to save some bytes. ",
+      "createdAt": "2025-02-14T08:56:35Z",
+      "updatedAt": "2025-02-14T08:56:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 105,
+      "id": "I_kwDOFyeisM6qDo_v",
+      "title": "Section 11.1.2: requesting more details for \"Reference\" field contents",
+      "url": "https://github.com/core-wg/href/issues/105",
+      "state": "OPEN",
+      "author": "EskoDijk",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 11.1.2 has for the \"Reference\" field: \"a reference to a document, if available, or the registrant\" -> maybe better to clarify to \"a reference to a document requesting the registration, if available, or the registrant\"\n\n  Is this intended? The initial registry contents only have \"RFC-XXXX\" as the reference which is the document requesting the registration, not the document describing the scheme semantics.\n\n  If the Designated Expert at own initiative requests the registration per 11.1.1 , what would the \"Reference\" field contain then? The name of the expert or the RFC number that defines the new scheme?\n\n",
+      "createdAt": "2025-02-14T09:07:53Z",
+      "updatedAt": "2025-02-14T14:15:46Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "The document would be the *reference* document, not the IANA form for a registration request.\nThe purpose is to document what the registration is about.  Generally, this will be copied from the URI Scheme registration, unless there indeed is a separate document.  The initial registration is a bit of a special case, because we won't fill in all that information for hundreds of schemes...",
+          "createdAt": "2025-02-14T10:19:21Z",
+          "updatedAt": "2025-02-14T10:19:21Z"
+        },
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "Ok, clear, in that case it's best to state the expected contents for all future/upcoming registrations: e.g.\n\n> a reference to a document defining the scheme, if available, or the registrant\"\n\nThen it's also clear what the designated expert should put in this field: the document reference for the newly registered scheme.",
+          "createdAt": "2025-02-14T10:36:38Z",
+          "updatedAt": "2025-02-14T10:36:38Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "> > a reference to a document defining the scheme, if available, or the registrant\"\n\nThat may not always exist, but *something* may, that's why we left this a bit open (i.e., recurred to the general purpose of a \"reference\" column in an IANA registration).",
+          "createdAt": "2025-02-14T10:40:58Z",
+          "updatedAt": "2025-02-14T10:40:58Z"
+        },
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "Ok so that could also be:\n\n> a reference to a document, if available, or the registrant. A document that describes the scheme should preferably be referenced.\n\nJust as sanity check: if an IETF stream document requests IANA to add an existing scheme \"foo\" to the CRI Scheme Numbers registry, then the RFC number of this document will not appear in the registry so it's not possible to trace back who made the registration or what document did?\n\n\n\n",
+          "createdAt": "2025-02-14T14:15:45Z",
+          "updatedAt": "2025-02-14T14:15:45Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4568,24 +4645,26 @@
       "id": "PR_kwDOFyeisM6J2k2H",
       "title": "Editorial fixes from CoRE interim 2025-01-29 for dash18",
       "url": "https://github.com/core-wg/href/pull/101",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-02-03T13:48:42Z",
-      "updatedAt": "2025-02-03T14:14:46Z",
+      "updatedAt": "2025-02-14T09:49:06Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "a0b194723b41b19e095547d115b0928d91e73f83",
       "headRepository": "core-wg/href",
       "headRefName": "dash18",
-      "headRefOid": "691882063c060ccdcc1c56c13a0756c2e6a4ed21",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "df0ed34e3430fdf8db019d5aadd41a112b4b3cce",
+      "closedAt": "2025-02-14T09:49:03Z",
+      "mergedAt": "2025-02-14T09:49:03Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "f265ea01000ffc9aa76c3393af3bd0050f457d26"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4602,6 +4681,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 106,
+      "id": "PR_kwDOFyeisM6LOWNK",
+      "title": "Clerical fixes from Esko Dijk's comments",
+      "url": "https://github.com/core-wg/href/pull/106",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-14T10:35:27Z",
+      "updatedAt": "2025-02-14T10:35:27Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
+      "headRepository": "core-wg/href",
+      "headRefName": "ed-clerical",
+      "headRefOid": "0377c7895e5fe0678d7e9efc2377e6e91f85b84a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
