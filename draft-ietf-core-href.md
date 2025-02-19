@@ -1506,8 +1506,6 @@ representative of the normal operation of CRIs.
      are special in that they are syntactic delimiters of their respective components in CRIs.
      Thus, the following examples *are* convertible to basic CRIs:
 
-     `https://interior%2edot/`
-
      `https://example.com/path%2fcomponent/second-component`
 
      `https://example.com/x?ampersand=%26&questionmark=?`
