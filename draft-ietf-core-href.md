@@ -95,8 +95,8 @@ normative:
 
 The Constrained Resource Identifier (CRI) is a complement to the Uniform
 Resource Identifier (URI) that represents the URI components in Concise
-Binary Object Representation (CBOR) instead of in a sequence of characters.
-This simplifies parsing, comparison, and reference resolution in
+Binary Object Representation (CBOR) rather than as a sequence of characters.
+This approach simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
