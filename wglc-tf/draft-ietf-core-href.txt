@@ -419,7 +419,7 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
       slash characters, and they would be indistinguishable from a URI
       with a shorter path and a present but empty authority component.
 
-   *  CRIs without authority that are rootless and do not have a pathg
+   *  CRIs without authority that are rootless and do not have a path
       component (e.g., ["a", true]), which would be indistinguishable
       from its root-based equivalent (["a"]) as both would have the URI
       a:.
