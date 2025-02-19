@@ -62,6 +62,7 @@ informative:
   W3C.REC-html52-20171214:
   I-D.ietf-cbor-edn-literals: edn
   I-D.carpenter-6man-rfc6874bis: zonebis
+  I-D.bormann-cbor-notable-tags: notable
 normative:
   STD66: uri
 # RFC 3986
@@ -127,14 +128,17 @@ resources in hypertext formats such as [HTML](#W3C.REC-html52-20171214)
 or the [HTTP "Link" header field](#RFC8288).
 
 A URI reference is a sequence of characters chosen from the repertoire
-of US-ASCII characters.
+of US-ASCII characters ({{Section 4.1 of RFC3986@-uri}}).
 The individual components of a URI reference are delimited by a number
 of reserved characters, which necessitates the use of a character escape
 mechanism called "percent-encoding" when these reserved characters are
 used in a non-delimiting function.
-The resolution of URI references involves parsing a character sequence
+The resolution of URI references ({{Section 5 of RFC3986@-uri}})
+involves parsing a character sequence
 into its components, combining those components with the components of a
-base URI, merging path components, removing dot-segments, and
+base URI, merging path components, removing dot-segments (`"." and
+".."`, see {{Section 3.3
+of RFC3986@-uri}}), and
 recomposing the result back into a character sequence.
 
 Overall, the proper handling of URI references is quite intricate.
@@ -207,10 +211,10 @@ The components are subject to the following constraints:
    defined in {{Section 3.3 of RFC3986@-uri}} are modeled by two different
    values used in place of an absent authority:
 
-   * the path can be root-based (zero or more path components that are
+   * the path can be root-based (zero or more path segments that are
      each started in the URI with "/", as when the authority is
      present), or
-   * the path can be rootless, which requires at least one path component.
+   * the path can be rootless, which requires at least one path segment.
 
    (Note that, in {{cddl}}, `no-authority` is marked as a feature, as
    not all CRI implementations will support authority-less URIs.)
@@ -300,7 +304,7 @@ The components are subject to the following constraints:
    is percent-encoded.
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
    Definition D92 in {{Unicode}}) to convert the character to a sequence
-   of bytes (that is then converted to a sequence of %HH triplets).
+   of bytes, which are then converted to a sequence of %HH triplets.
    <!-- As per 3986 2.1, use uppercase hex. -->
 
 Examples for URIs at or beyond the boundaries of these constraints are in {{<sp-constraints}} in {{the-small-print}}.
@@ -320,9 +324,9 @@ Examples of this are:
 Normatively they are characterized by the {{cri-to-uri}} process not producing a valid and syntax-normalized URI.
 For easier understanding, they are listed here:
 
-* CRIs (and CRI references) containing a path component "." or "..".
+* CRIs (and CRI references) containing dot-segments (path segment `"."` or `".."`).
 
-  These would be removed by the remove_dot_segments algorithm of {{STD66}},
+  These segments would be removed by the remove_dot_segments algorithm of {{STD66}},
   and thus never produce a normalized URI after resolution.
 
   (In CRI references, the `discard` value is used to afford segment removal,
@@ -334,15 +338,14 @@ For easier understanding, they are listed here:
   When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
   and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
 
-* {:#naked-rootless} CRIs without authority that are rootless and do not have a path
+* {:#naked-rootless} CRIs without authority that are rootless and do not have a pathg
   component (e.g., `["a", true]`), which would be indistinguishable
   from its root-based equivalent (`["a"]`) as both would have the URI `a:`.
 
 # Creation and Normalization
 
-In general, resource identifiers are created on the initial creation of a
-resource with a certain resource identifier, or the initial exposition
-of a resource under a particular resource identifier.
+In general, resource identifiers are generated when a
+resource is initially created or exposed under a certain resource identifier.
 
 A Constrained Resource Identifier SHOULD be created by
 the naming authority that governs the namespace of the resource
@@ -418,13 +421,13 @@ The most common usage of a Constrained Resource Identifier is to embed
 it in resource representations, e.g., to express a hyperlink between the
 represented resource and the resource identified by the CRI.
 
-This section defines the representation of CRIs in
+{{cbor-representation}} first defines the representation of CRIs in
 [Concise Binary Object Representation (CBOR)](#STD94).
 When reduced representation size is desired, CRIs are often not represented directly.
 Instead, CRIs are indirectly referenced through *CRI references*.
 These take advantage of hierarchical locality and provide a very compact
 encoding.
-The CBOR representation of CRI references is specified in
+The CBOR representation of CRI references also is specified in
 {{cbor-representation}}.
 
 The only operation defined on a CRI reference is *reference resolution*:
@@ -442,17 +445,28 @@ Notably, a CRI reference is not required to satisfy all of the
 constraints of a CRI; the only requirement on a CRI reference is that
 reference resolution MUST yield the original CRI.
 
-When testing for equivalence or difference, applications SHOULD NOT
-directly compare CRI references; the references should be
-resolved to their respective CRI before comparison.
+When testing for equivalence or difference, it is rarely appropriate
+for applications to directly compare CRI references; instead, the
+references should be resolved to their respective CRI before
+comparison.
 
 ## CBOR Representation {#cbor-representation}
 
 [^replace-xxxx]
 
 A CRI or CRI reference is encoded as a CBOR array (Major type 4 in
-{{Section 3.1 of RFC8949@-cbor}}), with the structure described in CDDL as
-follows:
+{{Section 3.1 of RFC8949@-cbor}}).
+{{fig-railroad}} has a coarse visualization of the structure of this
+array, without going into the details of the elements.
+
+~~~ railroad-utf8
+cri-reference = ((scheme authority) / discard) local-part
+
+local-part = [path [query [fragment]]]
+~~~
+{: #fig-railroad title="Overall Structure of a CRI or CRI Reference"}
+
+{{cddl}} has a more detailed description of the structure, in CDDL.
 
 ~~~~ cddl
 {::include cddl/cri.cddl}
@@ -468,15 +482,17 @@ This CDDL specification is simplified for exposition and needs to be
 augmented by the following rules for interchange of CRIs and CRI
 references:
 
-* Trailing null values MUST be removed,
-* two leading null values (scheme and authority both not given) MUST
-  be represented by using the `discard` alternative instead, and
-* an empty path in a `CRI` MUST be represented as the empty array `[]`
-  (note that for `CRI-Reference` there is a difference between empty
-  and absent paths, represented by `[]` and `null`, respectively),
-* an entirely empty outer array is not a valid CRI (but a valid CRI reference,
-  as per {{ingest}} equivalent to `[0]`, which essentially copies the
-  base CRI).
+* Trailing null values MUST be removed.
+* Two leading null values (scheme and authority both not given) MUST
+  be represented by using the `discard` alternative instead.
+* An empty path in a `CRI` MUST be represented as the empty array
+  `[]`.
+  Note that for `CRI-Reference` there is a difference between empty
+  and absent paths, represented by `[]` and `null`, respectively.
+* An empty outer array (`[]`) is not a valid CRI.
+  It is a valid CRI reference,
+  equivalent to `[0]` as per {{ingest}}, which essentially copies the
+  base CRI.
 
 Application specifications that use CRIs may explicitly enable the use
 of "stand-in" items (tags or simple values).
@@ -484,10 +500,13 @@ These are data items used in place of original representation items
 such as strings or arrays, where the tag or simple value is defined to
 stand for a data item that can be used in the position of the stand-in
 item.
-Examples would be tags such as 21 to 23 ({{Section 3.4.5.2 of
-RFC8949@-cbor}}), which stand for text string components but internally
-employ more compact byte string representations, or reference tags and
+Examples would be (1) tags such as 21 to 23 ({{Section 3.4.5.2 of
+RFC8949@-cbor}}) or 108 ({{Section 2.1 of -notable}}), which stand for text string components but internally
+employ more compact byte string representations, or (2) reference tags and
 simple values as defined in {{-packed}}.
+Note that application specifications need to be explicit about which
+stand-in items are allowed; otherwise, inconsistent interpretations at
+different places in a system can lead to check/use vulnerabilities.
 
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
@@ -542,18 +561,6 @@ discard the entire path of the base CRI.
 These CRI references never carry a `discard` section: the value of
 `discard` defaults to `true`.
 
-### Visualization
-
-The structure of a CRI reference is visualized using the somewhat limited means
-of a railroad diagram:
-
-~~~ railroad-utf8
-cri-reference = ((scheme authority) / discard) local-part
-
-local-part = [path [query [fragment]]]
-~~~
-
-This visualization does not go into the details of the elements.
 
 ### Examples
 
@@ -565,6 +572,7 @@ This visualization does not go into the details of the elements.
   "core"]
 ]
 ~~~~
+{: #fig-ex-1 title="CRI for coap://198.51.100.1:61616/.well-known/core"}
 
 ~~~~ cbor-diag
 [true,                  / discard /
@@ -572,6 +580,7 @@ This visualization does not go into the details of the elements.
   "core"],
  ["rt=temperature-c"]]  / query /
 ~~~~
+{: #fig-ex-2 title="CRI Reference for /.well-known/core?rt=temperature-c"}
 
 ~~~~ cbor-diag
 [-6,                / scheme-id -- equivalent to "did" /
@@ -579,6 +588,7 @@ This visualization does not go into the details of the elements.
  ["web:alice:bob"]  / path /
 ]
 ~~~~
+{: #fig-ex-3 title="CRI for did:web:alice:bob"}
 
 ### Specific Terminology
 
@@ -600,24 +610,28 @@ with six sections:
 
 scheme, authority, discard, path, query, fragment
 
-Each of these sections can be unset ("null"),
+We refer to this as the *abstract form*, while the *interchange form* ({{cddl}}) has either
+two sections for scheme and authority or one section for discard, but
+never both of these alternatives.
+
+Each of the sections in the abstract form can be unset ("null"),
 <!-- "not defined" in RFC 3986 -->
 except for discard,
 which is always an unsigned integer or `true`.  If scheme and/or
-authority are non-null, discard must be `true`.
+authority are non-null, discard is set to `true`.
 
-When ingesting a CRI Reference that is in the transfer form, those
-sections are filled in from the transfer form (unset sections are
+When ingesting a CRI Reference that is in interchange form, those
+sections are filled in from interchange form (unset sections are
 filled with null), and the following steps are performed:
 
-* If the array is entirely empty, replace it with `[0]`.
-* If discard is present in the transfer form (i.e., the outer array
+* If the array is empty, replace it with `[0]`.
+* If discard is present in interchange form (i.e., the outer array
   starts with true or an unsigned integer), set scheme and authority to null.
-* If scheme and/or authority are present in the transfer form (i.e.,
+* If scheme and/or authority are present in interchange form (i.e.,
   the outer array starts with null, a text string, or a negative integer), set
   discard to `true`.
 
-Upon encoding the abstract form into the transfer form, the inverse
+Upon encoding the abstract form into interchange form, the inverse
 processing is performed:  If scheme and/or authority are not null, the
 discard value is not transferred (it must be true in this case).  If
 they are both null, they are both left out and only discard is
@@ -676,6 +690,15 @@ having generated a valid CRI/CRI reference.
 This is true for both basic CRIs (e.g., checking for valid UTF-8) and
 for extensions (e.g., checking both for valid UTF-8 and the minimal
 use of PET elements in extended-cris as per {{pet}}).
+
+A system that is checking a CRI for some reason but is not its
+ultimate recipient needs to consider the tension between security
+requirements and the danger of ossification: If the system rejects
+anything that it does not know, it prevents the other components from
+making use of extensions.
+If it passes through extensions unknown to it, that might allow
+semantics pass through that the system should have been designed to
+filter out.
 
 ## Reference Resolution {#reference-resolution}
 
