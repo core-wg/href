@@ -384,8 +384,8 @@ normalization, conversion of two distinct CRIs to URIs do
 not yield the "same" URI, including equivalence under syntax-based
 normalization ({{Section 6.2.2 of RFC3986@-uri}}), but not including
 protocol-based normalization.
-Note that this exclusively is an objective for (absolute) CRIs, not
-for CRI references: these need to be resolved relative to a base URI,
+Note that this objective exclusively applies to (absolute) CRIs, not
+to CRI references: these need to be resolved relative to a base URI,
 with results that may be equivalent or not depending on the base.
 
 # Comparison
