@@ -338,7 +338,7 @@ For easier understanding, they are listed here:
   When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
   and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
 
-* {:#naked-rootless} CRIs without authority that are rootless and do not have a pathg
+* {:#naked-rootless} CRIs without authority that are rootless and do not have a path
   component (e.g., `["a", true]`), which would be indistinguishable
   from its root-based equivalent (`["a"]`) as both would have the URI `a:`.
 
