@@ -1496,6 +1496,8 @@ representative of the normal operation of CRIs.
      Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.
      <!-- <https://www.bittorrent.org/beps/bep_0017.html>, not sure this warrants an informative reference -->
 
+     These URIs can be expressed when using the `extended-cri` feature.
+
    * `https://example.com/component%3bone;component%3btwo`, `http://example.com/component%3dequals`
 
      While delimiters can be used in an escaped and unescaped form in URIs with generally distinct meanings,
@@ -1504,7 +1506,7 @@ representative of the normal operation of CRIs.
 
      Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
      are special in that they are syntactic delimiters of their respective components in CRIs.
-     Thus, the following examples *are* convertible to basic CRIs:
+     Thus, the following examples *are* convertible to basic CRIs with out the `extended-cri` feature:
 
      `https://example.com/path%2fcomponent/second-component`
 
