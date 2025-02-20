@@ -473,9 +473,23 @@ local-part = [path [query [fragment]]]
 ~~~~
 {: #cddl title="CDDL for CRI CBOR representation"}
 
-The rules `scheme`, `authority`, `path`, `query`, `fragment`
-correspond to the (sub‑)components of a CRI, as described in
-{{constraints}}, with the addition of the `discard` section.
+We call the elements of the top-level array *sections*.
+The sections containing the rules `scheme`, `authority`, `path`, `query`, `fragment`
+correspond to the components of a URI and thus of a CRI, as described in
+{{constraints}}.
+For use in CRI references, we add in a `discard` section as an
+alternative to the `scheme` and `authority` sections:
+URI references express discarding path segments with extended syntax
+for the path component: a leading slash or special path segments `.` and `..`.
+In contrast, discarding is separate from adding path segments in CRI
+references: the discarding intent is fully decoded to a single value
+in the discard section.
+An unsigned integer specifies the number of path segments
+to be discarded from the base CRI; the value `true` specifies
+discarding all path segments from the base CRI.
+If a scheme or authority is present in a CRI reference, the discard
+section is implicitly equivalent a value of `true` and thus not
+transmitted.
 
 {:#prose}
 This CDDL specification is simplified for exposition and needs to be
