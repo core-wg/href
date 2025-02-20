@@ -22,8 +22,8 @@ Abstract
    limitations on processing power, code size, and memory size.
 
    This RFC updates RFC 7595 to add a note on how the URI Schemes
-   registry RFC 7595 describes cooperates with the CRI Scheme Numbers
-   registry created by the present RFC.
+   registry RFC 7595 cooperates with the CRI Scheme Numbers registry
+   created by the present RFC.
 
 
    // (This "cref" paragraph will be removed by the RFC editor:) The
@@ -1560,7 +1560,7 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
    zero-length CoAP Option value.
 
 
-   // TO DO: Discuss the need for a location-scheme-numeric option?
+
 
 
 
