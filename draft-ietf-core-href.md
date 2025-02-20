@@ -63,6 +63,7 @@ informative:
   I-D.ietf-cbor-edn-literals: edn
   I-D.carpenter-6man-rfc6874bis: zonebis
   I-D.bormann-cbor-notable-tags: notable
+  RFC9170: use-lose
 normative:
   STD66: uri
 # RFC 3986
@@ -709,7 +710,7 @@ use of PET elements in extended-cris as per {{pet}}).
 
 A system that is checking a CRI for some reason but is not its
 ultimate recipient needs to consider the tension between security
-requirements and the danger of ossification: If the system rejects
+requirements and the danger of ossification {{-use-lose}}: If the system rejects
 anything that it does not know, it prevents the other components from
 making use of extensions.
 If it passes through extensions unknown to it, that might allow
