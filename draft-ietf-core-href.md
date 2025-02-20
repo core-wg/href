@@ -103,7 +103,7 @@ environments with severe limitations on processing power, code size, and
 memory size.
 
 This RFC updates RFC 7595 to add a note on how the URI Schemes
-registry RFC 7595 describes cooperates with the CRI Scheme Numbers
+registry RFC 7595 cooperates with the CRI Scheme Numbers
 registry created by the present RFC.
 
 [^status]
@@ -1260,11 +1260,6 @@ unsigned integer that represents the CRI scheme-number (which relates to
 a CRI scheme-id as defined in {{scheme-id}}).
 For instance, the scheme name "coap" has the scheme-number 0 and is
 represented as an unsigned integer by a zero-length CoAP Option value.
-
-[^location-scheme]
-
-[^location-scheme]: TO DO: Discuss the need for a
-    location-scheme-numeric option?
 
 ## ACE AIF {#toid}
 
