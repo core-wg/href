@@ -407,9 +407,9 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
       after resolution.
 
       (In CRI references, the discard value is used to afford segment
-      removal, and with "." being an unreserved character, expressing
-      them as "%2e" and "%2e%2e" is not even viable, let alone
-      practical).
+      removal (see Section 5.1, Paragraph 6), and with "." being an
+      unreserved character, expressing them as "%2e" and "%2e%2e" is not
+      even viable, let alone practical).
 
    *  CRIs without authority whose path starts with two or more empty
       segments.

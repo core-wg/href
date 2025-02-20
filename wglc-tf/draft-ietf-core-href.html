@@ -1639,7 +1639,8 @@ For easier understanding, they are listed here:<a href="#section-2.1-4" class="p
 These segments would be removed by the remove_dot_segments algorithm of <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>,
 and thus never produce a normalized URI after resolution.<a href="#section-2.1-5.1.2" class="pilcrow">¶</a></p>
 <p id="section-2.1-5.1.3">
-(In CRI references, the <code>discard</code> value is used to afford segment removal,
+(In CRI references, the <code>discard</code> value is used to afford segment
+removal (see <a href="#discard" class="auto internal xref">Section 5.1, Paragraph 6</a>),
 and with "." being an unreserved character, expressing them as "%2e" and "%2e%2e" is not even viable,
 let alone practical).<a href="#section-2.1-5.1.3" class="pilcrow">¶</a></p>
 </li>
@@ -1905,6 +1906,7 @@ fragment    = text
 <a href="#name-cddl-for-cri-cbor-represent" class="selfRef">CDDL for CRI CBOR representation</a>
           </figcaption></figure>
 </div>
+<div id="discard">
 <p id="section-5.1-6">We call the elements of the top-level array <em>sections</em>.
 The sections containing the rules <code>scheme</code>, <code>authority</code>, <code>path</code>, <code>query</code>, <code>fragment</code>
 correspond to the components of a URI and thus of a CRI, as described in
@@ -1922,6 +1924,7 @@ discarding all path segments from the base CRI.
 If a scheme or authority is present in a CRI reference, the discard
 section is implicitly equivalent a value of <code>true</code> and thus not
 transmitted.<a href="#section-5.1-6" class="pilcrow">¶</a></p>
+</div>
 <div id="prose">
 <p id="section-5.1-7">This CDDL specification is simplified for exposition and needs to be
 augmented by the following rules for interchange of CRIs and CRI
