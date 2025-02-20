@@ -10,8 +10,8 @@
 <meta content='
        The Constrained Resource Identifier (CRI) is a complement to the Uniform
 Resource Identifier (URI) that represents the URI components in Concise
-Binary Object Representation (CBOR) instead of in a sequence of characters.
-This simplifies parsing, comparison, and reference resolution in
+Binary Object Representation (CBOR) rather than as a sequence of characters.
+This approach simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size. 
        This RFC updates RFC 7595 to add a note on how the URI Schemes
@@ -22,11 +22,11 @@ editor:)
 The present revision –18 integrates two small changes from the CoRE
 interim on 2025-01-29 and should be ready for WGLC. 
     ' name="description">
-<meta content="xml2rfc 3.26.0" name="generator">
+<meta content="xml2rfc 3.27.0" name="generator">
 <meta content="draft-ietf-core-href-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.26.0
-    Python 3.12.8
+  xml2rfc 3.27.0
+    Python 3.12.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -447,7 +447,7 @@ dl {
     margin-bottom: 0;
   }
 }
-dl > dt {
+dl:not(.dlNewline) > dt {
   float: left;
   margin-right: 2ch;
   min-width: 8ch;
@@ -1060,7 +1060,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 18 August 2025</td>
+<td class="center">Expires 24 August 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1076,12 +1076,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc7595" class="eref">7595</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-02-14" class="published">14 February 2025</time>
+<time datetime="2025-02-20" class="published">20 February 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-08-18">18 August 2025</time></dd>
+<dd class="expires"><time datetime="2025-08-24">24 August 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1101,8 +1101,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">The Constrained Resource Identifier (CRI) is a complement to the Uniform
 Resource Identifier (URI) that represents the URI components in Concise
-Binary Object Representation (CBOR) instead of in a sequence of characters.
-This simplifies parsing, comparison, and reference resolution in
+Binary Object Representation (CBOR) rather than as a sequence of characters.
+This approach simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">This RFC updates RFC 7595 to add a note on how the URI Schemes
@@ -1147,7 +1147,7 @@ interim on 2025-01-29 and should be ready for WGLC.</span><a href="#section-abst
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 August 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 August 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1211,13 +1211,10 @@ interim on 2025-01-29 and should be ready for WGLC.</span><a href="#section-abst
                     <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-the-discard-section" class="internal xref">The <code>discard</code> Section</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.3">
-                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="auto internal xref">5.1.3</a>.  <a href="#name-visualization" class="internal xref">Visualization</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="auto internal xref">5.1.3</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.4">
-                    <p id="section-toc.1-1.5.2.1.2.4.1"><a href="#section-5.1.4" class="auto internal xref">5.1.4</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.5">
-                    <p id="section-toc.1-1.5.2.1.2.5.1"><a href="#section-5.1.5" class="auto internal xref">5.1.5</a>.  <a href="#name-specific-terminology" class="internal xref">Specific Terminology</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.4.1"><a href="#section-5.1.4" class="auto internal xref">5.1.4</a>.  <a href="#name-specific-terminology" class="internal xref">Specific Terminology</a></p>
 </li>
                 </ul>
 </li>
@@ -1371,14 +1368,16 @@ usage, the URI reference, are the Internet standard for linking to
 resources in hypertext formats such as <span><a href="#W3C.REC-html52-20171214" class="internal xref">HTML</a> [<a href="#W3C.REC-html52-20171214" class="cite xref">W3C.REC-html52-20171214</a>]</span>
 or the <span><a href="#RFC8288" class="internal xref">HTTP "Link" header field</a> [<a href="#RFC8288" class="cite xref">RFC8288</a>]</span>.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">A URI reference is a sequence of characters chosen from the repertoire
-of US-ASCII characters.
+of US-ASCII characters (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-4.1" class="relref">4.1</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).
 The individual components of a URI reference are delimited by a number
 of reserved characters, which necessitates the use of a character escape
 mechanism called "percent-encoding" when these reserved characters are
 used in a non-delimiting function.
-The resolution of URI references involves parsing a character sequence
+The resolution of URI references (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-5" class="relref">5</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>)
+involves parsing a character sequence
 into its components, combining those components with the components of a
-base URI, merging path components, removing dot-segments, and
+base URI, merging path components, removing dot-segments (<code>"." and
+".."</code>, see Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">3.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), and
 recomposing the result back into a character sequence.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">Overall, the proper handling of URI references is quite intricate.
 This can be a problem especially in <span><a href="#RFC7228" class="internal xref">constrained environments</a> [<a href="#RFC7228" class="cite xref">RFC7228</a>]</span>,
@@ -1460,16 +1459,16 @@ defined in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" clas
 values used in place of an absent authority:<a href="#section-2-2.2.2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2-2.2.3.1">
-              <p id="section-2-2.2.3.1.1">the path can be root-based (zero or more path components that are
+              <p id="section-2-2.2.3.1.1">the path can be root-based (zero or more path segments that are
 each started in the URI with "/", as when the authority is
 present), or<a href="#section-2-2.2.3.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-2-2.2.3.2">
-              <p id="section-2-2.2.3.2.1">the path can be rootless, which requires at least one path component.<a href="#section-2-2.2.3.2.1" class="pilcrow">¶</a></p>
+              <p id="section-2-2.2.3.2.1">the path can be rootless, which requires at least one path segment.<a href="#section-2-2.2.3.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-2-2.2.4">
-(Note that, in <a href="#cddl" class="auto internal xref">Figure 1</a>, <code>no-authority</code> is marked as a feature, as
+(Note that, in <a href="#cddl" class="auto internal xref">Figure 2</a>, <code>no-authority</code> is marked as a feature, as
 not all CRI implementations will support authority-less URIs.)<a href="#section-2-2.2.4" class="pilcrow">¶</a></p>
 </div>
         </dd>
@@ -1607,7 +1606,7 @@ If no authority is present in a CRI, the leading path segment cannot be empty.
    is percent-encoded.
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
    Definition D92 in <span>[<a href="#Unicode" class="cite xref">Unicode</a>]</span>) to convert the character to a sequence
-   of bytes (that is then converted to a sequence of %HH triplets).<a href="#section-2-2.13.1" class="pilcrow">¶</a></p>
+   of bytes, which are then converted to a sequence of %HH triplets.<a href="#section-2-2.13.1" class="pilcrow">¶</a></p>
 </div>
       </dd>
 <dd class="break"></dd>
@@ -1635,12 +1634,13 @@ Normatively they are characterized by the <a href="#cri-to-uri" class="auto inte
 For easier understanding, they are listed here:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.1-5.1">
-            <p id="section-2.1-5.1.1">CRIs (and CRI references) containing a path component "." or "..".<a href="#section-2.1-5.1.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-5.1.1">CRIs (and CRI references) containing dot-segments (path segment <code>"."</code> or <code>".."</code>).<a href="#section-2.1-5.1.1" class="pilcrow">¶</a></p>
 <p id="section-2.1-5.1.2">
-These would be removed by the remove_dot_segments algorithm of <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>,
+These segments would be removed by the remove_dot_segments algorithm of <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>,
 and thus never produce a normalized URI after resolution.<a href="#section-2.1-5.1.2" class="pilcrow">¶</a></p>
 <p id="section-2.1-5.1.3">
-(In CRI references, the <code>discard</code> value is used to afford segment removal,
+(In CRI references, the <code>discard</code> value is used to afford segment
+removal (see <a href="#discard" class="auto internal xref">Section 5.1, Paragraph 6</a>),
 and with "." being an unreserved character, expressing them as "%2e" and "%2e%2e" is not even viable,
 let alone practical).<a href="#section-2.1-5.1.3" class="pilcrow">¶</a></p>
 </li>
@@ -1667,9 +1667,8 @@ from its root-based equivalent (<code>["a"]</code>) as both would have the URI <
       <h2 id="name-creation-and-normalization">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-creation-and-normalization" class="section-name selfRef">Creation and Normalization</a>
       </h2>
-<p id="section-3-1">In general, resource identifiers are created on the initial creation of a
-resource with a certain resource identifier, or the initial exposition
-of a resource under a particular resource identifier.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">In general, resource identifiers are generated when a
+resource is initially created or exposed under a certain resource identifier.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">A Constrained Resource Identifier <span class="bcp14">SHOULD</span> be created by
 the naming authority that governs the namespace of the resource
 identifier (see also <span>[<a href="#BCP190" class="cite xref">BCP190</a>]</span>).
@@ -1707,12 +1706,13 @@ assumption that the CRI is appropriately pre-normalized.
 transferred, recipients must operate on as-good-as untrusted input and
 fail gracefully in the face of malicious inputs.)<a href="#section-3-6" class="pilcrow">¶</a></p>
 <p id="section-3-7">CRIs have been designed with the objective that, after the above
-normalization, conversion of two distinct (absolute) CRIs to URIs do
+normalization, conversion of two distinct CRIs to URIs do
 not yield the "same" URI, including equivalence under syntax-based
 normalization (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.2" class="relref">6.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), but not including
 protocol-based normalization.
-(This is not an objective for CRI references, which may lead to
-equivalent URIs or not depending on the base used for resolving them.)<a href="#section-3-7" class="pilcrow">¶</a></p>
+Note that this objective exclusively applies to (absolute) CRIs, not
+to CRI references: these need to be resolved relative to a base URI,
+with results that may be equivalent or not depending on the base.<a href="#section-3-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="comparison">
@@ -1750,13 +1750,13 @@ excluded from the comparison.<a href="#section-4-4" class="pilcrow">¶</a></p>
 <p id="section-5-1">The most common usage of a Constrained Resource Identifier is to embed
 it in resource representations, e.g., to express a hyperlink between the
 represented resource and the resource identified by the CRI.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">This section defines the representation of CRIs in
+<p id="section-5-2"><a href="#cbor-representation" class="auto internal xref">Section 5.1</a> first defines the representation of CRIs in
 <span><a href="#STD94" class="internal xref">Concise Binary Object Representation (CBOR)</a> [<a href="#STD94" class="cite xref">STD94</a>]</span>.
 When reduced representation size is desired, CRIs are often not represented directly.
 Instead, CRIs are indirectly referenced through <em>CRI references</em>.
 These take advantage of hierarchical locality and provide a very compact
 encoding.
-The CBOR representation of CRI references is specified in
+The CBOR representation of CRI references also is specified in
 <a href="#cbor-representation" class="auto internal xref">Section 5.1</a>.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">The only operation defined on a CRI reference is <em>reference resolution</em>:
 the act of transforming a CRI reference into a CRI.
@@ -1771,9 +1771,10 @@ resolution of the resulting CRI reference yields the original CRI.
 Notably, a CRI reference is not required to satisfy all of the
 constraints of a CRI; the only requirement on a CRI reference is that
 reference resolution <span class="bcp14">MUST</span> yield the original CRI.<a href="#section-5-4" class="pilcrow">¶</a></p>
-<p id="section-5-5">When testing for equivalence or difference, applications <span class="bcp14">SHOULD NOT</span>
-directly compare CRI references; the references should be
-resolved to their respective CRI before comparison.<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-5">When testing for equivalence or difference, it is rarely appropriate
+for applications to directly compare CRI references; instead, the
+references should be resolved to their respective CRI before
+comparison.<a href="#section-5-5" class="pilcrow">¶</a></p>
 <div id="cbor-representation">
 <section id="section-5.1">
         <h3 id="name-cbor-representation">
@@ -1783,11 +1784,77 @@ resolved to their respective CRI before comparison.<a href="#section-5-5" class=
 RFC-XXXX with the RFC number of this specification and remove this
 note.</span><a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">A CRI or CRI reference is encoded as a CBOR array (Major type 4 in
-Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.1" class="relref">3.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>), with the structure described in CDDL as
-follows:<a href="#section-5.1-2" class="pilcrow">¶</a></p>
-<span id="name-cddl-for-cri-cbor-represent"></span><div id="cddl">
+Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.1" class="relref">3.1</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>).
+<a href="#fig-railroad" class="auto internal xref">Figure 1</a> has a coarse visualization of the structure of this
+array, without going into the details of the elements.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<span id="name-overall-structure-of-a-cri-"></span><div id="fig-railroad">
 <figure id="figure-1">
-          <div class="lang-cddl sourcecode" id="section-5.1-3.1">
+          <div id="section-5.1-3.1">
+            <div class="alignLeft art-svg artwork" id="section-5.1-3.1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 530 360">
+                <g transform="translate(40 50)">
+                  <text x="-30" y="-10">cri-reference:</text>
+                  <path class="station" d="M5.5 14 v12 m 4 0 v-12" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path class="station" d="M400.5 14 v12 m 4 0 v-12" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="70" x="60" y="10"></rect>
+                  <text class="rule" text-anchor="middle" x="95" y="25">scheme</text>
+                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="90" x="150" y="10"></rect>
+                  <text class="rule" text-anchor="middle" x="195" y="25">authority</text>
+                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="70" x="115" y="40"></rect>
+                  <text class="rule" text-anchor="middle" x="150" y="55">discard</text>
+                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="90" x="290" y="10"></rect>
+                  <text class="rule" text-anchor="middle" x="335" y="25">local-part</text>
+                  <path d="M260 30 v10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M185 50 h65 q10 0 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M40 40 q0 10 10 10 h65" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M260 30 q0 -10 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M240 20 h50" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M130 20 h20" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M30 20 q10 0 10 10 v10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M380 20 h20" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M10 20 h50" fill="none" stroke="black" stroke-width="1.5"></path>
+                </g>
+                <g transform="translate(40 160)">
+                  <text x="-30" y="-10">local-part:</text>
+                  <path class="station" d="M5.5 74 v12 m 4 0 v-12" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path class="station" d="M460.5 74 v12 m 4 0 v-12" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path class="arrow" d="M237 10 l-4 3 v-6 z" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="50" x="60" y="70"></rect>
+                  <text class="rule" text-anchor="middle" x="85" y="85">path</text>
+                  <path class="arrow" d="M272 30 l-4 3 v-6 z" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="50" x="160" y="70"></rect>
+                  <text class="rule" text-anchor="middle" x="185" y="85">query</text>
+                  <path class="arrow" d="M307 50 l-4 3 v-6 z" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="90" x="260" y="70"></rect>
+                  <text class="rule" text-anchor="middle" x="305" y="85">fragment</text>
+                  <path d="M40 20 v50" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M430 70 q0 10 10 10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M140 40 v30" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M400 70 q0 10 10 10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M240 60 v10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M370 70 q0 10 10 10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M350 80 h110" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M230 80 q10 0 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M240 60 q0 -10 10 -10 h110 q10 0 10 10 v10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M210 80 h50" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M130 80 q10 0 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M140 40 q0 -10 10 -10 h240 q10 0 10 10 v30" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M110 80 h50" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M30 80 q10 0 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M40 20 q0 -10 10 -10 h370 q10 0 10 10 v50" fill="none" stroke="black" stroke-width="1.5"></path>
+                  <path d="M10 80 h50" fill="none" stroke="black" stroke-width="1.5"></path>
+                </g>
+              </svg><a href="#section-5.1-3.1.1" class="pilcrow">¶</a>
+</div>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-overall-structure-of-a-cri-" class="selfRef">Overall Structure of a CRI or CRI Reference</a>
+          </figcaption></figure>
+</div>
+<p id="section-5.1-4"><a href="#cddl" class="auto internal xref">Figure 2</a> has a more detailed description of the structure, in CDDL.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+<span id="name-cddl-for-cri-cbor-represent"></span><div id="cddl">
+<figure id="figure-2">
+          <div class="lang-cddl sourcecode" id="section-5.1-5.1">
 <pre>
 ; not expressed in this CDDL spec: trailing nulls to be left off
 
@@ -1835,51 +1902,72 @@ fragment    = text
 
 </pre>
 </div>
-<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-cddl-for-cri-cbor-represent" class="selfRef">CDDL for CRI CBOR representation</a>
           </figcaption></figure>
 </div>
-<p id="section-5.1-4">The rules <code>scheme</code>, <code>authority</code>, <code>path</code>, <code>query</code>, <code>fragment</code>
-correspond to the (sub‑)components of a CRI, as described in
-<a href="#constraints" class="auto internal xref">Section 2</a>, with the addition of the <code>discard</code> section.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+<div id="discard">
+<p id="section-5.1-6">We call the elements of the top-level array <em>sections</em>.
+The sections containing the rules <code>scheme</code>, <code>authority</code>, <code>path</code>, <code>query</code>, <code>fragment</code>
+correspond to the components of a URI and thus of a CRI, as described in
+<a href="#constraints" class="auto internal xref">Section 2</a>.
+For use in CRI references, we add in a <code>discard</code> section as an
+alternative to the <code>scheme</code> and <code>authority</code> sections:
+URI references express discarding path segments with extended syntax
+for the path component: a leading slash or special path segments <code>.</code> and <code>..</code>.
+In contrast, discarding is separate from adding path segments in CRI
+references: the discarding intent is fully decoded to a single value
+in the discard section.
+An unsigned integer specifies the number of path segments
+to be discarded from the base CRI; the value <code>true</code> specifies
+discarding all path segments from the base CRI.
+If a scheme or authority is present in a CRI reference, the discard
+section is implicitly equivalent a value of <code>true</code> and thus not
+transmitted.<a href="#section-5.1-6" class="pilcrow">¶</a></p>
+</div>
 <div id="prose">
-<p id="section-5.1-5">This CDDL specification is simplified for exposition and needs to be
+<p id="section-5.1-7">This CDDL specification is simplified for exposition and needs to be
 augmented by the following rules for interchange of CRIs and CRI
-references:<a href="#section-5.1-5" class="pilcrow">¶</a></p>
+references:<a href="#section-5.1-7" class="pilcrow">¶</a></p>
 </div>
 <ul class="normal">
-<li class="normal" id="section-5.1-6.1">
-            <p id="section-5.1-6.1.1">Trailing null values <span class="bcp14">MUST</span> be removed,<a href="#section-5.1-6.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.1-8.1">
+            <p id="section-5.1-8.1.1">Trailing null values <span class="bcp14">MUST</span> be removed.<a href="#section-5.1-8.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.1-6.2">
-            <p id="section-5.1-6.2.1">two leading null values (scheme and authority both not given) <span class="bcp14">MUST</span>
-be represented by using the <code>discard</code> alternative instead, and<a href="#section-5.1-6.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.1-8.2">
+            <p id="section-5.1-8.2.1">Two leading null values (scheme and authority both not given) <span class="bcp14">MUST</span>
+be represented by using the <code>discard</code> alternative instead.<a href="#section-5.1-8.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.1-6.3">
-            <p id="section-5.1-6.3.1">an empty path in a <code>CRI</code> <span class="bcp14">MUST</span> be represented as the empty array <code>[]</code>
-(note that for <code>CRI-Reference</code> there is a difference between empty
-and absent paths, represented by <code>[]</code> and <code>null</code>, respectively),<a href="#section-5.1-6.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.1-8.3">
+            <p id="section-5.1-8.3.1">An empty path in a <code>CRI</code> <span class="bcp14">MUST</span> be represented as the empty array
+<code>[]</code>.
+Note that for <code>CRI-Reference</code> there is a difference between empty
+and absent paths, represented by <code>[]</code> and <code>null</code>, respectively.<a href="#section-5.1-8.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.1-6.4">
-            <p id="section-5.1-6.4.1">an entirely empty outer array is not a valid CRI (but a valid CRI reference,
-as per <a href="#ingest" class="auto internal xref">Section 5.2</a> equivalent to <code>[0]</code>, which essentially copies the
-base CRI).<a href="#section-5.1-6.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.1-8.4">
+            <p id="section-5.1-8.4.1">An empty outer array (<code>[]</code>) is not a valid CRI.
+It is a valid CRI reference,
+equivalent to <code>[0]</code> as per <a href="#ingest" class="auto internal xref">Section 5.2</a>, which essentially copies the
+base CRI.<a href="#section-5.1-8.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-7">Application specifications that use CRIs may explicitly enable the use
+<p id="section-5.1-9">Application specifications that use CRIs may explicitly enable the use
 of "stand-in" items (tags or simple values).
 These are data items used in place of original representation items
 such as strings or arrays, where the tag or simple value is defined to
 stand for a data item that can be used in the position of the stand-in
 item.
-Examples would be tags such as 21 to 23 (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.4.5.2" class="relref">3.4.5.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>), which stand for text string components but internally
-employ more compact byte string representations, or reference tags and
-simple values as defined in <span>[<a href="#I-D.ietf-cbor-packed" class="cite xref">I-D.ietf-cbor-packed</a>]</span>.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
-<p id="section-5.1-8">For interchange as separate encoded data items, CRIs <span class="bcp14">MUST NOT</span> use
+Examples would be (1) tags such as 21 to 23 (Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.4.5.2" class="relref">3.4.5.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>) or 108 (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-notable-tags-12#section-2.1" class="relref">Section 2.1</a> of [<a href="#I-D.bormann-cbor-notable-tags" class="cite xref">I-D.bormann-cbor-notable-tags</a>]</span>), which stand for text string components but internally
+employ more compact byte string representations, or (2) reference tags and
+simple values as defined in <span>[<a href="#I-D.ietf-cbor-packed" class="cite xref">I-D.ietf-cbor-packed</a>]</span>.
+Note that application specifications need to be explicit about which
+stand-in items are allowed; otherwise, inconsistent interpretations at
+different places in a system can lead to check/use vulnerabilities.<a href="#section-5.1-9" class="pilcrow">¶</a></p>
+<p id="section-5.1-10">For interchange as separate encoded data items, CRIs <span class="bcp14">MUST NOT</span> use
 indefinite length encoding (see
 Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.2" class="relref">3.2</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>); this requirement is relaxed for
 specifications that embed CRIs into an encompassing CBOR
-representation that does provide for indefinite length encoding.<a href="#section-5.1-8" class="pilcrow">¶</a></p>
+representation that does provide for indefinite length encoding.<a href="#section-5.1-10" class="pilcrow">¶</a></p>
 <div id="scheme-id">
 <section id="section-5.1.1">
           <h4 id="name-scheme-name-and-scheme-id">
@@ -2006,80 +2094,14 @@ These CRI references never carry a <code>discard</code> section: the value of
 <code>discard</code> defaults to <code>true</code>.<a href="#section-5.1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="visualization">
-<section id="section-5.1.3">
-          <h4 id="name-visualization">
-<a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-visualization" class="section-name selfRef">Visualization</a>
-          </h4>
-<p id="section-5.1.3-1">The structure of a CRI reference is visualized using the somewhat limited means
-of a railroad diagram:<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
-<div id="section-5.1.3-2">
-            <div class="alignLeft art-svg artwork" id="section-5.1.3-2.1">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 530 360">
-                <g transform="translate(40 50)">
-                  <text x="-30" y="-10">cri-reference:</text>
-                  <path class="station" d="M5.5 14 v12 m 4 0 v-12" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path class="station" d="M400.5 14 v12 m 4 0 v-12" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="70" x="60" y="10"></rect>
-                  <text class="rule" text-anchor="middle" x="95" y="25">scheme</text>
-                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="90" x="150" y="10"></rect>
-                  <text class="rule" text-anchor="middle" x="195" y="25">authority</text>
-                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="70" x="115" y="40"></rect>
-                  <text class="rule" text-anchor="middle" x="150" y="55">discard</text>
-                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="90" x="290" y="10"></rect>
-                  <text class="rule" text-anchor="middle" x="335" y="25">local-part</text>
-                  <path d="M260 30 v10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M185 50 h65 q10 0 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M40 40 q0 10 10 10 h65" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M260 30 q0 -10 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M240 20 h50" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M130 20 h20" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M30 20 q10 0 10 10 v10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M380 20 h20" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M10 20 h50" fill="none" stroke="black" stroke-width="1.5"></path>
-                </g>
-                <g transform="translate(40 160)">
-                  <text x="-30" y="-10">local-part:</text>
-                  <path class="station" d="M5.5 74 v12 m 4 0 v-12" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path class="station" d="M460.5 74 v12 m 4 0 v-12" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path class="arrow" d="M237 10 l-4 3 v-6 z" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="50" x="60" y="70"></rect>
-                  <text class="rule" text-anchor="middle" x="85" y="85">path</text>
-                  <path class="arrow" d="M272 30 l-4 3 v-6 z" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="50" x="160" y="70"></rect>
-                  <text class="rule" text-anchor="middle" x="185" y="85">query</text>
-                  <path class="arrow" d="M307 50 l-4 3 v-6 z" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <rect class="rule" fill="none" height="20" rx="0" ry="0" stroke="black" stroke-width="1.5" width="90" x="260" y="70"></rect>
-                  <text class="rule" text-anchor="middle" x="305" y="85">fragment</text>
-                  <path d="M40 20 v50" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M430 70 q0 10 10 10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M140 40 v30" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M400 70 q0 10 10 10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M240 60 v10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M370 70 q0 10 10 10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M350 80 h110" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M230 80 q10 0 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M240 60 q0 -10 10 -10 h110 q10 0 10 10 v10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M210 80 h50" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M130 80 q10 0 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M140 40 q0 -10 10 -10 h240 q10 0 10 10 v30" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M110 80 h50" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M30 80 q10 0 10 -10" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M40 20 q0 -10 10 -10 h370 q10 0 10 10 v50" fill="none" stroke="black" stroke-width="1.5"></path>
-                  <path d="M10 80 h50" fill="none" stroke="black" stroke-width="1.5"></path>
-                </g>
-              </svg><a href="#section-5.1.3-2.1" class="pilcrow">¶</a>
-</div>
-</div>
-<p id="section-5.1.3-3">This visualization does not go into the details of the elements.<a href="#section-5.1.3-3" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="examples">
-<section id="section-5.1.4">
+<section id="section-5.1.3">
           <h4 id="name-examples">
-<a href="#section-5.1.4" class="section-number selfRef">5.1.4. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
+<a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
           </h4>
-<div class="lang-cbor-diag sourcecode" id="section-5.1.4-1">
+<span id="name-cri-for-coap-19851100161616"></span><div id="fig-ex-1">
+<figure id="figure-3">
+            <div class="lang-cbor-diag sourcecode" id="section-5.1.3-1.1">
 <pre>
 [-1,             / scheme-id -- equivalent to "coap" /
  [h'C6336401',   / host /
@@ -2087,39 +2109,55 @@ of a railroad diagram:<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
  [".well-known", / path /
   "core"]
 ]
-</pre><a href="#section-5.1.4-1" class="pilcrow">¶</a>
+</pre>
 </div>
-<div class="lang-cbor-diag sourcecode" id="section-5.1.4-2">
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-cri-for-coap-19851100161616" class="selfRef">CRI for coap://198.51.100.1:61616/.well-known/core</a>
+            </figcaption></figure>
+</div>
+<span id="name-cri-reference-for-well-know"></span><div id="fig-ex-2">
+<figure id="figure-4">
+            <div class="lang-cbor-diag sourcecode" id="section-5.1.3-2.1">
 <pre>
 [true,                  / discard /
  [".well-known",        / path /
   "core"],
  ["rt=temperature-c"]]  / query /
-</pre><a href="#section-5.1.4-2" class="pilcrow">¶</a>
+</pre>
 </div>
-<div class="lang-cbor-diag sourcecode" id="section-5.1.4-3">
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-cri-reference-for-well-know" class="selfRef">CRI Reference for /.well-known/core?rt=temperature-c</a>
+            </figcaption></figure>
+</div>
+<span id="name-cri-for-didwebalicebob"></span><div id="fig-ex-3">
+<figure id="figure-5">
+            <div class="lang-cbor-diag sourcecode" id="section-5.1.3-3.1">
 <pre>
 [-6,                / scheme-id -- equivalent to "did" /
  true,              / authority = NOAUTH-ROOTLESS /
  ["web:alice:bob"]  / path /
 ]
-</pre><a href="#section-5.1.4-3" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-cri-for-didwebalicebob" class="selfRef">CRI for did:web:alice:bob</a>
+            </figcaption></figure>
 </div>
 </section>
 </div>
 <div id="specific-terminology">
-<section id="section-5.1.5">
+<section id="section-5.1.4">
           <h4 id="name-specific-terminology">
-<a href="#section-5.1.5" class="section-number selfRef">5.1.5. </a><a href="#name-specific-terminology" class="section-name selfRef">Specific Terminology</a>
+<a href="#section-5.1.4" class="section-number selfRef">5.1.4. </a><a href="#name-specific-terminology" class="section-name selfRef">Specific Terminology</a>
           </h4>
-<p id="section-5.1.5-1">A CRI reference is considered <em>well-formed</em> if it matches the
-structure as expressed in <a href="#cddl" class="auto internal xref">Figure 1</a> in CDDL, with the additional
-requirement that trailing <code>null</code> values are removed from the array.<a href="#section-5.1.5-1" class="pilcrow">¶</a></p>
-<p id="section-5.1.5-2">A CRI reference is considered <em>absolute</em> if it is well-formed
-and the sequence of sections starts with a non-null <code>scheme</code>.<a href="#section-5.1.5-2" class="pilcrow">¶</a></p>
-<p id="section-5.1.5-3">A CRI reference is considered <em>relative</em> if it is well-formed
+<p id="section-5.1.4-1">A CRI reference is considered <em>well-formed</em> if it matches the
+structure as expressed in <a href="#cddl" class="auto internal xref">Figure 2</a> in CDDL, with the additional
+requirement that trailing <code>null</code> values are removed from the array.<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.4-2">A CRI reference is considered <em>absolute</em> if it is well-formed
+and the sequence of sections starts with a non-null <code>scheme</code>.<a href="#section-5.1.4-2" class="pilcrow">¶</a></p>
+<p id="section-5.1.4-3">A CRI reference is considered <em>relative</em> if it is well-formed
 and the sequence of sections is empty or starts with a section other
-than those that would constitute a <code>scheme</code>.<a href="#section-5.1.5-3" class="pilcrow">¶</a></p>
+than those that would constitute a <code>scheme</code>.<a href="#section-5.1.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2132,36 +2170,39 @@ than those that would constitute a <code>scheme</code>.<a href="#section-5.1.5-3
 <p id="section-5.2-1">From an abstract point of view, a CRI Reference is a data structure
 with six sections:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">scheme, authority, discard, path, query, fragment<a href="#section-5.2-2" class="pilcrow">¶</a></p>
-<p id="section-5.2-3">Each of these sections can be unset ("null"),
+<p id="section-5.2-3">We refer to this as the <em>abstract form</em>, while the <em>interchange form</em> (<a href="#cddl" class="auto internal xref">Figure 2</a>) has either
+two sections for scheme and authority or one section for discard, but
+never both of these alternatives.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">Each of the sections in the abstract form can be unset ("null"),
 
 except for discard,
 which is always an unsigned integer or <code>true</code>.  If scheme and/or
-authority are non-null, discard must be <code>true</code>.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
-<p id="section-5.2-4">When ingesting a CRI Reference that is in the transfer form, those
-sections are filled in from the transfer form (unset sections are
-filled with null), and the following steps are performed:<a href="#section-5.2-4" class="pilcrow">¶</a></p>
+authority are non-null, discard is set to <code>true</code>.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
+<p id="section-5.2-5">When ingesting a CRI Reference that is in interchange form, those
+sections are filled in from interchange form (unset sections are
+filled with null), and the following steps are performed:<a href="#section-5.2-5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2-5.1">
-            <p id="section-5.2-5.1.1">If the array is entirely empty, replace it with <code>[0]</code>.<a href="#section-5.2-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.2-6.1">
+            <p id="section-5.2-6.1.1">If the array is empty, replace it with <code>[0]</code>.<a href="#section-5.2-6.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.2-5.2">
-            <p id="section-5.2-5.2.1">If discard is present in the transfer form (i.e., the outer array
-starts with true or an unsigned integer), set scheme and authority to null.<a href="#section-5.2-5.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-5.2-6.2">
+            <p id="section-5.2-6.2.1">If discard is present in interchange form (i.e., the outer array
+starts with true or an unsigned integer), set scheme and authority to null.<a href="#section-5.2-6.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.2-5.3">
-            <p id="section-5.2-5.3.1">If scheme and/or authority are present in the transfer form (i.e.,
+          <li class="normal" id="section-5.2-6.3">
+            <p id="section-5.2-6.3.1">If scheme and/or authority are present in interchange form (i.e.,
 the outer array starts with null, a text string, or a negative integer), set
-discard to <code>true</code>.<a href="#section-5.2-5.3.1" class="pilcrow">¶</a></p>
+discard to <code>true</code>.<a href="#section-5.2-6.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.2-6">Upon encoding the abstract form into the transfer form, the inverse
+<p id="section-5.2-7">Upon encoding the abstract form into interchange form, the inverse
 processing is performed:  If scheme and/or authority are not null, the
 discard value is not transferred (it must be true in this case).  If
 they are both null, they are both left out and only discard is
 transferred.
 Trailing null values are removed from the array.
 As a special case, an empty array is sent in place for a remaining
-<code>[0]</code> (URI reference "").<a href="#section-5.2-6" class="pilcrow">¶</a></p>
+<code>[0]</code> (URI reference "").<a href="#section-5.2-7" class="pilcrow">¶</a></p>
 <div id="unprocessable">
 <section id="section-5.2.1">
           <h4 id="name-error-handling-and-extensib">
@@ -2216,6 +2257,14 @@ having generated a valid CRI/CRI reference.
 This is true for both basic CRIs (e.g., checking for valid UTF-8) and
 for extensions (e.g., checking both for valid UTF-8 and the minimal
 use of PET elements in extended-cris as per <a href="#pet" class="auto internal xref">Section 7.1</a>).<a href="#section-5.2.1-8" class="pilcrow">¶</a></p>
+<p id="section-5.2.1-9">A system that is checking a CRI for some reason but is not its
+ultimate recipient needs to consider the tension between security
+requirements and the danger of ossification <span>[<a href="#RFC9170" class="cite xref">RFC9170</a>]</span>: If the system rejects
+anything that it does not know, it prevents the other components from
+making use of extensions.
+If it passes through extensions unknown to it, that might allow
+semantics pass through that the system should have been designed to
+filter out.<a href="#section-5.2.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2514,7 +2563,7 @@ URIs, such as userinfo, hostnames, paths, queries, and fragments.<a href="#secti
 <p id="section-7-11">One such extended form is described in the following <a href="#pet" class="auto internal xref">Section 7.1</a>.
 Consumers of CRIs will generally notice when an extended form is in
 use, by finding structures that do not match the CDDL rules given in
-<a href="#cddl" class="auto internal xref">Figure 1</a>.
+<a href="#cddl" class="auto internal xref">Figure 2</a>.
 Future definitions of extended forms need to strive to be
 distinguishable in their structures from the extended form presented
 here as well as other future forms.<a href="#section-7-11" class="pilcrow">¶</a></p>
@@ -2931,7 +2980,7 @@ defines its general Information Model as:<a href="#section-8.3-1" class="pilcrow
 AIF-Generic&lt;Toid, Tperm&gt; = [* [Toid, Tperm]]
 </pre><a href="#section-8.3-2" class="pilcrow">¶</a>
 </div>
-<p id="section-8.3-3">Using the definitions in <a href="#cddl" class="auto internal xref">Figure 1</a> together with the <span>[<a href="#RFC9237" class="cite xref">RFC9237</a>]</span> default TPerm
+<p id="section-8.3-3">Using the definitions in <a href="#cddl" class="auto internal xref">Figure 2</a> together with the <span>[<a href="#RFC9237" class="cite xref">RFC9237</a>]</span> default TPerm
 choice <code>REST-method-set</code>, this information model can be specialized as
 in:<a href="#section-8.3-3" class="pilcrow">¶</a></p>
 <div class="lang-cddl sourcecode" id="section-8.3-4">
@@ -3376,6 +3425,10 @@ note.</span><a href="#section-11.6-3" class="pilcrow">¶</a></p>
             <span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"URI Design and Ownership"</span>, <span class="seriesInfo">BCP 190</span>, <span class="seriesInfo">RFC 8820</span>, <span class="seriesInfo">DOI 10.17487/RFC8820</span>, <time datetime="2020-06" class="refDate">June 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8820">https://www.rfc-editor.org/info/rfc8820</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
+<dt id="I-D.bormann-cbor-notable-tags">[I-D.bormann-cbor-notable-tags]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Notable CBOR Tags"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-notable-tags-12</span>, <time datetime="2025-02-12" class="refDate">12 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-notable-tags-12">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-notable-tags-12</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.carpenter-6man-rfc6874bis">[I-D.carpenter-6man-rfc6874bis]</dt>
         <dd>
 <span class="refAuthor">Carpenter, B. E.</span>, <span class="refAuthor">Cheshire, S.</span>, and <span class="refAuthor">R. M. Hinden</span>, <span class="refTitle">"Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-carpenter-6man-rfc6874bis-03</span>, <time datetime="2022-02-08" class="refDate">8 February 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-carpenter-6man-rfc6874bis-03">https://datatracker.ietf.org/doc/html/draft-carpenter-6man-rfc6874bis-03</a>&gt;</span>. </dd>
@@ -3411,6 +3464,10 @@ note.</span><a href="#section-11.6-3" class="pilcrow">¶</a></p>
 <dt id="RFC8288">[RFC8288]</dt>
         <dd>
 <span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"Web Linking"</span>, <span class="seriesInfo">RFC 8288</span>, <span class="seriesInfo">DOI 10.17487/RFC8288</span>, <time datetime="2017-10" class="refDate">October 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8288">https://www.rfc-editor.org/rfc/rfc8288</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9170">[RFC9170]</dt>
+        <dd>
+<span class="refAuthor">Thomson, M.</span> and <span class="refAuthor">T. Pauly</span>, <span class="refTitle">"Long-Term Viability of Protocol Extension Mechanisms"</span>, <span class="seriesInfo">RFC 9170</span>, <span class="seriesInfo">DOI 10.17487/RFC9170</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9170">https://www.rfc-editor.org/rfc/rfc9170</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="STD97">[STD97]</dt>
         <dd>
@@ -5550,11 +5607,11 @@ cri'https://example.com/bottarga/shaved'
 <p id="appendix-C.1-1">The syntax of the content of <code>cri</code> literals can be described by the
 ABNF for <code>URI-reference</code> in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-4.1" class="relref">4.1</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> with certain
 re-arrangements taken from <a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16#figure-5" class="relref">Figure 5</a> of <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>;
-these are reproduced in <a href="#abnf-grammar-cri" class="auto internal xref">Figure 2</a>.
+these are reproduced in <a href="#abnf-grammar-cri" class="auto internal xref">Figure 6</a>.
 If the content is not ASCII only (i.e., for IRIs), first apply
 <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> and apply this grammar to the result.<a href="#appendix-C.1-1" class="pilcrow">¶</a></p>
 <span id="name-abnf-definition-of-uri-repr"></span><div id="abnf-grammar-cri">
-<figure id="figure-2">
+<figure id="figure-6">
           <div class="breakable lang-abnf sourcecode" id="appendix-C.1-2.1">
 <pre>
 app-string-cri = URI-reference
@@ -5649,7 +5706,7 @@ sub-delims    = "!" / "$" / "&amp;" / "'" / "(" / ")"
                  / "*" / "+" / "," / ";" / "="
 </pre>
 </div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-abnf-definition-of-uri-repr" class="selfRef">ABNF Definition of URI Representation of a CRI</a>
           </figcaption></figure>
 </div>
@@ -5705,9 +5762,9 @@ authority that do not have a path component)<a href="#appendix-D-9.2.1" class="p
           <p id="appendix-D-9.5.1">Add user information to the authority ("userinfo" feature)<a href="#appendix-D-9.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-9.6">
-          <p id="appendix-D-9.6.1"><a href="#cddl" class="auto internal xref">Figure 1</a>: Use separate rule for CRI, allow <code>[]</code> for query in CRI
+          <p id="appendix-D-9.6.1"><a href="#cddl" class="auto internal xref">Figure 2</a>: Use separate rule for CRI, allow <code>[]</code> for query in CRI
 Reference; generalize scheme numbers, add userinfo; add list of
-additional requirements in prose (<a href="#prose" class="auto internal xref">Section 5.1, Paragraph 5</a>)<a href="#appendix-D-9.6.1" class="pilcrow">¶</a></p>
+additional requirements in prose (<a href="#prose" class="auto internal xref">Section 5.1, Paragraph 7</a>)<a href="#appendix-D-9.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-9.7">
           <p id="appendix-D-9.7.1">Discuss <a href="#unprocessable" class="internal xref">Error handling and extensibility</a> (<a href="#unprocessable" class="auto internal xref">Section 5.2.1</a>)<a href="#appendix-D-9.7.1" class="pilcrow">¶</a></p>
