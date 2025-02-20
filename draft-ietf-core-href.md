@@ -329,7 +329,8 @@ For easier understanding, they are listed here:
   These segments would be removed by the remove_dot_segments algorithm of {{STD66}},
   and thus never produce a normalized URI after resolution.
 
-  (In CRI references, the `discard` value is used to afford segment removal,
+  (In CRI references, the `discard` value is used to afford segment
+  removal (see {{discard}}),
   and with "." being an unreserved character, expressing them as "%2e" and "%2e%2e" is not even viable,
   let alone practical).
 
@@ -473,6 +474,7 @@ local-part = [path [query [fragment]]]
 ~~~~
 {: #cddl title="CDDL for CRI CBOR representation"}
 
+{:#discard}
 We call the elements of the top-level array *sections*.
 The sections containing the rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the components of a URI and thus of a CRI, as described in
