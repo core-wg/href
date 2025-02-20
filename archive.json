@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-18T01:48:05.005695+00:00",
+  "timestamp": "2025-02-20T01:49:32.780419+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -4706,6 +4706,152 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 107,
+      "id": "PR_kwDOFyeisM6LvwMX",
+      "title": "Nits around SP2",
+      "url": "https://github.com/core-wg/href/pull/107",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "There's some extra context in my upcoming review mail, but those should reasonably stand on their own.",
+      "createdAt": "2025-02-19T13:00:07Z",
+      "updatedAt": "2025-02-19T13:00:07Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
+      "headRepository": "core-wg/href",
+      "headRefName": "nits-sp2",
+      "headRefOid": "6fa72ceaf8bedbfe55a058491b87e5723a0de446",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 108,
+      "id": "PR_kwDOFyeisM6Lwjma",
+      "title": "Wglc: comments from Thomas Fossati",
+      "url": "https://github.com/core-wg/href/pull/108",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-19T14:19:43Z",
+      "updatedAt": "2025-02-19T18:58:10Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
+      "headRepository": "core-wg/href",
+      "headRefName": "wglc-tf",
+      "headRefOid": "49a9e655dacb4ce5c610f83732f53a2bac79f537",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6cm_vU",
+          "commit": {
+            "abbreviatedOid": "688c092"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks mucho.  (I've left a couple of small editorial nits, feel free to ignore the second one.)",
+          "createdAt": "2025-02-19T17:09:11Z",
+          "updatedAt": "2025-02-19T17:18:05Z",
+          "comments": [
+            {
+              "originalPosition": 79,
+              "body": "typo `pathg`",
+              "createdAt": "2025-02-19T17:09:12Z",
+              "updatedAt": "2025-02-19T17:17:32Z"
+            },
+            {
+              "originalPosition": 105,
+              "body": "```suggestion\r\nNote that this objective exclusively applies to (absolute) CRIs, not\r\nto CRI references: these need to be resolved relative to a base URI,\r\n```",
+              "createdAt": "2025-02-19T17:12:45Z",
+              "updatedAt": "2025-02-19T17:17:32Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 109,
+      "id": "PR_kwDOFyeisM6LxZV0",
+      "title": "chrysn's nits collected during review",
+      "url": "https://github.com/core-wg/href/pull/109",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-19T15:51:27Z",
+      "updatedAt": "2025-02-19T15:51:27Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
+      "headRepository": "core-wg/href",
+      "headRefName": "nits",
+      "headRefOid": "ddbed00cb96d3a1888bf937a5d4d6835c22e8bde",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 110,
+      "id": "PR_kwDOFyeisM6Lxd3t",
+      "title": "no indefinite lengths: Suggest that formats including this still do it",
+      "url": "https://github.com/core-wg/href/pull/110",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "I'm aware we can't add any mandate on this, but downstream protocol designers might. For consumers, it is tremendously helpful: It allows them to use CRI references in memory references and pass them on.\r\n\r\nI'll definitely consider doing this for CoRAL -- indefinite length might be allowed there, eg. for embedded representations, but for CRIs it'd still follow this recommendation.",
+      "createdAt": "2025-02-19T15:59:51Z",
+      "updatedAt": "2025-02-19T21:38:22Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
+      "headRepository": "core-wg/href",
+      "headRefName": "suggest-indefinite-length",
+      "headRefOid": "b284a5926ca7f7918452e967bd0fe7a829b6ace2",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "Encoding decisions typically aren't local, so I'm not sure I like this a lot.\r\nWe don't have a lot of experience with applications that use indefinite length encoding internally in specific places (much has shifted over to CBOR sequences where that matters).\r\nI do like the old text.\r\n",
+          "createdAt": "2025-02-19T16:19:43Z",
+          "updatedAt": "2025-02-19T16:19:43Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Ultimately it is up to the top-level format to steer encoding decisions; it can do that in any way, but some may be harder or easier to enforce using generic tools.\r\n\r\n\"No indefinite length encodings in particular places\" sounds like something it should well be able to do -- worst thing, an easy way for an implementation of that top-level format to comply with it is to not use indefinite length at all.\r\n\r\nI do think that interoperability will be easier if this recommendation is followed, but don't have much energy to spend on fighting for it.",
+          "createdAt": "2025-02-19T21:38:21Z",
+          "updatedAt": "2025-02-19T21:38:21Z"
+        }
+      ],
       "reviews": []
     }
   ]
