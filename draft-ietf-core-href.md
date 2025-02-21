@@ -490,11 +490,13 @@ simple values as defined in {{-packed}}.
 
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
-{{Section 3.2 of RFC8949@-cbor}}). This requirement is relaxed for
+{{Section 3.2 of RFC8949@-cbor}}).
+This requirement is relaxed for
 specifications that embed CRIs into an encompassing CBOR
 representation that does provide for indefinite length encoding;
-those might still consider such a mandate for their CBOR items
-to aid constrained implementations.
+those specifications that are selective in where they provide for
+indefinite length encoding are RECOMMENDED to not provide it for
+embedded CRIs.
 
 ### `scheme-name` and `scheme-id` {#scheme-id}
 
