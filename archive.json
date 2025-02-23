@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-20T01:49:32.780419+00:00",
+  "timestamp": "2025-02-23T01:55:46.867730+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -1234,15 +1234,15 @@
       "id": "I_kwDOFyeisM6pZDro",
       "title": "Abstract sentence unclear: \"describes cooperates\" ?",
       "url": "https://github.com/core-wg/href/issues/102",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "EskoDijk",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "> This RFC updates RFC 7595 to add a note on how the URI Schemes registry RFC 7595 **describes cooperates** with the CRI Scheme Numbers registry created by the present RFC.\n\n",
       "createdAt": "2025-02-10T10:01:57Z",
-      "updatedAt": "2025-02-10T10:01:57Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-20T16:01:53Z",
+      "closedAt": "2025-02-20T16:01:53Z",
       "comments": []
     },
     {
@@ -1250,15 +1250,15 @@
       "id": "I_kwDOFyeisM6qDc9j",
       "title": "Section 8.2.2 in -18 has a \"TO DO\" line - needs to be removed",
       "url": "https://github.com/core-wg/href/issues/103",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "EskoDijk",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-02-14T08:45:34Z",
-      "updatedAt": "2025-02-14T08:45:34Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-20T16:01:54Z",
+      "closedAt": "2025-02-20T16:01:54Z",
       "comments": []
     },
     {
@@ -4687,24 +4687,26 @@
       "id": "PR_kwDOFyeisM6LOWNK",
       "title": "Clerical fixes from Esko Dijk's comments",
       "url": "https://github.com/core-wg/href/pull/106",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-02-14T10:35:27Z",
-      "updatedAt": "2025-02-14T10:35:27Z",
+      "updatedAt": "2025-02-20T16:01:55Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
       "headRepository": "core-wg/href",
       "headRefName": "ed-clerical",
       "headRefOid": "0377c7895e5fe0678d7e9efc2377e6e91f85b84a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-20T16:01:52Z",
+      "mergedAt": "2025-02-20T16:01:52Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "2b53a789a61e815464a2703c58a825e57f864a93"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4720,7 +4722,7 @@
       "labels": [],
       "body": "There's some extra context in my upcoming review mail, but those should reasonably stand on their own.",
       "createdAt": "2025-02-19T13:00:07Z",
-      "updatedAt": "2025-02-19T13:00:07Z",
+      "updatedAt": "2025-02-20T16:14:09Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
@@ -4732,31 +4734,47 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6cyO-7",
+          "commit": {
+            "abbreviatedOid": "6fa72ce"
+          },
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "These changes look good to me.\r\n\r\nI'm wondering if we need more text about URI components that carry non-text (or text-in-random-legacy-charset) sequences of bytes.",
+          "createdAt": "2025-02-20T16:14:09Z",
+          "updatedAt": "2025-02-20T16:14:09Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 108,
       "id": "PR_kwDOFyeisM6Lwjma",
       "title": "Wglc: comments from Thomas Fossati",
       "url": "https://github.com/core-wg/href/pull/108",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-02-19T14:19:43Z",
-      "updatedAt": "2025-02-19T18:58:10Z",
+      "updatedAt": "2025-02-20T16:01:17Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
       "headRepository": "core-wg/href",
       "headRefName": "wglc-tf",
-      "headRefOid": "49a9e655dacb4ce5c610f83732f53a2bac79f537",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "8a37c05e814d1ca8243082ad76d2a94d3f5df99f",
+      "closedAt": "2025-02-20T16:01:14Z",
+      "mergedAt": "2025-02-20T16:01:14Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "feab4b9359b9742701fd641c6a2f3b162adaa032"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4784,6 +4802,19 @@
               "updatedAt": "2025-02-19T17:17:32Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOFyeisM6cwP7P",
+          "commit": {
+            "abbreviatedOid": "8a37c05"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "\ud83d\udea2 it!",
+          "createdAt": "2025-02-20T13:42:34Z",
+          "updatedAt": "2025-02-20T13:42:34Z",
+          "comments": []
         }
       ]
     },
@@ -4799,7 +4830,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-02-19T15:51:27Z",
-      "updatedAt": "2025-02-19T15:51:27Z",
+      "updatedAt": "2025-02-21T14:06:51Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
@@ -4811,31 +4842,74 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6cyIxL",
+          "commit": {
+            "abbreviatedOid": "ddbed00"
+          },
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-20T16:04:49Z",
+          "updatedAt": "2025-02-20T16:04:49Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I'm not sure what \"already in use\" would mean here...",
+              "createdAt": "2025-02-20T16:04:49Z",
+              "updatedAt": "2025-02-20T16:04:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFyeisM6c8oo8",
+          "commit": {
+            "abbreviatedOid": "ddbed00"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-21T14:06:51Z",
+          "updatedAt": "2025-02-21T14:06:51Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "What I meant was \"in the CRI grammar\" -- but indeed those are not stand-in items, so maybe let's just drop that change. (Like, true and false)",
+              "createdAt": "2025-02-21T14:06:51Z",
+              "updatedAt": "2025-02-21T14:07:04Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 110,
       "id": "PR_kwDOFyeisM6Lxd3t",
       "title": "no indefinite lengths: Suggest that formats including this still do it",
       "url": "https://github.com/core-wg/href/pull/110",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "I'm aware we can't add any mandate on this, but downstream protocol designers might. For consumers, it is tremendously helpful: It allows them to use CRI references in memory references and pass them on.\r\n\r\nI'll definitely consider doing this for CoRAL -- indefinite length might be allowed there, eg. for embedded representations, but for CRIs it'd still follow this recommendation.",
       "createdAt": "2025-02-19T15:59:51Z",
-      "updatedAt": "2025-02-19T21:38:22Z",
+      "updatedAt": "2025-02-21T14:03:37Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
       "headRepository": "core-wg/href",
       "headRefName": "suggest-indefinite-length",
-      "headRefOid": "b284a5926ca7f7918452e967bd0fe7a829b6ace2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "dcfb4d336db0f4f3da967a98628c537893748b75",
+      "closedAt": "2025-02-21T14:03:34Z",
+      "mergedAt": "2025-02-21T14:03:34Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "a0a9c21b4e3ae446e562e7b5ca8e6c86bbe12cc3"
+      },
       "comments": [
         {
           "author": "cabo",
@@ -4850,6 +4924,20 @@
           "body": "Ultimately it is up to the top-level format to steer encoding decisions; it can do that in any way, but some may be harder or easier to enforce using generic tools.\r\n\r\n\"No indefinite length encodings in particular places\" sounds like something it should well be able to do -- worst thing, an easy way for an implementation of that top-level format to comply with it is to not use indefinite length at all.\r\n\r\nI do think that interoperability will be easier if this recommendation is followed, but don't have much energy to spend on fighting for it.",
           "createdAt": "2025-02-19T21:38:21Z",
           "updatedAt": "2025-02-19T21:38:21Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "Sorry for pushing to your branch, but that is most expedient.\r\nI sharpened this a bit, with both a stronger and a more selective recommendation.\r\nWould like to merge this if you agree with the new text.\r\n",
+          "createdAt": "2025-02-21T13:32:36Z",
+          "updatedAt": "2025-02-21T13:32:36Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Good text, thanks.",
+          "createdAt": "2025-02-21T13:44:05Z",
+          "updatedAt": "2025-02-21T13:44:05Z"
         }
       ],
       "reviews": []
