@@ -183,7 +183,7 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
    code size and memory size limitations.  As a result, many
    implementations in such environments support only an ad-hoc,
    informally-specified, bug-ridden, non-interoperable subset of half of
-   [STD66].
+   [STD66] (aperçu adapted from [GREENSPUN-10]).
 
    This document defines the _Constrained Resource Identifier (CRI)_ by
    constraining URIs to a simplified subset and representing their
@@ -1966,6 +1966,10 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
               RFC 8820, DOI 10.17487/RFC8820, June 2020,
               <https://www.rfc-editor.org/info/rfc8820>.
 
+   [GREENSPUN-10]
+              Wikipedia, "Greenspun's tenth rule",
+              <https://en.wikipedia.org/wiki/Greenspun's_tenth_rule>.
+
    [I-D.bormann-cbor-notable-tags]
               Bormann, C., "Notable CBOR Tags", Work in Progress,
               Internet-Draft, draft-bormann-cbor-notable-tags-12, 12
@@ -2004,10 +2008,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
               DOI 10.17487/RFC4180, October 2005,
               <https://www.rfc-editor.org/rfc/rfc4180>.
 
-   [RFC7228]  Bormann, C., Ersue, M., and A. Keranen, "Terminology for
-              Constrained-Node Networks", RFC 7228,
-              DOI 10.17487/RFC7228, May 2014,
-              <https://www.rfc-editor.org/rfc/rfc7228>.
 
 
 
@@ -2017,6 +2017,11 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 36]
 
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
+
+   [RFC7228]  Bormann, C., Ersue, M., and A. Keranen, "Terminology for
+              Constrained-Node Networks", RFC 7228,
+              DOI 10.17487/RFC7228, May 2014,
+              <https://www.rfc-editor.org/rfc/rfc7228>.
 
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
@@ -2062,17 +2067,15 @@ Appendix A.  Mapping Scheme Numbers to Scheme Names
    // RFC Ed.: throughout this section, please replace RFC-XXXX with the
    // RFC number of this specification and remove this note.
 
-   Table 8 defines the initial mapping from CRI scheme numbers to URI
-   scheme names.
-
-
-
 
 
 Bormann & Birkholz       Expires 30 August 2025                [Page 37]
 
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
+
+   Table 8 defines the initial mapping from CRI scheme numbers to URI
+   scheme names.
 
     +============+======================================+============+
     | CRI scheme | URI scheme name                      | Reference  |
@@ -2119,9 +2122,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 1562       | ms-personacard                       | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 1578       | jar                                  | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 1658       | wpid                                 | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2130,6 +2130,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 38]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 1658       | wpid                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 1762       | payment                              | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 1895       | news                                 | [RFC-XXXX] |
@@ -2175,9 +2178,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 3255       | vscode-insiders                      | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 3342       | geo                                  | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 3348       | rtmfp                                | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2186,6 +2186,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 39]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 3348       | rtmfp                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 3358       | mtqp                                 | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 3365       | filesystem                           | [RFC-XXXX] |
@@ -2231,9 +2234,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 4193       | embedded                             | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 4315       | xftp                                 | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 4327       | browserext                           | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2242,6 +2242,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 40]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 4327       | browserext                           | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 4355       | session                              | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 4373       | dav                                  | [RFC-XXXX] |
@@ -2287,9 +2290,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 5188       | bb                                   | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 5217       | udp                                  | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 5296       | example                              | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2298,6 +2298,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 41]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 5296       | example                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 5347       | ms-remotedesktop                     | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 5410       | ms-sttoverlay                        | [RFC-XXXX] |
@@ -2343,9 +2346,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 6189       | ms-spd                               | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 6341       | opaquelocktoken                      | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 6349       | soldat                               | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2354,6 +2354,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 42]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 6349       | soldat                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 6380       | z39.50s                              | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 6388       | ms-media-stream-id                   | [RFC-XXXX] |
@@ -2399,9 +2402,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 6992       | payto                                | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 7074       | secret-token                         | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 7126       | iax                                  | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2410,6 +2410,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 43]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 7126       | iax                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 7225       | isostore                             | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 7226       | bitcoincash                          | [RFC-XXXX] |
@@ -2455,9 +2458,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 8251       | brid                                 | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 8300       | tftp                                 | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 8387       | content                              | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2466,6 +2466,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 44]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 8387       | content                              | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 8454       | wais                                 | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 8506       | view-source                          | [RFC-XXXX] |
@@ -2511,9 +2514,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 9444       | grd                                  | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 9453       | ms-screensketch                      | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 9487       | matrix                               | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2522,6 +2522,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 45]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 9487       | matrix                               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 9520       | xcon-userid                          | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 9535       | sips                                 | [RFC-XXXX] |
@@ -2567,9 +2570,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 10247      | lid                                  | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 10317      | h323                                 | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 10327      | aim                                  | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2578,6 +2578,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 46]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 10327      | aim                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 10333      | turn                                 | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 10361      | ms-stickers                          | [RFC-XXXX] |
@@ -2623,9 +2626,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 11255      | xri                                  | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 11315      | msrp                                 | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 11351      | ms-settings-connectabledevices       | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2634,6 +2634,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 47]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 11351      | ms-settings-connectabledevices       | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 11393      | cabal                                | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 11428      | nih                                  | [RFC-XXXX] |
@@ -2679,9 +2682,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 12068      | file                                 | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 12102      | mailto                               | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 12174      | ms-launchremotedesktop               | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2690,6 +2690,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 48]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 12174      | ms-launchremotedesktop               | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 12242      | cvs                                  | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 12337      | mms                                  | [RFC-XXXX] |
@@ -2735,9 +2738,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 12876      | hyper                                | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 12932      | dns                                  | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 13014      | doi                                  | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2746,6 +2746,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 49]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 13014      | doi                                  | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 13026      | ms-settings-power                    | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 13068      | git                                  | [RFC-XXXX] |
@@ -2791,9 +2794,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 13923      | svn                                  | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 13986      | iris                                 | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 14010      | lbry                                 | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2802,6 +2802,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 50]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 14010      | lbry                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 14034      | ms-search                            | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 14090      | ms-browser-extension                 | [RFC-XXXX] |
@@ -2847,9 +2850,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 14878      | ftp                                  | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 14901      | stuns                                | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 14906      | mqtts                                | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2858,6 +2858,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 51]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 14906      | mqtts                                | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 14936      | ms-settings-workplace                | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 14962      | tn3270                               | [RFC-XXXX] |
@@ -2903,9 +2906,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 15679      | ms-search-repair                     | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 15773      | ms-settings-camera                   | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 15776      | ms-virtualtouchpad                   | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2914,6 +2914,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 52]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 15776      | ms-virtualtouchpad                   | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 15805      | xmlrpc.beeps                         | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 15972      | ipfs                                 | [RFC-XXXX] |
@@ -2959,9 +2962,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
     | 17039      | swh                                  | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 17068      | pwid                                 | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
-    | 17097      | dtmi                                 | [RFC-XXXX] |
-    +------------+--------------------------------------+------------+
 
 
 
@@ -2970,6 +2970,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 53]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
+    +------------+--------------------------------------+------------+
+    | 17097      | dtmi                                 | [RFC-XXXX] |
+    +------------+--------------------------------------+------------+
     | 17134      | dis                                  | [RFC-XXXX] |
     +------------+--------------------------------------+------------+
     | 17170      | iotdisco                             | [RFC-XXXX] |
@@ -3014,9 +3017,6 @@ Appendix B.  The Small Print
       discussing HTTP semantics, Section 6.2.3 of RFC 3986 [STD66]
       states:
 
-   |  In general, a URI that uses the generic syntax for authority with
-   |  an empty path should be normalized to a path of "/".
-
 
 
 
@@ -3025,6 +3025,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 54]
 
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
+
+   |  In general, a URI that uses the generic syntax for authority with
+   |  an empty path should be normalized to a path of "/".
 
    *  _Leading empty path segments without authority_: Somewhat related,
       note also that URIs and URI references that do not carry an
@@ -3071,9 +3074,6 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
             https://example.com/x?ampersand=%26&questionmark=?
 
          *  https://alice@example.com/
-
-
-
 
 
 
