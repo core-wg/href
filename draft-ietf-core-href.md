@@ -10,6 +10,9 @@ title: Constrained Resource Identifiers
 updates: 7595
 wg: CoRE Working Group
 
+v3xml2rfc:
+  table_borders: light
+
 author:
 - name: Carsten Bormann
   org: Universität Bremen TZI
