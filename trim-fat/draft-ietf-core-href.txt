@@ -1356,19 +1356,14 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
    This section makes use of the mapping between CRI scheme numbers and
    URI scheme names shown in Table 1:
 
-                  +===================+=================+
+                  +-------------------+-----------------+
                   | CRI scheme number | URI scheme name |
-                  +===================+=================+
+                  +-------------------+-----------------+
                   | 0                 | coap            |
-                  +-------------------+-----------------+
                   | 1                 | coaps           |
-                  +-------------------+-----------------+
                   | 6                 | coap+tcp        |
-                  +-------------------+-----------------+
                   | 7                 | coaps+tcp       |
-                  +-------------------+-----------------+
                   | 8                 | coap+ws         |
-                  +-------------------+-----------------+
                   | 9                 | coaps+ws        |
                   +-------------------+-----------------+
 
@@ -1395,14 +1390,17 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
        is being used, fail this algorithm.  Remember the specific
        variant of CoAP to be used based on this URI scheme name.
 
+   3.  If »cri« has a fragment component, then fail this algorithm.
+
+
+
+
 
 
 Bormann & Birkholz       Expires 30 August 2025                [Page 25]
 
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
-
-   3.  If »cri« has a fragment component, then fail this algorithm.
 
    4.  If the host component of »cri« is a host-name, include a Uri-Host
        Option and let that option's value be the text string value of
@@ -1453,6 +1451,8 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
 
+
+
 Bormann & Birkholz       Expires 30 August 2025                [Page 26]
 
 Internet-Draft      Constrained Resource Identifiers       February 2025
@@ -1492,9 +1492,9 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
 
 8.2.1.  Proxy-CRI
 
-    +========+===+===+===+===+===========+========+========+=========+
+    +--------+---+---+---+---+-----------+--------+--------+---------+
     | No.    | C | U | N | R | Name      | Format | Length | Default |
-    +========+===+===+===+===+===========+========+========+=========+
+    +--------+---+---+---+---+-----------+--------+--------+---------+
     | TBD235 | x | x | - |   | Proxy-Cri | opaque | 1-1023 | (none)  |
     +--------+---+---+---+---+-----------+--------+--------+---------+
 
@@ -1524,9 +1524,9 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
 
 8.2.2.  Proxy-Scheme-Number
 
-   +========+=+=+=+=+=====================+========+========+=========+
+   +--------+-+-+-+-+---------------------+--------+--------+---------+
    | No.    |C|U|N|R| Name                | Format | Length | Default |
-   +========+=+=+=+=+=====================+========+========+=========+
+   +--------+-+-+-+-+---------------------+--------+--------+---------+
    | TBD239 |x|x|-| | Proxy-Scheme-Number | uint   | 0-3    | (none)  |
    +--------+-+-+-+-+---------------------+--------+--------+---------+
 
@@ -1738,10 +1738,10 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 31]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
-     +=======================+=============+============+===========+
+     +-----------------------+-------------+------------+-----------+
      | Application-extension | Description | Change     | Reference |
      | Identifier            |             | Controller |           |
-     +=======================+=============+============+===========+
+     +-----------------------+-------------+------------+-----------+
      | cri                   | Constrained | IETF       | RFC-XXXX, |
      |                       | Resource    |            | Appendix  |
      |                       | Identifier  |            | C         |
@@ -1761,11 +1761,10 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
    the CoAP Option Numbers as described in Table 5 and defined in
    Section 8.2.
 
-               +========+=====================+===========+
-               | No.    | Name                | Reference |
-               +========+=====================+===========+
-               | TBD235 | Proxy-Cri           | RFC-XXXX  |
                +--------+---------------------+-----------+
+               | No.    | Name                | Reference |
+               +--------+---------------------+-----------+
+               | TBD235 | Proxy-Cri           | RFC-XXXX  |
                | TBD239 | Proxy-Scheme-Number | RFC-XXXX  |
                +--------+---------------------+-----------+
 
@@ -1789,15 +1788,16 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
 
+
 Bormann & Birkholz       Expires 30 August 2025                [Page 32]
 
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
-       +===========+================+===============+=============+
+       +-----------+----------------+---------------+-------------+
        | Parameter | Name           | Description/  | Reference   |
        |           |                | Specification |             |
-       +===========+================+===============+=============+
+       +-----------+----------------+---------------+-------------+
        | Toid      | CRI-local-part | local-part of | Section 8.3 |
        |           |                | CRI           | of RFC-XXXX |
        +-----------+----------------+---------------+-------------+
@@ -1815,9 +1815,9 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
    RESTful Environments (CoRE) Parameters" registry group
    [IANA.core-parameters], as follows:
 
-          +=======================+==========+=====+===========+
+          +-----------------------+----------+-----+-----------+
           | Media Type            | Encoding | ID  | Reference |
-          +=======================+==========+=====+===========+
+          +-----------------------+----------+-----+-----------+
           | application/aif+cbor; | -        | TBD | RFC-XXXX  |
           | Toid=CRI-local-part   |          |     |           |
           +-----------------------+----------+-----+-----------+
@@ -2062,10 +2062,10 @@ Appendix A.  Mapping Scheme Numbers to Scheme Names
    // RFC Ed.: throughout this section, please replace RFC-XXXX with the
    // RFC number of this specification and remove this note.
 
-
-
-
-
+   Table 8 in Appendix A of [I-D.draft-ietf-core-href-18] lists the
+   initial mapping from CRI scheme numbers to URI scheme names.  (This
+   table was developed with a previous revision of the Internet-Draft of
+   the RFC derived from this document but is not copied into the current
 
 
 
@@ -2074,12 +2074,9 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 37]
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
 
-   Table 8 in Appendix A of [I-D.draft-ietf-core-href-18] lists the
-   initial mapping from CRI scheme numbers to URI scheme names.  (This
-   table was developed with a previous Internet-Draft of the RFC derived
-   from this document but is not copied into the actual RFC because it
-   will be out-of-date quickly, and because IANA registry should be the
-   focal point for users of this registry, anyway.)
+   draft or the actual RFC because it will be out-of-date quickly, and
+   because the IANA registry should be the focal point for users of this
+   registry, anyway.)
 
    The assignments from this table can be extracted from the XML form of
    [I-D.draft-ietf-core-href-18] (when stored in a file "this.xml") into
@@ -2121,7 +2118,10 @@ Appendix B.  The Small Print
 
    SP2.  Constraints (Section 2) of CRIs/basic CRIs
 
-
+         While most URIs in everyday use can be converted to CRIs and
+         back to URIs matching the input after syntax-based
+         normalization of the URI, these URIs illustrate the constraints
+         by example:
 
 
 
@@ -2129,11 +2129,6 @@ Bormann & Birkholz       Expires 30 August 2025                [Page 38]
 
 Internet-Draft      Constrained Resource Identifiers       February 2025
 
-
-         While most URIs in everyday use can be converted to CRIs and
-         back to URIs matching the input after syntax-based
-         normalization of the URI, these URIs illustrate the constraints
-         by example:
 
          *  https://host%ffname, https://example.com/x?data=%ff
 
@@ -2175,6 +2170,11 @@ Internet-Draft      Constrained Resource Identifiers       February 2025
             The rules do not cater for unencoded ":" in userinfo, which
             is commonly considered a deprecated inclusion of a literal
             password.
+
+
+
+
+
 
 
 
