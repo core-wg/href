@@ -51,6 +51,7 @@ venue:
 informative:
   RFC3490: toascii
   RFC7228: term
+  I-D.ietf-iotops-7228bis: termbis
   STD97: http
 # RFC9110
   RFC7252: coap
@@ -102,8 +103,8 @@ This approach simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
-This RFC updates RFC 7595 to add a note on how the URI Schemes
-registry RFC 7595 cooperates with the CRI Scheme Numbers
+This RFC updates RFC 7595 to add a note on how the "URI Schemes"
+registry of RFC 7595 cooperates with the "CRI Scheme Numbers"
 registry created by the present RFC.
 
 [^status]
@@ -143,7 +144,7 @@ of RFC3986@-uri}}), and
 recomposing the result back into a character sequence.
 
 Overall, the proper handling of URI references is quite intricate.
-This can be a problem especially in [constrained environments](#RFC7228),
+This can be a problem especially in constrained environments {{-term}}{{-termbis}},
 where nodes often have severe code size and memory size limitations.
 As a result, many implementations in such environments support only an
 ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
@@ -167,7 +168,7 @@ The supported subset includes all URIs of the
 The exact constraints are defined in {{constraints}}.
 
 This RFC creates a "CRI Scheme Numbers" registry and updates {{RFC7595}}
-to add a note on how this new registry cooperates with the URI Schemes
+to add a note on how this new registry cooperates with the "URI Schemes"
 registry that {{RFC7595}} describes.
 
 
@@ -370,14 +371,14 @@ more likely to validate:
 * elide the port if it is the default port for the scheme
 ({{<c-port-omitted}});
 <!-- * elide a single zero-length path segment ({{<c-path}}); -->
-* map path segments, query parameters and the fragment identifier to
+* map path segments, query parameters, and the fragment identifier to
   NFC form ({{<c-path-segment}}, {{<c-query}}, {{<c-fragment}}).
 
 Once a CRI has been created, it can be used and transferred without
 further normalization.
 All operations that operate on a CRI SHOULD rely on the
 assumption that the CRI is appropriately pre-normalized.
-(This does not contradict the requirement that when CRIs are
+(This does not contradict the requirement that, when CRIs are
 transferred, recipients must operate on as-good-as untrusted input and
 fail gracefully in the face of malicious inputs.)
 
@@ -599,7 +600,8 @@ These CRI references never carry a `discard` section: the value of
 [true,                  / discard /
  [".well-known",        / path /
   "core"],
- ["rt=temperature-c"]]  / query /
+ ["rt=temperature-c"]  / query /
+]
 ~~~~
 {: #fig-ex-2 title="CRI Reference for /.well-known/core?rt=temperature-c"}
 
@@ -626,7 +628,7 @@ than those that would constitute a `scheme`.
 
 ## Ingesting and encoding a CRI Reference {#ingest}
 
-From an abstract point of view, a CRI Reference is a data structure
+From an abstract point of view, a CRI reference is a data structure
 with six sections:
 
 scheme, authority, discard, path, query, fragment
@@ -641,7 +643,7 @@ except for discard,
 which is always an unsigned integer or `true`.  If scheme and/or
 authority are non-null, discard is set to `true`.
 
-When ingesting a CRI Reference that is in interchange form, those
+When ingesting a CRI reference that is in interchange form, those
 sections are filled in from interchange form (unset sections are
 filled with null), and the following steps are performed:
 
@@ -688,7 +690,7 @@ that do not use indefinite length encoding, as mandated in
 The unprocessable CRI is treated as an opaque identifier
 that is distinct from all processable CRIs,
 and distinct from all unprocessable CRIs with different CBOR representations.
-It is up to implementation whether unprocessable CRIs with identical representations
+It is up to the implementation whether unprocessable CRIs with identical representations
 are treated as identical to each other or not.
 Unprocessable CRIs cannot be dereferenced,
 and it is an error to query any of their components.
@@ -762,7 +764,7 @@ an absolute CRI reference:
 
 CRIs are meant to replace both [Uniform Resource Identifiers (URIs)](#STD66)
 and [Internationalized Resource Identifiers (IRIs)](#RFC3987)
-in [constrained environments](#RFC7228).
+in constrained environments {{-term}}{{-termbis}}.
 Applications in these environments may never need to use URIs and IRIs
 directly, especially when the resource identifier is used simply for
 identification purposes or when the CRI can be directly converted into a
@@ -941,7 +943,7 @@ query
 
   Any character in the value of a `query` item that is not
   in the set of unreserved characters or "sub-delims" or a colon
-  (":"), commercial at ("@"), slash ("/") or question mark ("?")
+  (":"), commercial at ("@"), slash ("/"), or question mark ("?")
   character MUST be percent-encoded.
   Additionally, any ampersand character ("&") in the item
   value MUST be percent-encoded.
@@ -954,7 +956,7 @@ fragment
 
   Any character in the value of a `fragment` item that is
   not in the set of unreserved characters or "sub-delims" or a colon
-  (":"), commercial at ("@"), slash ("/") or question mark ("?")
+  (":"), commercial at ("@"), slash ("/"), or question mark ("?")
   character MUST be percent-encoded.
 
 # Extending CRIs {#extending}
@@ -1160,7 +1162,7 @@ value from a data item in the CRI, the presence of any
        component's unsigned integer value; otherwise, let »port« be
        the default port number for the scheme.
 
-   6.  If »port« does not equal the request's destination UDP port,
+   6.  If »port« does not equal the request's destination port,
        include a Uri-Port Option and let that option's value be »port«.
 
    7.  If the value of the `path` component of »cri« is empty or
@@ -1172,7 +1174,7 @@ value from a data item in the CRI, the presence of any
 
    8.  If »cri« has a `query` component, then, for each element in the
        `query` component, include a Uri-Query Option and let that
-       option's value be the be the text string
+       option's value be the text string
        value of that element.
 
 ### Composing a Request CRI from a Set of CoAP Options {#compose-coap}
@@ -1202,7 +1204,7 @@ value from a data item in the CRI, the presence of any
 
    3.   If the request includes a Uri-Port Option, let »port« be that
         option's value.  Otherwise, let »port« be the request's
-        destination UDP port.
+        destination port.
         If »port« is not the default port for the scheme, then insert
         the integer value of »port« as the value of `port` in the
         authority.
@@ -1281,7 +1283,7 @@ defines its general Information Model as:
 AIF-Generic<Toid, Tperm> = [* [Toid, Tperm]]
 ~~~
 
-Using the definitions in {{cddl}} together with the {{-aif}} default TPerm
+Using the definitions in {{cddl}} together with the {{-aif}} default Tperm
 choice `REST-method-set`, this information model can be specialized as
 in:
 
@@ -1315,15 +1317,17 @@ security considerations relating to CBOR.
 
 The security considerations discussed in {{Section 7 of RFC3986@-uri}} and
 {{Section 8 of RFC3987}} for URIs and IRIs also apply to CRIs.
-
+The security considerations discussed for URIs in {{Section 6 of -aif}}
+apply analogously to AIF-CRI {{toid}}.
 
 # IANA Considerations
 
 ## CRI Scheme Numbers Registry {#cri-reg}
 
-This specification defines a new "CRI Scheme Numbers" sub-registry in
-the "CoRE Parameters" registry {{IANA.core-parameters}}, with the
-policy "Expert Review" ({{Section 4.5 of RFC8126@-ianacons}}).
+This specification defines a new "CRI Scheme Numbers" registry in the
+"Constrained RESTful Environments (CoRE) Parameters" registry group
+{{IANA.core-parameters}}, with the policy "Expert Review" ({{Section 4.5
+of RFC8126@-ianacons}}).
 The objective is to have CRI scheme number values registered for all
 registered URI schemes (Uniform Resource Identifier (URI) Schemes
 registry), as well as exceptionally for certain text strings that the
@@ -1456,13 +1460,13 @@ register:
 
 ## Content-Format for CRI in AIF
 
-IANA is requested to register a Content-Format number in the "CoAP
+IANA is requested to register a Content-Format identifier in the "CoAP
 Content-Formats" registry (range 256-999), within the "Constrained
 RESTful Environments (CoRE) Parameters" registry group
 [IANA.core-parameters], as follows:
 
-| Media Type                                | Encoding | ID  | Reference |
-| application/aif+cbor; Toid=CRI-local-part | -        | TBD | RFC-XXXX  |
+| Content Type                             | Content Coding | ID  | Reference |
+| application/aif+cbor;Toid=CRI-local-part | -              | TBD | RFC-XXXX  |
 {: #tab-iana-toid-ct title="Content-Format for ACE AIF with CRI-local-part Toid"}
 
 [^replace-xxxx]
