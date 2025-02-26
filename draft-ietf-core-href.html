@@ -14,8 +14,8 @@ Binary Object Representation (CBOR) rather than as a sequence of characters.
 This approach simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size. 
-       This RFC updates RFC 7595 to add a note on how the URI Schemes
-registry RFC 7595 cooperates with the CRI Scheme Numbers
+       This RFC updates RFC 7595 to add a note on how the "URI Schemes"
+registry of RFC 7595 cooperates with the "CRI Scheme Numbers"
 registry created by the present RFC. 
        (This "cref" paragraph will be removed by the RFC
 editor:) 
@@ -1105,8 +1105,8 @@ Binary Object Representation (CBOR) rather than as a sequence of characters.
 This approach simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">This RFC updates RFC 7595 to add a note on how the URI Schemes
-registry RFC 7595 cooperates with the CRI Scheme Numbers
+<p id="section-abstract-2">This RFC updates RFC 7595 to add a note on how the "URI Schemes"
+registry of RFC 7595 cooperates with the "CRI Scheme Numbers"
 registry created by the present RFC.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 <p id="section-abstract-3"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC
 editor:)<br>
@@ -1380,18 +1380,19 @@ base URI, merging path components, removing dot-segments (<code>"." and
 ".."</code>, see Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">3.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), and
 recomposing the result back into a character sequence.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">Overall, the proper handling of URI references is quite intricate.
-This can be a problem especially in <span><a href="#RFC7228" class="internal xref">constrained environments</a> [<a href="#RFC7228" class="cite xref">RFC7228</a>]</span>,
+This can be a problem especially in constrained environments <span>[<a href="#RFC7228" class="cite xref">RFC7228</a>]</span><span>[<a href="#I-D.ietf-iotops-7228bis" class="cite xref">I-D.ietf-iotops-7228bis</a>]</span>,
 where nodes often have severe code size and memory size limitations.
 As a result, many implementations in such environments support only an
 ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
-half of <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
+half of <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> (aperçu adapted from <span>[<a href="#GREENSPUN-10" class="cite xref">GREENSPUN-10</a>]</span>).<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">This document defines the <em>Constrained Resource Identifier (CRI)</em> by
 constraining URIs to a simplified subset and representing their
 components in <span><a href="#STD94" class="internal xref">Concise Binary Object Representation (CBOR)</a> [<a href="#STD94" class="cite xref">STD94</a>]</span>
 instead of a sequence of characters.
 This allows typical operations on URI references such as parsing,
 comparison, and reference resolution (including all corner cases) to be
-implemented in a comparatively small amount of code.<a href="#section-1-4" class="pilcrow">¶</a></p>
+implemented in a comparatively small amount of code and to be less
+prone to bugs and interoperability issues.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">As a result of simplification, however, CRIs are not capable of
 expressing all URIs permitted by the generic syntax of <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> (hence
 the "constrained" in "Constrained Resource Identifier").
@@ -1401,7 +1402,7 @@ The supported subset includes all URIs of the
 <span><a href="#RFC8141" class="internal xref">Uniform Resource Names (URNs)</a> [<a href="#RFC8141" class="cite xref">RFC8141</a>]</span>, and other similar URIs.
 The exact constraints are defined in <a href="#constraints" class="auto internal xref">Section 2</a>.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">This RFC creates a "CRI Scheme Numbers" registry and updates <a href="#RFC7595" class="auto internal xref">RFC7595</a>
-to add a note on how this new registry cooperates with the URI Schemes
+to add a note on how this new registry cooperates with the "URI Schemes"
 registry that <a href="#RFC7595" class="auto internal xref">RFC7595</a> describes.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <div id="notational-conventions">
 <section id="section-1.1">
@@ -1694,7 +1695,7 @@ embedded dots;<a href="#section-3-5.2.1" class="pilcrow">¶</a></p>
 (<a href="#c-port-omitted" class="auto internal xref">C7</a>);<a href="#section-3-5.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-5.4">
-          <p id="section-3-5.4.1">map path segments, query parameters and the fragment identifier to
+          <p id="section-3-5.4.1">map path segments, query parameters, and the fragment identifier to
 NFC form (<a href="#c-path-segment" class="auto internal xref">C9</a>, <a href="#c-query" class="auto internal xref">C10</a>, <a href="#c-fragment" class="auto internal xref">C11</a>).<a href="#section-3-5.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
@@ -1702,7 +1703,7 @@ NFC form (<a href="#c-path-segment" class="auto internal xref">C9</a>, <a href="
 further normalization.
 All operations that operate on a CRI <span class="bcp14">SHOULD</span> rely on the
 assumption that the CRI is appropriately pre-normalized.
-(This does not contradict the requirement that when CRIs are
+(This does not contradict the requirement that, when CRIs are
 transferred, recipients must operate on as-good-as untrusted input and
 fail gracefully in the face of malicious inputs.)<a href="#section-3-6" class="pilcrow">¶</a></p>
 <p id="section-3-7">CRIs have been designed with the objective that, after the above
@@ -2126,7 +2127,8 @@ These CRI references never carry a <code>discard</code> section: the value of
 [true,                  / discard /
  [".well-known",        / path /
   "core"],
- ["rt=temperature-c"]]  / query /
+ ["rt=temperature-c"]  / query /
+]
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
@@ -2171,7 +2173,7 @@ than those that would constitute a <code>scheme</code>.<a href="#section-5.1.4-3
         <h3 id="name-ingesting-and-encoding-a-cr">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-ingesting-and-encoding-a-cr" class="section-name selfRef">Ingesting and encoding a CRI Reference</a>
         </h3>
-<p id="section-5.2-1">From an abstract point of view, a CRI Reference is a data structure
+<p id="section-5.2-1">From an abstract point of view, a CRI reference is a data structure
 with six sections:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">scheme, authority, discard, path, query, fragment<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <p id="section-5.2-3">We refer to this as the <em>abstract form</em>, while the <em>interchange form</em> (<a href="#cddl" class="auto internal xref">Figure 2</a>) has either
@@ -2182,7 +2184,7 @@ never both of these alternatives.<a href="#section-5.2-3" class="pilcrow">¶</a>
 except for discard,
 which is always an unsigned integer or <code>true</code>.  If scheme and/or
 authority are non-null, discard is set to <code>true</code>.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
-<p id="section-5.2-5">When ingesting a CRI Reference that is in interchange form, those
+<p id="section-5.2-5">When ingesting a CRI reference that is in interchange form, those
 sections are filled in from interchange form (unset sections are
 filled with null), and the following steps are performed:<a href="#section-5.2-5" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -2240,7 +2242,7 @@ that do not use indefinite length encoding, as mandated in
 <p id="section-5.2.1-6">The unprocessable CRI is treated as an opaque identifier
 that is distinct from all processable CRIs,
 and distinct from all unprocessable CRIs with different CBOR representations.
-It is up to implementation whether unprocessable CRIs with identical representations
+It is up to the implementation whether unprocessable CRIs with identical representations
 are treated as identical to each other or not.
 Unprocessable CRIs cannot be dereferenced,
 and it is an error to query any of their components.<a href="#section-5.2.1-6" class="pilcrow">¶</a></p>
@@ -2329,7 +2331,7 @@ query is non-null in the CRI reference.<a href="#section-5.3-3.5.1" class="pilcr
       </h2>
 <p id="section-6-1">CRIs are meant to replace both <span><a href="#STD66" class="internal xref">Uniform Resource Identifiers (URIs)</a> [<a href="#STD66" class="cite xref">STD66</a>]</span>
 and <span><a href="#RFC3987" class="internal xref">Internationalized Resource Identifiers (IRIs)</a> [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>
-in <span><a href="#RFC7228" class="internal xref">constrained environments</a> [<a href="#RFC7228" class="cite xref">RFC7228</a>]</span>.
+in constrained environments <span>[<a href="#RFC7228" class="cite xref">RFC7228</a>]</span><span>[<a href="#I-D.ietf-iotops-7228bis" class="cite xref">I-D.ietf-iotops-7228bis</a>]</span>.
 Applications in these environments may never need to use URIs and IRIs
 directly, especially when the resource identifier is used simply for
 identification purposes or when the CRI can be directly converted into a
@@ -2504,7 +2506,7 @@ each item, separated by an ampersand ("&amp;") character.
 Otherwise, the query component is unset.<a href="#section-6.1-2.8.1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2.8.2">Any character in the value of a <code>query</code> item that is not
 in the set of unreserved characters or "sub-delims" or a colon
-(":"), commercial at ("@"), slash ("/") or question mark ("?")
+(":"), commercial at ("@"), slash ("/"), or question mark ("?")
 character <span class="bcp14">MUST</span> be percent-encoded.
 Additionally, any ampersand character ("&amp;") in the item
 value <span class="bcp14">MUST</span> be percent-encoded.<a href="#section-6.1-2.8.2" class="pilcrow">¶</a></p>
@@ -2518,7 +2520,7 @@ item.
 Otherwise, the fragment component is unset.<a href="#section-6.1-2.10.1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2.10.2">Any character in the value of a <code>fragment</code> item that is
 not in the set of unreserved characters or "sub-delims" or a colon
-(":"), commercial at ("@"), slash ("/") or question mark ("?")
+(":"), commercial at ("@"), slash ("/"), or question mark ("?")
 character <span class="bcp14">MUST</span> be percent-encoded.<a href="#section-6.1-2.10.2" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
@@ -2772,7 +2774,7 @@ component's unsigned integer value; otherwise, let »port« be
 the default port number for the scheme.<a href="#section-8.1.1-3.5.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.6">
-              <p id="section-8.1.1-3.6.1">If »port« does not equal the request's destination UDP port,
+              <p id="section-8.1.1-3.6.1">If »port« does not equal the request's destination port,
 include a Uri-Port Option and let that option's value be »port«.<a href="#section-8.1.1-3.6.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.7">
@@ -2786,7 +2788,7 @@ value of that element.<a href="#section-8.1.1-3.7.2" class="pilcrow">¶</a></p>
             <li id="section-8.1.1-3.8">
               <p id="section-8.1.1-3.8.1">If »cri« has a <code>query</code> component, then, for each element in the
 <code>query</code> component, include a Uri-Query Option and let that
-option's value be the be the text string
+option's value be the text string
 value of that element.<a href="#section-8.1.1-3.8.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
@@ -2824,7 +2826,7 @@ if one is present in the request's destination, add a <code>zone-id</code>.<a hr
             <li id="section-8.1.2-2.3">
               <p id="section-8.1.2-2.3.1">If the request includes a Uri-Port Option, let »port« be that
 option's value.  Otherwise, let »port« be the request's
-destination UDP port.
+destination port.
 If »port« is not the default port for the scheme, then insert
 the integer value of »port« as the value of <code>port</code> in the
 authority.
@@ -2982,7 +2984,7 @@ defines its general Information Model as:<a href="#section-8.3-1" class="pilcrow
 AIF-Generic&lt;Toid, Tperm&gt; = [* [Toid, Tperm]]
 </pre><a href="#section-8.3-2" class="pilcrow">¶</a>
 </div>
-<p id="section-8.3-3">Using the definitions in <a href="#cddl" class="auto internal xref">Figure 2</a> together with the <span>[<a href="#RFC9237" class="cite xref">RFC9237</a>]</span> default TPerm
+<p id="section-8.3-3">Using the definitions in <a href="#cddl" class="auto internal xref">Figure 2</a> together with the <span>[<a href="#RFC9237" class="cite xref">RFC9237</a>]</span> default Tperm
 choice <code>REST-method-set</code>, this information model can be specialized as
 in:<a href="#section-8.3-3" class="pilcrow">¶</a></p>
 <div class="lang-cddl sourcecode" id="section-8.3-4">
@@ -3039,7 +3041,9 @@ items) or exhaustion of the call stack (stack overflow).
 See Section <a href="https://rfc-editor.org/rfc/rfc8949#section-10" class="relref">10</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span> for additional
 security considerations relating to CBOR.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <p id="section-10-2">The security considerations discussed in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-7" class="relref">7</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> and
-<span><a href="https://rfc-editor.org/rfc/rfc3987#section-8" class="relref">Section 8</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> for URIs and IRIs also apply to CRIs.<a href="#section-10-2" class="pilcrow">¶</a></p>
+<span><a href="https://rfc-editor.org/rfc/rfc3987#section-8" class="relref">Section 8</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> for URIs and IRIs also apply to CRIs.
+The security considerations discussed for URIs in <span><a href="https://rfc-editor.org/rfc/rfc9237#section-6" class="relref">Section 6</a> of [<a href="#RFC9237" class="cite xref">RFC9237</a>]</span>
+apply analogously to AIF-CRI <a href="#toid" class="auto internal xref">Section 8.3</a>.<a href="#section-10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -3052,9 +3056,9 @@ security considerations relating to CBOR.<a href="#section-10-1" class="pilcrow"
         <h3 id="name-cri-scheme-numbers-registry">
 <a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-cri-scheme-numbers-registry" class="section-name selfRef">CRI Scheme Numbers Registry</a>
         </h3>
-<p id="section-11.1-1">This specification defines a new "CRI Scheme Numbers" sub-registry in
-the "CoRE Parameters" registry <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, with the
-policy "Expert Review" (Section <a href="https://rfc-editor.org/rfc/rfc8126#section-4.5" class="relref">4.5</a> of RFC 8126 <span>[<a href="#BCP26" class="cite xref">BCP26</a>]</span>).
+<p id="section-11.1-1">This specification defines a new "CRI Scheme Numbers" registry in the
+"Constrained RESTful Environments (CoRE) Parameters" registry group
+<span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, with the policy "Expert Review" (Section <a href="https://rfc-editor.org/rfc/rfc8126#section-4.5" class="relref">4.5</a> of RFC 8126 <span>[<a href="#BCP26" class="cite xref">BCP26</a>]</span>).
 The objective is to have CRI scheme number values registered for all
 registered URI schemes (Uniform Resource Identifier (URI) Schemes
 registry), as well as exceptionally for certain text strings that the
@@ -3282,7 +3286,7 @@ note.</span><a href="#section-11.5-3" class="pilcrow">¶</a></p>
         <h3 id="name-content-format-for-cri-in-a">
 <a href="#section-11.6" class="section-number selfRef">11.6. </a><a href="#name-content-format-for-cri-in-a" class="section-name selfRef">Content-Format for CRI in AIF</a>
         </h3>
-<p id="section-11.6-1">IANA is requested to register a Content-Format number in the "CoAP
+<p id="section-11.6-1">IANA is requested to register a Content-Format identifier in the "CoAP
 Content-Formats" registry (range 256-999), within the "Constrained
 RESTful Environments (CoRE) Parameters" registry group
 <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, as follows:<a href="#section-11.6-1" class="pilcrow">¶</a></p>
@@ -3294,15 +3298,15 @@ RESTful Environments (CoRE) Parameters" registry group
           </caption>
 <thead>
             <tr>
-              <th class="text-left" rowspan="1" colspan="1">Media Type</th>
-              <th class="text-left" rowspan="1" colspan="1">Encoding</th>
+              <th class="text-left" rowspan="1" colspan="1">Content Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Content Coding</th>
               <th class="text-left" rowspan="1" colspan="1">ID</th>
               <th class="text-left" rowspan="1" colspan="1">Reference</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">application/aif+cbor; Toid=CRI-local-part</td>
+              <td class="text-left" rowspan="1" colspan="1">application/aif+cbor;Toid=CRI-local-part</td>
               <td class="text-left" rowspan="1" colspan="1">-</td>
               <td class="text-left" rowspan="1" colspan="1">TBD</td>
               <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
@@ -3427,6 +3431,10 @@ note.</span><a href="#section-11.6-3" class="pilcrow">¶</a></p>
             <span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"URI Design and Ownership"</span>, <span class="seriesInfo">BCP 190</span>, <span class="seriesInfo">RFC 8820</span>, <span class="seriesInfo">DOI 10.17487/RFC8820</span>, <time datetime="2020-06" class="refDate">June 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8820">https://www.rfc-editor.org/info/rfc8820</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
+<dt id="GREENSPUN-10">[GREENSPUN-10]</dt>
+        <dd>
+<span class="refAuthor">Wikipedia</span>, <span class="refTitle">"Greenspun's tenth rule"</span>, <span>&lt;<a href="https://en.wikipedia.org/wiki/Greenspun's_tenth_rule">https://en.wikipedia.org/wiki/Greenspun's_tenth_rule</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.bormann-cbor-notable-tags">[I-D.bormann-cbor-notable-tags]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Notable CBOR Tags"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-notable-tags-12</span>, <time datetime="2025-02-12" class="refDate">12 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-notable-tags-12">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-notable-tags-12</a>&gt;</span>. </dd>
@@ -3442,6 +3450,10 @@ note.</span><a href="#section-11.6-3" class="pilcrow">¶</a></p>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-16</span>, <time datetime="2025-01-08" class="refDate">8 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-iotops-7228bis">[I-D.ietf-iotops-7228bis]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refAuthor">Ersue, M.</span>, <span class="refAuthor">Keränen, A.</span>, and <span class="refAuthor">C. Gomez</span>, <span class="refTitle">"Terminology for Constrained-Node Networks"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-iotops-7228bis-01</span>, <time datetime="2025-01-08" class="refDate">8 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-iotops-7228bis-01">https://datatracker.ietf.org/doc/html/draft-ietf-iotops-7228bis-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC3490">[RFC3490]</dt>
         <dd>
