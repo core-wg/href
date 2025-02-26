@@ -63,6 +63,7 @@ informative:
   I-D.ietf-cbor-edn-literals: edn
   I-D.carpenter-6man-rfc6874bis: zonebis
   I-D.bormann-cbor-notable-tags: notable
+  I-D.draft-ietf-core-href-18: dash18
   RFC9170: use-lose
 normative:
   STD66: uri
@@ -1359,8 +1360,8 @@ Numbers registration simply stays in place, even if the URI Schemes
 registration happens to be for something different from what the
 expert had in mind at the time for the CRI Scheme Numbers
 registration.
-Also note that the initial registrations in {{tab-numbers}} in
-{{sec-numbers}} already include such registrations for the text strings
+Also note that the initial registrations in {{sec-numbers}} already
+include such registrations for the text strings
 "mqtt" and "mqtts".)
 
 A registration in the CRI Scheme Numbers registry does not imply that
@@ -1392,7 +1393,7 @@ Reference:
 ### Initial Registrations
 
 The initial registrations for the CRI Scheme Numbers registry are
-provided in {{tab-numbers}} in {{sec-numbers}}.
+provided in {{sec-numbers}}.
 
 
 ## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
@@ -1474,14 +1475,15 @@ RESTful Environments (CoRE) Parameters" registry group
 
 [^replace-xxxx]
 
-{{tab-numbers}} defines the initial mapping from CRI scheme numbers to
-URI scheme names.
-
-{::include code/schemes-numbers.md}
-{: #tab-numbers title="Mapping Scheme Numbers to Scheme Names"}
+Table 8 in {{Appendix A of -dash18}} lists the initial mapping from
+CRI scheme numbers to URI scheme names.
+(This table was developed with a previous Internet-Draft of the RFC
+derived from this document but is not copied into the actual RFC because it
+will be out-of-date quickly, and because IANA registry should be the focal
+point for users of this registry, anyway.)
 
 The assignments from this table can be extracted from the XML form of
-this document (when stored in a file "this.xml") into CSV form
+{{-dash18}} (when stored in a file "this.xml") into CSV form
 {{?RFC4180}} using this short Ruby program:
 
 ~~~ ruby
