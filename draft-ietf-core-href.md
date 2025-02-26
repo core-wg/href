@@ -162,7 +162,8 @@ components in [Concise Binary Object Representation (CBOR)](#STD94)
 instead of a sequence of characters.
 This allows typical operations on URI references such as parsing,
 comparison, and reference resolution (including all corner cases) to be
-implemented in a comparatively small amount of code.
+implemented in a comparatively small amount of code and to be less
+prone to bugs and interoperability issues.
 
 As a result of simplification, however, CRIs are not capable of
 expressing all URIs permitted by the generic syntax of {{STD66}} (hence
