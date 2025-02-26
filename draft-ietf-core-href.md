@@ -65,6 +65,12 @@ informative:
   I-D.carpenter-6man-rfc6874bis: zonebis
   I-D.bormann-cbor-notable-tags: notable
   RFC9170: use-lose
+  GREENSPUN-10:
+    target: https://en.wikipedia.org/wiki/Greenspun's_tenth_rule
+    title: Greenspun's tenth rule
+    date: false
+    author:
+      org: Wikipedia
 normative:
   STD66: uri
 # RFC 3986
@@ -148,7 +154,7 @@ This can be a problem especially in constrained environments {{-term}}{{-termbis
 where nodes often have severe code size and memory size limitations.
 As a result, many implementations in such environments support only an
 ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
-half of {{STD66}}.
+half of {{STD66}} (aperçu adapted from {{GREENSPUN-10}}).
 
 This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
