@@ -1480,9 +1480,10 @@ RESTful Environments (CoRE) Parameters" registry group
 
 Table 8 in {{Appendix A of -dash18}} lists the initial mapping from
 CRI scheme numbers to URI scheme names.
-(This table was developed with a previous Internet-Draft of the RFC
-derived from this document but is not copied into the actual RFC because it
-will be out-of-date quickly, and because IANA registry should be the focal
+(This table was developed with a previous revision of the
+Internet-Draft of the RFC derived from this document but is not copied
+into the current draft or the actual RFC because it will be
+out-of-date quickly, and because the IANA registry should be the focal
 point for users of this registry, anyway.)
 
 The assignments from this table can be extracted from the XML form of
