@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-25T01:51:54.530517+00:00",
+  "timestamp": "2025-02-27T01:51:55.594289+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -1289,7 +1289,7 @@
       "labels": [],
       "body": "Section 11.1.2 has for the \"Reference\" field: \"a reference to a document, if available, or the registrant\" -> maybe better to clarify to \"a reference to a document requesting the registration, if available, or the registrant\"\n\n  Is this intended? The initial registry contents only have \"RFC-XXXX\" as the reference which is the document requesting the registration, not the document describing the scheme semantics.\n\n  If the Designated Expert at own initiative requests the registration per 11.1.1 , what would the \"Reference\" field contain then? The name of the expert or the RFC number that defines the new scheme?\n\n",
       "createdAt": "2025-02-14T09:07:53Z",
-      "updatedAt": "2025-02-14T14:15:46Z",
+      "updatedAt": "2025-02-26T12:40:49Z",
       "closedAt": null,
       "comments": [
         {
@@ -1319,6 +1319,13 @@
           "body": "Ok so that could also be:\n\n> a reference to a document, if available, or the registrant. A document that describes the scheme should preferably be referenced.\n\nJust as sanity check: if an IETF stream document requests IANA to add an existing scheme \"foo\" to the CRI Scheme Numbers registry, then the RFC number of this document will not appear in the registry so it's not possible to trace back who made the registration or what document did?\n\n\n\n",
           "createdAt": "2025-02-14T14:15:45Z",
           "updatedAt": "2025-02-14T14:15:45Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "I'm wondering how much of this needs to be in the document.  I would normally expect IANA to put useful reference information in there (original scheme registration, potentially document that applies this to the CRI space).  For the Schemes in Appendix A, the reference currently is RFC-XXXX.",
+          "createdAt": "2025-02-26T12:40:48Z",
+          "updatedAt": "2025-02-26T12:40:48Z"
         }
       ]
     }
@@ -4715,24 +4722,26 @@
       "id": "PR_kwDOFyeisM6LvwMX",
       "title": "Nits around SP2",
       "url": "https://github.com/core-wg/href/pull/107",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "There's some extra context in my upcoming review mail, but those should reasonably stand on their own.",
       "createdAt": "2025-02-19T13:00:07Z",
-      "updatedAt": "2025-02-20T16:14:09Z",
+      "updatedAt": "2025-02-26T12:51:19Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
       "headRepository": "core-wg/href",
       "headRefName": "nits-sp2",
       "headRefOid": "6fa72ceaf8bedbfe55a058491b87e5723a0de446",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-26T12:51:18Z",
+      "mergedAt": "2025-02-26T12:51:18Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "65538d758d7c70dd4e0af443f177897aff5ede82"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4941,6 +4950,90 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "number": 111,
+      "id": "PR_kwDOFyeisM6Mo-7a",
+      "title": "Trim 16 pages by referencing initial IANA table from previous I-D.",
+      "url": "https://github.com/core-wg/href/pull/111",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-26T13:08:23Z",
+      "updatedAt": "2025-02-26T21:47:45Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "65538d758d7c70dd4e0af443f177897aff5ede82",
+      "headRepository": "core-wg/href",
+      "headRefName": "trim-fat",
+      "headRefOid": "0ad48c57edee0e0a784f83a5691b816ca5cbd7d8",
+      "closedAt": "2025-02-26T21:47:43Z",
+      "mergedAt": "2025-02-26T21:47:43Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "ebb0e523cf79e8e30eaaf63056002d4453b9b6b5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6dr7Wb",
+          "commit": {
+            "abbreviatedOid": "0ad48c5"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-26T18:53:38Z",
+          "updatedAt": "2025-02-26T18:53:38Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 112,
+      "id": "PR_kwDOFyeisM6MpYQ4",
+      "title": "Clerical errors and gaps pointed out by Marco Tiloca",
+      "url": "https://github.com/core-wg/href/pull/112",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Deviations:\r\n\r\n[Nits]\r\n\r\n* Abstract (similar) - s/URI Schemes registry/\"URI Schemes registry\" (similar) - s/RFC 7595 describes cooperates/described by RFC 7595 cooperates\r\n\r\n* Section 5.1 (don't agree) - s/query, fragment/query, and fragment\r\n\r\n* Section 5.2.1 (don't agree) - s/as a CRI,/as a CRI, or\r\n\r\n[Section 5.3]\r\n\r\n* Step 3 says:\r\n\r\n  > and set a true authority to null.\r\n\r\n  I guess it means the following.\r\n\r\n  > and set authority in the buffer to null.\r\n\r\n-> We previously made that \u00bband set a `true` authority to `null`\u00ab\r\n\r\nMaybe that is not perfect for the plaintext rendering.",
+      "createdAt": "2025-02-26T13:43:42Z",
+      "updatedAt": "2025-02-26T21:48:14Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "65538d758d7c70dd4e0af443f177897aff5ede82",
+      "headRepository": "core-wg/href",
+      "headRefName": "mt-clerical",
+      "headRefOid": "9dc42dc3d0b7a32678640e2bddf9cdbf3cd0f328",
+      "closedAt": "2025-02-26T21:48:12Z",
+      "mergedAt": "2025-02-26T21:48:12Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "2c523a18358b5dd89a6db66720cb553c27430c8c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6dr3rv",
+          "commit": {
+            "abbreviatedOid": "9dc42dc"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good to me. Thanks!",
+          "createdAt": "2025-02-26T18:46:46Z",
+          "updatedAt": "2025-02-26T18:46:46Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
