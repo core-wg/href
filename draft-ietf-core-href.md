@@ -366,9 +366,9 @@ For easier understanding, they are listed here:
 In general, resource identifiers are generated when a
 resource is initially created or exposed under a certain resource identifier.
 
-A Constrained Resource Identifier SHOULD be created by
-the naming authority that governs the namespace of the resource
-identifier (see also {{BCP190}}).
+The naming authority that creates
+a Constrained Resource Identifier SHOULD be the authority that governs
+the namespace of the resource identifier (see also {{BCP190}}).
 For example, for the resources of an HTTP origin server,
 that server is responsible for creating the CRIs for those resources.
 
