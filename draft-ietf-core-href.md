@@ -203,11 +203,11 @@ RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
 ({{-edn}} more rigorously defines and further extends EDN.)
 
 
-# Constraints {#constraints}
+# From URIs to CRIs: Considerations and Constraints {#constraints}
 
 A Constrained Resource Identifier consists of the same five components
 as a URI: scheme, authority, path, query, and fragment.
-The components are subject to the following constraints:
+The components are subject to the following considerations and constraints:
 
 {: type="C%d."}
 1. {:#c-scheme} The scheme name can be any Unicode string (see
