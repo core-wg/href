@@ -164,7 +164,10 @@ This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
 components in [Concise Binary Object Representation (CBOR)](#STD94)
 instead of a sequence of characters.
-This allows typical operations on URI references such as parsing,
+Analogously, *CRI references* are to CRIs what URI references are to
+URIs.
+
+CRIs and CRI references allow typical operations on URIs and URI references such as parsing,
 comparison, and reference resolution (including all corner cases) to be
 implemented in a comparatively small amount of code and to be less
 prone to bugs and interoperability issues.
@@ -177,6 +180,7 @@ The supported subset includes all URIs of the
 [Hypertext Transfer Protocol (HTTP)](#STD97),
 [Uniform Resource Names (URNs)](#RFC8141), and other similar URIs.
 The exact constraints are defined in {{constraints}}.
+CRI extensions ({{extending}}) can be defined to address some of the constraints.
 
 This RFC creates a "CRI Scheme Numbers" registry and updates {{RFC7595}}
 to add a note on how this new registry cooperates with the "URI Schemes"
