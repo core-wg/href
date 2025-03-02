@@ -280,7 +280,7 @@ The components are subject to the following constraints:
    also relieve the application from removing a lone zero-length path
    segment before putting path segments into CoAP Options, i.e., from
    performing the check and jump in item 8 of {{Section 6.4 of
-   -coap}}.  See also {{<sp-initial-empty}} in {{the-small-print}}.)
+   -coap}}.  See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 9. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
@@ -288,7 +288,7 @@ The components are subject to the following constraints:
    Note that this includes the zero-length string.
 
    If no authority is present in a CRI, the leading path segment cannot be empty.
-   (See also {{<sp-initial-empty}} in {{the-small-print}}.)
+   (See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 10. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
@@ -347,23 +347,28 @@ For easier understanding, they are listed here:
   and with "." being an unreserved character, expressing them as "%2e" and "%2e%2e" is not even viable,
   let alone practical).
 
-* CRIs without authority whose path starts with two or more empty segments.
+* CRIs without authority whose path starts with a leading empty segment
+  followed by at least one more segment.
 
-  When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
-  and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
+  When converted to URIs, these would violate the requirement that in
+  absence of an authority, a URI's path cannot begin with two slash
+  characters.
+  (E.g., two leading empty segments would be indistinguishable from a URI with a shorter path and a present but empty authority component.)
+  (Compare {{<c-path-segment}}.)
 
-* {:#naked-rootless} CRIs without authority that are rootless and do not have a path
-  component (e.g., `["a", true]`), which would be indistinguishable
-  from its root-based equivalent (`["a"]`) as both would have the URI `a:`.
+* {:#naked-rootless} CRIs without authority that are rootless and have
+  an empty path
+  component (e.g., `["a", true, []]`), which would be indistinguishable
+  from its root-based equivalent (`["a", null, []]`) as both would have the URI `a:`.
 
 # Creation and Normalization
 
 In general, resource identifiers are generated when a
 resource is initially created or exposed under a certain resource identifier.
 
-A Constrained Resource Identifier SHOULD be created by
-the naming authority that governs the namespace of the resource
-identifier (see also {{BCP190}}).
+The naming authority that creates
+a Constrained Resource Identifier SHOULD be the authority that governs
+the namespace of the resource identifier (see also {{BCP190}}).
 For example, for the resources of an HTTP origin server,
 that server is responsible for creating the CRIs for those resources.
 
@@ -425,8 +430,8 @@ False negatives can be caused, for example, by CRIs that are not
 appropriately pre-normalized and by resource aliases.
 
 When CRIs are compared to select (or avoid) a network action, such as
-retrieval of a representation, fragment components (if any) should be
-excluded from the comparison.
+retrieval of a representation, fragment components (if any) do not
+play a role and typically are excluded from the comparison.
 
 
 # CRI References
@@ -461,7 +466,7 @@ reference resolution MUST yield the original CRI.
 
 When testing for equivalence or difference, it is rarely appropriate
 for applications to directly compare CRI references; instead, the
-references should be resolved to their respective CRI before
+references are typically resolved to their respective CRI before
 comparison.
 
 ## CBOR Representation {#cbor-representation}
@@ -798,7 +803,7 @@ URI to CRI
   or to URIs analogously to processing URIs into CoAP Options and
   back, with the exception that item 8 of {{Section 6.4 of -coap}}
   and item 7 of {{Section 6.5 of -coap}} do not apply to CRI processing.
-  See {{<sp-initial-empty}} in {{the-small-print}} for more details.
+  See {{<sp-leading-empty}} in {{the-small-print}} for more details.
 
 CRI to IRI
 : {:#critoiri} A CRI can be converted to an IRI by first converting it to a URI as
@@ -1514,7 +1519,7 @@ implementers of CRIs need to be aware of, but that are not
 representative of the normal operation of CRIs.
 
 {:sp}
-1. {:#sp-initial-empty} Initial (Lone/Leading) Empty Path Segments:
+1. {:#sp-leading-empty} Initial (Lone/Leading) Empty Path Segments:
 
   * *Lone empty path segments:*
   As per {{-uri}}, `s://x` is distinct from `s://x/` -- i.e., a URI
@@ -1534,7 +1539,7 @@ representative of the normal operation of CRIs.
 
   * *Leading empty path segments without authority*:
   Somewhat related, note also that URIs and URI references that do not
-  carry an authority cannot represent initial empty path segments
+  carry an authority cannot represent leading empty path segments
   (i.e., that are followed by further path segments): `s://x//foo`
   works, but in a `s://foo` URI or an (absolute-path) URI reference of
   the form `//foo` the double slash would be mis-parsed as leading in
