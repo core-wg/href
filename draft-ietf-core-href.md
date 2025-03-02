@@ -347,14 +347,19 @@ For easier understanding, they are listed here:
   and with "." being an unreserved character, expressing them as "%2e" and "%2e%2e" is not even viable,
   let alone practical).
 
-* CRIs without authority whose path starts with two or more empty segments.
+* CRIs without authority whose path starts with a leading empty segment
+  followed by at least one more segment.
 
-  When converted to URIs, these would violate the requirement that in absence of an authority, a URI's path cannot begin with two slash characters,
-  and they would be indistinguishable from a URI with a shorter path and a present but empty authority component.
+  When converted to URIs, these would violate the requirement that in
+  absence of an authority, a URI's path cannot begin with two slash
+  characters.
+  (E.g., two leading empty segments would be indistinguishable from a URI with a shorter path and a present but empty authority component.)
+  (Compare {{<c-path-segment}}.)
 
-* {:#naked-rootless} CRIs without authority that are rootless and do not have a path
-  component (e.g., `["a", true]`), which would be indistinguishable
-  from its root-based equivalent (`["a"]`) as both would have the URI `a:`.
+* {:#naked-rootless} CRIs without authority that are rootless and have
+  an empty path
+  component (e.g., `["a", true, []]`), which would be indistinguishable
+  from its root-based equivalent (`["a", null, []]`) as both would have the URI `a:`.
 
 # Creation and Normalization
 
