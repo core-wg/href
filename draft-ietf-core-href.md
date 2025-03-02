@@ -280,7 +280,7 @@ The components are subject to the following constraints:
    also relieve the application from removing a lone zero-length path
    segment before putting path segments into CoAP Options, i.e., from
    performing the check and jump in item 8 of {{Section 6.4 of
-   -coap}}.  See also {{<sp-initial-empty}} in {{the-small-print}}.)
+   -coap}}.  See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 9. {:#c-path-segment} A path segment can be any Unicode string that is
    in NFC, with the exception of the special "." and ".." complete path
@@ -288,7 +288,7 @@ The components are subject to the following constraints:
    Note that this includes the zero-length string.
 
    If no authority is present in a CRI, the leading path segment cannot be empty.
-   (See also {{<sp-initial-empty}} in {{the-small-print}}.)
+   (See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 10. {:#c-query} A query always consists of one or more query parameters.
    A query parameter can be any Unicode string that is in NFC.
@@ -798,7 +798,7 @@ URI to CRI
   or to URIs analogously to processing URIs into CoAP Options and
   back, with the exception that item 8 of {{Section 6.4 of -coap}}
   and item 7 of {{Section 6.5 of -coap}} do not apply to CRI processing.
-  See {{<sp-initial-empty}} in {{the-small-print}} for more details.
+  See {{<sp-leading-empty}} in {{the-small-print}} for more details.
 
 CRI to IRI
 : {:#critoiri} A CRI can be converted to an IRI by first converting it to a URI as
@@ -1514,7 +1514,7 @@ implementers of CRIs need to be aware of, but that are not
 representative of the normal operation of CRIs.
 
 {:sp}
-1. {:#sp-initial-empty} Initial (Lone/Leading) Empty Path Segments:
+1. {:#sp-leading-empty} Initial (Lone/Leading) Empty Path Segments:
 
   * *Lone empty path segments:*
   As per {{-uri}}, `s://x` is distinct from `s://x/` -- i.e., a URI
@@ -1534,7 +1534,7 @@ representative of the normal operation of CRIs.
 
   * *Leading empty path segments without authority*:
   Somewhat related, note also that URIs and URI references that do not
-  carry an authority cannot represent initial empty path segments
+  carry an authority cannot represent leading empty path segments
   (i.e., that are followed by further path segments): `s://x//foo`
   works, but in a `s://foo` URI or an (absolute-path) URI reference of
   the form `//foo` the double slash would be mis-parsed as leading in
