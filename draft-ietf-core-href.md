@@ -430,8 +430,8 @@ False negatives can be caused, for example, by CRIs that are not
 appropriately pre-normalized and by resource aliases.
 
 When CRIs are compared to select (or avoid) a network action, such as
-retrieval of a representation, fragment components (if any) should be
-excluded from the comparison.
+retrieval of a representation, fragment components (if any) do not
+play a role and typically are excluded from the comparison.
 
 
 # CRI References
@@ -466,7 +466,7 @@ reference resolution MUST yield the original CRI.
 
 When testing for equivalence or difference, it is rarely appropriate
 for applications to directly compare CRI references; instead, the
-references should be resolved to their respective CRI before
+references are typically resolved to their respective CRI before
 comparison.
 
 ## CBOR Representation {#cbor-representation}
