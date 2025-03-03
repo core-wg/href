@@ -561,7 +561,7 @@ references:
 |-----------|---------------|
 | scheme    | –             |
 | authority | null          |
-| discard   | –             |
+| discard   | 0             |
 | path      | []            |
 | query     | null          |
 | fragment  | null          |
