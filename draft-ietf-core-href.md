@@ -75,6 +75,7 @@ informative:
     date: false
     author:
       org: Wikipedia
+  MNU: I-D.bormann-dispatch-modern-network-unicode
 normative:
   STD66: uri
 # RFC 3986
@@ -249,7 +250,7 @@ The components are subject to the following constraints:
 5. {:#c-reg-name} A registered name is a sequence of one or more
    *labels*, which, when joined with dots (".") in between them,
    result in a Unicode string that is lowercase and in Unicode
-   Normalization Form C (NFC) (see Definition D120 in {{Unicode}}).
+   Normalization Form C (NFC) (see Definition D120 in {{Unicode}} and {{norm}}).
    (The syntax may be further restricted by the scheme.
    As per {{Section 3.2.2 of RFC3986@-uri}}, a registered name can be empty, for
    which case a scheme can define a default for the host.)
@@ -283,7 +284,7 @@ The components are subject to the following constraints:
    -coap}}.  See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 9. {:#c-path-segment} A path segment can be any Unicode string that is
-   in NFC, with the exception of the special "." and ".." complete path
+   in NFC ({{norm}}), with the exception of the special "." and ".." complete path
    segments.
    Note that this includes the zero-length string.
 
@@ -291,7 +292,7 @@ The components are subject to the following constraints:
    (See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 10. {:#c-query} A query always consists of one or more query parameters.
-   A query parameter can be any Unicode string that is in NFC.
+   A query parameter can be any Unicode string that is in NFC {{norm}}.
    It is often in the form of a "key=value" pair.
    When converting a CRI to a URI, query parameters are separated by an
    ampersand ("&") character.
@@ -301,7 +302,7 @@ The components are subject to the following constraints:
    and a single query parameter that is the empty string.
 
 11. {:#c-fragment} A fragment identifier can be any Unicode string that
-   is in NFC.
+   is in NFC {{norm}}.
    Fragment identifiers are optional; there is a difference between an
    absent fragment identifier and a fragment identifier that is the
    empty string.
@@ -361,7 +362,7 @@ For easier understanding, they are listed here:
   component (e.g., `["a", true, []]`), which would be indistinguishable
   from its root-based equivalent (`["a", null, []]`) as both would have the URI `a:`.
 
-# Creation and Normalization
+# Creation and Normalization {#norm}
 
 In general, resource identifiers are generated when a
 resource is initially created or exposed under a certain resource identifier.
@@ -397,6 +398,20 @@ assumption that the CRI is appropriately pre-normalized.
 (This does not contradict the requirement that, when CRIs are
 transferred, recipients must operate on as-good-as untrusted input and
 fail gracefully in the face of malicious inputs.)
+
+Note that the processing of CRIs does not imply that all the
+constraints continuously need to be checked and enforced.
+Specifically, the text normalization constraints (NFC) can be expanded
+as:
+The recipient of a CRI MAY reasonably expect the text labels to be in
+NFC form, but as with any input MUST NOT fail (beyond possibly not
+being able to process the specific CRI) if they are not.
+So the onus of fulfilling the expectation is on the original creator
+of the CRI, not on each processor (including consumer).
+This consideration extends to the sources the CRI creator uses in
+building the labels, which the CRI creator MAY in turn expect to be in
+NFC form if that expectation is reasonable.
+See {{Appendix C of MNU}} for some background.
 
 CRIs have been designed with the objective that, after the above
 normalization, conversion of two distinct CRIs to URIs do
