@@ -134,9 +134,9 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
      11.2.  Update to "Uniform Resource Identifier (URI) Schemes"
             Registry . . . . . . . . . . . . . . . . . . . . . . . .  32
      11.3.  CBOR Diagnostic Notation Application-extension Identifiers
-            Registry . . . . . . . . . . . . . . . . . . . . . . . .  32
+            Registry . . . . . . . . . . . . . . . . . . . . . . . .  33
      11.4.  CoAP Option Numbers Registry . . . . . . . . . . . . . .  33
-     11.5.  Media-Type subparameters for ACE AIF . . . . . . . . . .  33
+     11.5.  Media-Type subparameters for ACE AIF . . . . . . . . . .  34
      11.6.  Content-Format for CRI in AIF  . . . . . . . . . . . . .  34
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  34
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  34
@@ -1757,6 +1757,13 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    Reference:
       a reference to a document, if available, or the registrant
 
+   The Reference field can simply be a copy of the reference field for
+   the URI-Scheme registration if that exists.  If not, it can contain
+   helpful information (including the name of the registrant) that may
+   be available for the registration, with the expectation that this
+   will be updated if a URI-Scheme registration under that URI scheme
+   name is later made.
+
 11.1.3.  Initial Registrations
 
    The initial registrations for the CRI Scheme Numbers registry are
@@ -1774,13 +1781,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    |  registry.  The number for this registration will be assigned by
    |  the Designated Expert for that registry.
 
-11.3.  CBOR Diagnostic Notation Application-extension Identifiers
-       Registry
-
-   In the "Application-Extension Identifiers" registry in the "CBOR
-   Diagnostic Notation" registry group [IANA.cbor-diagnostic-notation],
-   IANA is requested to register the application-extension identifier
-   cri as described in Table 4 and defined in Appendix C.
 
 
 
@@ -1793,6 +1793,14 @@ Bormann & Birkholz      Expires 4 September 2025               [Page 32]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+11.3.  CBOR Diagnostic Notation Application-extension Identifiers
+       Registry
+
+   In the "Application-Extension Identifiers" registry in the "CBOR
+   Diagnostic Notation" registry group [IANA.cbor-diagnostic-notation],
+   IANA is requested to register the application-extension identifier
+   cri as described in Table 4 and defined in Appendix C.
 
      +-----------------------+-------------+------------+-----------+
      | Application-extension | Description | Change     | Reference |
@@ -1830,14 +1838,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    // RFC Ed.: throughout this section, please replace RFC-XXXX with the
    // RFC number of this specification and remove this note.
 
-11.5.  Media-Type subparameters for ACE AIF
-
-   In the "Sub-Parameter Registry for application/aif+cbor and
-   application/aif+json" in the "Media Type Sub-Parameter Registries"
-   registry group [IANA.media-type-sub-parameters], IANA is requested to
-   register:
-
-
 
 
 
@@ -1849,6 +1849,13 @@ Bormann & Birkholz      Expires 4 September 2025               [Page 33]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+11.5.  Media-Type subparameters for ACE AIF
+
+   In the "Sub-Parameter Registry for application/aif+cbor and
+   application/aif+json" in the "Media Type Sub-Parameter Registries"
+   registry group [IANA.media-type-sub-parameters], IANA is requested to
+   register:
 
        +-----------+----------------+---------------+-------------+
        | Parameter | Name           | Description/  | Reference   |
@@ -1892,19 +1899,17 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
               <https://www.rfc-editor.org/info/bcp14>.
               At the time of writing, this BCP comprises the following:
 
-              Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/info/rfc2119>.
-
-
-
 
 
 Bormann & Birkholz      Expires 4 September 2025               [Page 34]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+              Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
 
               Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -1948,11 +1953,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
               IANA, "Uniform Resource Identifier (URI) Schemes",
               <https://www.iana.org/assignments/uri-schemes>.
 
-   [RFC3987]  Duerst, M. and M. Suignard, "Internationalized Resource
-              Identifiers (IRIs)", RFC 3987, DOI 10.17487/RFC3987,
-              January 2005, <https://www.rfc-editor.org/rfc/rfc3987>.
-
-
 
 
 
@@ -1961,6 +1961,10 @@ Bormann & Birkholz      Expires 4 September 2025               [Page 35]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+   [RFC3987]  Duerst, M. and M. Suignard, "Internationalized Resource
+              Identifiers (IRIs)", RFC 3987, DOI 10.17487/RFC3987,
+              January 2005, <https://www.rfc-editor.org/rfc/rfc3987>.
 
    [RFC6874]  Carpenter, B., Cheshire, S., and R. Hinden, "Representing
               IPv6 Zone Identifiers in Address Literals and Uniform
@@ -2007,16 +2011,16 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 12.2.  Informative References
 
-   [BCP190]   Best Current Practice 190,
-              <https://www.rfc-editor.org/info/bcp190>.
-              At the time of writing, this BCP comprises the following:
-
 
 
 Bormann & Birkholz      Expires 4 September 2025               [Page 36]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+   [BCP190]   Best Current Practice 190,
+              <https://www.rfc-editor.org/info/bcp190>.
+              At the time of writing, this BCP comprises the following:
 
               Nottingham, M., "URI Design and Ownership", BCP 190,
               RFC 8820, DOI 10.17487/RFC8820, June 2020,
@@ -2061,10 +2065,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
               January 2025, <https://datatracker.ietf.org/doc/html/
               draft-ietf-iotops-7228bis-01>.
 
-   [RFC3490]  Faltstrom, P., Hoffman, P., and A. Costello,
-              "Internationalizing Domain Names in Applications (IDNA)",
-              RFC 3490, DOI 10.17487/RFC3490, March 2003,
-              <https://www.rfc-editor.org/rfc/rfc3490>.
 
 
 
@@ -2073,6 +2073,11 @@ Bormann & Birkholz      Expires 4 September 2025               [Page 37]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+   [RFC3490]  Faltstrom, P., Hoffman, P., and A. Costello,
+              "Internationalizing Domain Names in Applications (IDNA)",
+              RFC 3490, DOI 10.17487/RFC3490, March 2003,
+              <https://www.rfc-editor.org/rfc/rfc3490>.
 
    [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
               Separated Values (CSV) Files", RFC 4180,
@@ -2115,12 +2120,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
               DOI 10.17487/RFC9110, June 2022,
               <https://www.rfc-editor.org/info/rfc9110>.
 
-   [W3C.REC-html52-20171214]
-              Danilo, A., Ed., Eicholz, A., Ed., Moon, S., Ed.,
-              Faulkner, S., Ed., and T. Leithead, Ed., "HTML 5.2", W3C
-              REC REC-html52-20171214, W3C REC-html52-20171214, 14
-              December 2017,
-              <https://www.w3.org/TR/2017/REC-html52-20171214/>.
+
 
 
 
@@ -2129,6 +2129,13 @@ Bormann & Birkholz      Expires 4 September 2025               [Page 38]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+   [W3C.REC-html52-20171214]
+              Danilo, A., Ed., Eicholz, A., Ed., Moon, S., Ed.,
+              Faulkner, S., Ed., and T. Leithead, Ed., "HTML 5.2", W3C
+              REC REC-html52-20171214, W3C REC-html52-20171214, 14
+              December 2017,
+              <https://www.w3.org/TR/2017/REC-html52-20171214/>.
 
 Appendix A.  Mapping Scheme Numbers to Scheme Names
 
@@ -2171,13 +2178,6 @@ Appendix B.  The Small Print
       discussing HTTP semantics, Section 6.2.3 of RFC 3986 [STD66]
       states:
 
-   |  In general, a URI that uses the generic syntax for authority with
-   |  an empty path should be normalized to a path of "/".
-
-   *  _Leading empty path segments without authority_: Somewhat related,
-      note also that URIs and URI references that do not carry an
-      authority cannot represent leading empty path segments (i.e., that
-      are followed by further path segments): s://x//foo works, but in a
 
 
 
@@ -2186,6 +2186,13 @@ Bormann & Birkholz      Expires 4 September 2025               [Page 39]
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
+   |  In general, a URI that uses the generic syntax for authority with
+   |  an empty path should be normalized to a path of "/".
+
+   *  _Leading empty path segments without authority_: Somewhat related,
+      note also that URIs and URI references that do not carry an
+      authority cannot represent leading empty path segments (i.e., that
+      are followed by further path segments): s://x//foo works, but in a
       s://foo URI or an (absolute-path) URI reference of the form //foo
       the double slash would be mis-parsed as leading in to an
       authority.
@@ -2228,19 +2235,18 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
          *  https://alice@example.com/
 
-            The user information can be expressed in CRIs if the
-            "userinfo" feature is present.  The URI https://@example.com
-            is represented as [-4, [false, "", "example", "com"]]; the
-            false serves as a marker that the next element is the
-            userinfo.
-
-
 
 
 Bormann & Birkholz      Expires 4 September 2025               [Page 40]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+            The user information can be expressed in CRIs if the
+            "userinfo" feature is present.  The URI https://@example.com
+            is represented as [-4, [false, "", "example", "com"]]; the
+            false serves as a marker that the next element is the
+            userinfo.
 
             The rules explicitly cater for unencoded ":" in userinfo
             (without needing the extended-cri feature).  (We opted for
@@ -2282,12 +2288,6 @@ Appendix C.  CBOR Extended Diagnostic Notation (EDN): The "cri"
 
    See Appendix C.1 for an ABNF definition for the content of cri
    literals.
-
-
-
-
-
-
 
 
 
