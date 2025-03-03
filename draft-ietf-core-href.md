@@ -545,7 +545,7 @@ This CDDL specification is simplified for exposition and needs to be
 augmented by the following rules for interchange of CRIs and CRI
 references:
 
-* Trailing null values MUST be removed.
+* Trailing default values ({{tbl-default}}) MUST be removed.
 * Two leading null values (scheme and authority both not given) MUST
   be represented by using the `discard` alternative instead.
 * An empty path in a `CRI` MUST be represented as the empty array
@@ -555,7 +555,17 @@ references:
 * An empty outer array (`[]`) is not a valid CRI.
   It is a valid CRI reference,
   equivalent to `[0]` as per {{ingest}}, which essentially copies the
-  base CRI.
+  base CRI up to and including the path section, unsetting query and fragment.
+
+| Section   | Default Value |
+|-----------|---------------|
+| scheme    | –             |
+| authority | null          |
+| discard   | 0             |
+| path      | []            |
+| query     | null          |
+| fragment  | null          |
+{:#tbl-default title="Default Values for CRI Sections"}
 
 Application specifications that use CRIs may explicitly enable the use
 of "stand-in" items (tags or simple values).

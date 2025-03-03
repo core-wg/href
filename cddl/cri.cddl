@@ -5,7 +5,7 @@ RFC-XXXX-Definitions = [CRI, CRI-Reference]
 CRI = [
   scheme,
   authority / no-authority,
-  path / null,
+  path,                         ; use [] for empty path
   query / null,
   fragment / null
 ]
