@@ -164,7 +164,10 @@ This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
 components in [Concise Binary Object Representation (CBOR)](#STD94)
 instead of a sequence of characters.
-This allows typical operations on URI references such as parsing,
+Analogously, *CRI references* are to CRIs what URI references are to
+URIs.
+
+CRIs and CRI references allow typical operations on URIs and URI references such as parsing,
 comparison, and reference resolution (including all corner cases) to be
 implemented in a comparatively small amount of code and to be less
 prone to bugs and interoperability issues.
@@ -177,6 +180,7 @@ The supported subset includes all URIs of the
 [Hypertext Transfer Protocol (HTTP)](#STD97),
 [Uniform Resource Names (URNs)](#RFC8141), and other similar URIs.
 The exact constraints are defined in {{constraints}}.
+CRI extensions ({{extending}}) can be defined to address some of the constraints.
 
 This RFC creates a "CRI Scheme Numbers" registry and updates {{RFC7595}}
 to add a note on how this new registry cooperates with the "URI Schemes"
@@ -203,11 +207,13 @@ RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
 ({{-edn}} more rigorously defines and further extends EDN.)
 
 
-# Constraints {#constraints}
+# From URIs to CRIs: Considerations and Constraints {#constraints}
+
+## The CRI interchange data model
 
 A Constrained Resource Identifier consists of the same five components
 as a URI: scheme, authority, path, query, and fragment.
-The components are subject to the following constraints:
+The components are subject to the following considerations and constraints:
 
 {: type="C%d."}
 1. {:#c-scheme} The scheme name can be any Unicode string (see
@@ -259,11 +265,11 @@ The components are subject to the following constraints:
    digits, see {{Section 3.2.3 of RFC3986@-uri}}), or ports with redundant
    leading zeros, are not supported.
 
-7. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
-   scheme's default port (provided the scheme is defining such a default
-   port) or the scheme is not using ports.
-   <!-- Note that this is hard to do by a generic URI implementation
-   that may not know the scheme's default port -->
+7. {:#c-port-omitted} If the scheme's port handling is known to the
+   CRI creator, it is RECOMMENDED to omit the port if and only if the
+   port would be the same as the scheme's default port (provided the
+   scheme is defining such a default port) or the scheme is not using
+   ports.
 
 8. {:#c-path} A path consists of zero or more path segments.
    Note that a path of just a single zero-length path segment is allowed —
@@ -322,11 +328,42 @@ The components are subject to the following constraints:
 
 Examples for URIs at or beyond the boundaries of these constraints are in {{<sp-constraints}} in {{the-small-print}}.
 
+## CRI References: The `discard` Component {#discard}
+
+As with URI references and URIs, CRI references are a shorthand for a
+CRI that is expressed relative to a base CRI.
+URI and CRI references often *discard* part or all of the trailing
+path segments of the base URI or CRI.
+
+In a URI reference, this is expressed by syntax for its path component
+such as leading special path segments `.` and `..` or a leading
+slash before giving the path segments to be added at the end of the
+(now truncated) base URI.
+For use in CRI references, we instead add in a `discard` component as
+an alternative to the `scheme` and `authority` components, making the
+specification of discarding base URI path segments separate from
+adding new path segments from the CRI reference.
+
+The discarding intent of a CRI reference is thus fully condensed to a
+single value in its discard component:
+
+* An unsigned integer as the discard component specifies the number of
+  path segments to be discarded from the base CRI (note that this
+  includes the value 0 which cannot be expressed in URI references that then add any path component);
+
+* the value `true` as the discard component
+  specifies discarding all path segments from the base CRI.
+
+If a scheme or authority is present in a CRI reference, the discard
+component is implicitly equivalent to a value of `true` and thus not
+included in the interchanged data item.
+
 ## Constraints not expressed by the data model
 
 There are syntactically valid CRIs and CRI references that cannot be converted into a URI or URI reference, respectively.
 
-For CRI references, this is acceptable -- they can be resolved still and result in a valid CRI that can be converted back.
+CRI references of this kind can be acceptable -- they still can be resolved
+and result in a valid full CRI that can be converted back.
 Examples of this are:
 
 * `[0, ["p"]]`: appends a slash and the path segment "p" to its base
@@ -371,10 +408,13 @@ a Constrained Resource Identifier SHOULD be the authority that governs
 the namespace of the resource identifier (see also {{BCP190}}).
 For example, for the resources of an HTTP origin server,
 that server is responsible for creating the CRIs for those resources.
+If the naming authority creates a URI instead that can be obtained as
+a conversion result from a CRI ({{cri-to-uri}}) that CRI can be
+considered to have been created by the naming authority.
 
 The naming authority MUST ensure that any CRI created
-satisfies the constraints defined in {{constraints}}. The creation of a
-CRI fails if the CRI cannot be validated to satisfy all of the
+satisfies the required constraints defined in {{constraints}}. The creation of a
+CRI fails if the CRI cannot be validated to satisfy all of the required
 constraints.
 
 If a naming authority creates a CRI from user input, it MAY apply
@@ -403,7 +443,7 @@ normalization, conversion of two distinct CRIs to URIs do
 not yield the "same" URI, including equivalence under syntax-based
 normalization ({{Section 6.2.2 of RFC3986@-uri}}), but not including
 protocol-based normalization.
-Note that this objective exclusively applies to (absolute) CRIs, not
+Note that this objective exclusively applies to (full) CRIs, not
 to CRI references: these need to be resolved relative to a base URI,
 with results that may be equivalent or not depending on the base.
 
@@ -492,24 +532,13 @@ local-part = [path [query [fragment]]]
 ~~~~
 {: #cddl title="CDDL for CRI CBOR representation"}
 
-{:#discard}
+{:#discard1}
 We call the elements of the top-level array *sections*.
 The sections containing the rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the components of a URI and thus of a CRI, as described in
 {{constraints}}.
-For use in CRI references, we add in a `discard` section as an
-alternative to the `scheme` and `authority` sections:
-URI references express discarding path segments with extended syntax
-for the path component: a leading slash or special path segments `.` and `..`.
-In contrast, discarding is separate from adding path segments in CRI
-references: the discarding intent is fully decoded to a single value
-in the discard section.
-An unsigned integer specifies the number of path segments
-to be discarded from the base CRI; the value `true` specifies
-discarding all path segments from the base CRI.
-If a scheme or authority is present in a CRI reference, the discard
-section is implicitly equivalent a value of `true` and thus not
-transmitted.
+For use in CRI references, the `discard` section (see also {{discard}}) provides an
+alternative to the `scheme` and `authority` sections.
 
 {:#prose}
 This CDDL specification is simplified for exposition and needs to be
@@ -635,7 +664,7 @@ A CRI reference is considered *well-formed* if it matches the
 structure as expressed in {{cddl}} in CDDL, with the additional
 requirement that trailing `null` values are removed from the array.
 
-A CRI reference is considered *absolute* if it is well-formed
+A CRI reference is considered a *full* CRI if it is well-formed
 and the sequence of sections starts with a non-null `scheme`.
 
 A CRI reference is considered *relative* if it is well-formed
@@ -746,11 +775,12 @@ relative reference is applied. Aside from fragment-only references,
 relative references are only usable when a base CRI is known.
 
 The following steps define the process of resolving any well-formed CRI
-reference against a base CRI so that the result is a CRI in the form of
-an absolute CRI reference:
+reference against a base CRI so that the result is a full CRI in the form of
+an CRI reference:
 
-1. Establish the base CRI of the CRI reference and express it in the
-  form of an abstract absolute CRI reference.
+1. Establish the base CRI of the CRI reference (compare {{Section 5.1 of
+   RFC3986@-uri}}) and express it in the form of an abstract (full) CRI
+   reference.
 
 2. Initialize a buffer with the sections from the base CRI.
 
@@ -850,9 +880,9 @@ authority
   string by
   appending a "@".  Otherwise, both the subcomponent and the "@" sign
   are omitted.
-  Any character in the value of the `userinfo` elements that is not in
+  Any character in the value of the `userinfo` element that is not in
   the set of unreserved characters ({{Section 2.3 of RFC3986@-uri}}) or
-  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) MUST be
+  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) or a colon (":") MUST be
   percent-encoded.
 
   The `host-name` is turned into a single string by joining the
@@ -1149,8 +1179,7 @@ Where the following speaks of deriving a text-string for a CoAP Option
 value from a data item in the CRI, the presence of any
 `text-pet-sequence` subitem ({{pet}}) in this item fails this algorithm.
 
-   1.  If »cri« is not an absolute CRI reference, then fail this
-       algorithm.
+   1.  If »cri« is not a full CRI, then fail this algorithm.
 
    2.  Translate the scheme-id into a URI scheme name as per
        {{scheme-id}} and
@@ -1254,7 +1283,7 @@ Scheme numbering provided by the present specification.
 {: #tab-proxy-cri title="Proxy-Cri CoAP Option"}
 
 The Proxy-CRI Option carries an encoded CBOR data item that represents
-an absolute CRI reference.
+a full CRI.
 It is used analogously to Proxy-Uri as defined in {{Section 5.10.2
 of -coap}}.
 The Proxy-Cri Option MUST take precedence over any of the Uri-Host,
@@ -1568,7 +1597,7 @@ representative of the normal operation of CRIs.
 
      Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
      are special in that they are syntactic delimiters of their respective components in CRIs.
-     Thus, the following examples *are* convertible to basic CRIs with out the `extended-cri` feature:
+     Thus, the following examples *are* convertible to basic CRIs without the `extended-cri` feature:
 
      `https://example.com/path%2fcomponent/second-component`
 
@@ -1581,8 +1610,11 @@ representative of the normal operation of CRIs.
      represented as `[-4, [false, "", "example", "com"]]`; the `false`
      serves as a marker that the next element is the userinfo.
 
-     The rules do not cater for unencoded ":" in userinfo, which is
-     commonly considered a deprecated inclusion of a literal password.
+     The rules explicitly cater for unencoded ":" in userinfo (without
+     needing the `extended-cri` feature).
+     (We opted for including this syntactic feature instead of
+     disabling it as a mechanism against potential uses of colons for
+     the deprecated inclusion of unencrypted secrets.)
 
 # CBOR Extended Diagnostic Notation (EDN): The "cri" Extension {#edn-cri}
 
