@@ -120,10 +120,8 @@ registry created by the present RFC.
 
 [^status]
 
-[^status]: (This "cref" paragraph will be removed by the RFC
-    editor:)\\
-    The present revision –18 integrates two small changes from the CoRE
-    interim on 2025-01-29 and should be ready for WGLC.
+[^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
+    The present revision –19 addresses WGLC comments.
 
 --- middle
 
@@ -575,11 +573,11 @@ references:
 | Section   | Default Value |
 |-----------|---------------|
 | scheme    | –             |
-| authority | null          |
-| discard   | 0             |
-| path      | []            |
-| query     | null          |
-| fragment  | null          |
+| authority | `null`        |
+| discard   | `0`           |
+| path      | `[]`          |
+| query     | `null`        |
+| fragment  | `null`        |
 {:#tbl-default title="Default Values for CRI Sections"}
 
 Application specifications that use CRIs may explicitly enable the use
