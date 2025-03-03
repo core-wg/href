@@ -760,7 +760,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
                        +-----------+---------------+
                        | scheme    | –             |
                        | authority | null          |
-                       | discard   | –             |
+                       | discard   | 0             |
                        | path      | []            |
                        | query     | null          |
                        | fragment  | null          |
@@ -1964,9 +1964,9 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
    [I-D.ietf-cbor-packed]
               Bormann, C. and M. Gütschow, "Packed CBOR", Work in
-              Progress, Internet-Draft, draft-ietf-cbor-packed-13, 1
-              September 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-cbor-packed-13>.
+              Progress, Internet-Draft, draft-ietf-cbor-packed-14, 3
+              March 2025, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-cbor-packed-14>.
 
    [IANA.core-parameters]
               IANA, "Constrained RESTful Environments (CoRE)
