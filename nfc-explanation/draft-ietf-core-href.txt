@@ -520,9 +520,9 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    fails if the CRI cannot be validated to satisfy all of the required
    constraints.
 
-   If a naming authority creates a CRI from user input, it MAY apply the
-   following (and only the following) normalizations to get the CRI more
-   likely to validate:
+   If a naming authority creates a CRI from user input, it may need to
+   apply the following (and only the following) normalizations to get
+   the CRI more likely to validate:
 
    *  map the scheme name to lowercase (C1);
 
