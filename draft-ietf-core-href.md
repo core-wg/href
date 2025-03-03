@@ -1438,6 +1438,13 @@ URI scheme name:
 Reference:
 : a reference to a document, if available, or the registrant
 
+The Reference field can simply be a copy of the reference field for the
+URI-Scheme registration if that exists.
+If not, it can contain helpful information (including the name of the
+registrant) that may be available for the registration, with the
+expectation that this will be updated if a URI-Scheme registration
+under that URI scheme name is later made.
+
 ### Initial Registrations
 
 The initial registrations for the CRI Scheme Numbers registry are
