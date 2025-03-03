@@ -349,7 +349,7 @@ single value in its discard component:
 
 * An unsigned integer as the discard component specifies the number of
   path segments to be discarded from the base CRI (note that this
-  includes the value 0 which cannot be expressed in a URI reference);
+  includes the value 0 which cannot be expressed in URI references that then add any path component);
 
 * the value `true` as the discard component
   specifies discarding all path segments from the base CRI.
