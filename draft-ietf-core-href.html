@@ -3043,7 +3043,10 @@ included in a request containing the Proxy-Cri Option).<a href="#section-8.2.1-2
 </div>
 <p id="section-8.2.2-2">The Proxy-Scheme-Number Option carries a CRI Scheme Number represented as a
 CoAP unsigned integer.
-It is used analogously to Proxy-Scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc7252#section-5.10.2" class="relref">Section 5.10.2</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.<a href="#section-8.2.2-2" class="pilcrow">¶</a></p>
+It is used analogously to Proxy-Scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc7252#section-5.10.2" class="relref">Section 5.10.2</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.
+The Proxy-Scheme-Number Option <span class="bcp14">MUST</span> take precedence over any
+Proxy-Scheme Option, which <span class="bcp14">MUST NOT</span> be included in a request
+containing the Proxy-Scheme-Number Option.<a href="#section-8.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-8.2.2-3">As per <span><a href="https://rfc-editor.org/rfc/rfc7252#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>, CoAP Options are only defined as one of empty, (text) string,
 opaque (byte string), or uint (unsigned integer).
 The Option therefore carries an

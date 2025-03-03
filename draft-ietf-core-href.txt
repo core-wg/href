@@ -1604,7 +1604,10 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
    The Proxy-Scheme-Number Option carries a CRI Scheme Number
    represented as a CoAP unsigned integer.  It is used analogously to
-   Proxy-Scheme as defined in Section 5.10.2 of [RFC7252].
+   Proxy-Scheme as defined in Section 5.10.2 of [RFC7252].  The Proxy-
+   Scheme-Number Option MUST take precedence over any Proxy-Scheme
+   Option, which MUST NOT be included in a request containing the Proxy-
+   Scheme-Number Option.
 
    As per Section 3.2 of [RFC7252], CoAP Options are only defined as one
    of empty, (text) string, opaque (byte string), or uint (unsigned
@@ -1613,9 +1616,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    defined in Section 5.1.1).  For instance, the scheme name "coap" has
    the scheme-number 0 and is represented as an unsigned integer by a
    zero-length CoAP Option value.
-
-
-
 
 
 
