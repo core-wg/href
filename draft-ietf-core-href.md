@@ -876,9 +876,9 @@ authority
   string by
   appending a "@".  Otherwise, both the subcomponent and the "@" sign
   are omitted.
-  Any character in the value of the `userinfo` elements that is not in
+  Any character in the value of the `userinfo` element that is not in
   the set of unreserved characters ({{Section 2.3 of RFC3986@-uri}}) or
-  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) MUST be
+  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) or a colon (":") MUST be
   percent-encoded.
 
   The `host-name` is turned into a single string by joining the
@@ -1593,7 +1593,7 @@ representative of the normal operation of CRIs.
 
      Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
      are special in that they are syntactic delimiters of their respective components in CRIs.
-     Thus, the following examples *are* convertible to basic CRIs with out the `extended-cri` feature:
+     Thus, the following examples *are* convertible to basic CRIs without the `extended-cri` feature:
 
      `https://example.com/path%2fcomponent/second-component`
 
@@ -1606,8 +1606,11 @@ representative of the normal operation of CRIs.
      represented as `[-4, [false, "", "example", "com"]]`; the `false`
      serves as a marker that the next element is the userinfo.
 
-     The rules do not cater for unencoded ":" in userinfo, which is
-     commonly considered a deprecated inclusion of a literal password.
+     The rules explicitly cater for unencoded ":" in userinfo (without
+     needing the `extended-cri` feature).
+     (We opted for including this syntactic feature instead of
+     disabling it as a mechanism against potential uses of colons for
+     the deprecated inclusion of unencrypted secrets.)
 
 # CBOR Extended Diagnostic Notation (EDN): The "cri" Extension {#edn-cri}
 
