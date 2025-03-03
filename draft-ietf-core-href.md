@@ -265,11 +265,11 @@ The components are subject to the following considerations and constraints:
    digits, see {{Section 3.2.3 of RFC3986@-uri}}), or ports with redundant
    leading zeros, are not supported.
 
-7. {:#c-port-omitted} The port is omitted if and only if the port would be the same as the
-   scheme's default port (provided the scheme is defining such a default
-   port) or the scheme is not using ports.
-   <!-- Note that this is hard to do by a generic URI implementation
-   that may not know the scheme's default port -->
+7. {:#c-port-omitted} If the scheme's port handling is known to the
+   CRI creator, it is RECOMMENDED to omit the port if and only if the
+   port would be the same as the scheme's default port (provided the
+   scheme is defining such a default port) or the scheme is not using
+   ports.
 
 8. {:#c-path} A path consists of zero or more path segments.
    Note that a path of just a single zero-length path segment is allowed —
