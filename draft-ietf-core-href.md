@@ -209,6 +209,8 @@ RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
 
 # From URIs to CRIs: Considerations and Constraints {#constraints}
 
+## The CRI interchange data model
+
 A Constrained Resource Identifier consists of the same five components
 as a URI: scheme, authority, path, query, and fragment.
 The components are subject to the following considerations and constraints:
@@ -325,6 +327,36 @@ The components are subject to the following considerations and constraints:
    <!-- As per 3986 2.1, use uppercase hex. -->
 
 Examples for URIs at or beyond the boundaries of these constraints are in {{<sp-constraints}} in {{the-small-print}}.
+
+## CRI References: The `discard` Component {#discard}
+
+As with URI references and URIs, CRI references are a shorthand for a
+CRI that is expressed relative to a base CRI.
+URI and CRI references often *discard* part or all of the trailing
+path segments of the base URI or CRI.
+
+In a URI reference, this is expressed by syntax for its path component
+such as leading special path segments `.` and `..` or a leading
+slash before giving the path segments to be added at the end of the
+(now truncated) base URI.
+For use in CRI references, we instead add in a `discard` component as
+an alternative to the `scheme` and `authority` components, making the
+specification of discarding base URI path segments separate from
+adding new path segments from the CRI reference.
+
+The discarding intent of a CRI reference is thus fully condensed to a
+single value in its discard component:
+
+* An unsigned integer as the discard component specifies the number of
+  path segments to be discarded from the base CRI (note that this
+  includes the value 0 which cannot be expressed in a URI reference);
+
+* the value `true` as the discard component
+  specifies discarding all path segments from the base CRI.
+
+If a scheme or authority is present in a CRI reference, the discard
+component is implicitly equivalent to a value of `true` and thus not
+included in the interchanged data item.
 
 ## Constraints not expressed by the data model
 
@@ -496,24 +528,13 @@ local-part = [path [query [fragment]]]
 ~~~~
 {: #cddl title="CDDL for CRI CBOR representation"}
 
-{:#discard}
+{:#discard1}
 We call the elements of the top-level array *sections*.
 The sections containing the rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the components of a URI and thus of a CRI, as described in
 {{constraints}}.
-For use in CRI references, we add in a `discard` section as an
-alternative to the `scheme` and `authority` sections:
-URI references express discarding path segments with extended syntax
-for the path component: a leading slash or special path segments `.` and `..`.
-In contrast, discarding is separate from adding path segments in CRI
-references: the discarding intent is fully decoded to a single value
-in the discard section.
-An unsigned integer specifies the number of path segments
-to be discarded from the base CRI; the value `true` specifies
-discarding all path segments from the base CRI.
-If a scheme or authority is present in a CRI reference, the discard
-section is implicitly equivalent a value of `true` and thus not
-transmitted.
+For use in CRI references, the `discard` section (see also {{discard}}) provides an
+alternative to the `scheme` and `authority` sections.
 
 {:#prose}
 This CDDL specification is simplified for exposition and needs to be
