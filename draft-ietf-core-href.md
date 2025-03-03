@@ -1313,6 +1313,9 @@ The Proxy-Scheme-Number Option carries a CRI Scheme Number represented as a
 CoAP unsigned integer.
 It is used analogously to Proxy-Scheme as defined in {{Section 5.10.2
 of -coap}}.
+The Proxy-Scheme-Number Option MUST take precedence over any
+Proxy-Scheme Option, which MUST NOT be included in a request
+containing the Proxy-Scheme-Number Option.
 
 As per {{Section 3.2 of -coap}}, CoAP Options are only defined as one of empty, (text) string,
 opaque (byte string), or uint (unsigned integer).
