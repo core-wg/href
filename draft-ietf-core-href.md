@@ -778,8 +778,9 @@ The following steps define the process of resolving any well-formed CRI
 reference against a base CRI so that the result is a full CRI in the form of
 an CRI reference:
 
-1. Establish the base CRI of the CRI reference and express it in the
-  form of an abstract (full) CRI reference.
+1. Establish the base CRI of the CRI reference (compare {{Section 5.1 of
+   RFC3986@-uri}}) and express it in the form of an abstract (full) CRI
+   reference.
 
 2. Initialize a buffer with the sections from the base CRI.
 
