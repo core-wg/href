@@ -362,7 +362,8 @@ included in the interchanged data item.
 
 There are syntactically valid CRIs and CRI references that cannot be converted into a URI or URI reference, respectively.
 
-For CRI references, this is acceptable -- they can be resolved still and result in a valid CRI that can be converted back.
+CRI references of this kind can be acceptable -- they still can be resolved
+and result in a valid full CRI that can be converted back.
 Examples of this are:
 
 * `[0, ["p"]]`: appends a slash and the path segment "p" to its base
@@ -439,7 +440,7 @@ normalization, conversion of two distinct CRIs to URIs do
 not yield the "same" URI, including equivalence under syntax-based
 normalization ({{Section 6.2.2 of RFC3986@-uri}}), but not including
 protocol-based normalization.
-Note that this objective exclusively applies to (absolute) CRIs, not
+Note that this objective exclusively applies to (full) CRIs, not
 to CRI references: these need to be resolved relative to a base URI,
 with results that may be equivalent or not depending on the base.
 
@@ -660,7 +661,7 @@ A CRI reference is considered *well-formed* if it matches the
 structure as expressed in {{cddl}} in CDDL, with the additional
 requirement that trailing `null` values are removed from the array.
 
-A CRI reference is considered *absolute* if it is well-formed
+A CRI reference is considered a *full* CRI if it is well-formed
 and the sequence of sections starts with a non-null `scheme`.
 
 A CRI reference is considered *relative* if it is well-formed
@@ -771,11 +772,11 @@ relative reference is applied. Aside from fragment-only references,
 relative references are only usable when a base CRI is known.
 
 The following steps define the process of resolving any well-formed CRI
-reference against a base CRI so that the result is a CRI in the form of
-an absolute CRI reference:
+reference against a base CRI so that the result is a full CRI in the form of
+an CRI reference:
 
 1. Establish the base CRI of the CRI reference and express it in the
-  form of an abstract absolute CRI reference.
+  form of an abstract (full) CRI reference.
 
 2. Initialize a buffer with the sections from the base CRI.
 
@@ -1174,8 +1175,7 @@ Where the following speaks of deriving a text-string for a CoAP Option
 value from a data item in the CRI, the presence of any
 `text-pet-sequence` subitem ({{pet}}) in this item fails this algorithm.
 
-   1.  If »cri« is not an absolute CRI reference, then fail this
-       algorithm.
+   1.  If »cri« is not a full CRI, then fail this algorithm.
 
    2.  Translate the scheme-id into a URI scheme name as per
        {{scheme-id}} and
@@ -1279,7 +1279,7 @@ Scheme numbering provided by the present specification.
 {: #tab-proxy-cri title="Proxy-Cri CoAP Option"}
 
 The Proxy-CRI Option carries an encoded CBOR data item that represents
-an absolute CRI reference.
+a full CRI.
 It is used analogously to Proxy-Uri as defined in {{Section 5.10.2
 of -coap}}.
 The Proxy-Cri Option MUST take precedence over any of the Uri-Host,
