@@ -568,7 +568,7 @@ references:
 {:#tbl-default title="Default Values for CRI Sections"}
 
 Application specifications that use CRIs may explicitly enable the use
-of "stand-in" items (tags or simple values).
+of "stand-in" items (tags or simple values other then those already in use).
 These are data items used in place of original representation items
 such as strings or arrays, where the tag or simple value is defined to
 stand for a data item that can be used in the position of the stand-in
