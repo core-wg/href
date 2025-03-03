@@ -408,10 +408,13 @@ a Constrained Resource Identifier SHOULD be the authority that governs
 the namespace of the resource identifier (see also {{BCP190}}).
 For example, for the resources of an HTTP origin server,
 that server is responsible for creating the CRIs for those resources.
+If the naming authority creates a URI instead that can be obtained as
+a conversion result from a CRI ({{cri-to-uri}}) that CRI can be
+considered to have been created by the naming authority.
 
 The naming authority MUST ensure that any CRI created
-satisfies the constraints defined in {{constraints}}. The creation of a
-CRI fails if the CRI cannot be validated to satisfy all of the
+satisfies the required constraints defined in {{constraints}}. The creation of a
+CRI fails if the CRI cannot be validated to satisfy all of the required
 constraints.
 
 If a naming authority creates a CRI from user input, it MAY apply
