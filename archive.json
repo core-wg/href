@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-02T01:57:07.532056+00:00",
+  "timestamp": "2025-03-04T01:53:38.473965+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -1266,15 +1266,17 @@
       "id": "I_kwDOFyeisM6qDi0n",
       "title": "Section 8.2.2 to add precedence rules for Proxy-Scheme / Proxy-Scheme-Number joint usage",
       "url": "https://github.com/core-wg/href/issues/104",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "EskoDijk",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "has-pr"
+      ],
       "body": "Similar as in 8.2.1 normative rules.\n\nAlso for completeness we might indicate that a CoAP server that doesn't support the Proxy-CRI option, may well support the Proxy-Scheme-Number option on its own? I.e. as a quick and easy replacement for \"Proxy-Scheme\" to save some bytes. ",
       "createdAt": "2025-02-14T08:56:35Z",
-      "updatedAt": "2025-02-14T08:56:35Z",
-      "closedAt": null,
+      "updatedAt": "2025-03-03T21:49:15Z",
+      "closedAt": "2025-03-03T21:49:15Z",
       "comments": []
     },
     {
@@ -1282,15 +1284,17 @@
       "id": "I_kwDOFyeisM6qDo_v",
       "title": "Section 11.1.2: requesting more details for \"Reference\" field contents",
       "url": "https://github.com/core-wg/href/issues/105",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "EskoDijk",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "has-pr"
+      ],
       "body": "Section 11.1.2 has for the \"Reference\" field: \"a reference to a document, if available, or the registrant\" -> maybe better to clarify to \"a reference to a document requesting the registration, if available, or the registrant\"\n\n  Is this intended? The initial registry contents only have \"RFC-XXXX\" as the reference which is the document requesting the registration, not the document describing the scheme semantics.\n\n  If the Designated Expert at own initiative requests the registration per 11.1.1 , what would the \"Reference\" field contain then? The name of the expert or the RFC number that defines the new scheme?\n\n",
       "createdAt": "2025-02-14T09:07:53Z",
-      "updatedAt": "2025-02-26T12:40:49Z",
-      "closedAt": null,
+      "updatedAt": "2025-03-03T16:45:19Z",
+      "closedAt": "2025-03-03T16:45:19Z",
       "comments": [
         {
           "author": "cabo",
@@ -1326,6 +1330,46 @@
           "body": "I'm wondering how much of this needs to be in the document.  I would normally expect IANA to put useful reference information in there (original scheme registration, potentially document that applies this to the CRI space).  For the Schemes in Appendix A, the reference currently is RFC-XXXX.",
           "createdAt": "2025-02-26T12:40:48Z",
           "updatedAt": "2025-02-26T12:40:48Z"
+        },
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "Possibly by default IANA would just include the name of the registrant there, if the registrant doesn't supply any document link in the registration request. (That's allowed given the current text.)\n\nSince it's expert review we could also expect the Designated Expert to complete references?\n\nFor example if someone registers CRI for scheme \"example\" which doesn't exist at the time, and it gets approved, and 2 years later an RFC defines scheme \"example\" then the expert should notice this according to 11.1.1 and the CRI registry entry can be updated with the reference.\n\nOr do the same if the registrant forgot to include a reference to the RFC defining the scheme. (and IANA didn't ask for a reference)\n\nOk for me to leave the text as is, if we don't want to be too restrictive. My last text proposal was just a hint to the registrant what \"a document\" should be.",
+          "createdAt": "2025-03-03T11:16:15Z",
+          "updatedAt": "2025-03-03T11:16:15Z"
+        }
+      ]
+    },
+    {
+      "number": 114,
+      "id": "I_kwDOFyeisM6sPKjk",
+      "title": "NFC requirement for text values",
+      "url": "https://github.com/core-wg/href/issues/114",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "@chrysn (Archived-At: <https://mailarchive.ietf.org/arch/msg/core/nteOp0w6Cj9ZWe52qqD1_lXIeTo>):\n\n* Some constraints talk of NFC. That term is only later used as a \"MAY\"\n for converting from user input -- but then it's not a constraint at\n all.\n\n (And please don't resolve this into an actual requirement: the\n stability guarantee on normalization[1] only makes promises on\n characters from a given version of Unicode, so a URI-to-CRI converter\n that sees %f0%9f%ab%be%f0%9f%ab%bf may not have that in its table and\n express it as \"\\u{1fafe}\\u{1faff}\", while another converter may know\n some more Unicode and would then either convert it to\n \"\\u{whateverthatcombinesto}\" or as PET)\n",
+      "createdAt": "2025-03-02T16:45:38Z",
+      "updatedAt": "2025-03-03T21:50:18Z",
+      "closedAt": "2025-03-03T21:50:18Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "The NFC constraint was added in draft-ietf-core-href-03, 2020-03-09 (five years minus a week ago).\nI don't think it has changed since then.\nGoing away from this constraint would be a big step now.\n\nIt seems that the last actual addition to the Unicode rules was around 2010.\n\nBut we need to be prepared for future additions.  The question here is what the effect of the NFC constraint should be.\nThe scenario you describe assumes some processing that satisfies this constraint.  Do we have to mandate that?",
+          "createdAt": "2025-03-02T17:12:27Z",
+          "updatedAt": "2025-03-02T17:12:27Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "Some additional information can be found in https://www.ietf.org/archive/id/draft-bormann-dispatch-modern-network-unicode-05.html#name-normalization and the recommendations in that guide about NFC constraints.\n",
+          "createdAt": "2025-03-02T17:16:01Z",
+          "updatedAt": "2025-03-02T17:16:01Z"
         }
       ]
     }
@@ -5034,6 +5078,385 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 113,
+      "id": "PR_kwDOFyeisM6ND9BW",
+      "title": "Wglc comments from Marco Tiloca",
+      "url": "https://github.com/core-wg/href/pull/113",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-02T12:00:21Z",
+      "updatedAt": "2025-03-02T13:29:20Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "2c523a18358b5dd89a6db66720cb553c27430c8c",
+      "headRepository": "core-wg/href",
+      "headRefName": "wglc-mt",
+      "headRefOid": "097b96351934b3e64658f1785382affb49a74621",
+      "closedAt": "2025-03-02T13:29:19Z",
+      "mergedAt": "2025-03-02T13:29:19Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "6bd6f63b361fedd56704e31a6b22dbe8d27cd54b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6eHUul",
+          "commit": {
+            "abbreviatedOid": "097b963"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-02T13:10:27Z",
+          "updatedAt": "2025-03-02T13:10:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 115,
+      "id": "PR_kwDOFyeisM6NHymu",
+      "title": "Close #114 (NFC expectation)",
+      "url": "https://github.com/core-wg/href/pull/115",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-03T09:35:56Z",
+      "updatedAt": "2025-03-03T21:50:18Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "dca9245233adb4fd638af32a6513f2074a76fe10",
+      "headRepository": "core-wg/href",
+      "headRefName": "nfc-explanation",
+      "headRefOid": "59edb47e0bfbcaedc6bd5bc621e0f4cda5a85a8a",
+      "closedAt": "2025-03-03T21:50:17Z",
+      "mergedAt": "2025-03-03T21:50:17Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "a54dcac4d94aab09378d0617d850cefb5c96db5d"
+      },
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "This addresses the letter of #114 but not the spirit. It is technically correct, but adds more text to an already large section, while effectively telling the consumer of a CRI that they can't rely on the property anyway.\r\n\r\nThere is *already* text at the point where CRIs in \"creation and normalization\" where the creator MAY perform this normalization; I'd rather suggest removing the details of what the text string is (it's a CBOR text string in the model, after all) from the constraints, and if needed, emphasize what is in the existing section.",
+          "createdAt": "2025-03-03T09:52:22Z",
+          "updatedAt": "2025-03-03T09:52:22Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "The new text makes it explicit that the recipient of a CRI MAY expect NFC.\r\nThis is a very different interoperability requirement from just stating the fact that the creator MAY pay its dues to this expectation by performing normalization.\r\nThe point here is that it normally doesn't.",
+          "createdAt": "2025-03-03T09:57:28Z",
+          "updatedAt": "2025-03-03T10:00:23Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Is that how we should describe a standard? If the sender MAY do something (but also MAY NOT), and a the receiver MAY rely on that, who gets to keep the parts when it breaks?\r\n\r\nThere are constraints that the recipient needs to apply because it can't use the CRI otherwise (it may not recognize some extensions, or it may need to store the CRI for some time and it simply exceeds its buffer size); isn't this one more of that same kind (and then why does it warrant 4 mentions in the constraints section)?\r\n\r\n(And of course that is all only for the original source and final recipient: intermediaries are, in a different section, even softly absolved from verifying that bytes are even really UTF-8 encoded).\r\n\r\nAnd what does it mean for the text-or-PET extension? I doubt that converting a URI into a CRI where the input is not NFC warrants starting a PET block for those characters.",
+          "createdAt": "2025-03-03T10:57:54Z",
+          "updatedAt": "2025-03-03T10:57:54Z"
+        },
+        {
+          "author": "core-bot",
+          "authorAssociation": "NONE",
+          "body": "> Is that how we should describe a standard? If the sender MAY do something (but also MAY NOT), and a the receiver MAY rely on that, who gets to keep the parts when it breaks?\r\n\r\nIf you make NFC a hard requirement, you end up in a \u201cnormalize everywhere again\u201d world.  I think the progress we had in the last five years or so in understanding the problem is that we are indeed better off with a soft requirement, even if that cannot guarantee anything (spoiler: the hard requirement cannot really guarantee anything either, but by putting a large onus on everyone it will detect errors earlier).\r\n\r\n> There are constraints that the recipient needs to apply because it can't use the CRI otherwise (it may not recognize some extensions, or it may need to store the CRI for some time and it simply exceeds its buffer size); isn't this one more of that same kind\r\n\r\nNFC is a an expectation that a sender needs to be reasonably sure it can meet.\r\nBut it is allowed to have other components do the work (such as an input framework).\r\n\r\n> (and then why does it warrant 4 mentions in the constraints section)?\r\n\r\nI\u2019d like to do editorial cleanups after we have agreed on content.\r\n\r\n> (And of course that is all only for the original source and final recipient: intermediaries are, in a different section, even softly absolved from verifying that bytes are even really UTF-8 encoded).\r\n\r\nWhile that is correct, there is a big difference between valid UTF-8 (hard requirement) and NFC (soft requirement).\r\n\r\n> And what does it mean for the text-or-PET extension? I doubt that converting a URI into a CRI where the input is not NFC warrants starting a PET block for those characters.\r\n\r\nPET is for tunneling non-UTF-8 (and, the way we have defined it, it really cannot do anything else).\r\nWe don\u2019t have an extension yet for \u201chere\u2019s UTF-8 that might not be NFC\u201d.\r\n\r\nGr\u00fc\u00dfe, Carsten\r\n\r\n",
+          "createdAt": "2025-03-03T12:48:44Z",
+          "updatedAt": "2025-03-03T12:48:44Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "I agree we shouldn't make NFC a requirement; I doubt it even makes sense as a soft requirement.\r\n\r\nRecipients may have soft requirements about all sorts of things -- I don't understand why the possibility of requiring NFC is any more special than any other expectations they might have. (The conversion to CoAP options is the strongest I see, but a) it doesn't even say \"net-unicode\" here, and b) I haven't ever seen a CoAP impelementation that enforces this).\r\n\r\nIf this is all about *displaying* CRIs, that's a different business \u2013 for example, a link viewer that explicitly highlights places with possibly confusing characters, non-NFC text or unexpected ZWJs spread in the text would be a welcome thing[^1]. But generic clients refusing to fetch a URI just because it is not NFC, is that desirable?\r\n\r\n[^1]: Even those are hard to detect these days, because whether \ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d\udc66 contains unexpected ZWJ depends on what the font can render, but I digress.\r\n\r\n> We don\u2019t have an extension yet for \u201chere\u2019s UTF-8 that might not be NFC\u201d.\r\n\r\nWell, for example, CBOR calls those \"text strings\".",
+          "createdAt": "2025-03-03T13:09:04Z",
+          "updatedAt": "2025-03-03T13:09:04Z"
+        },
+        {
+          "author": "core-bot",
+          "authorAssociation": "NONE",
+          "body": "On 2025-03-03, at 14:09, chrysn ***@***.***> wrote:\r\n> I agree we shouldn't make NFC a requirement; I doubt it even makes sense as a soft requirement.\r\n\r\nIt makes a lot of sense when server implementers know how they should offer a resource called \u00fcbergr\u00f6\u00dfentr\u00e4ger.\r\n\r\n> Recipients may have soft requirements about all sorts of things -- I don't understand why the possibility of requiring NFC is any more special than any other expectations they might have.\r\n\r\nWell, this has been in the document for five years.\r\n\r\n> (The conversion to CoAP options is the strongest I see, but a) it doesn't even say \"net-unicode\" here, and b) I haven't ever seen a CoAP impelementation that enforces this).\r\n\r\nAgain, this is not about enforcement, but about nudging choices into a common direction.\r\n\r\n> If this is all about displaying CRIs, that's a different business \u2013 for example, a link viewer that explicitly highlights places with possibly confusing characters, non-NFC text or unexpected ZWJs spread in the text would be a welcome thing1.\r\n\r\nConfusing characters are a whole other set of issues...\r\n\r\n> But generic clients refusing to fetch a URI just because it is not NFC, is that desirable?\r\n\r\nHow did the client get the URI?\r\nIf the server made it up and the client discovered it, then the client should use it as it is.\r\nIf the client\u2019s user typed it in, the client should send NFC (that is the point here); probably the input method already normalizes towards NFC anyway.\r\n\r\n>> We don\u2019t have an extension yet for \u201chere\u2019s UTF-8 that might not be NFC\u201d.\r\n> \r\n> Well, for example, CBOR calls those \"text strings\".\r\n\r\nCBOR indeed doesn\u2019t help at all with Unicode normalization.\r\nThat\u2019s why it is a great idea to address it in the application layer.\r\n\r\nGr\u00fc\u00dfe, Carsten\r\n\r\n",
+          "createdAt": "2025-03-03T13:20:22Z",
+          "updatedAt": "2025-03-03T13:20:22Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Nudging is good, let's do nudging. (It's already in -18, and I'd be happy to read \"If a naming authority creates a CRI from user input, it MAY apply\" becoming a \"SHOULD\"). The quadruple repetition in the constraints is exercising a lot of textual force than I'd expect from nudging.\r\n\r\nThe \"MAY\" in the proposed text can be read as \"client implementations can start refusing non-NFC text just because\"; what I think we want is \"issuers of CRIs beware that addresses can traverse media changes, so they better be chosen such that they can be entered by a human (and that might entail using existing printable characters, and then the user entering them through a keyboard with NFC applied)\" (and if that fails even though the user typed it correctly, it's the server's fault for issuing the CRI in a context where this might happen).\r\n\r\nFrankly, if that original creation-and-normalization MAY becomes a SHOULD, and we do end up with an effective \"client implementation MAY refusing non-NFC\" (as can be read in the PR), I'm fine with that too, with the caveat that when text-or-pet is allowed, exercising that MAY becomes nonsensical (because the non-NFC can come from binary PET that just happens to be UTF-8). But \"MAY normalize\" and \"MAY refuse\" causes a situation where two parties both just exercise a MAY and can then not interoperate, and AIU, non-interoperability should only happen if at least one party violates at least a SHOULD.",
+          "createdAt": "2025-03-03T13:39:51Z",
+          "updatedAt": "2025-03-03T13:39:51Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "\"SHOULD\" is too strong.   I'd settle for \"may need to\".",
+          "createdAt": "2025-03-03T17:52:21Z",
+          "updatedAt": "2025-03-03T17:52:21Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6eKrID",
+          "commit": {
+            "abbreviatedOid": "63e4d4a"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-03T09:50:51Z",
+          "updatedAt": "2025-03-03T17:50:31Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 116,
+      "id": "PR_kwDOFyeisM6NJ6S-",
+      "title": "Some Wglc comments from Christian Ams\u00fcss",
+      "url": "https://github.com/core-wg/href/pull/116",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-03T13:41:00Z",
+      "updatedAt": "2025-03-03T13:57:08Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "6bd6f63b361fedd56704e31a6b22dbe8d27cd54b",
+      "headRepository": "core-wg/href",
+      "headRefName": "wglc-ca",
+      "headRefOid": "7dbb1e2de62b1894dcb955a41ac4eddbc9165ee4",
+      "closedAt": "2025-03-03T13:57:07Z",
+      "mergedAt": "2025-03-03T13:57:06Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "df6fecbdefc8193361a3921d861a808d8120bd5e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6eM216",
+          "commit": {
+            "abbreviatedOid": "5c28ffc"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks, LGTM; one minor factual correction suggested.",
+          "createdAt": "2025-03-03T13:45:01Z",
+          "updatedAt": "2025-03-03T13:50:12Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "```suggestion\r\n  includes the value 0 which cannot be expressed in URI references that then add any path component);\r\n```\r\n\r\ndiscard=0 is what happens in `?foo=bar` or `#baz`.",
+              "createdAt": "2025-03-03T13:45:01Z",
+              "updatedAt": "2025-03-03T13:50:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFyeisM6eM9eT",
+          "commit": {
+            "abbreviatedOid": "5c28ffc"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-03T13:55:58Z",
+          "updatedAt": "2025-03-03T13:55:58Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 117,
+      "id": "PR_kwDOFyeisM6NKFVY",
+      "title": "Don't allow null path for CRI in CDDL",
+      "url": "https://github.com/core-wg/href/pull/117",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "What's next?\r\nA table of Defaults would be great, but these seem to differ for CRIs and CRI References.",
+      "createdAt": "2025-03-03T14:01:49Z",
+      "updatedAt": "2025-03-03T21:44:30Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "df6fecbdefc8193361a3921d861a808d8120bd5e",
+      "headRepository": "core-wg/href",
+      "headRefName": "null-path-cri",
+      "headRefOid": "5d6c6cd59eb8a8600d04e2f87c6a74bf4446dd6d",
+      "closedAt": "2025-03-03T21:44:29Z",
+      "mergedAt": "2025-03-03T21:44:29Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "f126758f2f89c58aae1df0472094e36659939cc6"
+      },
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "I think we can take the same defaults for CRIs and CRI references: scheme, authority and discard have no default, and it's `[]` for path, and `null` for query and fragment. (Technically by the words of the tail truncation rules, authority also has null as a default, because `urn:` / `[\"urn\", /null, [], null, null/]` has that null truncated, but I don't know whether it is even preferable to have a default for that very special case).",
+          "createdAt": "2025-03-03T14:23:15Z",
+          "updatedAt": "2025-03-03T14:23:46Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "Shouldn't the default for path be null for CRI-References?",
+          "createdAt": "2025-03-03T15:15:42Z",
+          "updatedAt": "2025-03-03T15:15:42Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "I don't think so: it barely makes any difference. The vast majority of CRIs where something is stripped either have a path anyway (so it's not the default), or they then append a query and/or a fragment (in which case there is no benefit to \"being the default\", because the tail stripping doesn't get there anyway).\r\n\r\nThe two CRI references that have the option of actually using the default are `[0, [] /, null, null/]` and `[0, null /, null, null/]` (because for any larger number of discard, esp. when true by the presence of an authority, query and fragment get set to null anyway). And among those two, I wouldn't even know which of them I'd prefer `[0]` to mean, so whatever is more consistent should be fine.\r\n\r\n(Also I'm not sure off my head what they even mean; both leave the path alone, and I think `[0, []]` sets query and fragment to null, while `[0, null]` sets only the fragment to null and leaves the query in place, neither of which is expressible in a URI reference)",
+          "createdAt": "2025-03-03T15:33:05Z",
+          "updatedAt": "2025-03-03T15:33:05Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "\u2026 and come to think of it, I'd even prefer `[0]` to mean `[0, []]` because it refers back to the \"unqueried\" form of the current resource, which probably works for an \"up\" after \"digging down\" into a resource whose inner structure is explored by the use of query parameters.",
+          "createdAt": "2025-03-03T15:36:05Z",
+          "updatedAt": "2025-03-03T15:36:05Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "I would like to keep some symmetry between URI-Reference \"\" and CRI-Reference []",
+          "createdAt": "2025-03-03T17:08:30Z",
+          "updatedAt": "2025-03-03T17:08:30Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Good point: that *is* `[0, null /null, null /]`, so that does have an equivalent URI reference. But is that symmetry really worth having different default handling?",
+          "createdAt": "2025-03-03T17:18:00Z",
+          "updatedAt": "2025-03-03T17:18:00Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "MEMBER",
+          "body": "`a:` is `[\"a\", null, [], null, null]`, I think.  If the authority default were null, this could be represented as `[\"a\"]` instead of `[\"a\", null]`.",
+          "createdAt": "2025-03-03T17:33:10Z",
+          "updatedAt": "2025-03-03T17:33:10Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Yes. That's a byte saved for very rare URIs that'll need to stand against all the firmwares in the world, but I don't have any intuition let alone numbers on whether makes a difference there.",
+          "createdAt": "2025-03-03T17:36:17Z",
+          "updatedAt": "2025-03-03T17:36:17Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6eRGDy",
+          "commit": {
+            "abbreviatedOid": "3eaf976"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "One comment on the precise value; with either outcome, fine with me (as the `[]` can just as well be argued to be an explicit rule).",
+          "createdAt": "2025-03-03T21:03:20Z",
+          "updatedAt": "2025-03-03T21:04:14Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "Given the line above on the empty array, isn't it \r\n\r\n```suggestion\r\n| discard   | 0             |\r\n```\r\n\r\nbecause that is the value that gets removed from the tail?",
+              "createdAt": "2025-03-03T21:03:21Z",
+              "updatedAt": "2025-03-03T21:04:14Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 118,
+      "id": "PR_kwDOFyeisM6NKMb8",
+      "title": "Close #105 (Reference column in Scheme Numbers registry)",
+      "url": "https://github.com/core-wg/href/pull/118",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Give more guidance for what should be in the Reference field for different types of Scheme Numbers registrations",
+      "createdAt": "2025-03-03T14:15:18Z",
+      "updatedAt": "2025-03-03T16:45:20Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "df6fecbdefc8193361a3921d861a808d8120bd5e",
+      "headRepository": "core-wg/href",
+      "headRefName": "close-105",
+      "headRefOid": "112f2a7632a6971712923c473ec9d73e8b9156d6",
+      "closedAt": "2025-03-03T16:45:18Z",
+      "mergedAt": "2025-03-03T16:45:18Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "dca9245233adb4fd638af32a6513f2074a76fe10"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6eOK2p",
+          "commit": {
+            "abbreviatedOid": "112f2a7"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-03T15:42:53Z",
+          "updatedAt": "2025-03-03T15:42:53Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 119,
+      "id": "PR_kwDOFyeisM6NKV_n",
+      "title": "Close #104: Proxy-Scheme-Number takes precedence over Proxy-Scheme",
+      "url": "https://github.com/core-wg/href/pull/119",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-03T14:30:45Z",
+      "updatedAt": "2025-03-03T21:49:15Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "df6fecbdefc8193361a3921d861a808d8120bd5e",
+      "headRepository": "core-wg/href",
+      "headRefName": "close-104",
+      "headRefOid": "03086579b3b19c5d7b12923e46dcc5d2d62c60ee",
+      "closedAt": "2025-03-03T21:49:14Z",
+      "mergedAt": "2025-03-03T21:49:14Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "1e8fc659c3f6861f2a2c2040fea51dff04ceb15f"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
