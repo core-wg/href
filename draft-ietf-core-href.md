@@ -634,10 +634,11 @@ are equivalent to URI references with relative paths and path prefixes such as "
 "." and ".." are not available in CRIs and are therefore expressed
 using `discard` after a normalization step, as is the presence or absence of a leading "/".
 
-E.g., a simple URI reference "foo" specifies to remove one leading segment
+E.g., a simple URI reference "foo" specifies to remove one trailing
+segment, if any,
 from the base URI's path, which is represented in the equivalent CRI
 reference discard section as the value `1`; similarly "../foo" removes
-two leading segments, represented as `2`;
+two trailing segments, if any, represented as `2`;
 and "/foo" removes all segments, represented in the `discard` section as the value `true`.
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
