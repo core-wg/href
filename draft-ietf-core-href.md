@@ -619,10 +619,13 @@ embedded CRIs.
 
 ### `scheme-name` and `scheme-id` {#scheme-id}
 
-In the scheme section, a CRI scheme can be given by its `scheme-name`
-(a text string giving the scheme name as in URIs' scheme section,
-mapped to lower case), or as a negative integer `scheme-id` derived
-from the *scheme number*.
+In the scheme section, a CRI scheme can be given as a negative integer
+`scheme-id` derived from the *scheme number*, or optionally by its
+`scheme-name` (a text string giving the scheme name as in URIs' scheme
+section, mapped to lower case).
+(Note that, in {{cddl}}, `scheme-name` is marked as a feature, as only
+less constrained CRI implementations might support `scheme-name`.)
+
 Scheme numbers are unsigned integers that are mapped to and from URI
 scheme names by the "CRI Scheme Numbers" registry ({{cri-reg}}).
 The relationship of a scheme number to its `scheme-id` is as follows:
