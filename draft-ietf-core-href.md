@@ -454,13 +454,13 @@ Note that the processing of CRIs does not imply that all the
 constraints continuously need to be checked and enforced.
 Specifically, the text normalization constraints (NFC) can be expanded
 as:
-The recipient of a CRI MAY reasonably expect the text labels to be in
+The recipient of a CRI MAY reasonably expect the text strings to be in
 NFC form, but as with any input MUST NOT fail (beyond possibly not
 being able to process the specific CRI) if they are not.
 So the onus of fulfilling the expectation is on the original creator
 of the CRI, not on each processor (including consumer).
 This consideration extends to the sources the CRI creator uses in
-building the labels, which the CRI creator MAY in turn expect to be in
+building the text strings, which the CRI creator MAY in turn expect to be in
 NFC form if that expectation is reasonable.
 See {{Appendix C of MNU}} for some background.
 
