@@ -247,7 +247,8 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    * the path can be root-based (zero or more path segments that are
      each started in the URI with "/", as when the authority is
      present), or
-   * the path can be rootless, which requires at least one path segment.
+   * the path can be rootless, which requires at least one path
+     segment, the first one of which has non-zero length.
 
    (Note that, in {{cddl}}, `no-authority` is marked as a feature, as
    not all CRI implementations will support authority-less URIs.)
