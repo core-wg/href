@@ -12,6 +12,8 @@ wg: CoRE Working Group
 
 v3xml2rfc:
   table_borders: light
+kramdown_options:
+  ol_start_at_first_marker: true
 
 author:
 - name: Carsten Bormann
@@ -78,6 +80,7 @@ informative:
   MNU: I-D.bormann-dispatch-modern-network-unicode
 normative:
   STD66: uri
+  STD63: utf-8
 # RFC 3986
   RFC3987: iri
   RFC6874: zone
@@ -212,13 +215,25 @@ RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
 
 A Constrained Resource Identifier consists of the same five components
 as a URI: scheme, authority, path, query, and fragment.
-The components are subject to the following considerations and constraints:
+The components are subject to the considerations and constraints
+listed in this section.
+Note that CRI extensions can relax constraints; for
+example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
 
 {: type="C%d."}
-1. {:#c-scheme} The scheme name can be any Unicode string (see
-   Definition D80 in {{Unicode}}) that matches the syntax of a URI
-   scheme (see {{Section 3.1 of RFC3986@-uri}}, which constrains scheme names to
-   ASCII) and is lowercase (see Definition D139 in {{Unicode}}).
+0. {:#c-nfc} Text strings in CRIs ("CRI text strings") are CBOR text
+   strings (i.e., in UTF-8 form {{-utf-8}}) that represent Unicode
+   strings (see Definition D80 in {{Unicode}}) in Unicode Normalization
+   Form C (NFC) (see Definition D120 in {{Unicode}} and specifically
+   {{norm-nfc}}).
+
+1. {:#c-scheme} The scheme name can be any CRI text string that
+   matches the syntax of a URI scheme (see {{Section 3.1 of
+   RFC3986@-uri}}, which constrains scheme names to a subset of ASCII),
+   in its canonical form.
+   (The canonical form as per {{Section 3.1 of RFC3986@-uri}} requires
+   alphabetic characters to be in lowercase.)
+   <!-- see also Definition D139 in {{Unicode}}). -->
    The scheme is always present.
 
 2. {:#c-authority} An authority is always a host identified by an IP
@@ -232,7 +247,8 @@ The components are subject to the following considerations and constraints:
    * the path can be root-based (zero or more path segments that are
      each started in the URI with "/", as when the authority is
      present), or
-   * the path can be rootless, which requires at least one path segment.
+   * the path can be rootless, which requires at least one path
+     segment, the first one of which has non-zero length.
 
    (Note that, in {{cddl}}, `no-authority` is marked as a feature, as
    not all CRI implementations will support authority-less URIs.)
@@ -253,8 +269,7 @@ The components are subject to the following considerations and constraints:
 
 5. {:#c-reg-name} A registered name is a sequence of one or more
    *labels*, which, when joined with dots (".") in between them,
-   result in a Unicode string that is lowercase and in Unicode
-   Normalization Form C (NFC) (see Definition D120 in {{Unicode}} and {{norm}}).
+   result in a lowercase CRI text string.
    (The syntax may be further restricted by the scheme.
    As per {{Section 3.2.2 of RFC3986@-uri}}, a registered name can be empty, for
    which case a scheme can define a default for the host.)
@@ -287,16 +302,15 @@ The components are subject to the following considerations and constraints:
    performing the check and jump in item 8 of {{Section 6.4 of
    -coap}}.  See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
-9. {:#c-path-segment} A path segment can be any Unicode string that is
-   in NFC ({{norm}}), with the exception of the special "." and ".." complete path
-   segments.
+9. {:#c-path-segment} A path segment can be any CRI text string, with
+   the exception of the special "." and ".." complete path segments.
    Note that this includes the zero-length string.
 
    If no authority is present in a CRI, the leading path segment cannot be empty.
    (See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 10. {:#c-query} A query always consists of one or more query parameters.
-   A query parameter can be any Unicode string that is in NFC {{norm}}.
+   A query parameter can be any CRI text string.
    It is often in the form of a "key=value" pair.
    When converting a CRI to a URI, query parameters are separated by an
    ampersand ("&") character.
@@ -305,8 +319,7 @@ The components are subject to the following considerations and constraints:
    Queries are optional; there is a difference between an absent query
    and a single query parameter that is the empty string.
 
-11. {:#c-fragment} A fragment identifier can be any Unicode string that
-   is in NFC {{norm}}.
+11. {:#c-fragment} A fragment identifier can be any CRI text string.
    Fragment identifiers are optional; there is a difference between an
    absent fragment identifier and a fragment identifier that is the
    empty string.
@@ -437,17 +450,18 @@ assumption that the CRI is appropriately pre-normalized.
 transferred, recipients must operate on as-good-as untrusted input and
 fail gracefully in the face of malicious inputs.)
 
+{:#norm-nfc}
 Note that the processing of CRIs does not imply that all the
 constraints continuously need to be checked and enforced.
 Specifically, the text normalization constraints (NFC) can be expanded
 as:
-The recipient of a CRI MAY reasonably expect the text labels to be in
+The recipient of a CRI MAY reasonably expect the text strings to be in
 NFC form, but as with any input MUST NOT fail (beyond possibly not
 being able to process the specific CRI) if they are not.
 So the onus of fulfilling the expectation is on the original creator
 of the CRI, not on each processor (including consumer).
 This consideration extends to the sources the CRI creator uses in
-building the labels, which the CRI creator MAY in turn expect to be in
+building the text strings, which the CRI creator MAY in turn expect to be in
 NFC form if that expectation is reasonable.
 See {{Appendix C of MNU}} for some background.
 
@@ -606,10 +620,13 @@ embedded CRIs.
 
 ### `scheme-name` and `scheme-id` {#scheme-id}
 
-In the scheme section, a CRI scheme can be given by its `scheme-name`
-(a text string giving the scheme name as in URIs' scheme section,
-mapped to lower case), or as a negative integer `scheme-id` derived
-from the *scheme number*.
+In the scheme section, a CRI scheme can be given as a negative integer
+`scheme-id` derived from the *scheme number*, or optionally by its
+`scheme-name` (a text string giving the scheme name as in URIs' scheme
+section, mapped to lower case).
+(Note that, in {{cddl}}, `scheme-name` is marked as a feature, as only
+less constrained CRI implementations might support `scheme-name`.)
+
 Scheme numbers are unsigned integers that are mapped to and from URI
 scheme names by the "CRI Scheme Numbers" registry ({{cri-reg}}).
 The relationship of a scheme number to its `scheme-id` is as follows:
@@ -634,10 +651,11 @@ are equivalent to URI references with relative paths and path prefixes such as "
 "." and ".." are not available in CRIs and are therefore expressed
 using `discard` after a normalization step, as is the presence or absence of a leading "/".
 
-E.g., a simple URI reference "foo" specifies to remove one leading segment
+E.g., a simple URI reference "foo" specifies to remove one trailing
+segment, if any,
 from the base URI's path, which is represented in the equivalent CRI
 reference discard section as the value `1`; similarly "../foo" removes
-two leading segments, represented as `2`;
+two trailing segments, if any, represented as `2`;
 and "/foo" removes all segments, represented in the `discard` section as the value `true`.
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
@@ -1147,8 +1165,10 @@ valid UTF-8 character ≥ U+0080, move this character over into a text
 string by appending it to the end of the preceding text string,
 prepending it to the start of the following text string, or splitting
 the byte string and inserting a new text string with this character,
-all while preserving the order of the bytes.  (Note that the
-properties of UTF-8 make this a simple linear process.)
+all while preserving the order of the bytes.
+(Note that the properties of UTF-8 make this a simple linear process;
+working around the NFC constraint {{<c-nfc}} in this way may be more
+complex.)
 
 {:aside}
 > Unlike the text elements of a path or a query, which through CoAP's
@@ -1326,9 +1346,10 @@ The Proxy-Scheme-Number Option carries a CRI Scheme Number represented as a
 CoAP unsigned integer.
 It is used analogously to Proxy-Scheme as defined in {{Section 5.10.2
 of -coap}}.
-The Proxy-Scheme-Number Option MUST take precedence over any
-Proxy-Scheme Option, which MUST NOT be included in a request
-containing the Proxy-Scheme-Number Option.
+
+The Proxy-Scheme Option MUST NOT be included in a request that also
+contains the Proxy-Scheme-Number Option; servers MUST reject the
+request if this is the case.
 
 As per {{Section 3.2 of -coap}}, CoAP Options are only defined as one of empty, (text) string,
 opaque (byte string), or uint (unsigned integer).
