@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-06T01:53:42.950573+00:00",
+  "timestamp": "2025-03-09T01:37:44.104831+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -4876,25 +4876,33 @@
       "id": "PR_kwDOFyeisM6LxZV0",
       "title": "chrysn's nits collected during review",
       "url": "https://github.com/core-wg/href/pull/109",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-02-19T15:51:27Z",
-      "updatedAt": "2025-02-21T14:06:51Z",
+      "updatedAt": "2025-03-07T14:14:58Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "f265ea01000ffc9aa76c3393af3bd0050f457d26",
       "headRepository": "core-wg/href",
       "headRefName": "nits",
       "headRefOid": "ddbed00cb96d3a1888bf937a5d4d6835c22e8bde",
-      "closedAt": null,
+      "closedAt": "2025-03-07T14:14:57Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Closing because the one discussion has resolved the issue, and there were no more nits so far.",
+          "createdAt": "2025-03-07T14:14:58Z",
+          "updatedAt": "2025-03-07T14:14:58Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOFyeisM6cyIxL",
@@ -5457,6 +5465,46 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 120,
+      "id": "PR_kwDOFyeisM6N3yrM",
+      "title": "WGLC processing by coral design team",
+      "url": "https://github.com/core-wg/href/pull/120",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-08T14:09:54Z",
+      "updatedAt": "2025-03-08T14:30:49Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "065c10cf8c80e176e54e463a049325b6eab44dd7",
+      "headRepository": "core-wg/href",
+      "headRefName": "wglc-coral",
+      "headRefOid": "88398b19dd9a702640ae5c7e15e2672d9dca080c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6fGG1Y",
+          "commit": {
+            "abbreviatedOid": "88398b1"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-08T14:30:49Z",
+          "updatedAt": "2025-03-08T14:30:49Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
