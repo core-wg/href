@@ -48,6 +48,9 @@ The columns are:
 | `cri_hex`          | `cri` in CBOR hexdump format                                                            |
 | `resolved_cri_hex` | `resolved_cri` in CBOR hexdump format                                                   |
 | `description`      | comment                                                                                 |
+| `features_needed`  | comma-separted list of features that are needed, possibly including "broken"[^1]        |
+
+[^1]: Tests with the feature "broken" look somewhat right, and implementations that don't reject them outright would probably come to the test vector's conclusions, but something is wrong about them. The description usually describes what that is.
 
 An initial line with type `base` gives the base URI and CRI applied, see above.
 
