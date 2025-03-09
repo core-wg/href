@@ -1694,11 +1694,12 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    It is up to the individual working groups to use this information as
    they see fit".
 
-   With the exception of the authority=true fix, host-names split into
-   labels, and Section 7.1, CRIs are implemented in
-   https://gitlab.com/chrysn/micrurus.  A golang implementation of
-   version -10 of this document is found at: https://github.com/thomas-
-   fossati/href
+   A golang implementation of revision -10 of this document is found at:
+   https://github.com/thomas-fossati/href.  A Rust implementation is
+   available at https://codeberg.org/chrysn/cri-ref; it is being updated
+   to revision -18 at the time of writing.  A python implementation is
+   available as part of https://gitlab.com/chrysn/micrurus but is based
+   on revision -05.
 
 10.  Security Considerations
 
@@ -1727,7 +1728,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    Identifier (URI) Schemes registry), as well as exceptionally for
    certain text strings that the Designated Expert considers widely used
    in constrained applications in place of URI scheme names.
-
 
 
 
