@@ -1,4 +1,4 @@
-type;uri;cri;red;resolved_uri;resolved_cri;cri_hex;resolved_cri_hex;comment
+type;uri;cri;red;resolved_uri;resolved_cri;cri_hex;resolved_cri_hex;comment;features_neeeded
 base;coaps://foo:4711/pa/th?query#frag;[-2, ["foo", 4711], ["pa", "th"], ["query"], "frag"];;;;85218263666f6f19126782627061627468816571756572796466726167
 rt;;[0];;coaps://foo:4711/pa/th?query#frag;[-2, ["foo", 4711], ["pa", "th"], ["query"], "frag"];8100;85218263666f6f19126782627061627468816571756572796466726167;
 rt;//a;[null, ["a"]];;coaps://a;[-2, ["a"]];82f6816161;8221816161;
@@ -98,7 +98,7 @@ rt;/a?b#c;[true, ["a"], ["b"], "c"];;coaps://foo:4711/a?b#c;[-2, ["foo", 4711], 
 rt;?a&b&c;[0, null, ["a", "b", "c"]];;coaps://foo:4711/pa/th?a&b&c;[-2, ["foo", 4711], ["pa", "th"], ["a", "b", "c"]];8300f683616161626163;84218263666f6f1912678262706162746883616161626163;
 rt;;[];;coaps://foo:4711/pa/th?query#frag;[-2, ["foo", 4711], ["pa", "th"], ["query"], "frag"];80;85218263666f6f19126782627061627468816571756572796466726167;Empty CRI Reference ~ [0]
 rt;//a.b;[null, ["a", "b"]];;coaps://a.b;[-2, ["a", "b"]];82f68261616162;82218261616162;Dotted host name
-rt;//a%2Ea;[null, ["a.a"]];;coaps://a%2Eb;[-2, ["a.a"]];82f68163612e61;82218163612e61;Weird non-PET in host
+rt;//a%2Ea;[null, ["a.a"]];;coaps://a%2Eb;[-2, ["a.a"]];82f68163612e61;82218163612e61;Weird non-PET in host (not allowed: URI normalization would turn that into coaps://a.b);broken
 rt;//a%3Aa;[null, [["a", h'3A', "a"]]];;coaps://a%3Aa;[-2, [["a", h'3A', "a"]]];82f681836161413a6161;822181836161413a6161;PET (':') in host
 rt;/a%2Fa%25a;[true, ["a/a%a"]];;coaps://foo:4711/a%2Fa%25a;[-2, ["foo", 4711], ["a/a%a"]];82f58165612f612561;83218263666f6f1912678165612f612561;Non-PET in path
 rt;|/a;a|;|[true, ["a;a"]]|;;|coaps://foo:4711/a;a|;|[-2, ["foo", 4711], ["a;a"]]|;82f58163613b61;83218263666f6f1912678163613b61;Semicolon in path (pretty tame, but contrasting the next example)
