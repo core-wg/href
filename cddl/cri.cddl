@@ -1,4 +1,4 @@
-; not expressed in this CDDL spec: trailing nulls to be left off
+; not expressed in this CDDL spec: trailing defaults to be left off
 
 RFC-XXXX-Definitions = [CRI, CRI-Reference]
 
@@ -19,9 +19,9 @@ CRI-Reference = [
   fragment / null
 ]
 
-scheme      = scheme-name / scheme-id
-scheme-name = text .regexp "[a-z][a-z0-9+.-]*"
+scheme      = scheme-id / (scheme-name .feature "scheme-name")
 scheme-id   = nint              ; -1 - scheme-number
+scheme-name = text .regexp "[a-z][a-z0-9+.-]*"
 
 no-authority = NOAUTH-ROOTBASED / NOAUTH-ROOTLESS
 NOAUTH-ROOTBASED = null .feature "no-authority"
