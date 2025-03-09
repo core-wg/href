@@ -1390,11 +1390,12 @@ AIF-CRI = AIF-Generic<CRI-local-part, REST-method-set>
 
 {::boilerplate rfc7942info}
 
-With the exception of the authority=true fix, host-names split into
-labels, and {{pet}}, CRIs are implemented in `https://gitlab.com/chrysn/micrurus`.
-A golang implementation of version -10 of this document is found at:
-`https://github.com/thomas-fossati/href`
-<!-- see RFC 7942 -->
+A golang implementation of revision -10 of this document is found at:
+`https://github.com/thomas-fossati/href`.
+A Rust implementation is available at `https://codeberg.org/chrysn/cri-ref`;
+it is being updated to revision -18 at the time of writing.
+A python implementation is available as part of `https://gitlab.com/chrysn/micrurus`
+but is based on revision -05.
 
 # Security Considerations {#security}
 
