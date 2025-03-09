@@ -1369,13 +1369,12 @@ AIF-CRI = AIF-Generic<CRI-local-part, REST-method-set>
 
 {::boilerplate rfc7942info}
 
-A golang implementation of version -10 of this document is found at:
-`https://github.com/thomas-fossati/href`
-A Rust implementation is available at https://codeberg.org/chrysn/cri-ref;
-it is being updated to version -18 at the time of writing.
-A python implementation is available as part of `https://gitlab.com/chrysn/micrurus
-but severely outdated (based on version -05).
-<!-- see RFC 7942 -->
+A golang implementation of revision -10 of this document is found at:
+`https://github.com/thomas-fossati/href`.
+A Rust implementation is available at `https://codeberg.org/chrysn/cri-ref`;
+it is being updated to revision -18 at the time of writing.
+A python implementation is available as part of `https://gitlab.com/chrysn/micrurus`
+but is based on revision -05.
 
 # Security Considerations {#security}
 
