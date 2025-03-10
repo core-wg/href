@@ -1578,25 +1578,6 @@ RESTful Environments (CoRE) Parameters" registry group
 
 --- back
 
-# Mapping Scheme Numbers to Scheme Names {#sec-numbers}
-{:removeinrfc}
-
-[^replace-xxxx]
-
-{{tab-numbers}} defines the initial mapping from CRI scheme numbers to
-URI scheme names.
-
-{::include code/schemes-numbers.md}
-{: #tab-numbers title="Mapping Scheme Numbers to Scheme Names"}
-
-The assignments from this table can be extracted from the XML form of
-this document (when stored in a file "this.xml") into CSV form
-{{?RFC4180}} using this short Ruby program:
-
-~~~ ruby
-{::include code/extract-schemes-numbers.rb}
-~~~
-
 # The Small Print
 
 {:sp: type="SP%d." group="SP"}
@@ -1816,6 +1797,27 @@ sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
 {: #abnf-grammar-cri sourcecode-name="cbor-edn-cri.abnf"
 title="ABNF Definition of URI Representation of a CRI"
 }
+
+
+# Mapping Scheme Numbers to Scheme Names {#sec-numbers}
+{:removeinrfc}
+
+[^replace-xxxx]
+
+{{tab-numbers}} defines the initial mapping from CRI scheme numbers to
+URI scheme names.
+
+{::include code/schemes-numbers.md}
+{: #tab-numbers title="Mapping Scheme Numbers to Scheme Names"}
+
+The assignments from this table can be extracted from the XML form of
+this document (when stored in a file "this.xml") into CSV form
+{{?RFC4180}} using this short Ruby program:
+
+~~~ ruby
+{::include code/extract-schemes-numbers.rb}
+~~~
+
 
 # Change Log
 {:removeinrfc}
