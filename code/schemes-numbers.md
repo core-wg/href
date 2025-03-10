@@ -8,8 +8,8 @@
 |                 5 | did             | \[RFC-XXXX] |
 |                 6 | coap+tcp        | \[RFC-XXXX] |
 |                 7 | coaps+tcp       | \[RFC-XXXX] |
-|                 8 | coap+ws         | \[RFC-XXXX] |
-|                 9 | coaps+ws        | \[RFC-XXXX] |
+|               256 | coap+ws         | \[RFC-XXXX] |
+|               257 | coaps+ws        | \[RFC-XXXX] |
 |              1059 | ms-gamingoverlay | \[RFC-XXXX] |
 |              1165 |             snmp | \[RFC-XXXX] |
 |              1220 |             cast | \[RFC-XXXX] |

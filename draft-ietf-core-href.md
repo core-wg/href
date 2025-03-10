@@ -1205,8 +1205,8 @@ and URI scheme names shown in {{scheme-map}}:
 |                 1 | coaps           |
 |                 6 | coap+tcp        |
 |                 7 | coaps+tcp       |
-|                 8 | coap+ws         |
-|                 9 | coaps+ws        |
+|               256 | coap+ws         |
+|               257 | coaps+ws        |
 {: #scheme-map title="Mapping CRI scheme numbers and URI scheme names"}
 
 
