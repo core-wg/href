@@ -1725,7 +1725,13 @@ See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
 
 ## cri: ABNF Definition of URI Representation of a CRI {#cri-grammar}
 
-The syntax of the content of `cri` literals can be described by the
+It can be expected that implementations of the application-extension
+identifier "`cri`" will make use of platform-provided URI
+implementations, which will include a URI parser.
+
+In case such a URI parser is not available or inconvenient to
+integrate,
+a grammar of the content of `cri` literals is provided by the
 ABNF for `URI-reference` in {{Section 4.1 of RFC3986@-uri}} with certain
 re-arrangements taken from {{figure-5 (Figure 5)<I-D.ietf-cbor-edn-literals}} of {{I-D.ietf-cbor-edn-literals}};
 these are reproduced in {{abnf-grammar-cri}}.
