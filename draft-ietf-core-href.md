@@ -1701,17 +1701,23 @@ Note that there may be more than one CRI reference that can be
 converted to the URI/IRI reference given; implementations are expected
 to favor the simplest variant available and make non-surprising
 choices otherwise.
+In the all-upper-case variant of the app-prefix, the value is enclosed
+in a tag number CPA99.
+
+[^cpa]
 
 As an example, the CBOR diagnostic notation
 
 ~~~ cbor-diag
 cri'https://example.com/bottarga/shaved'
+CRI'https://example.com/bottarga/shaved'
 ~~~
 
 is equivalent to
 
 ~~~ cbor-diag
 [-4, ["example", "com"], ["bottarga", "shaved"]]
+CPA99([-4, ["example", "com"], ["bottarga", "shaved"]])
 ~~~
 
 See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
