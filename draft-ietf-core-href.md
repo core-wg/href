@@ -69,7 +69,6 @@ informative:
   I-D.ietf-cbor-edn-literals: edn
   I-D.carpenter-6man-rfc6874bis: zonebis
   I-D.bormann-cbor-notable-tags: notable
-  I-D.draft-ietf-core-href-18: dash18
   RFC9170: use-lose
   GREENSPUN-10:
     target: https://en.wikipedia.org/wiki/Greenspun's_tenth_rule
@@ -1415,6 +1414,11 @@ apply analogously to AIF-CRI {{toid}}.
 
 # IANA Considerations
 
+[^removenumbers]
+
+[^removenumbers]: RFC-editor: Please replace all references to
+    {{sec-numbers}} by a reference to the IANA registry.
+
 ## CRI Scheme Numbers Registry {#cri-reg}
 
 This specification defines a new "CRI Scheme Numbers" registry in the
@@ -1456,8 +1460,8 @@ Numbers registration simply stays in place, even if the URI Schemes
 registration happens to be for something different from what the
 expert had in mind at the time for the CRI Scheme Numbers
 registration.
-Also note that the initial registrations in {{sec-numbers}} already
-include such registrations for the text strings
+Also note that the initial registrations in {{tab-numbers}} in
+{{sec-numbers}} already include such registrations for the text strings
 "mqtt" and "mqtts".)
 
 A registration in the CRI Scheme Numbers registry does not imply that
@@ -1496,7 +1500,7 @@ under that URI scheme name is later made.
 ### Initial Registrations
 
 The initial registrations for the CRI Scheme Numbers registry are
-provided in {{sec-numbers}}.
+provided in {{tab-numbers}} in {{sec-numbers}}.
 
 
 ## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
@@ -1575,19 +1579,18 @@ RESTful Environments (CoRE) Parameters" registry group
 --- back
 
 # Mapping Scheme Numbers to Scheme Names {#sec-numbers}
+{:removeinrfc}
 
 [^replace-xxxx]
 
-Table 8 in {{Appendix A of -dash18}} lists the initial mapping from
-CRI scheme numbers to URI scheme names.
-(This table was developed with a previous revision of the
-Internet-Draft of the RFC derived from this document but is not copied
-into the current draft or the actual RFC because it will be
-out-of-date quickly, and because the IANA registry should be the focal
-point for users of this registry, anyway.)
+{{tab-numbers}} defines the initial mapping from CRI scheme numbers to
+URI scheme names.
+
+{::include code/schemes-numbers.md}
+{: #tab-numbers title="Mapping Scheme Numbers to Scheme Names"}
 
 The assignments from this table can be extracted from the XML form of
-{{-dash18}} (when stored in a file "this.xml") into CSV form
+this document (when stored in a file "this.xml") into CSV form
 {{?RFC4180}} using this short Ruby program:
 
 ~~~ ruby
