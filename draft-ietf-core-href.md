@@ -92,6 +92,7 @@ normative:
   IANA.media-type-sub-parameters: mtsub
   RFC9237: aif
   IANA.core-parameters:
+  IANA.cbor-tags: tags
   RFC8610: cddl
   Unicode:
     target: https://www.unicode.org/versions/Unicode13.0.0/
@@ -1532,6 +1533,29 @@ IANA is requested to register the application-extension identifier
 {: #tab-iana title="CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI"}
 
 [^replace-xxxx]
+
+## CBOR Tags Registry {#tags-iana}
+
+[^cpa]
+
+[^cpa]: RFC-Editor: This document uses the CPA (code point allocation)
+      convention described in [I-D.bormann-cbor-draft-numbers].  For
+      each usage of the term "CPA", please remove the prefix "CPA"
+      from the indicated value and replace the residue with the value
+      assigned by IANA; perform an analogous substitution for all other
+      occurrences of the prefix "CPA" in the document.  Finally,
+      please remove this note.
+
+In the "CBOR Tags" registry {{-tags}}, IANA is requested to assign the
+tags in {{tab-tag-values}} from the "specification required" space
+(suggested assignment: 99), with the present document as the
+specification reference.
+
+| Tag   | Data Item | Semantics                                            | Reference |
+| CPA99 | array     | Diagnostic Notation<br>Unresolved Application-Extension | RFC-XXXX  |
+{: #tab-tag-values cols='r l l' title="Values for Tags"}
+
+
 
 ## CoAP Option Numbers Registry
 
