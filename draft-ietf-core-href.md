@@ -1200,13 +1200,13 @@ This section makes use of the mapping between CRI scheme numbers
 and URI scheme names shown in {{scheme-map}}:
 
 | CRI scheme number | URI scheme name |
-|-------------------+-----------------|
+|-------------------|-----------------|
 |                 0 | coap            |
 |                 1 | coaps           |
 |                 6 | coap+tcp        |
 |                 7 | coaps+tcp       |
-|               256 | coap+ws         |
-|               257 | coaps+ws        |
+|                24 | coap+ws         |
+|                25 | coaps+ws        |
 {: #scheme-map title="Mapping CRI scheme numbers and URI scheme names"}
 
 

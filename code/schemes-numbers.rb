@@ -78,5 +78,5 @@ __END__
 |                 5 | did             | \[RFC-XXXX] |
 |                 6 | coap+tcp        | \[RFC-XXXX] |
 |                 7 | coaps+tcp       | \[RFC-XXXX] |
-|               256 | coap+ws         | \[RFC-XXXX] |
-|               257 | coaps+ws        | \[RFC-XXXX] |
+|                24 | coap+ws         | \[RFC-XXXX] |
+|                25 | coaps+ws        | \[RFC-XXXX] |
