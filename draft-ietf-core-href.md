@@ -608,6 +608,7 @@ Note that application specifications need to be explicit about which
 stand-in items are allowed; otherwise, inconsistent interpretations at
 different places in a system can lead to check/use vulnerabilities.
 
+{:#no-indef}
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
 {{Section 3.2 of RFC8949@-cbor}}).
@@ -1092,8 +1093,9 @@ Future definitions of extended forms need to strive to be
 distinguishable in their structures from the extended form presented
 here as well as other future forms.
 
-Extensions to CRIs MUST NOT allow indefinite length items.
-This provision ensures that recipients of CRIs can deal with unprocessable CRIs
+Extensions to CRIs are not intended to change encoding constraints;
+e.g., {{no-indef}} is applicable to extended forms of CRIs as well.
+This also ensures that recipients of CRIs can deal with unprocessable CRIs
 as described in {{unprocessable}}.
 
 ## Extended CRI: Accommodating Percent Encoding (PET) {#pet}
