@@ -58,6 +58,7 @@
 |              3783 |       calculator | \[RFC-XXXX] |
 |              3786 |            about | \[RFC-XXXX] |
 |              3795 |         facetime | \[RFC-XXXX] |
+|              3818 |              ari | \[RFC-XXXX] |
 |              3837 |            ymsgr | \[RFC-XXXX] |
 |              3886 |             dict | \[RFC-XXXX] |
 |              3906 |            ldaps | \[RFC-XXXX] |
@@ -78,6 +79,7 @@
 |              4559 |             web3 | \[RFC-XXXX] |
 |              4590 |         iris.lwz | \[RFC-XXXX] |
 |              4598 |         diaspora | \[RFC-XXXX] |
+|              4613 |       ms-widgets | \[RFC-XXXX] |
 |              4619 |            rtsps | \[RFC-XXXX] |
 |              4674 |          beshare | \[RFC-XXXX] |
 |              4709 |            gtalk | \[RFC-XXXX] |
@@ -262,6 +264,7 @@
 |             12068 |             file | \[RFC-XXXX] |
 |             12102 |           mailto | \[RFC-XXXX] |
 |             12174 | ms-launchremotedesktop | \[RFC-XXXX] |
+|             12237 |         ilstring | \[RFC-XXXX] |
 |             12242 |              cvs | \[RFC-XXXX] |
 |             12337 |              mms | \[RFC-XXXX] |
 |             12400 |              ssb | \[RFC-XXXX] |
@@ -274,6 +277,7 @@
 |             12566 |             icap | \[RFC-XXXX] |
 |             12569 |          mupdate | \[RFC-XXXX] |
 |             12599 |        paparazzi | \[RFC-XXXX] |
+|             12603 |   ms-widgetboard | \[RFC-XXXX] |
 |             12634 |             fish | \[RFC-XXXX] |
 |             12644 |              sip | \[RFC-XXXX] |
 |             12699 |               mt | \[RFC-XXXX] |
