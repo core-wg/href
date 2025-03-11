@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-09T01:37:44.104831+00:00",
+  "timestamp": "2025-03-11T01:54:40.681171+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -5471,24 +5471,26 @@
       "id": "PR_kwDOFyeisM6N3yrM",
       "title": "WGLC processing by coral design team",
       "url": "https://github.com/core-wg/href/pull/120",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-03-08T14:09:54Z",
-      "updatedAt": "2025-03-08T14:30:49Z",
+      "updatedAt": "2025-03-09T14:06:31Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "065c10cf8c80e176e54e463a049325b6eab44dd7",
       "headRepository": "core-wg/href",
       "headRefName": "wglc-coral",
       "headRefOid": "88398b19dd9a702640ae5c7e15e2672d9dca080c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-03-09T14:06:29Z",
+      "mergedAt": "2025-03-09T14:06:29Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "84efcdbfc26563f77e594f8a59d5c526d3fa69ad"
+      },
       "comments": [],
       "reviews": [
         {
@@ -5503,8 +5505,101 @@
           "createdAt": "2025-03-08T14:30:49Z",
           "updatedAt": "2025-03-08T14:30:49Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOFyeisM6fG_dY",
+          "commit": {
+            "abbreviatedOid": "88398b1"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "I like how together with \"extensions relax this\", the NFC becomes more explicit as a default, but with a no-syntax-change way to keep non-NFC texts (along with syntax changes to support even non-Unicode strings for complete URI coverage).",
+          "createdAt": "2025-03-09T12:12:07Z",
+          "updatedAt": "2025-03-09T12:12:07Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 121,
+      "id": "PR_kwDOFyeisM6N5gjC",
+      "title": "implementations: Add Rust implementation, note Python impl's age.",
+      "url": "https://github.com/core-wg/href/pull/121",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "The text that was there on missing features is obsolete because those were just not in the version that was current at the time of writing. (IIRC, that text was accurate at the time of writing: then, it was on the latest version but just did not implement all the WIP features of the editor's copy).",
+      "createdAt": "2025-03-09T12:43:31Z",
+      "updatedAt": "2025-03-09T14:20:53Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "065c10cf8c80e176e54e463a049325b6eab44dd7",
+      "headRepository": "core-wg/href",
+      "headRefName": "update-impls",
+      "headRefOid": "3e79238c04a981f315e65f4b8df2ad589444f20a",
+      "closedAt": "2025-03-09T14:20:52Z",
+      "mergedAt": "2025-03-09T14:20:52Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "be31d89579745cf1ea58cbe7a9bbdd56ecb54027"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 122,
+      "id": "PR_kwDOFyeisM6N5lhF",
+      "title": "Extend test metadata",
+      "url": "https://github.com/core-wg/href/pull/122",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "So far, this only adds the \"features\" column and doesn't populate it yet.\r\n\r\nMore things I'd yet like to do here:\r\n* Actually populate that column\r\n* Add tests with URI references that don't have a corresponding URI (possibly as a new type \"onlycri\", where the uri column is empty)\r\n* Fix the empty URI references examples based on the changes in the editor's copy (happy to take anything you have on that already, @cabo).",
+      "createdAt": "2025-03-09T13:34:16Z",
+      "updatedAt": "2025-03-09T14:27:11Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "be31d89579745cf1ea58cbe7a9bbdd56ecb54027",
+      "headRepository": "core-wg/href",
+      "headRefName": "test-extensions",
+      "headRefOid": "6dc36ecbe5551ea560f01bbae2c12bcf896de3e1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 123,
+      "id": "PR_kwDOFyeisM6ODmtF",
+      "title": "Addressing Christian's WGLC comments, part deux",
+      "url": "https://github.com/core-wg/href/pull/123",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "In Progress...",
+      "createdAt": "2025-03-10T21:15:28Z",
+      "updatedAt": "2025-03-10T21:15:28Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "be31d89579745cf1ea58cbe7a9bbdd56ecb54027",
+      "headRepository": "core-wg/href",
+      "headRefName": "wglc-ca2",
+      "headRefOid": "aff42196628019fec80c5e7767148ff1c6600b65",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
