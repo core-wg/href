@@ -48,9 +48,12 @@ The columns are:
 | `cri_hex`          | `cri` in CBOR hexdump format                                                            |
 | `resolved_cri_hex` | `resolved_cri` in CBOR hexdump format                                                   |
 | `description`      | comment                                                                                 |
-| `features_needed`  | comma-separted list of features that are needed, possibly including "broken"[^1]        |
+| `features_needed`  | comma-separted list of features that are needed, possibly including extra feature names[^1] |
 
-[^1]: Tests with the feature "broken" look somewhat right, and implementations that don't reject them outright would probably come to the test vector's conclusions, but something is wrong about them. The description usually describes what that is.
+[^1]: Three feature names currently help implementations select tests which they can not expect to pass:
+    * "broken": The test just looks somewhat right, and implementations that don't enforce CRI correctness would probably come to the test vector's conclusions, but something is wrong about the test. The description usually describes what that is.
+    * "zone-id-6874": The test only works if the URI processor uses RFC6874 zone identifiers (`[fe80::%25eth0]`).
+    * "zone-id-6874bis": The test only works if the URI processor uses draft-carpenter-6man-rfc6874bis-03 zone identifiers (`[fe80::%eth0]`).
 
 An initial line with type `base` gives the base URI and CRI applied, see above.
 
