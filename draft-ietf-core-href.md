@@ -1594,7 +1594,7 @@ tags in {{tab-tag-values}} from the "specification required" space
 specification reference.
 
 | Tag   | Data Item | Semantics                                            | Reference |
-| CPA99 | array     | Diagnostic Notation<br>Unresolved Application-Extension | RFC-XXXX  |
+| CPA99 | array     | CRI Reference | RFC-XXXX  |
 {: #tab-tag-values cols='r l l' title="Values for Tags"}
 
 
