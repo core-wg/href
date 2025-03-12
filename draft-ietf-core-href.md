@@ -784,9 +784,9 @@ An intermediary that does not use the detailed information in a CRI
 (or merely performs reference resolution) MAY pass on a CRI/CRI
 reference without having fully checked it, relying on the producer
 having generated a valid CRI/CRI reference.
-This is true for both basic CRIs (e.g., checking for valid UTF-8) and
+This is true for both Simple CRIs (e.g., checking for valid UTF-8) and
 for extensions (e.g., checking both for valid UTF-8 and the minimal
-use of PET elements in extended-cris as per {{pet}}).
+use of PET elements in the text-or-pet feature as per {{pet}}).
 
 A system that is checking a CRI for some reason but is not its
 ultimate recipient needs to consider the tension between security
@@ -1156,7 +1156,7 @@ query       = [+text-or-pet]
 fragment    = text-or-pet
 
 text-or-pet = text /
-    text-pet-sequence .feature "extended-cri"
+    text-pet-sequence .feature "text-or-pet"
 
 ; text1 and pet1 alternating, at least one pet1:
 text-pet-sequence = [?text1, ((+(pet1, text1), ?pet1) // pet1)]
@@ -1188,8 +1188,8 @@ can now be represented as:
 (Note that, in CBOR diagnostic notation, single quotes delimit
 literals for byte strings, double quotes for text strings.)
 
-To yield a valid `extended-cri`, the use of byte strings MUST be
-minimal.
+To yield a valid CRI using the `text-or-pet` feature, the use of byte
+strings MUST be minimal.
 Both the following examples are therefore not valid:
 
 ~~~ cbor-diag
@@ -1219,8 +1219,8 @@ complex.)
 > This consequence of the flexibility in delimiters offered in URIs is
 > demonstrated by this example, which structurally singles out the one
 > ':' that is *not* a delimiter at the application level.
-> Applications designed for using CRIs will generally avoid using the
-> extended-cri feature.
+> Applications specifically designed for using CRIs will generally
+> avoid using the `text-or-pet` feature.
 > Applications using existing URI structures that require
 > text-pet-sequence elements for their representation typically need
 > to process them byte by byte.
@@ -1691,7 +1691,7 @@ representative of the normal operation of CRIs.
      Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.
      <!-- <https://www.bittorrent.org/beps/bep_0017.html>, not sure this warrants an informative reference -->
 
-     These URIs can be expressed when using the `extended-cri` feature.
+     These URIs can be expressed when using the `text-or-pet` feature.
 
    * `https://example.com/component%3bone;component%3btwo`, `http://example.com/component%3dequals`
 
@@ -1701,7 +1701,7 @@ representative of the normal operation of CRIs.
 
      Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
      are special in that they are syntactic delimiters of their respective components in CRIs.
-     Thus, the following examples *are* convertible to basic CRIs without the `extended-cri` feature:
+     Thus, the following examples *are* convertible to basic CRIs without the `text-or-pet` feature:
 
      `https://example.com/path%2fcomponent/second-component`
 
@@ -1715,7 +1715,7 @@ representative of the normal operation of CRIs.
      serves as a marker that the next element is the userinfo.
 
      The rules explicitly cater for unencoded ":" in userinfo (without
-     needing the `extended-cri` feature).
+     needing the `text-or-pet` feature).
      (We opted for including this syntactic feature instead of
      disabling it as a mechanism against potential uses of colons for
      the deprecated inclusion of unencrypted secrets.)
