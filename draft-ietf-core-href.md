@@ -1036,20 +1036,20 @@ fragment
 
 # Extending CRIs {#extending}
 
-CRIs have been designed to relieve implementations operating on CRIs
-from string scanning, which both helps constrained implementations and
-implementations that need to achieve high throughput.
-
-The CRI structure described up to this point is termed the _Basic CRI_.
+The CRI structure described up to this point, without enabling any
+feature ("scheme-name", "no-authority", "userinfo"), is termed the
+_Basic CRI_.
 It should be sufficient for all applications that use the CoAP
 protocol, as well as most other protocols employing URIs.
 
-However, Basic CRIs have one limitation: They do not support URI
-components that *require* percent-encoding ({{Section 2.1 of RFC3986@-uri}}) to
-represent them in the URI syntax, except where that percent-encoding
-is used to escape the main delimiter in use.
+With one or more of the three features enabled, we speak of _Simple
+CRIs_, which cover a larger subset of protocols that employ URIs.
+To overcome remaining limitations, _Extended Forms_ of CRIs may be
+defined to enable further applications.
+They will generally extend the CRI structure to accommodate more potential
+values of text components of URIs, such as userinfo, hostnames, paths,
+queries, and fragments.
 
-E.g., the URI
 Extensions may also be defined to afford a more natural
 representation of the information in a URI.
 _Stand-in Items_ ({{stand-in}}) are one way to provide such
@@ -1057,28 +1057,46 @@ representations.
 For instance, information that needs to be base64-encoded in a URI can
 be represented in a CRI in its natural form as a byte string instead.
 
-~~~ uri
-https://alice/3%2f4-inch
-~~~
+Extensions are or will be necessary to cover two limitations of
+Simple CRIs:
 
-is represented by the basic CRI
+* Simple CRIs do not support IPvFuture ({{Section 3.2.2 of RFC3986@-uri}}).
+  Definition of such an extension probably best waits until a wider
+  use of new IP literal formats is planned.
+* More important in practice:
 
-~~~ coap-diag
-[-4, ["alice"], ["3/4-inch"]]
-~~~
+  Simple CRIs do not support URI components that *require*
+  percent-encoding ({{Section 2.1 of RFC3986@-uri}}) to represent them
+  in the URI syntax, except where that percent-encoding is used to
+  escape the main delimiter in use.
 
-However, percent-encoding that is used at the application level is not
-supported by basic CRIs:
 
-~~~ uri
-did:web:alice:7%3A1-balun
-~~~
+  E.g., the URI
 
-Extended forms of CRIs may be defined to enable these applications.
-They will generally extend the potential values of text components of
-URIs, such as userinfo, hostnames, paths, queries, and fragments.
+  ~~~ uri
+  https://alice/3%2f4-inch
+  ~~~
 
-One such extended form is described in the following {{pet}}.
+  is represented by the Basic CRI
+
+  ~~~ coap-diag
+  [-4, ["alice"], ["3/4-inch"]]
+  ~~~
+
+  However, percent-encoding that is used at the application level is not
+  supported by Simple CRIs:
+
+  ~~~ uri
+  did:web:alice:7%3A1-balun
+  ~~~
+
+  CRIs have been designed to relieve implementations operating on CRIs
+  from string scanning, which both helps constrained implementations and
+  implementations that need to achieve high throughput.
+
+  An extension supporting application-level percent-encoded text in
+  CRIs is described in {{pet}}.
+
 Consumers of CRIs will generally notice when an extended form is in
 use, by finding structures that do not match the CDDL rules given in
 {{cddl}}.
@@ -1155,7 +1173,13 @@ while the byte strings retain the special
 semantics of percent-encoded text without actually being
 percent-encoded.
 
-The above DID URI can now be represented as:
+The abovementioned DID URI
+
+~~~ uri
+did:web:alice:7%3A1-balun
+~~~
+
+can now be represented as:
 
 ~~~ cbor-diag
 [-6, true, [["web:alice:7", ':', "1-balun"]]]
