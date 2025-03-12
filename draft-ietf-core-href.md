@@ -1278,7 +1278,7 @@ value from a data item in the CRI, the presence of any
 
    4.  If the `host` component of »cri« is a `host-name`, include a
        Uri-Host Option and let that option's value be the text string
-       value of the `host-name`.
+       values of the `host-name` elements joined by dots.
 
        If the `host` component of »cri« is a `host-ip`, check whether
        the IP address given represents the request's
@@ -1318,8 +1318,9 @@ value from a data item in the CRI, the presence of any
 
    2.   If the request includes a Uri-Host Option, insert an
         `authority` with its value determined as follows:
-        If the value of the  Uri-Host Option is a `reg-name`, include
-        this as the `host-name`.
+        If the value of the Uri-Host Option is a `reg-name`, split it
+        on any dots in the name and use the resulting text string
+        values as the `host-name`.
         If the value is an IP-literal or IPv4address, extract any
         `zone-id`, and represent the IP address as a byte string of
         the correct length in `host-ip`, followed by any `zone-id`
@@ -1345,7 +1346,7 @@ value from a data item in the CRI, the presence of any
 
    5.   Insert a `query` component that contains an array built from
         the text string values of the Uri-Query Options in the request,
-        or an empty array if no such options are present.
+        or null if no such options are present.
 
 
 ## CoAP Options for Forward-Proxies {#coap-options}
@@ -1700,7 +1701,11 @@ representative of the normal operation of CRIs.
      which is the delimiter by which the component is split up in the CRI.
 
      Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
-     are special in that they are syntactic delimiters of their respective components in CRIs.
+     are special in that they are syntactic delimiters of their
+     respective components in CRIs (note that `.` is doubly special
+     because it is not a `reserved` character in {{-uri}} and therefore
+     any percent-encoding would be normalized away).
+
      Thus, the following examples *are* convertible to basic CRIs without the `text-or-pet` feature:
 
      `https://example.com/path%2fcomponent/second-component`
