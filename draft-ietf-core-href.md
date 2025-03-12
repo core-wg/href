@@ -62,6 +62,7 @@ informative:
   RFC7252: coap
   RFC8141: urn
   RFC8288: web-linking
+  RFC9164: ip
   BCP190: lawn
 #  BCP205:
   # RFC8820
@@ -594,20 +595,6 @@ references:
 | fragment  | `null`        |
 {:#tbl-default title="Default Values for CRI Sections"}
 
-Application specifications that use CRIs may explicitly enable the use
-of "stand-in" items (tags or simple values).
-These are data items used in place of original representation items
-such as strings or arrays, where the tag or simple value is defined to
-stand for a data item that can be used in the position of the stand-in
-item.
-Examples would be (1) tags such as 21 to 23 ({{Section 3.4.5.2 of
-RFC8949@-cbor}}) or 108 ({{Section 2.1 of -notable}}), which stand for text string components but internally
-employ more compact byte string representations, or (2) reference tags and
-simple values as defined in {{-packed}}.
-Note that application specifications need to be explicit about which
-stand-in items are allowed; otherwise, inconsistent interpretations at
-different places in a system can lead to check/use vulnerabilities.
-
 {:#no-indef}
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
@@ -1063,6 +1050,12 @@ represent them in the URI syntax, except where that percent-encoding
 is used to escape the main delimiter in use.
 
 E.g., the URI
+Extensions may also be defined to afford a more natural
+representation of the information in a URI.
+_Stand-in Items_ ({{stand-in}}) are one way to provide such
+representations.
+For instance, information that needs to be base64-encoded in a URI can
+be represented in a CRI in its natural form as a byte string instead.
 
 ~~~ uri
 https://alice/3%2f4-inch
@@ -1097,6 +1090,28 @@ Extensions to CRIs are not intended to change encoding constraints;
 e.g., {{no-indef}} is applicable to extended forms of CRIs as well.
 This also ensures that recipients of CRIs can deal with unprocessable CRIs
 as described in {{unprocessable}}.
+
+## Extended CRI: Stand-In Items {#stand-in}
+
+Application specifications that use CRIs may explicitly enable the use
+of "stand-in" items (tags or simple values).
+These are data items used in place of original representation items
+such as strings or arrays, where the tag or simple value is defined to
+stand for a data item that can be used in the position of the stand-in
+item.
+Examples would be (1) tags such as 21 to 23 ({{Section 3.4.5.2 of
+RFC8949@-cbor}}) or 108 ({{Section 2.1 of -notable}}), which stand for text string components but internally
+employ more compact byte string representations, or (2) reference tags and
+simple values as defined in {{-packed}}.
+
+Application specifications need to be explicit about which
+stand-in items are allowed; otherwise, inconsistent interpretations at
+different places in a system can lead to check/use vulnerabilities.
+
+(Note that specifications that define CBOR tags may be employed in CRI
+extensions without actually using the tags defined there as stand-in
+tags; e.g., compare the way IP addresses are represented in Basic CRIs
+with {{-ip}}.)
 
 ## Extended CRI: Accommodating Percent Encoding (PET) {#pet}
 
