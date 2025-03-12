@@ -2946,7 +2946,7 @@ URI scheme name.<a href="#section-8.1.1-3.2.1" class="pilcrow">¶</a></p>
             <li id="section-8.1.1-3.4">
               <p id="section-8.1.1-3.4.1">If the <code>host</code> component of »cri« is a <code>host-name</code>, include a
 Uri-Host Option and let that option's value be the text string
-value of the <code>host-name</code>.<a href="#section-8.1.1-3.4.1" class="pilcrow">¶</a></p>
+values of the <code>host-name</code> elements joined by dots.<a href="#section-8.1.1-3.4.1" class="pilcrow">¶</a></p>
 <p id="section-8.1.1-3.4.2">
 If the <code>host</code> component of »cri« is a <code>host-ip</code>, check whether
 the IP address given represents the request's
@@ -2997,8 +2997,9 @@ that as the first value in the resulting CRI array.<a href="#section-8.1.2-2.1.1
             <li id="section-8.1.2-2.2">
               <p id="section-8.1.2-2.2.1">If the request includes a Uri-Host Option, insert an
 <code>authority</code> with its value determined as follows:
-If the value of the  Uri-Host Option is a <code>reg-name</code>, include
-this as the <code>host-name</code>.
+If the value of the Uri-Host Option is a <code>reg-name</code>, split it
+on any dots in the name and use the resulting text string
+values as the <code>host-name</code>.
 If the value is an IP-literal or IPv4address, extract any
 <code>zone-id</code>, and represent the IP address as a byte string of
 the correct length in <code>host-ip</code>, followed by any <code>zone-id</code>
@@ -3027,7 +3028,7 @@ or an empty array if no such options are present.<a href="#section-8.1.2-2.4.1" 
             <li id="section-8.1.2-2.5">
               <p id="section-8.1.2-2.5.1">Insert a <code>query</code> component that contains an array built from
 the text string values of the Uri-Query Options in the request,
-or an empty array if no such options are present.<a href="#section-8.1.2-2.5.1" class="pilcrow">¶</a></p>
+or null if no such options are present.<a href="#section-8.1.2-2.5.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 </section>
@@ -3835,10 +3836,14 @@ basic CRIs (i.e., without percent-encoded text <a href="#pet" class="auto intern
 which is the delimiter by which the component is split up in the CRI.<a href="#appendix-A-6.1.3.2.2" class="pilcrow">¶</a></p>
 <p id="appendix-A-6.1.3.2.3">
 Note that the separators <code>.</code> (for authority parts), <code>/</code> (for paths), <code>&amp;</code> (for query parameters)
-are special in that they are syntactic delimiters of their respective components in CRIs.
-Thus, the following examples <em>are</em> convertible to basic CRIs without the <code>text-or-pet</code> feature:<a href="#appendix-A-6.1.3.2.3" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.2.4"><code>https://example.com/path%2fcomponent/second-component</code><a href="#appendix-A-6.1.3.2.4" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.2.5"><code>https://example.com/x?ampersand=%26&amp;questionmark=?</code><a href="#appendix-A-6.1.3.2.5" class="pilcrow">¶</a></p>
+are special in that they are syntactic delimiters of their
+respective components in CRIs (note that <code>.</code> is doubly special
+because it is not a <code>reserved</code> character in <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> and therefore
+any percent-encoding would be normalized away).<a href="#appendix-A-6.1.3.2.3" class="pilcrow">¶</a></p>
+<p id="appendix-A-6.1.3.2.4">
+Thus, the following examples <em>are</em> convertible to basic CRIs without the <code>text-or-pet</code> feature:<a href="#appendix-A-6.1.3.2.4" class="pilcrow">¶</a></p>
+<p id="appendix-A-6.1.3.2.5"><code>https://example.com/path%2fcomponent/second-component</code><a href="#appendix-A-6.1.3.2.5" class="pilcrow">¶</a></p>
+<p id="appendix-A-6.1.3.2.6"><code>https://example.com/x?ampersand=%26&amp;questionmark=?</code><a href="#appendix-A-6.1.3.2.6" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="appendix-A-6.1.3.3">
               <p id="appendix-A-6.1.3.3.1"><code>https://alice@example.com/</code><a href="#appendix-A-6.1.3.3.1" class="pilcrow">¶</a></p>
