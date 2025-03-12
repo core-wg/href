@@ -104,7 +104,7 @@ rt;//a%3Aa;[null, [["a", h'3A', "a"]]];;coaps://a%3Aa;[-2, [["a", h'3A', "a"]]];
 rt;/a%2Fa%25a;[true, ["a/a%a"]];;coaps://foo:4711/a%2Fa%25a;[-2, ["foo", 4711], ["a/a%a"]];82f58165612f612561;83218263666f6f1912678165612f612561;Non-PET in path
 rt;|/a;a|;|[true, ["a;a"]]|;;|coaps://foo:4711/a;a|;|[-2, ["foo", 4711], ["a;a"]]|;82f58163613b61;83218263666f6f1912678163613b61;Semicolon in path (pretty tame, but contrasting the next example)
 rt;/a%3Ba;[true, [["a", h'3B', "a"]]];;coaps://foo:4711/a%3Ba;[-2, ["foo", 4711], [["a", h'3B', "a"]]];82f581836161413b6161;83218263666f6f19126781836161413b6161;PET in path
-rt;;[true, [], ["a&a"]];;coaps://foo:4711?a%26a;[-2, ["foo", 4711], [], ["a&a"]];83f5808163612661;84218263666f6f191267808163612661;escaped non-PET in query (discarding path without empty trailing)
+only-cri-ref;;[true, [], ["a&a"]];;coaps://foo:4711?a%26a;[-2, ["foo", 4711], [], ["a&a"]];83f5808163612661;84218263666f6f191267808163612661;escaped non-PET in query (discarding path without empty trailing)
 rt;/?a%26a;[true, [""], ["a&a"]];;coaps://foo:4711/?a%26a;[-2, ["foo", 4711], [""], ["a&a"]];83f581608163612661;84218263666f6f19126781608163612661;escaped non-PET in query (discarding path but restoring an empty trailing path component)
 rt;/?a%23a;[true, [""], [["a", h'23', "a"]]];;coaps://foo:4711/?a%23a;[-2, ["foo", 4711], [""], [["a", h'23', "a"]]];83f581608183616141236161;84218263666f6f19126781608183616141236161;PET in query
 rt;#/;[0, null, null, "/"];;coaps://foo:4711/pa/th?query#/;[-2, ["foo", 4711], ["pa", "th"], ["query"], "/"];8400f6f6612f;85218263666f6f1912678262706162746881657175657279612f;unescaped non-PET (but delimiter) in fragment

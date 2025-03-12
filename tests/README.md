@@ -40,7 +40,7 @@ The columns are:
 
 | Key Name           | Description                                                                             |
 | ---                | ---                                                                                     |
-| `type`             | kind of test: `ok`, `rt` (round-trip), `red` (normalized on roundtrip); special value `base` |
+| `type`             | kind of test[^2]                                                                        |
 | `uri`              | a URI reference                                                                         |
 | `cri`              | EDN CBOR representation of the CRI reference corresponding to `uri`                     |
 | `red`              | `uri` reference after normalization if type=red, empty otherwise                        |
@@ -49,6 +49,12 @@ The columns are:
 | `resolved_cri_hex` | `resolved_cri` in CBOR hexdump format                                                   |
 | `description`      | comment                                                                                 |
 | `features_needed`  | comma-separted list of features that are needed, possibly including extra feature names[^1] |
+
+[^2]: Test types are:
+    * `base`: Establishes a base URI for the resolution of URI references (first line)
+    * `rt`: A CRI reference that can be expresed as a URI reference, and it round-trips.
+    * `red`: Like red, but the `uri` reference given is not the one produced by the CRI-to-URI algorithm.
+    * `only-cri-ref`: A CRI reference that can not be expressed as a URI reference. Its `cri` is empty.
 
 [^1]: Three feature names currently help implementations select tests which they can not expect to pass:
     * "broken": The test just looks somewhat right, and implementations that don't enforce CRI correctness would probably come to the test vector's conclusions, but something is wrong about the test. The description usually describes what that is.
