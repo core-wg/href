@@ -982,9 +982,9 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    information in a CRI (or merely performs reference resolution) MAY
    pass on a CRI/CRI reference without having fully checked it, relying
    on the producer having generated a valid CRI/CRI reference.  This is
-   true for both basic CRIs (e.g., checking for valid UTF-8) and for
+   true for both Simple CRIs (e.g., checking for valid UTF-8) and for
    extensions (e.g., checking both for valid UTF-8 and the minimal use
-   of PET elements in extended-cris as per Section 7.2).
+   of PET elements in the text-or-pet feature as per Section 7.2).
 
    A system that is checking a CRI for some reason but is not its
    ultimate recipient needs to consider the tension between security
@@ -1409,7 +1409,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    fragment    = text-or-pet
 
    text-or-pet = text /
-       text-pet-sequence .feature "extended-cri"
+       text-pet-sequence .feature "text-or-pet"
 
    ; text1 and pet1 alternating, at least one pet1:
    text-pet-sequence = [?text1, ((+(pet1, text1), ?pet1) // pet1)]
@@ -1436,8 +1436,9 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    (Note that, in CBOR diagnostic notation, single quotes delimit
    literals for byte strings, double quotes for text strings.)
 
-   To yield a valid extended-cri, the use of byte strings MUST be
-   minimal.  Both the following examples are therefore not valid:
+   To yield a valid CRI using the text-or-pet feature, the use of byte
+   strings MUST be minimal.  Both the following examples are therefore
+   not valid:
 
    [-6, true, [["web:alice:", '7:', "1-balun"]]]
 
@@ -1449,7 +1450,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    valid UTF-8 character ≥ U+0080, move this character over into a text
    string by appending it to the end of the preceding text string,
    prepending it to the start of the following text string, or splitting
-   the byte string and inserting a new text string with this character,
 
 
 
@@ -1458,6 +1458,7 @@ Bormann & Birkholz      Expires 13 September 2025              [Page 26]
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
+   the byte string and inserting a new text string with this character,
    all while preserving the order of the bytes.  (Note that the
    properties of UTF-8 make this a simple linear process; working around
    the NFC constraint C0 in this way may be more complex.)
@@ -1469,10 +1470,11 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
       |  consequence of the flexibility in delimiters offered in URIs is
       |  demonstrated by this example, which structurally singles out
       |  the one ':' that is _not_ a delimiter at the application level.
-      |  Applications designed for using CRIs will generally avoid using
-      |  the extended-cri feature.  Applications using existing URI
-      |  structures that require text-pet-sequence elements for their
-      |  representation typically need to process them byte by byte.
+      |  Applications specifically designed for using CRIs will
+      |  generally avoid using the text-or-pet feature.  Applications
+      |  using existing URI structures that require text-pet-sequence
+      |  elements for their representation typically need to process
+      |  them byte by byte.
 
 8.  Integration into CoAP and ACE
 
@@ -1504,8 +1506,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
                     Table 2: Mapping CRI scheme numbers
                             and URI scheme names
-
-
 
 
 
@@ -2319,7 +2319,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
             UTF-8 encoded text.  Bytes that are not valid UTF-8 show up,
             for example, in BitTorrent web seeds.
 
-            These URIs can be expressed when using the extended-cri
+            These URIs can be expressed when using the text-or-pet
             feature.
 
          *  https://example.com/component%3bone;component%3btwo,
@@ -2336,7 +2336,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
             paths), & (for query parameters) are special in that they
             are syntactic delimiters of their respective components in
             CRIs.  Thus, the following examples _are_ convertible to
-            basic CRIs without the extended-cri feature:
+            basic CRIs without the text-or-pet feature:
 
             https://example.com/path%2fcomponent/second-component
 
@@ -2361,7 +2361,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
             userinfo.
 
             The rules explicitly cater for unencoded ":" in userinfo
-            (without needing the extended-cri feature).  (We opted for
+            (without needing the text-or-pet feature).  (We opted for
             including this syntactic feature instead of disabling it as
             a mechanism against potential uses of colons for the
             deprecated inclusion of unencrypted secrets.)

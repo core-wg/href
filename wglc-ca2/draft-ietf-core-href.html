@@ -2385,9 +2385,9 @@ An intermediary that does not use the detailed information in a CRI
 (or merely performs reference resolution) <span class="bcp14">MAY</span> pass on a CRI/CRI
 reference without having fully checked it, relying on the producer
 having generated a valid CRI/CRI reference.
-This is true for both basic CRIs (e.g., checking for valid UTF-8) and
+This is true for both Simple CRIs (e.g., checking for valid UTF-8) and
 for extensions (e.g., checking both for valid UTF-8 and the minimal
-use of PET elements in extended-cris as per <a href="#pet" class="auto internal xref">Section 7.2</a>).<a href="#section-5.2.1-8" class="pilcrow">¶</a></p>
+use of PET elements in the text-or-pet feature as per <a href="#pet" class="auto internal xref">Section 7.2</a>).<a href="#section-5.2.1-8" class="pilcrow">¶</a></p>
 <p id="section-5.2.1-9">A system that is checking a CRI for some reason but is not its
 ultimate recipient needs to consider the tension between security
 requirements and the danger of ossification <span>[<a href="#RFC9170" class="cite xref">RFC9170</a>]</span>: If the system rejects
@@ -2783,7 +2783,7 @@ query       = [+text-or-pet]
 fragment    = text-or-pet
 
 text-or-pet = text /
-    text-pet-sequence .feature "extended-cri"
+    text-pet-sequence .feature "text-or-pet"
 
 ; text1 and pet1 alternating, at least one pet1:
 text-pet-sequence = [?text1, ((+(pet1, text1), ?pet1) // pet1)]
@@ -2813,8 +2813,8 @@ did:web:alice:7%3A1-balun
 </div>
 <p id="section-7.2-11">(Note that, in CBOR diagnostic notation, single quotes delimit
 literals for byte strings, double quotes for text strings.)<a href="#section-7.2-11" class="pilcrow">¶</a></p>
-<p id="section-7.2-12">To yield a valid <code>extended-cri</code>, the use of byte strings <span class="bcp14">MUST</span> be
-minimal.
+<p id="section-7.2-12">To yield a valid CRI using the <code>text-or-pet</code> feature, the use of byte
+strings <span class="bcp14">MUST</span> be minimal.
 Both the following examples are therefore not valid:<a href="#section-7.2-12" class="pilcrow">¶</a></p>
 <div class="lang-cbor-diag sourcecode" id="section-7.2-13">
 <pre>
@@ -2845,8 +2845,8 @@ division into array elements.
 This consequence of the flexibility in delimiters offered in URIs is
 demonstrated by this example, which structurally singles out the one
 ':' that is <em>not</em> a delimiter at the application level.
-Applications designed for using CRIs will generally avoid using the
-extended-cri feature.
+Applications specifically designed for using CRIs will generally
+avoid using the <code>text-or-pet</code> feature.
 Applications using existing URI structures that require
 text-pet-sequence elements for their representation typically need
 to process them byte by byte.<a href="#section-7.2-16.1" class="pilcrow">¶</a></p>
@@ -3825,7 +3825,7 @@ these URIs illustrate the constraints by example:<a href="#appendix-A-6.1.2" cla
 All URI components must, after percent decoding, be valid UTF-8 encoded text.
 Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.<a href="#appendix-A-6.1.3.1.2" class="pilcrow">¶</a></p>
 <p id="appendix-A-6.1.3.1.3">
-These URIs can be expressed when using the <code>extended-cri</code> feature.<a href="#appendix-A-6.1.3.1.3" class="pilcrow">¶</a></p>
+These URIs can be expressed when using the <code>text-or-pet</code> feature.<a href="#appendix-A-6.1.3.1.3" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="appendix-A-6.1.3.2">
               <p id="appendix-A-6.1.3.2.1"><code>https://example.com/component%3bone;component%3btwo</code>, <code>http://example.com/component%3dequals</code><a href="#appendix-A-6.1.3.2.1" class="pilcrow">¶</a></p>
@@ -3836,7 +3836,7 @@ which is the delimiter by which the component is split up in the CRI.<a href="#a
 <p id="appendix-A-6.1.3.2.3">
 Note that the separators <code>.</code> (for authority parts), <code>/</code> (for paths), <code>&amp;</code> (for query parameters)
 are special in that they are syntactic delimiters of their respective components in CRIs.
-Thus, the following examples <em>are</em> convertible to basic CRIs without the <code>extended-cri</code> feature:<a href="#appendix-A-6.1.3.2.3" class="pilcrow">¶</a></p>
+Thus, the following examples <em>are</em> convertible to basic CRIs without the <code>text-or-pet</code> feature:<a href="#appendix-A-6.1.3.2.3" class="pilcrow">¶</a></p>
 <p id="appendix-A-6.1.3.2.4"><code>https://example.com/path%2fcomponent/second-component</code><a href="#appendix-A-6.1.3.2.4" class="pilcrow">¶</a></p>
 <p id="appendix-A-6.1.3.2.5"><code>https://example.com/x?ampersand=%26&amp;questionmark=?</code><a href="#appendix-A-6.1.3.2.5" class="pilcrow">¶</a></p>
 </li>
@@ -3849,7 +3849,7 @@ represented as <code>[-4, [false, "", "example", "com"]]</code>; the <code>false
 serves as a marker that the next element is the userinfo.<a href="#appendix-A-6.1.3.3.2" class="pilcrow">¶</a></p>
 <p id="appendix-A-6.1.3.3.3">
 The rules explicitly cater for unencoded ":" in userinfo (without
-needing the <code>extended-cri</code> feature).
+needing the <code>text-or-pet</code> feature).
 (We opted for including this syntactic feature instead of
 disabling it as a mechanism against potential uses of colons for
 the deprecated inclusion of unencrypted secrets.)<a href="#appendix-A-6.1.3.3.3" class="pilcrow">¶</a></p>
