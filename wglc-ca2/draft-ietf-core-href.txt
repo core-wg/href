@@ -1922,14 +1922,13 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    (suggested assignment: 99), with the present document as the
    specification reference.
 
-   +-------+-----------+----------------------------------+-----------+
-   |   Tag | Data Item | Semantics                        | Reference |
-   +-------+-----------+----------------------------------+-----------+
-   | CPA99 | array     | Diagnostic Notation              | RFC-XXXX  |
-   |       |           | Unresolved Application-Extension |           |
-   +-------+-----------+----------------------------------+-----------+
+             +-------+-----------+---------------+-----------+
+             |   Tag | Data Item | Semantics     | Reference |
+             +-------+-----------+---------------+-----------+
+             | CPA99 | array     | CRI Reference | RFC-XXXX  |
+             +-------+-----------+---------------+-----------+
 
-                         Table 6: Values for Tags
+                          Table 6: Values for Tags
 
 11.5.  CoAP Option Numbers Registry
 
@@ -1950,6 +1949,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
    // RFC Ed.: throughout this section, please replace RFC-XXXX with the
    // RFC number of this specification and remove this note.
+
 
 
 
