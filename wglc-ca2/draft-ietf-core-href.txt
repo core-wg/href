@@ -1699,7 +1699,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    Tperm choice REST-method-set, this information model can be
    specialized as in:
 
-   CRI-local-part = [path / null, ?query]
+   CRI-local-part = [path, ?query]
    AIF-CRI = AIF-Generic<CRI-local-part, REST-method-set>
 
 9.  Implementation Status
