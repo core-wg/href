@@ -1422,7 +1422,7 @@ choice `REST-method-set`, this information model can be specialized as
 in:
 
 ~~~ cddl
-CRI-local-part = [path / null, ?query]
+CRI-local-part = [path, ?query]
 AIF-CRI = AIF-Generic<CRI-local-part, REST-method-set>
 ~~~
 
