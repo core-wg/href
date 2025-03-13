@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-11T01:54:40.681171+00:00",
+  "timestamp": "2025-03-13T01:55:03.811336+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -5559,20 +5559,28 @@
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "So far, this only adds the \"features\" column and doesn't populate it yet.\r\n\r\nMore things I'd yet like to do here:\r\n* Actually populate that column\r\n* Add tests with URI references that don't have a corresponding URI (possibly as a new type \"onlycri\", where the uri column is empty)\r\n* Fix the empty URI references examples based on the changes in the editor's copy (happy to take anything you have on that already, @cabo).",
+      "body": "So far, this only adds the \"features\" column and doesn't populate it yet.\r\n\r\nMore things I'd yet like to do here:\r\n* [ ] Actually populate that column\r\n* [ ] Add tests with URI references that don't have a corresponding URI\r\n* [x] Introduce as a new type \"onlycri\", where the uri column is empty\r\n* [ ] Fix the empty URI references examples based on the changes in the editor's copy (happy to take anything you have on that already, @cabo).",
       "createdAt": "2025-03-09T13:34:16Z",
-      "updatedAt": "2025-03-09T14:27:11Z",
+      "updatedAt": "2025-03-12T10:32:44Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "be31d89579745cf1ea58cbe7a9bbdd56ecb54027",
       "headRepository": "core-wg/href",
       "headRefName": "test-extensions",
-      "headRefOid": "6dc36ecbe5551ea560f01bbae2c12bcf896de3e1",
+      "headRefOid": "138f62833abc87bc4543805cfa5d73904c6293c4",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "The current state passes through [cri-ref](https://codeberg.org/chrysn/cri-ref)'s tests.\r\n\r\nThat can be enough to merge; either way, I'll stick with it some more (esp. around the recent changes to the defaults).",
+          "createdAt": "2025-03-12T10:32:43Z",
+          "updatedAt": "2025-03-12T10:32:43Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -5587,19 +5595,40 @@
       "labels": [],
       "body": "In Progress...",
       "createdAt": "2025-03-10T21:15:28Z",
-      "updatedAt": "2025-03-10T21:15:28Z",
+      "updatedAt": "2025-03-12T21:39:26Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "be31d89579745cf1ea58cbe7a9bbdd56ecb54027",
       "headRepository": "core-wg/href",
       "headRefName": "wglc-ca2",
-      "headRefOid": "aff42196628019fec80c5e7767148ff1c6600b65",
+      "headRefOid": "3a65bdb94020075fe0d81d48e8c395580b09feae",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6fuylr",
+          "commit": {
+            "abbreviatedOid": "434da51"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "LGTM; suggestion covers a copy-paste issue.",
+          "createdAt": "2025-03-12T20:54:53Z",
+          "updatedAt": "2025-03-12T21:02:39Z",
+          "comments": [
+            {
+              "originalPosition": 344,
+              "body": "```suggestion\r\n| CPA99 | array     | CRI Reference | RFC-XXXX  |\r\n```",
+              "createdAt": "2025-03-12T20:54:53Z",
+              "updatedAt": "2025-03-12T21:02:39Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
