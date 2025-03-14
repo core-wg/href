@@ -62,6 +62,7 @@ informative:
   RFC7252: coap
   RFC8141: urn
   RFC8288: web-linking
+  RFC9164: ip
   BCP190: lawn
 #  BCP205:
   # RFC8820
@@ -69,7 +70,6 @@ informative:
   I-D.ietf-cbor-edn-literals: edn
   I-D.carpenter-6man-rfc6874bis: zonebis
   I-D.bormann-cbor-notable-tags: notable
-  I-D.draft-ietf-core-href-18: dash18
   RFC9170: use-lose
   GREENSPUN-10:
     target: https://en.wikipedia.org/wiki/Greenspun's_tenth_rule
@@ -93,6 +93,7 @@ normative:
   IANA.media-type-sub-parameters: mtsub
   RFC9237: aif
   IANA.core-parameters:
+  IANA.cbor-tags: tags
   RFC8610: cddl
   Unicode:
     target: https://www.unicode.org/versions/Unicode13.0.0/
@@ -594,20 +595,7 @@ references:
 | fragment  | `null`        |
 {:#tbl-default title="Default Values for CRI Sections"}
 
-Application specifications that use CRIs may explicitly enable the use
-of "stand-in" items (tags or simple values).
-These are data items used in place of original representation items
-such as strings or arrays, where the tag or simple value is defined to
-stand for a data item that can be used in the position of the stand-in
-item.
-Examples would be (1) tags such as 21 to 23 ({{Section 3.4.5.2 of
-RFC8949@-cbor}}) or 108 ({{Section 2.1 of -notable}}), which stand for text string components but internally
-employ more compact byte string representations, or (2) reference tags and
-simple values as defined in {{-packed}}.
-Note that application specifications need to be explicit about which
-stand-in items are allowed; otherwise, inconsistent interpretations at
-different places in a system can lead to check/use vulnerabilities.
-
+{:#no-indef}
 For interchange as separate encoded data items, CRIs MUST NOT use
 indefinite length encoding (see
 {{Section 3.2 of RFC8949@-cbor}}).
@@ -796,9 +784,9 @@ An intermediary that does not use the detailed information in a CRI
 (or merely performs reference resolution) MAY pass on a CRI/CRI
 reference without having fully checked it, relying on the producer
 having generated a valid CRI/CRI reference.
-This is true for both basic CRIs (e.g., checking for valid UTF-8) and
+This is true for both Simple CRIs (e.g., checking for valid UTF-8) and
 for extensions (e.g., checking both for valid UTF-8 and the minimal
-use of PET elements in extended-cris as per {{pet}}).
+use of PET elements in the text-or-pet feature as per {{pet}}).
 
 A system that is checking a CRI for some reason but is not its
 ultimate recipient needs to consider the tension between security
@@ -1048,43 +1036,67 @@ fragment
 
 # Extending CRIs {#extending}
 
-CRIs have been designed to relieve implementations operating on CRIs
-from string scanning, which both helps constrained implementations and
-implementations that need to achieve high throughput.
-
-The CRI structure described up to this point is termed the _Basic CRI_.
+The CRI structure described up to this point, without enabling any
+feature ("scheme-name", "no-authority", "userinfo"), is termed the
+_Basic CRI_.
 It should be sufficient for all applications that use the CoAP
 protocol, as well as most other protocols employing URIs.
 
-However, Basic CRIs have one limitation: They do not support URI
-components that *require* percent-encoding ({{Section 2.1 of RFC3986@-uri}}) to
-represent them in the URI syntax, except where that percent-encoding
-is used to escape the main delimiter in use.
+With one or more of the three features enabled, we speak of _Simple
+CRIs_, which cover a larger subset of protocols that employ URIs.
+To overcome remaining limitations, _Extended Forms_ of CRIs may be
+defined to enable further applications.
+They will generally extend the CRI structure to accommodate more potential
+values of text components of URIs, such as userinfo, hostnames, paths,
+queries, and fragments.
 
-E.g., the URI
+Extensions may also be defined to afford a more natural
+representation of the information in a URI.
+_Stand-in Items_ ({{stand-in}}) are one way to provide such
+representations.
+For instance, information that needs to be base64-encoded in a URI can
+be represented in a CRI in its natural form as a byte string instead.
 
-~~~ uri
-https://alice/3%2f4-inch
-~~~
+Extensions are or will be necessary to cover two limitations of
+Simple CRIs:
 
-is represented by the basic CRI
+* Simple CRIs do not support IPvFuture ({{Section 3.2.2 of RFC3986@-uri}}).
+  Definition of such an extension probably best waits until a wider
+  use of new IP literal formats is planned.
+* More important in practice:
 
-~~~ coap-diag
-[-4, ["alice"], ["3/4-inch"]]
-~~~
+  Simple CRIs do not support URI components that *require*
+  percent-encoding ({{Section 2.1 of RFC3986@-uri}}) to represent them
+  in the URI syntax, except where that percent-encoding is used to
+  escape the main delimiter in use.
 
-However, percent-encoding that is used at the application level is not
-supported by basic CRIs:
 
-~~~ uri
-did:web:alice:7%3A1-balun
-~~~
+  E.g., the URI
 
-Extended forms of CRIs may be defined to enable these applications.
-They will generally extend the potential values of text components of
-URIs, such as userinfo, hostnames, paths, queries, and fragments.
+  ~~~ uri
+  https://alice/3%2f4-inch
+  ~~~
 
-One such extended form is described in the following {{pet}}.
+  is represented by the Basic CRI
+
+  ~~~ coap-diag
+  [-4, ["alice"], ["3/4-inch"]]
+  ~~~
+
+  However, percent-encoding that is used at the application level is not
+  supported by Simple CRIs:
+
+  ~~~ uri
+  did:web:alice:7%3A1-balun
+  ~~~
+
+  CRIs have been designed to relieve implementations operating on CRIs
+  from string scanning, which both helps constrained implementations and
+  implementations that need to achieve high throughput.
+
+  An extension supporting application-level percent-encoded text in
+  CRIs is described in {{pet}}.
+
 Consumers of CRIs will generally notice when an extended form is in
 use, by finding structures that do not match the CDDL rules given in
 {{cddl}}.
@@ -1092,9 +1104,32 @@ Future definitions of extended forms need to strive to be
 distinguishable in their structures from the extended form presented
 here as well as other future forms.
 
-Extensions to CRIs MUST NOT allow indefinite length items.
-This provision ensures that recipients of CRIs can deal with unprocessable CRIs
+Extensions to CRIs are not intended to change encoding constraints;
+e.g., {{no-indef}} is applicable to extended forms of CRIs as well.
+This also ensures that recipients of CRIs can deal with unprocessable CRIs
 as described in {{unprocessable}}.
+
+## Extended CRI: Stand-In Items {#stand-in}
+
+Application specifications that use CRIs may explicitly enable the use
+of "stand-in" items (tags or simple values).
+These are data items used in place of original representation items
+such as strings or arrays, where the tag or simple value is defined to
+stand for a data item that can be used in the position of the stand-in
+item.
+Examples would be (1) tags such as 21 to 23 ({{Section 3.4.5.2 of
+RFC8949@-cbor}}) or 108 ({{Section 2.1 of -notable}}), which stand for text string components but internally
+employ more compact byte string representations, or (2) reference tags and
+simple values as defined in {{-packed}}.
+
+Application specifications need to be explicit about which
+stand-in items are allowed; otherwise, inconsistent interpretations at
+different places in a system can lead to check/use vulnerabilities.
+
+(Note that specifications that define CBOR tags may be employed in CRI
+extensions without actually using the tags defined there as stand-in
+tags; e.g., compare the way IP addresses are represented in Basic CRIs
+with {{-ip}}.)
 
 ## Extended CRI: Accommodating Percent Encoding (PET) {#pet}
 
@@ -1121,7 +1156,7 @@ query       = [+text-or-pet]
 fragment    = text-or-pet
 
 text-or-pet = text /
-    text-pet-sequence .feature "extended-cri"
+    text-pet-sequence .feature "text-or-pet"
 
 ; text1 and pet1 alternating, at least one pet1:
 text-pet-sequence = [?text1, ((+(pet1, text1), ?pet1) // pet1)]
@@ -1138,7 +1173,13 @@ while the byte strings retain the special
 semantics of percent-encoded text without actually being
 percent-encoded.
 
-The above DID URI can now be represented as:
+The abovementioned DID URI
+
+~~~ uri
+did:web:alice:7%3A1-balun
+~~~
+
+can now be represented as:
 
 ~~~ cbor-diag
 [-6, true, [["web:alice:7", ':', "1-balun"]]]
@@ -1147,8 +1188,8 @@ The above DID URI can now be represented as:
 (Note that, in CBOR diagnostic notation, single quotes delimit
 literals for byte strings, double quotes for text strings.)
 
-To yield a valid `extended-cri`, the use of byte strings MUST be
-minimal.
+To yield a valid CRI using the `text-or-pet` feature, the use of byte
+strings MUST be minimal.
 Both the following examples are therefore not valid:
 
 ~~~ cbor-diag
@@ -1178,8 +1219,8 @@ complex.)
 > This consequence of the flexibility in delimiters offered in URIs is
 > demonstrated by this example, which structurally singles out the one
 > ':' that is *not* a delimiter at the application level.
-> Applications designed for using CRIs will generally avoid using the
-> extended-cri feature.
+> Applications specifically designed for using CRIs will generally
+> avoid using the `text-or-pet` feature.
 > Applications using existing URI structures that require
 > text-pet-sequence elements for their representation typically need
 > to process them byte by byte.
@@ -1201,13 +1242,13 @@ This section makes use of the mapping between CRI scheme numbers
 and URI scheme names shown in {{scheme-map}}:
 
 | CRI scheme number | URI scheme name |
-|-------------------+-----------------|
+|-------------------|-----------------|
 |                 0 | coap            |
 |                 1 | coaps           |
 |                 6 | coap+tcp        |
 |                 7 | coaps+tcp       |
-|                 8 | coap+ws         |
-|                 9 | coaps+ws        |
+|                24 | coap+ws         |
+|                25 | coaps+ws        |
 {: #scheme-map title="Mapping CRI scheme numbers and URI scheme names"}
 
 
@@ -1237,7 +1278,7 @@ value from a data item in the CRI, the presence of any
 
    4.  If the `host` component of »cri« is a `host-name`, include a
        Uri-Host Option and let that option's value be the text string
-       value of the `host-name`.
+       values of the `host-name` elements joined by dots.
 
        If the `host` component of »cri« is a `host-ip`, check whether
        the IP address given represents the request's
@@ -1277,8 +1318,9 @@ value from a data item in the CRI, the presence of any
 
    2.   If the request includes a Uri-Host Option, insert an
         `authority` with its value determined as follows:
-        If the value of the  Uri-Host Option is a `reg-name`, include
-        this as the `host-name`.
+        If the value of the Uri-Host Option is a `reg-name`, split it
+        on any dots in the name and use the resulting text string
+        values as the `host-name`.
         If the value is an IP-literal or IPv4address, extract any
         `zone-id`, and represent the IP address as a byte string of
         the correct length in `host-ip`, followed by any `zone-id`
@@ -1304,7 +1346,7 @@ value from a data item in the CRI, the presence of any
 
    5.   Insert a `query` component that contains an array built from
         the text string values of the Uri-Query Options in the request,
-        or an empty array if no such options are present.
+        or null if no such options are present.
 
 
 ## CoAP Options for Forward-Proxies {#coap-options}
@@ -1380,7 +1422,7 @@ choice `REST-method-set`, this information model can be specialized as
 in:
 
 ~~~ cddl
-CRI-local-part = [path / null, ?query]
+CRI-local-part = [path, ?query]
 AIF-CRI = AIF-Generic<CRI-local-part, REST-method-set>
 ~~~
 
@@ -1414,6 +1456,11 @@ The security considerations discussed for URIs in {{Section 6 of -aif}}
 apply analogously to AIF-CRI {{toid}}.
 
 # IANA Considerations
+
+[^removenumbers]
+
+[^removenumbers]: RFC-editor: Please replace all references to
+    {{sec-numbers}} by a reference to the IANA registry.
 
 ## CRI Scheme Numbers Registry {#cri-reg}
 
@@ -1456,8 +1503,8 @@ Numbers registration simply stays in place, even if the URI Schemes
 registration happens to be for something different from what the
 expert had in mind at the time for the CRI Scheme Numbers
 registration.
-Also note that the initial registrations in {{sec-numbers}} already
-include such registrations for the text strings
+Also note that the initial registrations in {{tab-numbers}} in
+{{sec-numbers}} already include such registrations for the text strings
 "mqtt" and "mqtts".)
 
 A registration in the CRI Scheme Numbers registry does not imply that
@@ -1496,7 +1543,7 @@ under that URI scheme name is later made.
 ### Initial Registrations
 
 The initial registrations for the CRI Scheme Numbers registry are
-provided in {{sec-numbers}}.
+provided in {{tab-numbers}} in {{sec-numbers}}.
 
 
 ## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
@@ -1528,6 +1575,29 @@ IANA is requested to register the application-extension identifier
 {: #tab-iana title="CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI"}
 
 [^replace-xxxx]
+
+## CBOR Tags Registry {#tags-iana}
+
+[^cpa]
+
+[^cpa]: RFC-Editor: This document uses the CPA (code point allocation)
+      convention described in [I-D.bormann-cbor-draft-numbers].  For
+      each usage of the term "CPA", please remove the prefix "CPA"
+      from the indicated value and replace the residue with the value
+      assigned by IANA; perform an analogous substitution for all other
+      occurrences of the prefix "CPA" in the document.  Finally,
+      please remove this note.
+
+In the "CBOR Tags" registry {{-tags}}, IANA is requested to assign the
+tags in {{tab-tag-values}} from the "specification required" space
+(suggested assignment: 99), with the present document as the
+specification reference.
+
+| Tag   | Data Item | Semantics                                            | Reference |
+| CPA99 | array     | CRI Reference | RFC-XXXX  |
+{: #tab-tag-values cols='r l l' title="Values for Tags"}
+
+
 
 ## CoAP Option Numbers Registry
 
@@ -1573,26 +1643,6 @@ RESTful Environments (CoRE) Parameters" registry group
 
 
 --- back
-
-# Mapping Scheme Numbers to Scheme Names {#sec-numbers}
-
-[^replace-xxxx]
-
-Table 8 in {{Appendix A of -dash18}} lists the initial mapping from
-CRI scheme numbers to URI scheme names.
-(This table was developed with a previous revision of the
-Internet-Draft of the RFC derived from this document but is not copied
-into the current draft or the actual RFC because it will be
-out-of-date quickly, and because the IANA registry should be the focal
-point for users of this registry, anyway.)
-
-The assignments from this table can be extracted from the XML form of
-{{-dash18}} (when stored in a file "this.xml") into CSV form
-{{?RFC4180}} using this short Ruby program:
-
-~~~ ruby
-{::include code/extract-schemes-numbers.rb}
-~~~
 
 # The Small Print
 
@@ -1642,7 +1692,7 @@ representative of the normal operation of CRIs.
      Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.
      <!-- <https://www.bittorrent.org/beps/bep_0017.html>, not sure this warrants an informative reference -->
 
-     These URIs can be expressed when using the `extended-cri` feature.
+     These URIs can be expressed when using the `text-or-pet` feature.
 
    * `https://example.com/component%3bone;component%3btwo`, `http://example.com/component%3dequals`
 
@@ -1651,8 +1701,12 @@ representative of the normal operation of CRIs.
      which is the delimiter by which the component is split up in the CRI.
 
      Note that the separators `.` (for authority parts), `/` (for paths), `&` (for query parameters)
-     are special in that they are syntactic delimiters of their respective components in CRIs.
-     Thus, the following examples *are* convertible to basic CRIs without the `extended-cri` feature:
+     are special in that they are syntactic delimiters of their
+     respective components in CRIs (note that `.` is doubly special
+     because it is not a `reserved` character in {{-uri}} and therefore
+     any percent-encoding would be normalized away).
+
+     Thus, the following examples *are* convertible to basic CRIs without the `text-or-pet` feature:
 
      `https://example.com/path%2fcomponent/second-component`
 
@@ -1666,7 +1720,7 @@ representative of the normal operation of CRIs.
      serves as a marker that the next element is the userinfo.
 
      The rules explicitly cater for unencoded ":" in userinfo (without
-     needing the `extended-cri` feature).
+     needing the `text-or-pet` feature).
      (We opted for including this syntactic feature instead of
      disabling it as a mechanism against potential uses of colons for
      the deprecated inclusion of unencrypted secrets.)
@@ -1693,17 +1747,23 @@ Note that there may be more than one CRI reference that can be
 converted to the URI/IRI reference given; implementations are expected
 to favor the simplest variant available and make non-surprising
 choices otherwise.
+In the all-upper-case variant of the app-prefix, the value is enclosed
+in a tag number CPA99.
+
+[^cpa]
 
 As an example, the CBOR diagnostic notation
 
 ~~~ cbor-diag
 cri'https://example.com/bottarga/shaved'
+CRI'https://example.com/bottarga/shaved'
 ~~~
 
 is equivalent to
 
 ~~~ cbor-diag
 [-4, ["example", "com"], ["bottarga", "shaved"]]
+CPA99([-4, ["example", "com"], ["bottarga", "shaved"]])
 ~~~
 
 See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
@@ -1711,7 +1771,13 @@ See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
 
 ## cri: ABNF Definition of URI Representation of a CRI {#cri-grammar}
 
-The syntax of the content of `cri` literals can be described by the
+It can be expected that implementations of the application-extension
+identifier "`cri`" will make use of platform-provided URI
+implementations, which will include a URI parser.
+
+In case such a URI parser is not available or inconvenient to
+integrate,
+a grammar of the content of `cri` literals is provided by the
 ABNF for `URI-reference` in {{Section 4.1 of RFC3986@-uri}} with certain
 re-arrangements taken from {{figure-5 (Figure 5)<I-D.ietf-cbor-edn-literals}} of {{I-D.ietf-cbor-edn-literals}};
 these are reproduced in {{abnf-grammar-cri}}.
@@ -1813,6 +1879,27 @@ sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
 {: #abnf-grammar-cri sourcecode-name="cbor-edn-cri.abnf"
 title="ABNF Definition of URI Representation of a CRI"
 }
+
+
+# Mapping Scheme Numbers to Scheme Names {#sec-numbers}
+{:removeinrfc}
+
+[^replace-xxxx]
+
+{{tab-numbers}} defines the initial mapping from CRI scheme numbers to
+URI scheme names.
+
+{::include code/schemes-numbers.md}
+{: #tab-numbers title="Mapping Scheme Numbers to Scheme Names"}
+
+The assignments from this table can be extracted from the XML form of
+this document (when stored in a file "this.xml") into CSV form
+{{?RFC4180}} using this short Ruby program:
+
+~~~ ruby
+{::include code/extract-schemes-numbers.rb}
+~~~
+
 
 # Change Log
 {:removeinrfc}
