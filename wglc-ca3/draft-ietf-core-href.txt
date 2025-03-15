@@ -95,7 +95,7 @@ Table of Contents
    3.  Creation and Normalization  . . . . . . . . . . . . . . . . .  10
    4.  Comparison  . . . . . . . . . . . . . . . . . . . . . . . . .  11
    5.  CRI References  . . . . . . . . . . . . . . . . . . . . . . .  12
-     5.1.  CBOR Representation . . . . . . . . . . . . . . . . . . .  12
+     5.1.  CBOR Representation . . . . . . . . . . . . . . . . . . .  13
        5.1.1.  scheme-name and scheme-id . . . . . . . . . . . . . .  16
        5.1.2.  The discard Section . . . . . . . . . . . . . . . . .  16
        5.1.3.  Examples  . . . . . . . . . . . . . . . . . . . . . .  17
@@ -295,9 +295,9 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
          3986 [STD66] requires alphabetic characters to be in
          lowercase.)  The scheme is always present.
 
-   C2.   An authority is always a host identified by an IP address or
-         registered name, along with optional port information, and
-         optionally preceded by user information.
+   C2.   An authority is always a host identified by an IP address or a
+         "registered name" (see C5 below), along with optional port
+         information, and optionally preceded by user information.
 
          Alternatively, the authority can be absent; the two cases for
          this defined in Section 3.3 of RFC 3986 [STD66] are modeled by
@@ -338,12 +338,13 @@ Bormann & Birkholz      Expires 16 September 2025               [Page 6]
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
-   C5.   A registered name is a sequence of one or more _labels_, which,
-         when joined with dots (".") in between them, result in a
-         lowercase CRI text string.  (The syntax may be further
-         restricted by the scheme.  As per Section 3.2.2 of RFC 3986
-         [STD66], a registered name can be empty, for which case a
-         scheme can define a default for the host.)
+   C5.   A _registered name_ is represented as a sequence of one or more
+         lowercase CRI text string _labels_ that do not contain dots
+         (".").  (These labels joined with dots (".") in between them
+         result in the CRI equivalent of a URI registered name as per
+         Section 3.2.2 of RFC 3986 [STD66].  The syntax may be further
+         restricted by the scheme.  A URI registered name can be empty,
+         for which case a scheme can define a default for the host.)
 
    C6.   A port is always an integer in the range from 0 to 65535.
          Ports outside this range, empty ports (port subcomponents with
@@ -385,7 +386,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
          query parameter can be any CRI text string.  It is often in the
          form of a "key=value" pair.  When converting a CRI to a URI,
          query parameters are separated by an ampersand ("&") character.
-         (This matches the structure and encoding of the target URI in
 
 
 
@@ -394,6 +394,7 @@ Bormann & Birkholz      Expires 16 September 2025               [Page 7]
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
+         (This matches the structure and encoding of the target URI in
          CoAP requests.)  Queries are optional; there is a difference
          between an absent query and a single query parameter that is
          the empty string.
@@ -438,10 +439,9 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    The discarding intent of a CRI reference is thus fully condensed to a
    single value in its discard component:
 
-   *  An unsigned integer as the discard component specifies the number
-      of path segments to be discarded from the base CRI (note that this
-      includes the value 0 which cannot be expressed in URI references
-      that then add any path component);
+
+
+
 
 
 
@@ -449,6 +449,11 @@ Bormann & Birkholz      Expires 16 September 2025               [Page 8]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+   *  An unsigned integer as the discard component specifies the number
+      of path segments to be discarded from the base CRI (note that this
+      includes the value 0 which cannot be expressed in URI references
+      that then add any path component);
 
    *  the value true as the discard component specifies discarding all
       path segments from the base CRI.
@@ -492,11 +497,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    *  CRIs without authority whose path starts with a leading empty
       segment followed by at least one more segment.
 
-      When converted to URIs, these would violate the requirement that
-      in absence of an authority, a URI's path cannot begin with two
-      slash characters.  (E.g., two leading empty segments would be
-      indistinguishable from a URI with a shorter path and a present but
-      empty authority component.)  (Compare C9.)
 
 
 
@@ -505,6 +505,12 @@ Bormann & Birkholz      Expires 16 September 2025               [Page 9]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+      When converted to URIs, these would violate the requirement that
+      in absence of an authority, a URI's path cannot begin with two
+      slash characters.  (E.g., two leading empty segments would be
+      indistinguishable from a URI with a shorter path and a present but
+      empty authority component.)  (Compare C9.)
 
    *  CRIs without authority that are rootless and have an empty path
       component (e.g., ["a", true, []]), which would be
@@ -543,6 +549,19 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    *  map path segments, query parameters, and the fragment identifier
       to NFC form (C9, C10, C11).
 
+
+
+
+
+
+
+
+
+Bormann & Birkholz      Expires 16 September 2025              [Page 10]
+
+Internet-Draft      Constrained Resource Identifiers          March 2025
+
+
    Once a CRI has been created, it can be used and transferred without
    further normalization.  All operations that operate on a CRI SHOULD
    rely on the assumption that the CRI is appropriately pre-normalized.
@@ -554,14 +573,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    constraints continuously need to be checked and enforced.
    Specifically, the text normalization constraints (NFC) can be
    expanded as: The recipient of a CRI MAY reasonably expect the text
-
-
-
-Bormann & Birkholz      Expires 16 September 2025              [Page 10]
-
-Internet-Draft      Constrained Resource Identifiers          March 2025
-
-
    strings to be in NFC form, but as with any input MUST NOT fail
    (beyond possibly not being able to process the specific CRI) if they
    are not.  So the onus of fulfilling the expectation is on the
@@ -592,18 +603,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    that are Unicode strings) then it is safe to conclude that they are
    equivalent.
 
-   This comparison mechanism is designed to minimize false negatives
-   while strictly avoiding false positives.  The constraints defined in
-   Section 2 imply the most common forms of syntax- and scheme-based
-   normalizations in URIs, but do not comprise protocol-based
-   normalizations that require accessing the resources or detailed
-   knowledge of the scheme's dereference algorithm.  False negatives can
-   be caused, for example, by CRIs that are not appropriately pre-
-   normalized and by resource aliases.
 
-   When CRIs are compared to select (or avoid) a network action, such as
-   retrieval of a representation, fragment components (if any) do not
-   play a role and typically are excluded from the comparison.
 
 
 
@@ -617,6 +617,19 @@ Bormann & Birkholz      Expires 16 September 2025              [Page 11]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+   This comparison mechanism is designed to minimize false negatives
+   while strictly avoiding false positives.  The constraints defined in
+   Section 2 imply the most common forms of syntax- and scheme-based
+   normalizations in URIs, but do not comprise protocol-based
+   normalizations that require accessing the resources or detailed
+   knowledge of the scheme's dereference algorithm.  False negatives can
+   be caused, for example, by CRIs that are not appropriately pre-
+   normalized and by resource aliases.
+
+   When CRIs are compared to select (or avoid) a network action, such as
+   retrieval of a representation, fragment components (if any) do not
+   play a role and typically are excluded from the comparison.
 
 5.  CRI References
 
@@ -652,6 +665,15 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    references are typically resolved to their respective CRI before
    comparison.
 
+
+
+
+
+Bormann & Birkholz      Expires 16 September 2025              [Page 12]
+
+Internet-Draft      Constrained Resource Identifiers          March 2025
+
+
 5.1.  CBOR Representation
 
 
@@ -662,17 +684,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    Section 3.1 of RFC 8949 [STD94]).  Figure 1 has a coarse
    visualization of the structure of this array, without going into the
    details of the elements.
-
-
-
-
-
-
-
-Bormann & Birkholz      Expires 16 September 2025              [Page 12]
-
-Internet-Draft      Constrained Resource Identifiers          March 2025
-
 
    cri-reference:
        │├──╮── scheme ── authority ──╭── local-part ──┤│
@@ -691,17 +702,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
            Figure 1: Overall Structure of a CRI or CRI Reference
 
    Figure 2 has a more detailed description of the structure, in CDDL.
-
-
-
-
-
-
-
-
-
-
-
 
 
 
