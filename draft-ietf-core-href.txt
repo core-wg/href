@@ -282,9 +282,9 @@ Bormann & Birkholz      Expires 16 September 2025               [Page 5]
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
-   C2.   An authority is always a host identified by an IP address or
-         registered name, along with optional port information, and
-         optionally preceded by user information.
+   C2.   An authority is always a host identified by an IP address or a
+         "registered name" (see C5 below), along with optional port
+         information, and optionally preceded by user information.
 
          Alternatively, the authority can be absent; the two cases for
          this defined in Section 3.3 of RFC 3986 [STD66] are modeled by
@@ -315,18 +315,18 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
          and that cannot be designed ahead of time, so these versions
          need to be added as a future extension if needed).
 
-   C5.   A registered name is a sequence of one or more _labels_, which,
-         when joined with dots (".") in between them, result in a
-         lowercase CRI text string.  (The syntax may be further
-         restricted by the scheme.  As per Section 3.2.2 of RFC 3986
-         [STD66], a registered name can be empty, for which case a
-         scheme can define a default for the host.)
+   C5.   A _registered name_ is represented as a sequence of one or more
+         lowercase CRI text string _labels_ that do not contain dots
+         (".").  (These labels joined with dots (".") in between them
+         result in the CRI equivalent of a URI registered name as per
+         Section 3.2.2 of RFC 3986 [STD66].  The syntax may be further
+         restricted by the scheme.  A URI registered name can be empty,
+         for which case a scheme can define a default for the host.)
 
    C6.   A port is always an integer in the range from 0 to 65535.
          Ports outside this range, empty ports (port subcomponents with
          no digits, see Section 3.2.3 of RFC 3986 [STD66]), or ports
          with redundant leading zeros, are not supported.
-
 
 
 

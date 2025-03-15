@@ -1484,8 +1484,9 @@ The scheme is always present.<a href="#section-2.1-2.2.1" class="pilcrow">¶</a>
 <dd id="section-2.1-2.3">
 <div id="c-authority">
             <p id="section-2.1-2.3.1">An authority is always a host identified by an IP
-address or registered name, along with optional port information,
-and optionally preceded by user information.<a href="#section-2.1-2.3.1" class="pilcrow">¶</a></p>
+address or a "registered name" (see <a href="#c-reg-name" class="auto internal xref">C5</a> below), along with
+optional port information, and optionally preceded by user
+information.<a href="#section-2.1-2.3.1" class="pilcrow">¶</a></p>
 <p id="section-2.1-2.3.2">
 Alternatively, the authority can be absent; the two cases for this
 defined in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">3.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> are modeled by two different
@@ -1533,12 +1534,14 @@ extension if needed).<a href="#section-2.1-2.5.1" class="pilcrow">¶</a></p>
 <dt>C5.</dt>
 <dd id="section-2.1-2.6">
 <div id="c-reg-name">
-            <p id="section-2.1-2.6.1">A registered name is a sequence of one or more
-<em>labels</em>, which, when joined with dots (".") in between them,
-result in a lowercase CRI text string.
-(The syntax may be further restricted by the scheme.
-As per Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>, a registered name can be empty, for
-which case a scheme can define a default for the host.)<a href="#section-2.1-2.6.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-2.6.1">A <em>registered name</em> is represented as a sequence of
+one or more lowercase CRI text string <em>labels</em> that do not contain
+dots (".").
+(These labels joined with dots (".") in between them result in the
+CRI equivalent of a URI registered name as per Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>.
+The syntax may be further restricted by the scheme.
+A URI registered name can be empty, for which case a scheme can
+define a default for the host.)<a href="#section-2.1-2.6.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
