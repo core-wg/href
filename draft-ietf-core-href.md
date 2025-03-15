@@ -216,6 +216,21 @@ RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
 
 A Constrained Resource Identifier consists of the same five components
 as a URI: scheme, authority, path, query, and fragment.
+
+Most components of a CRI can be _absent_, i.e., they are optional; if
+they are not absent they are _present_ (or, equivalently speaking, the
+CRI _has_ the component).
+The scheme component is required in a CRI.
+The path component never is absent in a CRI, but it can be empty (no
+path segments, represented by an empty array).
+The query component can be absent, or it is present and consists of at
+least one query parameter (which can be the empty string); an
+absent query component is therefore represented as an empty array.
+Note that in CRI references, components can also be _not set_, i.e.,
+in the CRI reference resolution process ({{reference-resolution}}) they
+(including their absence or presence) are intended to be taken from a base
+CRI.
+
 The components are subject to the considerations and constraints
 listed in this section.
 Note that CRI extensions can relax constraints; for
@@ -380,8 +395,9 @@ and result in a valid full CRI that can be converted back.
 Examples of this are:
 
 * `[0, ["p"]]`: appends a slash and the path segment "p" to its base
-  (and unsets the query and the fragment)
-* `[0, null, []]`: leaves the path alone but unsets the query and the fragment
+  (and the query and the fragment to absent)
+* `[0, null, []]`: leaves the path alone but sets the query and the
+  fragment to absent
 
 (Full) CRIs that do not correspond to a valid URI are not valid on their own, and cannot be used.
 Normatively they are characterized by the {{cri-to-uri}} process not producing a valid and syntax-normalized URI.
@@ -580,10 +596,18 @@ references:
   `[]`.
   Note that for `CRI-Reference` there is a difference between empty
   and absent paths, represented by `[]` and `null`, respectively.
+* An absent query in a `CRI` MUST be represented as the empty array
+  `[]`; note that this is equivalent to the absence of the question
+  mark in a URI, while the equivalent of just a question mark in a URI is
+  an array with an empty query parameter represented by an empty
+  string `[""]`).
+  Note that for `CRI-Reference` there is a difference between absent
+  and not-set queries, represented by `[]` and `null`, respectively.
 * An empty outer array (`[]`) is not a valid CRI.
   It is a valid CRI reference,
   equivalent to `[0]` as per {{ingest}}, which essentially copies the
-  base CRI up to and including the path section, unsetting query and fragment.
+  base CRI up to and including the path section, setting query and
+  fragment to absent.
 
 | Section   | Default Value |
 |-----------|---------------|
@@ -591,7 +615,7 @@ references:
 | authority | `null`        |
 | discard   | `0`           |
 | path      | `[]`          |
-| query     | `null`        |
+| query     | `[]`          |
 | fragment  | `null`        |
 {:#tbl-default title="Default Values for CRI Sections"}
 
@@ -711,14 +735,14 @@ We refer to this as the *abstract form*, while the *interchange form* ({{cddl}})
 two sections for scheme and authority or one section for discard, but
 never both of these alternatives.
 
-Each of the sections in the abstract form can be unset ("null"),
+Each of the sections in the abstract form can be _not set_ ("null"),
 <!-- "not defined" in RFC 3986 -->
 except for discard,
 which is always an unsigned integer or `true`.  If scheme and/or
 authority are non-null, discard is set to `true`.
 
 When ingesting a CRI reference that is in interchange form, those
-sections are filled in from interchange form (unset sections are
+sections are filled in from interchange form (sections not set are
 filled with null), and the following steps are performed:
 
 * If the array is empty, replace it with `[0]`.
@@ -815,21 +839,23 @@ an CRI reference:
 
 3. If the value of discard is `true` in the CRI reference (which is
    implicitly the case when scheme and/or authority are present in the reference), replace the
-   path in the buffer with the empty array, unset query and
+   path in the buffer with the empty array, absent query and
    fragment, and set a `true` authority to `null`.  If the value of
    discard is an unsigned integer, remove as many elements
-   from the end of the path array; if it is non-zero, unset query and
-   fragment.
+   from the end of the path array; if it is non-zero, set query and
+   fragment to absent.
 
    Set discard to `true` in the buffer.
 
 4. If the path section is set in the CRI reference, append all
    elements from the path array to the array in the path section in
-   the buffer; unset query and fragment.
+   the buffer; set query and fragment to absent.
 
 5. Apart from the path and discard, copy all non-null sections from
-   the CRI reference to the buffer in sequence; unset query in the buffer if query
-   is the empty array `[]` in the CRI reference; unset fragment in the buffer if
+   the CRI reference to the buffer in sequence; set query to absent in
+   the buffer if query
+   is the empty array `[]` in the CRI reference; set fragment to
+   absent in the buffer if
    query is non-null in the CRI reference.
 
 6. Return the sections in the buffer as the resolved CRI.
@@ -893,14 +919,14 @@ scheme
   section, if text (`scheme-name`); or, if a negative integer is given
   (`scheme-id`), the lower case scheme name corresponding to the
   scheme-id as per {{scheme-id}}.
-  Otherwise, the scheme component is unset.
+  Otherwise, the scheme component is not set.
 
 authority
 : If the CRI reference contains a `host-name` or `host-ip` item, the
   authority component of the URI reference consists of a host
   subcomponent, optionally followed by a colon (":") character and a
   port subcomponent, optionally preceded by a `userinfo` subcomponent.
-  Otherwise, the authority component is unset.
+  Otherwise, the authority component is not set.
 
   The host subcomponent consists of the value of the `host-name` or
   `host-ip` item.
@@ -1014,7 +1040,7 @@ query
 : If the CRI reference contains one or more `query` items,
   the query component of the URI reference consists of the value of
   each item, separated by an ampersand ("&") character.
-  Otherwise, the query component is unset.
+  Otherwise, the query component is not set.
 
   Any character in the value of a `query` item that is not
   in the set of unreserved characters or "sub-delims" or a colon
@@ -1027,7 +1053,7 @@ fragment
 : If the CRI reference contains a fragment item, the fragment
   component of the URI reference consists of the value of that
   item.
-  Otherwise, the fragment component is unset.
+  Otherwise, the fragment component is not set.
 
   Any character in the value of a `fragment` item that is
   not in the set of unreserved characters or "sub-delims" or a colon
@@ -1142,7 +1168,7 @@ The four CDDL rules
 userinfo    = (false, text .feature "userinfo")
 host-name   = (*text)
 path        = [*text]
-query       = [+text]
+query       = [*text]
 fragment    = text
 ~~~
 
@@ -1152,7 +1178,7 @@ are replaced with
 userinfo    = (false, text-or-pet .feature "userinfo")
 host-name   = (*text-or-pet)
 path        = [*text-or-pet]
-query       = [+text-or-pet]
+query       = [*text-or-pet]
 fragment    = text-or-pet
 
 text-or-pet = text /
