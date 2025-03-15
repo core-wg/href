@@ -238,8 +238,9 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    The scheme is always present.
 
 2. {:#c-authority} An authority is always a host identified by an IP
-   address or registered name, along with optional port information,
-   and optionally preceded by user information.
+   address or a "registered name" (see {{<c-reg-name}} below), along with
+   optional port information, and optionally preceded by user
+   information.
 
    Alternatively, the authority can be absent; the two cases for this
    defined in {{Section 3.3 of RFC3986@-uri}} are modeled by two different
@@ -268,12 +269,15 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    ahead of time, so these versions need to be added as a future
    extension if needed).
 
-5. {:#c-reg-name} A registered name is a sequence of one or more
-   *labels*, which, when joined with dots (".") in between them,
-   result in a lowercase CRI text string.
-   (The syntax may be further restricted by the scheme.
-   As per {{Section 3.2.2 of RFC3986@-uri}}, a registered name can be empty, for
-   which case a scheme can define a default for the host.)
+5. {:#c-reg-name} A _registered name_ is represented as a sequence of
+   one or more lowercase CRI text string *labels* that do not contain
+   dots (".").
+   (These labels joined with dots (".") in between them result in the
+   CRI equivalent of a URI registered name as per {{Section 3.2.2 of
+   RFC3986@-uri}}.
+   The syntax may be further restricted by the scheme.
+   A URI registered name can be empty, for which case a scheme can
+   define a default for the host.)
 
 6. {:#c-port-range} A port is always an integer in the range from 0 to 65535.
    Ports outside this range, empty ports (port subcomponents with no
