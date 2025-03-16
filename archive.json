@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-13T01:55:03.811336+00:00",
+  "timestamp": "2025-03-16T02:01:06.334736+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -1372,6 +1372,50 @@
           "updatedAt": "2025-03-02T17:16:01Z"
         }
       ]
+    },
+    {
+      "number": 124,
+      "id": "I_kwDOFyeisM6t2AXU",
+      "title": "Reconsider query CRI after introducing defaults",
+      "url": "https://github.com/core-wg/href/issues/124",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "cabo"
+      ],
+      "labels": [],
+      "body": "Query is currently described as `[+text]` and sometimes has `null` and sometimes `[]` as alternatives, with `null` meaning \"no query\" and `[]` meaning \"really no query, I'm stating this here explicitly\".\n\nThis was necessary in earlier versions to enable the removal of trailing nulls, but now that we have defaults, we can think of what is more intuitive:\n\nWe should consider whether `query` should just be `[*text]`, have `[]` as its default, and `null` is just the for CRI references that are fragment-only.\n\nAFAIR this wouldn't be a change to the relatively sensitive conversion rules (they treat it through presence either way, and I found that my implementation didn't get the distinction between \"strip the query\" and \"just set the fragment\" right)\n\nI see several upsides and no downsides:\n* Processing outside of CRI references is more straightforward: It is iterating over a possibly empty list, rather than having the empty case special.\n* More consistency in CRI references: We don't have to make rules for whether when a path is set there needs to be a `null` or `[]` in the query position, there is an obvious choice of `[]` (which is the one in the CRI; this also makes it easy to splice a resolved CRI)\n* It makes query and path behave more similarly (esp. useful when sharing code that's just generic over the text-or-pet's character sets)\n* it would simplify the CDDL esier to understand because there are fewer \"or something special\" cases:\n\n```patch\n CRI = [\n   scheme,\n   authority / no-authority,\n   path,                         ; use [] for empty path\n+  query / null,\n+  query,\n   fragment / null\n ]\n\n\n CRI-Reference = [\n   ((scheme / null, authority / no-authority)\n    // discard),                 ; relative reference\n   path / null,\n-  query / [] / null,            ; [] is explicit unset\n+  query / null,            ; null keeps the query (only allowed when discard=0 and path=null)\n   fragment / null\n ]\n\n-query       = [+text]\n+query       = [*text]\n```\n\nThe null cases for path and query could also be explained consistently in the CRI reference in that\n\n> The value null for path and query are only allowed if discard=0, and, for query, if path=null.\n\n(not sure which text that replaces, but I'm pretty sure there is some on when path may be null)\n\n*Context:* We briefly talked about having some alternative CDDL forms on the side, now at https://github.com/core-wg/href/wiki/Useful-variations-of-the-CDDL, and writing that, the rules looked a bit odd. ",
+      "createdAt": "2025-03-13T10:19:13Z",
+      "updatedAt": "2025-03-13T23:28:17Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "By the way, one step of thought I took and discarded while writing the Useful-variations wiki entry was this: \"Given URIs can't express stripping the query and not even leaving a single `?`, do we need to?\". But as having a (possibly empty) query is more intuitively `[]` and we need a \"don't touch the query\" value anyway to set just the fragment, just unsetting the query is fine too.\n\n(Actually, if we *don't* go with this issue's proposal and leave `null` as the representation of not having any query, then we could just drop the `[]` explicit unset unset if we wanted to -- but I think that this issue's proposal makes sense, and then the ability to go \"up\" to the URI without query is a nice gift).",
+          "createdAt": "2025-03-13T23:28:16Z",
+          "updatedAt": "2025-03-13T23:28:16Z"
+        }
+      ]
+    },
+    {
+      "number": 125,
+      "id": "I_kwDOFyeisM6uJopg",
+      "title": "C5 should mention labels need to be dotless",
+      "url": "https://github.com/core-wg/href/issues/125",
+      "state": "CLOSED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "has-pr"
+      ],
+      "body": "https://github.com/core-wg/href/pull/122#pullrequestreview-2687344379",
+      "createdAt": "2025-03-15T05:26:03Z",
+      "updatedAt": "2025-03-15T13:26:12Z",
+      "closedAt": "2025-03-15T13:26:12Z",
+      "comments": []
     }
   ],
   "pulls": [
@@ -5552,26 +5596,28 @@
     {
       "number": 122,
       "id": "PR_kwDOFyeisM6N5lhF",
-      "title": "Extend test metadata",
+      "title": "Extend test metadata and fix tests",
       "url": "https://github.com/core-wg/href/pull/122",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "So far, this only adds the \"features\" column and doesn't populate it yet.\r\n\r\nMore things I'd yet like to do here:\r\n* [ ] Actually populate that column\r\n* [ ] Add tests with URI references that don't have a corresponding URI\r\n* [x] Introduce as a new type \"onlycri\", where the uri column is empty\r\n* [ ] Fix the empty URI references examples based on the changes in the editor's copy (happy to take anything you have on that already, @cabo).",
       "createdAt": "2025-03-09T13:34:16Z",
-      "updatedAt": "2025-03-12T10:32:44Z",
+      "updatedAt": "2025-03-15T05:27:08Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "be31d89579745cf1ea58cbe7a9bbdd56ecb54027",
       "headRepository": "core-wg/href",
       "headRefName": "test-extensions",
       "headRefOid": "138f62833abc87bc4543805cfa5d73904c6293c4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-03-15T05:27:06Z",
+      "mergedAt": "2025-03-15T05:27:06Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "6af9a2ac6d362ee8434223f13b98d40531d36ad8"
+      },
       "comments": [
         {
           "author": "chrysn",
@@ -5581,31 +5627,54 @@
           "updatedAt": "2025-03-12T10:32:43Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6gLZ77",
+          "commit": {
+            "abbreviatedOid": "138f628"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-03-15T04:33:01Z",
+          "updatedAt": "2025-03-15T04:33:01Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "Right now the information that this is broken is not written down as part of the constraints but only as part of the conversion rules; C5 should say that.",
+              "createdAt": "2025-03-15T04:33:01Z",
+              "updatedAt": "2025-03-15T04:33:01Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 123,
       "id": "PR_kwDOFyeisM6ODmtF",
       "title": "Addressing Christian's WGLC comments, part deux",
       "url": "https://github.com/core-wg/href/pull/123",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "In Progress...",
       "createdAt": "2025-03-10T21:15:28Z",
-      "updatedAt": "2025-03-12T21:39:26Z",
+      "updatedAt": "2025-03-14T18:50:27Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "be31d89579745cf1ea58cbe7a9bbdd56ecb54027",
       "headRepository": "core-wg/href",
       "headRefName": "wglc-ca2",
       "headRefOid": "3a65bdb94020075fe0d81d48e8c395580b09feae",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-03-14T18:50:25Z",
+      "mergedAt": "2025-03-14T18:50:25Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "5badd1e2733ae307a460584dd808074908256016"
+      },
       "comments": [],
       "reviews": [
         {
@@ -5627,8 +5696,89 @@
               "updatedAt": "2025-03-12T21:02:39Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOFyeisM6fyLpK",
+          "commit": {
+            "abbreviatedOid": "3a65bdb"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-13T06:54:15Z",
+          "updatedAt": "2025-03-13T06:54:15Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 126,
+      "id": "PR_kwDOFyeisM6OxEYB",
+      "title": "Clarify labels (close #125)",
+      "url": "https://github.com/core-wg/href/pull/126",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-15T10:23:23Z",
+      "updatedAt": "2025-03-15T13:26:13Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "6af9a2ac6d362ee8434223f13b98d40531d36ad8",
+      "headRepository": "core-wg/href",
+      "headRefName": "define-label",
+      "headRefOid": "0d24ad0b94771f703b75c9d5b15c0e373125b787",
+      "closedAt": "2025-03-15T13:26:11Z",
+      "mergedAt": "2025-03-15T13:26:11Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "17508c0350bc316629c6e990ef6730a3fa21406b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6gMqns",
+          "commit": {
+            "abbreviatedOid": "0d24ad0"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-15T12:11:53Z",
+          "updatedAt": "2025-03-15T12:11:53Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 127,
+      "id": "PR_kwDOFyeisM6OxfBc",
+      "title": "Use [] for absent queries, fix terms (close #124)",
+      "url": "https://github.com/core-wg/href/pull/127",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-15T13:23:53Z",
+      "updatedAt": "2025-03-15T13:28:46Z",
+      "baseRepository": "core-wg/href",
+      "baseRefName": "main",
+      "baseRefOid": "17508c0350bc316629c6e990ef6730a3fa21406b",
+      "headRepository": "core-wg/href",
+      "headRefName": "wglc-ca3",
+      "headRefOid": "e0fd7daeb288d59d9e3677d3dd72fdb759891a83",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
