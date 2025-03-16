@@ -802,9 +802,9 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    *  Two leading null values (scheme and authority both not given) MUST
       be represented by using the discard alternative instead.
 
-   *  An empty path in a CRI is be represented as the empty array [].
-      Note that for CRI-Reference there is a difference between empty
-      paths and paths that are not set, represented by [] and null,
+   *  An empty path in a CRI is represented as the empty array [].  Note
+      that for CRI-Reference there is a difference between empty paths
+      and paths that are not set, represented by [] and null,
       respectively.
 
    *  An empty query in a CRI (no query parameters, not even an empty
