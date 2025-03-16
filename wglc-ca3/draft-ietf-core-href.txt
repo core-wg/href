@@ -259,8 +259,8 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    Many components of a URI can be "absent", i.e., they are optional.
    This is not mirrored in CRIs, where all components are part of all
    CRIs.  Some CRI components can have values that are null or empty
-   arrays.  By defining a default value for each of certain components
-   these can be elided at the tail of the serialized form during
+   arrays.  By defining a default value for each of certain components,
+   they often can be elided at the tail of the serialized form during
    interchange.  (Note that some subcomponents such as port numbers or
    userinfo are optional in a CRI as well and therefore can be absent
    from a CRI.)
@@ -271,8 +271,8 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    can otherwise not have that value).  (For example, for a CRI
    reference where authority is either not set or has either of the
    NOAUTHORITY values, the equivalent URI reference's authority is
-   absent; for a CRI reference where the query is an empty list or not
-   set, the equivalent URI reference's query is absent).
+   absent.)
+
 
 
 
@@ -304,16 +304,18 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
          "registered name" (see C5 below), along with optional port
          information, and optionally preceded by user information.
 
-         Alternatively, the authority can be absent; the two cases for
-         this defined in Section 3.3 of RFC 3986 [STD66] are modeled by
-         two different values used in place of an absent authority:
+         Alternatively, URIs can be formed without an authority.  The
+         two cases for this defined in Section 3.3 of RFC 3986 [STD66]
+         are modeled by two different special values used in the CRI
+         authority component:
 
          *  the path can be root-based (zero or more path segments that
             are each started in the URI with "/", as when the authority
             is present), or
 
          *  the path can be rootless, which requires at least one path
-            segment, the first one of which has non-zero length.
+            segment, the first one of which has non-zero length and is
+            not started in the URI with "/".
 
          (Note that, in Figure 2, no-authority is marked as a feature,
          as not all CRI implementations will support authority-less
@@ -325,8 +327,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
          encoded (Section 7.2).  Note that this excludes the ":"
          character, which is commonly deprecated as a way to delimit a
          cleartext password in a userinfo.
-
-
 
 
 
@@ -397,19 +397,27 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
          If no authority is present in a CRI, the leading path segment
          cannot be empty.  (See also SP1 in Appendix A.)
 
-   C10.  A query always consists of one or more query parameters.  A
-         query parameter can be any CRI text string.  It is often in the
-         form of a "key=value" pair.  When converting a CRI to a URI,
-         query parameters are separated by an ampersand ("&") character.
-         (This matches the structure and encoding of the target URI in
-         CoAP requests.)  Queries are optional; there is a difference
-         between an absent query and a single query parameter that is
-         the empty string.
+   C10.  Queries are optional in URIs; there is a difference between an
+         absent query and a single query parameter that is the empty
+         string.  A CRI represents its query component as an array of
+         zero or more query parameters, which are CRI text strings.
+         Zero query parameters (an empty array) is equivalent to a URI
+         where the query is absent.  A query in a URI is represented in
+         a CRI by splitting its text up on any ampersand ("&")
+         characters into one or more query parameters, which may contain
+         certain characters (including ampersands) that were percent-
+         encoded in the URI.  Query parameters are often in the form of
+         a "key=value" pair.  When converting a CRI to a URI, one or
+         more query parameters are constructed into a URI query by
+         joining them together with ampersand characters, where certain
+         characters (including ampersands) present in the query
+         parameters are percent-encoded.  (This matches the structure
+         and encoding of the target URI in CoAP requests.)
 
    C11.  A fragment identifier can be any CRI text string.  Fragment
-         identifiers are optional; there is a difference between an
-         absent fragment identifier and a fragment identifier that is
-         the empty string.
+         identifiers are optional in URIs; in CRIs there is a difference
+         between a null fragment identifier and a fragment identifier
+         that is the empty string.
 
    C12.  The syntax of registered names, path segments, query
          parameters, and fragment identifiers may be further restricted
@@ -434,6 +442,14 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    often _discard_ part or all of the trailing path segments of the base
    URI or CRI.
 
+
+
+
+Bormann & Birkholz      Expires 17 September 2025               [Page 8]
+
+Internet-Draft      Constrained Resource Identifiers          March 2025
+
+
    In a URI reference, this is expressed by syntax for its path
    component such as leading special path segments . and .. or a leading
    slash before giving the path segments to be added at the end of the
@@ -442,13 +458,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    components, making the specification of discarding base URI path
    segments separate from adding new path segments from the CRI
    reference.
-
-
-
-Bormann & Birkholz      Expires 17 September 2025               [Page 8]
-
-Internet-Draft      Constrained Resource Identifiers          March 2025
-
 
    The discarding intent of a CRI reference is thus fully condensed to a
    single value in its discard component:
@@ -474,11 +483,11 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    resolved and result in a valid full CRI that can be converted back.
    Examples of this are:
 
-   *  [0, ["p"]]: appends a slash and the path segment "p" to its base
-      (and the query and the fragment to absent)
+   *  [0, ["p"]]: appends a slash and the path segment "p" to its base,
+      sets the query to an empty array and the fragment to null
 
-   *  [0, null, []]: leaves the path alone but sets the query and the
-      fragment to absent
+   *  [0, null, []]: leaves the path alone but sets the query to an
+      empty array and the fragment to null
 
    (Full) CRIs that do not correspond to a valid URI are not valid on
    their own, and cannot be used.  Normatively they are characterized by
@@ -488,15 +497,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    *  CRIs (and CRI references) containing dot-segments (path segment
       "." or "..").
 
-      These segments would be removed by the remove_dot_segments
-      algorithm of [STD66], and thus never produce a normalized URI
-      after resolution.
-
-      (In CRI references, the discard value is used to afford segment
-      removal (see Section 2.2), and with "." being an unreserved
-      character, expressing them as "%2e" and "%2e%2e" is not even
-      viable, let alone practical).
-
 
 
 
@@ -505,6 +505,15 @@ Bormann & Birkholz      Expires 17 September 2025               [Page 9]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+      These segments would be removed by the remove_dot_segments
+      algorithm of [STD66], and thus never produce a normalized URI
+      after resolution.
+
+      (In CRI references, the discard value is used to afford segment
+      removal (see Section 2.2), and with "." being an unreserved
+      character, expressing them as "%2e" and "%2e%2e" is not even
+      viable, let alone practical).
 
    *  CRIs without authority whose path starts with a leading empty
       segment followed by at least one more segment.
@@ -545,15 +554,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
    *  map the scheme name to lowercase (C1);
 
-   *  map the registered name to NFC (C5) and split it on embedded dots;
-
-   *  elide the port if it is the default port for the scheme (C7);
-
-   *  map path segments, query parameters, and the fragment identifier
-      to NFC form (C9, C10, C11).
-
-
-
 
 
 
@@ -561,6 +561,13 @@ Bormann & Birkholz      Expires 17 September 2025              [Page 10]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
+
+   *  map the registered name to NFC (C5) and split it on embedded dots;
+
+   *  elide the port if it is the default port for the scheme (C7);
+
+   *  map path segments, query parameters, and the fragment identifier
+      to NFC form (C9, C10, C11).
 
    Once a CRI has been created, it can be used and transferred without
    further normalization.  All operations that operate on a CRI SHOULD
@@ -602,13 +609,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    component (using code-point-by-code-point comparison for components
    that are Unicode strings) then it is safe to conclude that they are
    equivalent.
-
-
-
-
-
-
-
 
 
 
@@ -804,15 +804,16 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
    *  An empty path in a CRI MUST be represented as the empty array [].
       Note that for CRI-Reference there is a difference between empty
-      and absent paths, represented by [] and null, respectively.
+      paths and paths that are not set, represented by [] and null,
+      respectively.
 
-   *  An absent query in a CRI MUST be represented as the empty array
-      []; note that this is equivalent to the absence of the question
-      mark in a URI, while the equivalent of just a question mark in a
-      URI is an array with an empty query parameter represented by an
-      empty string [""]).  Note that for CRI-Reference there is a
-      difference between absent and not-set queries, represented by []
-      and null, respectively.
+   *  An empty query in a CRI (no query parameters, not even an empty
+      string) MUST be represented as the empty array []; note that this
+      is equivalent to the absence of the question mark in a URI, while
+      the equivalent of just a question mark in a URI is an array with a
+      single query parameter represented by an empty string [""]).  Note
+      that for CRI-Reference there is a difference between providing a
+      query as above and a query that is not set, represented by null.
 
    *  An empty outer array ([]) is not a valid CRI.  It is a valid CRI
       reference, equivalent to [0] as per Section 5.2, which essentially
@@ -832,7 +833,6 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
                           Table 1: Default Values
                               for CRI Sections
-
 
 
 
@@ -1086,22 +1086,20 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    3.  If the value of discard is true in the CRI reference (which is
        implicitly the case when scheme and/or authority are present in
        the reference), replace the path in the buffer with the empty
-       array, absent query and fragment, and set a true authority to
+       array, empty query and null fragment, and set a true authority to
        null.  If the value of discard is an unsigned integer, remove as
        many elements from the end of the path array; if it is non-zero,
-       set query and fragment to absent.
+       set query to empty and fragment to null.
 
        Set discard to true in the buffer.
 
-   4.  If the path section is set in the CRI reference, append all
+   4.  If the path section is non-null in the CRI reference, append all
        elements from the path array to the array in the path section in
-       the buffer; set query and fragment to absent.
+       the buffer; set query to empty and fragment to null.
 
    5.  Apart from the path and discard, copy all non-null sections from
-       the CRI reference to the buffer in sequence; set query to absent
-       in the buffer if query is the empty array [] in the CRI
-       reference; set fragment to absent in the buffer if query is non-
-       null in the CRI reference.
+       the CRI reference to the buffer in sequence; set fragment to null
+       in the buffer if query is non-null in the CRI reference.
 
    6.  Return the sections in the buffer as the resolved CRI.
 
@@ -1114,6 +1112,8 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    IRIs directly, especially when the resource identifier is used simply
    for identification purposes or when the CRI can be directly converted
    into a CoAP request.
+
+
 
 
 

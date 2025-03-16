@@ -1454,19 +1454,18 @@ as a URI: scheme, authority, path, query, and fragment.<a href="#section-2.1-1" 
 <p id="section-2.1-2">Many components of a URI can be "absent", i.e., they are optional.
 This is not mirrored in CRIs, where all components are part of all
 CRIs.
-Some CRI components can have values that are null or empty arrays.
-By defining a default value for each of certain components these can
+Some CRI components can have values that are <code>null</code> or empty arrays.
+By defining a default value for each of certain components, they often can
 be elided at the tail of the serialized form during interchange.
 (Note that some subcomponents such as port numbers or userinfo are
 optional in a CRI as well and therefore can be absent from a CRI.)<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 <p id="section-2.1-3">In a CRI reference, components can additionally be <em>not set</em>
 (indicated by interchanging a discard value instead of scheme and
-authority, or by null for the scheme, path and query components that
+authority, or by <code>null</code> for the scheme, path and query components that
 can otherwise not have that value).
 (For example, for a CRI reference where authority is either not set or
 has either of the NOAUTHORITY values, the equivalent URI reference's
-authority is absent; for a CRI reference where the query is an
-empty list or not set, the equivalent URI reference's query is absent).<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+authority is absent.)<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.1-4">The components are subject to the considerations and constraints
 listed in this section.
 Note that CRI extensions can relax constraints; for
@@ -1504,9 +1503,9 @@ address or a "registered name" (see <a href="#c-reg-name" class="auto internal x
 optional port information, and optionally preceded by user
 information.<a href="#section-2.1-5.3.1" class="pilcrow">¶</a></p>
 <p id="section-2.1-5.3.2">
-Alternatively, the authority can be absent; the two cases for this
-defined in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">3.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> are modeled by two different
-values used in place of an absent authority:<a href="#section-2.1-5.3.2" class="pilcrow">¶</a></p>
+Alternatively, URIs can be formed without an authority.
+The two cases for this defined in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">3.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> are
+modeled by two different special values used in the CRI authority component:<a href="#section-2.1-5.3.2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.1-5.3.3.1">
                 <p id="section-2.1-5.3.3.1.1">the path can be root-based (zero or more path segments that are
@@ -1515,7 +1514,8 @@ present), or<a href="#section-2.1-5.3.3.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-2.1-5.3.3.2">
                 <p id="section-2.1-5.3.3.2.1">the path can be rootless, which requires at least one path
-segment, the first one of which has non-zero length.<a href="#section-2.1-5.3.3.2.1" class="pilcrow">¶</a></p>
+segment, the first one of which has non-zero length and is not
+started in the URI with "/".<a href="#section-2.1-5.3.3.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-2.1-5.3.4">
@@ -1617,15 +1617,24 @@ If no authority is present in a CRI, the leading path segment cannot be empty.
 <dt>C10.</dt>
 <dd id="section-2.1-5.11">
 <div id="c-query">
-            <p id="section-2.1-5.11.1">A query always consists of one or more query parameters.
-   A query parameter can be any CRI text string.
-   It is often in the form of a "key=value" pair.
-   When converting a CRI to a URI, query parameters are separated by an
-   ampersand ("&amp;") character.
+            <p id="section-2.1-5.11.1">Queries are optional in URIs; there is a difference
+   between an absent query and a single query parameter that is the
+   empty string.
+   A CRI represents its query component as an array of zero or more query
+   parameters, which are CRI text strings.
+   Zero query parameters (an empty array) is equivalent to a URI
+   where the query is absent.
+   A query in a URI is represented in a CRI by splitting its text up
+   on any ampersand ("&amp;") characters into one or more query
+   parameters, which may contain certain characters (including
+   ampersands) that were percent-encoded in the URI.
+   Query parameters are often in the form of a "key=value" pair.
+   When converting a CRI to a URI, one or more query parameters are
+   constructed into a URI query by joining them together with
+   ampersand characters, where certain characters (including
+   ampersands) present in the query parameters are percent-encoded.
    (This matches the structure and encoding of the target URI in CoAP
-   requests.)
-   Queries are optional; there is a difference between an absent query
-   and a single query parameter that is the empty string.<a href="#section-2.1-5.11.1" class="pilcrow">¶</a></p>
+   requests.)<a href="#section-2.1-5.11.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
@@ -1633,9 +1642,9 @@ If no authority is present in a CRI, the leading path segment cannot be empty.
 <dd id="section-2.1-5.12">
 <div id="c-fragment">
             <p id="section-2.1-5.12.1">A fragment identifier can be any CRI text string.
-   Fragment identifiers are optional; there is a difference between an
-   absent fragment identifier and a fragment identifier that is the
-   empty string.<a href="#section-2.1-5.12.1" class="pilcrow">¶</a></p>
+   Fragment identifiers are optional in URIs; in CRIs there is a
+   difference between a <code>null</code> fragment identifier and a fragment
+   identifier that is the empty string.<a href="#section-2.1-5.12.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
@@ -1712,12 +1721,12 @@ and result in a valid full CRI that can be converted back.
 Examples of this are:<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.3-3.1">
-            <p id="section-2.3-3.1.1"><code>[0, ["p"]]</code>: appends a slash and the path segment "p" to its base
-(and the query and the fragment to absent)<a href="#section-2.3-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-2.3-3.1.1"><code>[0, ["p"]]</code>: appends a slash and the path segment "p" to its base,
+sets the query to an empty array and the fragment to <code>null</code><a href="#section-2.3-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.3-3.2">
-            <p id="section-2.3-3.2.1"><code>[0, null, []]</code>: leaves the path alone but sets the query and the
-fragment to absent<a href="#section-2.3-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-2.3-3.2.1"><code>[0, null, []]</code>: leaves the path alone but sets the query to an
+empty array and the fragment to <code>null</code><a href="#section-2.3-3.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-2.3-4">(Full) CRIs that do not correspond to a valid URI are not valid on their own, and cannot be used.
@@ -2045,16 +2054,17 @@ be represented by using the <code>discard</code> alternative instead.<a href="#s
             <p id="section-5.1-8.3.1">An empty path in a <code>CRI</code> <span class="bcp14">MUST</span> be represented as the empty array
 <code>[]</code>.
 Note that for <code>CRI-Reference</code> there is a difference between empty
-and absent paths, represented by <code>[]</code> and <code>null</code>, respectively.<a href="#section-5.1-8.3.1" class="pilcrow">¶</a></p>
+paths and paths that are not set, represented by <code>[]</code> and <code>null</code>, respectively.<a href="#section-5.1-8.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-8.4">
-            <p id="section-5.1-8.4.1">An absent query in a <code>CRI</code> <span class="bcp14">MUST</span> be represented as the empty array
+            <p id="section-5.1-8.4.1">An empty query in a <code>CRI</code> (no query parameters, not even an empty
+string) <span class="bcp14">MUST</span> be represented as the empty array
 <code>[]</code>; note that this is equivalent to the absence of the question
 mark in a URI, while the equivalent of just a question mark in a URI is
-an array with an empty query parameter represented by an empty
+an array with a single query parameter represented by an empty
 string <code>[""]</code>).
-Note that for <code>CRI-Reference</code> there is a difference between absent
-and not-set queries, represented by <code>[]</code> and <code>null</code>, respectively.<a href="#section-5.1-8.4.1" class="pilcrow">¶</a></p>
+Note that for <code>CRI-Reference</code> there is a difference between providing
+a query as above and a query that is not set, represented by <code>null</code>.<a href="#section-5.1-8.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-8.5">
             <p id="section-5.1-8.5.1">An empty outer array (<code>[]</code>) is not a valid CRI.
@@ -2452,26 +2462,23 @@ reference.<a href="#section-5.3-3.1.1" class="pilcrow">¶</a></p>
           <li id="section-5.3-3.3">
             <p id="section-5.3-3.3.1">If the value of discard is <code>true</code> in the CRI reference (which is
 implicitly the case when scheme and/or authority are present in the reference), replace the
-path in the buffer with the empty array, absent query and
+path in the buffer with the empty array, empty query and null
 fragment, and set a <code>true</code> authority to <code>null</code>.  If the value of
 discard is an unsigned integer, remove as many elements
-from the end of the path array; if it is non-zero, set query and
-fragment to absent.<a href="#section-5.3-3.3.1" class="pilcrow">¶</a></p>
+from the end of the path array; if it is non-zero, set query to empty and
+fragment to null.<a href="#section-5.3-3.3.1" class="pilcrow">¶</a></p>
 <p id="section-5.3-3.3.2">
 Set discard to <code>true</code> in the buffer.<a href="#section-5.3-3.3.2" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.3-3.4">
-            <p id="section-5.3-3.4.1">If the path section is set in the CRI reference, append all
+            <p id="section-5.3-3.4.1">If the path section is non-null in the CRI reference, append all
 elements from the path array to the array in the path section in
-the buffer; set query and fragment to absent.<a href="#section-5.3-3.4.1" class="pilcrow">¶</a></p>
+the buffer; set query to empty and fragment to null.<a href="#section-5.3-3.4.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.3-3.5">
             <p id="section-5.3-3.5.1">Apart from the path and discard, copy all non-null sections from
-the CRI reference to the buffer in sequence; set query to absent in
-the buffer if query
-is the empty array <code>[]</code> in the CRI reference; set fragment to
-absent in the buffer if
-query is non-null in the CRI reference.<a href="#section-5.3-3.5.1" class="pilcrow">¶</a></p>
+the CRI reference to the buffer in sequence; set fragment to <code>null</code>
+in the buffer if query is non-null in the CRI reference.<a href="#section-5.3-3.5.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.3-3.6">
             <p id="section-5.3-3.6.1">Return the sections in the buffer as the resolved CRI.<a href="#section-5.3-3.6.1" class="pilcrow">¶</a></p>
