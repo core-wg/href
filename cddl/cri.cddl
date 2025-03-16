@@ -5,17 +5,17 @@ RFC-XXXX-Definitions = [CRI, CRI-Reference]
 CRI = [
   scheme,
   authority / no-authority,
-  path,                         ; use [] for empty path
-  query / null,
+  path,                    ; use [] for empty path
+  query,                   ; use [] for absent query
   fragment / null
 ]
 
 
 CRI-Reference = [
   ((scheme / null, authority / no-authority)
-   // discard),                 ; relative reference
+   // discard),            ; relative reference
   path / null,
-  query / [] / null,            ; [] is explicit unset
+  query / null,            ; null is explicitly not set (no change)
   fragment / null
 ]
 
@@ -30,7 +30,7 @@ NOAUTH-ROOTLESS = true .feature "no-authority"
 authority   = [?userinfo, host, ?port]
 userinfo    = (false, text .feature "userinfo")
 host        = (host-ip // host-name)
-host-name   = (*text) ; lowercase, NFC labels
+host-name   = (*text)      ; lowercase, NFC labels; no dot
 host-ip     = (bytes .size 4 //
                (bytes .size 16, ?zone-id))
 zone-id     = text
