@@ -614,7 +614,7 @@ references:
 * Trailing default values ({{tbl-default}}) MUST be removed.
 * Two leading null values (scheme and authority both not given) MUST
   be represented by using the `discard` alternative instead.
-* An empty path in a `CRI` MUST be represented as the empty array
+* An empty path in a `CRI` is be represented as the empty array
   `[]`.
   Note that for `CRI-Reference` there is a difference between empty
   paths and paths that are not set, represented by `[]` and `null`, respectively.
