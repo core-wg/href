@@ -1058,7 +1058,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 16 September 2025</td>
+<td class="center">Expires 17 September 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1074,12 +1074,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc7595" class="eref">7595</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-03-15" class="published">15 March 2025</time>
+<time datetime="2025-03-16" class="published">16 March 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-09-16">16 September 2025</time></dd>
+<dd class="expires"><time datetime="2025-09-17">17 September 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1143,7 +1143,7 @@ The present revision –19 addresses WGLC comments.</span><a href="#section-abst
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 16 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 17 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1451,170 +1451,173 @@ Diagnostic Notation (EDN), as originally introduced in Section <a href="https://
         </h3>
 <p id="section-2.1-1">A Constrained Resource Identifier consists of the same five components
 as a URI: scheme, authority, path, query, and fragment.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
-<p id="section-2.1-2">Most components of a CRI can be <em>absent</em>, i.e., they are optional; if
-they are not absent they are <em>present</em> (or, equivalently speaking, the
-CRI <em>has</em> the component).
-The scheme component is required in a CRI.
-The path component never is absent in a CRI, but it can be empty (no
-path segments, represented by an empty array).
-The query component can be absent, or it is present and consists of at
-least one query parameter (which can be the empty string); an
-absent query component is therefore represented as an empty array.
-Note that in CRI references, components can also be <em>not set</em>, i.e.,
-in the CRI reference resolution process (<a href="#reference-resolution" class="auto internal xref">Section 5.3</a>) they
-(including their absence or presence) are intended to be taken from a base
-CRI.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
-<p id="section-2.1-3">The components are subject to the considerations and constraints
+<p id="section-2.1-2">Many components of a URI can be "absent", i.e., they are optional.
+This is not mirrored in CRIs, where all components are part of all
+CRIs.
+Some CRI components can have values that are null or empty arrays.
+By defining a default value for each of certain components these can
+be elided at the tail of the serialized form during interchange.
+(Note that some subcomponents such as port numbers or userinfo are
+optional in a CRI as well and therefore can be absent from a CRI.)<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">In a CRI reference, components can additionally be <em>not set</em>
+(indicated by interchanging a discard value instead of scheme and
+authority, or by null for the scheme, path and query components that
+can otherwise not have that value).
+(For example, for a CRI reference where authority is either not set or
+has either of the NOAUTHORITY values, the equivalent URI reference's
+authority is absent; for a CRI reference where the query is an
+empty list or not set, the equivalent URI reference's query is absent).<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">The components are subject to the considerations and constraints
 listed in this section.
 Note that CRI extensions can relax constraints; for
-example, see <a href="#pet" class="auto internal xref">Section 7.2</a> for partially relaxing constraint <a href="#c-nfc" class="auto internal xref">C0</a>.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="olPercent" id="section-2.1-4">
+example, see <a href="#pet" class="auto internal xref">Section 7.2</a> for partially relaxing constraint <a href="#c-nfc" class="auto internal xref">C0</a>.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="olPercent" id="section-2.1-5">
 <dt>C0.</dt>
-<dd id="section-2.1-4.1">
+<dd id="section-2.1-5.1">
 <div id="c-nfc">
-            <p id="section-2.1-4.1.1">Text strings in CRIs ("CRI text strings") are CBOR text
+            <p id="section-2.1-5.1.1">Text strings in CRIs ("CRI text strings") are CBOR text
 strings (i.e., in UTF-8 form <span>[<a href="#STD63" class="cite xref">STD63</a>]</span>) that represent Unicode
 strings (see Definition D80 in <span>[<a href="#Unicode" class="cite xref">Unicode</a>]</span>) in Unicode Normalization
 Form C (NFC) (see Definition D120 in <span>[<a href="#Unicode" class="cite xref">Unicode</a>]</span> and specifically
-<a href="#norm-nfc" class="auto internal xref">Section 3, Paragraph 7</a>).<a href="#section-2.1-4.1.1" class="pilcrow">¶</a></p>
+<a href="#norm-nfc" class="auto internal xref">Section 3, Paragraph 7</a>).<a href="#section-2.1-5.1.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C1.</dt>
-<dd id="section-2.1-4.2">
+<dd id="section-2.1-5.2">
 <div id="c-scheme">
-            <p id="section-2.1-4.2.1">The scheme name can be any CRI text string that
+            <p id="section-2.1-5.2.1">The scheme name can be any CRI text string that
 matches the syntax of a URI scheme (see Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.1" class="relref">3.1</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>, which constrains scheme names to a subset of ASCII),
 in its canonical form.
 (The canonical form as per Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.1" class="relref">3.1</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> requires
 alphabetic characters to be in lowercase.)
 
-The scheme is always present.<a href="#section-2.1-4.2.1" class="pilcrow">¶</a></p>
+The scheme is always present.<a href="#section-2.1-5.2.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C2.</dt>
-<dd id="section-2.1-4.3">
+<dd id="section-2.1-5.3">
 <div id="c-authority">
-            <p id="section-2.1-4.3.1">An authority is always a host identified by an IP
+            <p id="section-2.1-5.3.1">An authority is always a host identified by an IP
 address or a "registered name" (see <a href="#c-reg-name" class="auto internal xref">C5</a> below), along with
 optional port information, and optionally preceded by user
-information.<a href="#section-2.1-4.3.1" class="pilcrow">¶</a></p>
-<p id="section-2.1-4.3.2">
+information.<a href="#section-2.1-5.3.1" class="pilcrow">¶</a></p>
+<p id="section-2.1-5.3.2">
 Alternatively, the authority can be absent; the two cases for this
 defined in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">3.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> are modeled by two different
-values used in place of an absent authority:<a href="#section-2.1-4.3.2" class="pilcrow">¶</a></p>
+values used in place of an absent authority:<a href="#section-2.1-5.3.2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2.1-4.3.3.1">
-                <p id="section-2.1-4.3.3.1.1">the path can be root-based (zero or more path segments that are
+<li class="normal" id="section-2.1-5.3.3.1">
+                <p id="section-2.1-5.3.3.1.1">the path can be root-based (zero or more path segments that are
 each started in the URI with "/", as when the authority is
-present), or<a href="#section-2.1-4.3.3.1.1" class="pilcrow">¶</a></p>
+present), or<a href="#section-2.1-5.3.3.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-2.1-4.3.3.2">
-                <p id="section-2.1-4.3.3.2.1">the path can be rootless, which requires at least one path
-segment, the first one of which has non-zero length.<a href="#section-2.1-4.3.3.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-2.1-5.3.3.2">
+                <p id="section-2.1-5.3.3.2.1">the path can be rootless, which requires at least one path
+segment, the first one of which has non-zero length.<a href="#section-2.1-5.3.3.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-2.1-4.3.4">
+<p id="section-2.1-5.3.4">
 (Note that, in <a href="#cddl" class="auto internal xref">Figure 2</a>, <code>no-authority</code> is marked as a feature, as
-not all CRI implementations will support authority-less URIs.)<a href="#section-2.1-4.3.4" class="pilcrow">¶</a></p>
+not all CRI implementations will support authority-less URIs.)<a href="#section-2.1-5.3.4" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C3.</dt>
-<dd id="section-2.1-4.4">
+<dd id="section-2.1-5.4">
 <div id="c-userinfo">
-            <p id="section-2.1-4.4.1">A userinfo is a text string built out of unreserved
+            <p id="section-2.1-5.4.1">A userinfo is a text string built out of unreserved
   characters (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-2.3" class="relref">2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>) or "sub-delims" (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-2.2" class="relref">2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>); any other character needs to be percent-encoded (<a href="#pet" class="auto internal xref">Section 7.2</a>).
 Note that this excludes the ":" character, which is commonly
-deprecated as a way to delimit a cleartext password in a userinfo.<a href="#section-2.1-4.4.1" class="pilcrow">¶</a></p>
+deprecated as a way to delimit a cleartext password in a userinfo.<a href="#section-2.1-5.4.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C4.</dt>
-<dd id="section-2.1-4.5">
+<dd id="section-2.1-5.5">
 <div id="c-ip-address">
-            <p id="section-2.1-4.5.1">An IP address can be either an IPv4 address or an
+            <p id="section-2.1-5.5.1">An IP address can be either an IPv4 address or an
 IPv6 address (optionally with a zone identifier <span>[<a href="#RFC6874" class="cite xref">RFC6874</a>]</span>; see
 <a href="#zone-id-issue" class="auto internal xref">Section 6.1, Paragraph 2.4.7</a>).
 Future versions of IP are not supported (it is likely that a binary
 mapping would be strongly desirable, and that cannot be designed
 ahead of time, so these versions need to be added as a future
-extension if needed).<a href="#section-2.1-4.5.1" class="pilcrow">¶</a></p>
+extension if needed).<a href="#section-2.1-5.5.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C5.</dt>
-<dd id="section-2.1-4.6">
+<dd id="section-2.1-5.6">
 <div id="c-reg-name">
-            <p id="section-2.1-4.6.1">A <em>registered name</em> is represented as a sequence of
+            <p id="section-2.1-5.6.1">A <em>registered name</em> is represented as a sequence of
 one or more lowercase CRI text string <em>labels</em> that do not contain
 dots (".").
 (These labels joined with dots (".") in between them result in the
 CRI equivalent of a URI registered name as per Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>.
 The syntax may be further restricted by the scheme.
 A URI registered name can be empty, for which case a scheme can
-define a default for the host.)<a href="#section-2.1-4.6.1" class="pilcrow">¶</a></p>
+define a default for the host.)<a href="#section-2.1-5.6.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C6.</dt>
-<dd id="section-2.1-4.7">
+<dd id="section-2.1-5.7">
 <div id="c-port-range">
-            <p id="section-2.1-4.7.1">A port is always an integer in the range from 0 to 65535.
+            <p id="section-2.1-5.7.1">A port is always an integer in the range from 0 to 65535.
 Ports outside this range, empty ports (port subcomponents with no
 digits, see Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.3" class="relref">3.2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), or ports with redundant
-leading zeros, are not supported.<a href="#section-2.1-4.7.1" class="pilcrow">¶</a></p>
+leading zeros, are not supported.<a href="#section-2.1-5.7.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C7.</dt>
-<dd id="section-2.1-4.8">
+<dd id="section-2.1-5.8">
 <div id="c-port-omitted">
-            <p id="section-2.1-4.8.1">If the scheme's port handling is known to the
+            <p id="section-2.1-5.8.1">If the scheme's port handling is known to the
 CRI creator, it is <span class="bcp14">RECOMMENDED</span> to omit the port if and only if the
 port would be the same as the scheme's default port (provided the
 scheme is defining such a default port) or the scheme is not using
-ports.<a href="#section-2.1-4.8.1" class="pilcrow">¶</a></p>
+ports.<a href="#section-2.1-5.8.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C8.</dt>
-<dd id="section-2.1-4.9">
+<dd id="section-2.1-5.9">
 <div id="c-path">
-            <p id="section-2.1-4.9.1">A path consists of zero or more path segments.
+            <p id="section-2.1-5.9.1">A path consists of zero or more path segments.
 Note that a path of just a single zero-length path segment is allowed —
 this is considered equivalent to a path of zero path segments by
 HTTP and CoAP, but this equivalence does not hold for CRIs in general as they only perform
 normalization on the Syntax-Based Normalization level (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.2" class="relref">6.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), not on the scheme-specific Scheme-Based
-Normalization level (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.3" class="relref">6.2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).<a href="#section-2.1-4.9.1" class="pilcrow">¶</a></p>
-<p id="section-2.1-4.9.2">
+Normalization level (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.3" class="relref">6.2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).<a href="#section-2.1-5.9.1" class="pilcrow">¶</a></p>
+<p id="section-2.1-5.9.2">
 (A CRI implementation may want to offer scheme-cognizant
 interfaces, performing this scheme-specific normalization for
 schemes it knows.  The interface could assert which schemes the
 implementation knows and provide pre-normalized CRIs.  This can
 also relieve the application from removing a lone zero-length path
 segment before putting path segments into CoAP Options, i.e., from
-performing the check and jump in item 8 of <span><a href="https://rfc-editor.org/rfc/rfc7252#section-6.4" class="relref">Section 6.4</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.  See also <a href="#sp-leading-empty" class="auto internal xref">SP1</a> in <a href="#the-small-print" class="auto internal xref">Appendix A</a>.)<a href="#section-2.1-4.9.2" class="pilcrow">¶</a></p>
+performing the check and jump in item 8 of <span><a href="https://rfc-editor.org/rfc/rfc7252#section-6.4" class="relref">Section 6.4</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.  See also <a href="#sp-leading-empty" class="auto internal xref">SP1</a> in <a href="#the-small-print" class="auto internal xref">Appendix A</a>.)<a href="#section-2.1-5.9.2" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C9.</dt>
-<dd id="section-2.1-4.10">
+<dd id="section-2.1-5.10">
 <div id="c-path-segment">
-            <p id="section-2.1-4.10.1">A path segment can be any CRI text string, with
+            <p id="section-2.1-5.10.1">A path segment can be any CRI text string, with
 the exception of the special "." and ".." complete path segments.
-Note that this includes the zero-length string.<a href="#section-2.1-4.10.1" class="pilcrow">¶</a></p>
-<p id="section-2.1-4.10.2">
+Note that this includes the zero-length string.<a href="#section-2.1-5.10.1" class="pilcrow">¶</a></p>
+<p id="section-2.1-5.10.2">
 If no authority is present in a CRI, the leading path segment cannot be empty.
-(See also <a href="#sp-leading-empty" class="auto internal xref">SP1</a> in <a href="#the-small-print" class="auto internal xref">Appendix A</a>.)<a href="#section-2.1-4.10.2" class="pilcrow">¶</a></p>
+(See also <a href="#sp-leading-empty" class="auto internal xref">SP1</a> in <a href="#the-small-print" class="auto internal xref">Appendix A</a>.)<a href="#section-2.1-5.10.2" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C10.</dt>
-<dd id="section-2.1-4.11">
+<dd id="section-2.1-5.11">
 <div id="c-query">
-            <p id="section-2.1-4.11.1">A query always consists of one or more query parameters.
+            <p id="section-2.1-5.11.1">A query always consists of one or more query parameters.
    A query parameter can be any CRI text string.
    It is often in the form of a "key=value" pair.
    When converting a CRI to a URI, query parameters are separated by an
@@ -1622,45 +1625,45 @@ If no authority is present in a CRI, the leading path segment cannot be empty.
    (This matches the structure and encoding of the target URI in CoAP
    requests.)
    Queries are optional; there is a difference between an absent query
-   and a single query parameter that is the empty string.<a href="#section-2.1-4.11.1" class="pilcrow">¶</a></p>
+   and a single query parameter that is the empty string.<a href="#section-2.1-5.11.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C11.</dt>
-<dd id="section-2.1-4.12">
+<dd id="section-2.1-5.12">
 <div id="c-fragment">
-            <p id="section-2.1-4.12.1">A fragment identifier can be any CRI text string.
+            <p id="section-2.1-5.12.1">A fragment identifier can be any CRI text string.
    Fragment identifiers are optional; there is a difference between an
    absent fragment identifier and a fragment identifier that is the
-   empty string.<a href="#section-2.1-4.12.1" class="pilcrow">¶</a></p>
+   empty string.<a href="#section-2.1-5.12.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C12.</dt>
-<dd id="section-2.1-4.13">
+<dd id="section-2.1-5.13">
 <div id="c-escaping">
-            <p id="section-2.1-4.13.1">The syntax of registered names, path segments, query
+            <p id="section-2.1-5.13.1">The syntax of registered names, path segments, query
    parameters, and fragment identifiers may be further restricted and
    sub-structured by the scheme.
    There is no support, however, for escaping sub-delimiters
-   that are not intended to be used in a delimiting function.<a href="#section-2.1-4.13.1" class="pilcrow">¶</a></p>
+   that are not intended to be used in a delimiting function.<a href="#section-2.1-5.13.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
 <dd class="break"></dd>
 <dt>C13.</dt>
-<dd id="section-2.1-4.14">
+<dd id="section-2.1-5.14">
 <div id="c-mapping">
-            <p id="section-2.1-4.14.1">When converting a CRI to a URI, any character that is
+            <p id="section-2.1-5.14.1">When converting a CRI to a URI, any character that is
    outside the allowed character range or is a delimiter in the URI syntax
    is percent-encoded.
    For CRIs, percent-encoding always uses the UTF-8 encoding form (see
    Definition D92 in <span>[<a href="#Unicode" class="cite xref">Unicode</a>]</span>) to convert the character to a sequence
-   of bytes, which are then converted to a sequence of %HH triplets.<a href="#section-2.1-4.14.1" class="pilcrow">¶</a></p>
+   of bytes, which are then converted to a sequence of %HH triplets.<a href="#section-2.1-5.14.1" class="pilcrow">¶</a></p>
 </div>
         </dd>
 <dd class="break"></dd>
 </dl>
-<p id="section-2.1-5">Examples for URIs at or beyond the boundaries of these constraints are in <a href="#sp-constraints" class="auto internal xref">SP2</a> in <a href="#the-small-print" class="auto internal xref">Appendix A</a>.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.1-6">Examples for URIs at or beyond the boundaries of these constraints are in <a href="#sp-constraints" class="auto internal xref">SP2</a> in <a href="#the-small-print" class="auto internal xref">Appendix A</a>.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="discard">
@@ -2970,7 +2973,7 @@ Remember the specific variant of CoAP to be used based on this
 URI scheme name.<a href="#section-8.1.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.3">
-              <p id="section-8.1.1-3.3.1">If »cri« has a <code>fragment</code> component, then fail this algorithm.<a href="#section-8.1.1-3.3.1" class="pilcrow">¶</a></p>
+              <p id="section-8.1.1-3.3.1">If the »cri«'s <code>fragment</code> component is non-null, then fail this algorithm.<a href="#section-8.1.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.4">
               <p id="section-8.1.1-3.4.1">If the <code>host</code> component of »cri« is a <code>host-name</code>, include a
@@ -2985,8 +2988,8 @@ option's value be the text value of the URI representation of
 the IP address, as derived in <a href="#host-ip-to-uri" class="auto internal xref">Section 6.1, Paragraph 2.4.6</a>.<a href="#section-8.1.1-3.4.2" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.5">
-              <p id="section-8.1.1-3.5.1">If »cri« has a <code>port</code> component, then let »port« be that
-component's unsigned integer value; otherwise, let »port« be
+              <p id="section-8.1.1-3.5.1">If the <code>port</code> subcomponent in a »cri« is not absent, then let »port« be that
+subcomponent's unsigned integer value; otherwise, let »port« be
 the default port number for the scheme.<a href="#section-8.1.1-3.5.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.6">
@@ -3002,9 +3005,9 @@ Uri-Path Option and let that option's value be the text string
 value of that element.<a href="#section-8.1.1-3.7.2" class="pilcrow">¶</a></p>
 </li>
             <li id="section-8.1.1-3.8">
-              <p id="section-8.1.1-3.8.1">If »cri« has a <code>query</code> component, then, for each element in the
-<code>query</code> component, include a Uri-Query Option and let that
-option's value be the text string
+              <p id="section-8.1.1-3.8.1">If the value of the <code>query</code> component of »cri« is non-empty,
+then, for each element in the <code>query</code> component, include a
+Uri-Query Option and let that option's value be the text string
 value of that element.<a href="#section-8.1.1-3.8.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
