@@ -217,19 +217,23 @@ RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
 A Constrained Resource Identifier consists of the same five components
 as a URI: scheme, authority, path, query, and fragment.
 
-Most components of a CRI can be _absent_, i.e., they are optional; if
-they are not absent they are _present_ (or, equivalently speaking, the
-CRI _has_ the component).
-The scheme component is required in a CRI.
-The path component never is absent in a CRI, but it can be empty (no
-path segments, represented by an empty array).
-The query component can be absent, or it is present and consists of at
-least one query parameter (which can be the empty string); an
-absent query component is therefore represented as an empty array.
-Note that in CRI references, components can also be _not set_, i.e.,
-in the CRI reference resolution process ({{reference-resolution}}) they
-(including their absence or presence) are intended to be taken from a base
-CRI.
+Many components of a URI can be "absent", i.e., they are optional.
+This is not mirrored in CRIs, where all components are part of all
+CRIs.
+Some CRI components can have values that are null or empty arrays.
+By defining a default value for each of certain components these can
+be elided at the tail of the serialized form during interchange.
+(Note that some subcomponents such as port numbers or userinfo are
+optional in a CRI as well and therefore can be absent from a CRI.)
+
+In a CRI reference, components can additionally be _not set_
+(indicated by interchanging a discard value instead of scheme and
+authority, or by null for the scheme, path and query components that
+can otherwise not have that value).
+(For example, for a CRI reference where authority is either not set or
+has either of the NOAUTHORITY values, the equivalent URI reference's
+authority is absent; for a CRI reference where the query is an
+empty list or not set, the equivalent URI reference's query is absent).
 
 The components are subject to the considerations and constraints
 listed in this section.
@@ -1304,7 +1308,7 @@ value from a data item in the CRI, the presence of any
        Remember the specific variant of CoAP to be used based on this
        URI scheme name.
 
-   3.  If »cri« has a `fragment` component, then fail this algorithm.
+   3.  If the »cri«'s `fragment` component is non-null, then fail this algorithm.
 
    4.  If the `host` component of »cri« is a `host-name`, include a
        Uri-Host Option and let that option's value be the text string
@@ -1317,8 +1321,8 @@ value from a data item in the CRI, the presence of any
        option's value be the text value of the URI representation of
        the IP address, as derived in {{host-ip-to-uri}}.
 
-   5.  If »cri« has a `port` component, then let »port« be that
-       component's unsigned integer value; otherwise, let »port« be
+   5.  If the `port` subcomponent in a »cri« is not absent, then let »port« be that
+       subcomponent's unsigned integer value; otherwise, let »port« be
        the default port number for the scheme.
 
    6.  If »port« does not equal the request's destination port,
@@ -1331,9 +1335,9 @@ value from a data item in the CRI, the presence of any
        Uri-Path Option and let that option's value be the text string
        value of that element.
 
-   8.  If »cri« has a `query` component, then, for each element in the
-       `query` component, include a Uri-Query Option and let that
-       option's value be the text string
+   8.  If the value of the `query` component of »cri« is non-empty,
+       then, for each element in the `query` component, include a
+       Uri-Query Option and let that option's value be the text string
        value of that element.
 
 ### Composing a Request CRI from a Set of CoAP Options {#compose-coap}
