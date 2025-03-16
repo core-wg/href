@@ -619,7 +619,7 @@ references:
   Note that for `CRI-Reference` there is a difference between empty
   paths and paths that are not set, represented by `[]` and `null`, respectively.
 * An empty query in a `CRI` (no query parameters, not even an empty
-  string) MUST be represented as the empty array
+  string) is represented as the empty array
   `[]`; note that this is equivalent to the absence of the question
   mark in a URI, while the equivalent of just a question mark in a URI is
   an array with a single query parameter represented by an empty
