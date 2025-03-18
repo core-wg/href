@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-16T02:01:06.334736+00:00",
+  "timestamp": "2025-03-18T01:55:36.643124+00:00",
   "repo": "core-wg/href",
   "labels": [
     {
@@ -1378,7 +1378,7 @@
       "id": "I_kwDOFyeisM6t2AXU",
       "title": "Reconsider query CRI after introducing defaults",
       "url": "https://github.com/core-wg/href/issues/124",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chrysn",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1387,8 +1387,8 @@
       "labels": [],
       "body": "Query is currently described as `[+text]` and sometimes has `null` and sometimes `[]` as alternatives, with `null` meaning \"no query\" and `[]` meaning \"really no query, I'm stating this here explicitly\".\n\nThis was necessary in earlier versions to enable the removal of trailing nulls, but now that we have defaults, we can think of what is more intuitive:\n\nWe should consider whether `query` should just be `[*text]`, have `[]` as its default, and `null` is just the for CRI references that are fragment-only.\n\nAFAIR this wouldn't be a change to the relatively sensitive conversion rules (they treat it through presence either way, and I found that my implementation didn't get the distinction between \"strip the query\" and \"just set the fragment\" right)\n\nI see several upsides and no downsides:\n* Processing outside of CRI references is more straightforward: It is iterating over a possibly empty list, rather than having the empty case special.\n* More consistency in CRI references: We don't have to make rules for whether when a path is set there needs to be a `null` or `[]` in the query position, there is an obvious choice of `[]` (which is the one in the CRI; this also makes it easy to splice a resolved CRI)\n* It makes query and path behave more similarly (esp. useful when sharing code that's just generic over the text-or-pet's character sets)\n* it would simplify the CDDL esier to understand because there are fewer \"or something special\" cases:\n\n```patch\n CRI = [\n   scheme,\n   authority / no-authority,\n   path,                         ; use [] for empty path\n+  query / null,\n+  query,\n   fragment / null\n ]\n\n\n CRI-Reference = [\n   ((scheme / null, authority / no-authority)\n    // discard),                 ; relative reference\n   path / null,\n-  query / [] / null,            ; [] is explicit unset\n+  query / null,            ; null keeps the query (only allowed when discard=0 and path=null)\n   fragment / null\n ]\n\n-query       = [+text]\n+query       = [*text]\n```\n\nThe null cases for path and query could also be explained consistently in the CRI reference in that\n\n> The value null for path and query are only allowed if discard=0, and, for query, if path=null.\n\n(not sure which text that replaces, but I'm pretty sure there is some on when path may be null)\n\n*Context:* We briefly talked about having some alternative CDDL forms on the side, now at https://github.com/core-wg/href/wiki/Useful-variations-of-the-CDDL, and writing that, the rules looked a bit odd. ",
       "createdAt": "2025-03-13T10:19:13Z",
-      "updatedAt": "2025-03-13T23:28:17Z",
-      "closedAt": null,
+      "updatedAt": "2025-03-16T14:49:46Z",
+      "closedAt": "2025-03-16T14:49:46Z",
       "comments": [
         {
           "author": "chrysn",
@@ -5759,26 +5759,95 @@
       "id": "PR_kwDOFyeisM6OxfBc",
       "title": "Use [] for absent queries, fix terms (close #124)",
       "url": "https://github.com/core-wg/href/pull/127",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-03-15T13:23:53Z",
-      "updatedAt": "2025-03-15T13:28:46Z",
+      "updatedAt": "2025-03-16T14:49:47Z",
       "baseRepository": "core-wg/href",
       "baseRefName": "main",
       "baseRefOid": "17508c0350bc316629c6e990ef6730a3fa21406b",
       "headRepository": "core-wg/href",
       "headRefName": "wglc-ca3",
-      "headRefOid": "e0fd7daeb288d59d9e3677d3dd72fdb759891a83",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "63458bc827a9ec3fbeee78c8bf8cd26cabc01cee",
+      "closedAt": "2025-03-16T14:49:45Z",
+      "mergedAt": "2025-03-16T14:49:45Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "d46d2be450836b16e54cde0af7ed8093b63d9326"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFyeisM6gP_No",
+          "commit": {
+            "abbreviatedOid": "e0fd7da"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "Thanks for applying the technical change; the terminology with absent and set isn't quite managing the balancing act between using URI terminology and making it mean something here.",
+          "createdAt": "2025-03-16T07:45:22Z",
+          "updatedAt": "2025-03-16T07:47:58Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I don't even think it's \"most\":\r\n* scheme can not be absent\r\n* authority, if it is absent, is either ROOTBASED (null) or ROOTLESS (true), is that really absence? (Just because one is expressed with a null?)\r\n* query and path really behave the same in simple CRIs (in that they correspond to an empty string in a URI if they are an empty array, and a trailing delimiter is indicated by a single empty value (especially when that is also the leading delimiter)); I'd rather call them both unconditionally present (but possibly empty)\r\n* the fragment can legitimately be absent in a CRI\r\n\r\nGranted, that's what absence is called in a URI, but that *only* works for that PoV.",
+              "createdAt": "2025-03-16T07:45:22Z",
+              "updatedAt": "2025-03-16T07:47:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFyeisM6gP_xM",
+          "commit": {
+            "abbreviatedOid": "e0fd7da"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-03-16T07:56:01Z",
+          "updatedAt": "2025-03-16T07:56:01Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Maybe this can be starting point:\r\n\r\n> All components are part of all CRIs; some can have values that are `null` or empty arrays, with their default values being elided at the tail of the serialized form.\r\n> In a CRI reference, components can be *not set* (indicated by the discard value `0` for scheme and authority, or by `null` for the scheme, path and query components that can otherwise not have that value).\r\n>\r\n> In URIs, some components are said to be \"absent\". This term is not used for CRIs, and the mapping between a CRI component's value and whether it is absent depends on the component, and is not generally a useful comparison. (For example, a URI reference's authority is absent for CRI references where authority is either not set or has either of the NOAUTHORITY values; a URI reference's query is absent if the CRI's query is an empty list or not set).",
+              "createdAt": "2025-03-16T07:56:01Z",
+              "updatedAt": "2025-03-16T07:56:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFyeisM6gQoC_",
+          "commit": {
+            "abbreviatedOid": "69313f1"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-16T14:30:20Z",
+          "updatedAt": "2025-03-16T14:33:03Z",
+          "comments": [
+            {
+              "originalPosition": 106,
+              "body": "This has become a factual statement now (when previously there was some choice that required force):\r\n\r\n```suggestion\r\n* An empty path in a `CRI` is be represented as the empty array\r\n```\r\n\r\n(Not a blocking comment: it's not wrong, just IMO unnecessary)",
+              "createdAt": "2025-03-16T14:30:20Z",
+              "updatedAt": "2025-03-16T14:33:03Z"
+            },
+            {
+              "originalPosition": 112,
+              "body": "```suggestion\r\n  string) is represented as the empty array\r\n```\r\n\r\nSame as above (the syntax does not allow anything else).",
+              "createdAt": "2025-03-16T14:31:46Z",
+              "updatedAt": "2025-03-16T14:33:03Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
