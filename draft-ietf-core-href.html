@@ -1403,7 +1403,8 @@ URIs.<a href="#section-1-4" class="pilcrow">¶</a></p>
 comparison, and reference resolution (including all corner cases) to be
 implemented in a comparatively small amount of code and to be less
 prone to bugs and interoperability issues.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">As a result of simplification, however, CRIs are not capable of
+<p id="section-1-6">As a result of simplification, however, <em>Simple CRIs</em> (i.e., not using
+CRI extensions, see <a href="#extending" class="auto internal xref">Section 7</a>) are not capable of
 expressing all URIs permitted by the generic syntax of <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> (hence
 the "constrained" in "Constrained Resource Identifier").
 The supported subset includes all URIs of the
@@ -1411,7 +1412,9 @@ The supported subset includes all URIs of the
 <span><a href="#STD97" class="internal xref">Hypertext Transfer Protocol (HTTP)</a> [<a href="#STD97" class="cite xref">STD97</a>]</span>,
 <span><a href="#RFC8141" class="internal xref">Uniform Resource Names (URNs)</a> [<a href="#RFC8141" class="cite xref">RFC8141</a>]</span>, and other similar URIs.
 The exact constraints are defined in <a href="#constraints" class="auto internal xref">Section 2</a>.
-CRI extensions (<a href="#extending" class="auto internal xref">Section 7</a>) can be defined to address some of the constraints.<a href="#section-1-6" class="pilcrow">¶</a></p>
+CRI extensions (<a href="#extending" class="auto internal xref">Section 7</a>) can be defined to address some of the
+constraints and/or to provide more convenient representations for
+certain areas of application.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">This RFC creates a "CRI Scheme Numbers" registry and updates <a href="#RFC7595" class="auto internal xref">RFC7595</a>
 to add a note on how this new registry cooperates with the "URI Schemes"
 registry that <a href="#RFC7595" class="auto internal xref">RFC7595</a> describes.<a href="#section-1-7" class="pilcrow">¶</a></p>
@@ -2462,8 +2465,8 @@ reference.<a href="#section-5.3-3.1.1" class="pilcrow">¶</a></p>
           <li id="section-5.3-3.3">
             <p id="section-5.3-3.3.1">If the value of discard is <code>true</code> in the CRI reference (which is
 implicitly the case when scheme and/or authority are present in the reference), replace the
-path in the buffer with the empty array, empty query and null
-fragment, and set a <code>true</code> authority to <code>null</code>.  If the value of
+path in the buffer with the empty array, set query to empty and fragment
+to null, and set a <code>true</code> authority to <code>null</code>.  If the value of
 discard is an unsigned integer, remove as many elements
 from the end of the path array; if it is non-zero, set query to empty and
 fragment to null.<a href="#section-5.3-3.3.1" class="pilcrow">¶</a></p>
@@ -3038,7 +3041,7 @@ that as the first value in the resulting CRI array.<a href="#section-8.1.2-2.1.1
 <code>authority</code> with its value determined as follows:
 If the value of the Uri-Host Option is a <code>reg-name</code>, split it
 on any dots in the name and use the resulting text string
-values as the <code>host-name</code>.
+values as the elements of the <code>host-name</code> array.
 If the value is an IP-literal or IPv4address, extract any
 <code>zone-id</code>, and represent the IP address as a byte string of
 the correct length in <code>host-ip</code>, followed by any <code>zone-id</code>
@@ -3067,7 +3070,7 @@ or an empty array if no such options are present.<a href="#section-8.1.2-2.4.1" 
             <li id="section-8.1.2-2.5">
               <p id="section-8.1.2-2.5.1">Insert a <code>query</code> component that contains an array built from
 the text string values of the Uri-Query Options in the request,
-or null if no such options are present.<a href="#section-8.1.2-2.5.1" class="pilcrow">¶</a></p>
+or an empty array if no such options are present.<a href="#section-8.1.2-2.5.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 </section>
