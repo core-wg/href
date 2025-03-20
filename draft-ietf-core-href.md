@@ -175,7 +175,8 @@ comparison, and reference resolution (including all corner cases) to be
 implemented in a comparatively small amount of code and to be less
 prone to bugs and interoperability issues.
 
-As a result of simplification, however, CRIs are not capable of
+As a result of simplification, however, _Simple CRIs_ (i.e., not using
+CRI extensions, see {{extending}}) are not capable of
 expressing all URIs permitted by the generic syntax of {{STD66}} (hence
 the "constrained" in "Constrained Resource Identifier").
 The supported subset includes all URIs of the
@@ -183,7 +184,9 @@ The supported subset includes all URIs of the
 [Hypertext Transfer Protocol (HTTP)](#STD97),
 [Uniform Resource Names (URNs)](#RFC8141), and other similar URIs.
 The exact constraints are defined in {{constraints}}.
-CRI extensions ({{extending}}) can be defined to address some of the constraints.
+CRI extensions ({{extending}}) can be defined to address some of the
+constraints and/or to provide more convenient representations for
+certain areas of application.
 
 This RFC creates a "CRI Scheme Numbers" registry and updates {{RFC7595}}
 to add a note on how this new registry cooperates with the "URI Schemes"
@@ -862,8 +865,8 @@ an CRI reference:
 
 3. If the value of discard is `true` in the CRI reference (which is
    implicitly the case when scheme and/or authority are present in the reference), replace the
-   path in the buffer with the empty array, empty query and null
-   fragment, and set a `true` authority to `null`.  If the value of
+   path in the buffer with the empty array, set query to empty and fragment
+   to null, and set a `true` authority to `null`.  If the value of
    discard is an unsigned integer, remove as many elements
    from the end of the path array; if it is non-zero, set query to empty and
    fragment to null.
@@ -1366,7 +1369,7 @@ value from a data item in the CRI, the presence of any
         `authority` with its value determined as follows:
         If the value of the Uri-Host Option is a `reg-name`, split it
         on any dots in the name and use the resulting text string
-        values as the `host-name`.
+        values as the elements of the `host-name` array.
         If the value is an IP-literal or IPv4address, extract any
         `zone-id`, and represent the IP address as a byte string of
         the correct length in `host-ip`, followed by any `zone-id`
@@ -1392,7 +1395,7 @@ value from a data item in the CRI, the presence of any
 
    5.   Insert a `query` component that contains an array built from
         the text string values of the Uri-Query Options in the request,
-        or null if no such options are present.
+        or an empty array if no such options are present.
 
 
 ## CoAP Options for Forward-Proxies {#coap-options}
