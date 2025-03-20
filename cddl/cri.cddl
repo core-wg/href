@@ -6,7 +6,7 @@ CRI = [
   scheme,
   authority / no-authority,
   path,                    ; use [] for empty path
-  query,                   ; use [] for absent query
+  query,                   ; use [] for empty query
   fragment / null
 ]
 
@@ -14,8 +14,8 @@ CRI = [
 CRI-Reference = [
   ((scheme / null, authority / no-authority)
    // discard),            ; relative reference
-  path / null,
-  query / null,            ; null is explicitly not set (no change)
+  path / null,             ; null is explicitly not set
+  query / null,            ; null is explicitly not set
   fragment / null
 ]
 
@@ -39,6 +39,6 @@ port        = 0..65535
 discard     = DISCARD-ALL / 0..127
 DISCARD-ALL = true
 path        = [*text]
-query       = [+text]
+query       = [*text]
 fragment    = text
 
