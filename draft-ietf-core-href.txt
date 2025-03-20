@@ -27,7 +27,7 @@ Abstract
 
 
    // (This "cref" paragraph will be removed by the RFC editor:) The
-   // present revision –20 addresses additional WGLC comments.
+   // present revision –21 addresses a few post-WGLC nits.
 
 About This Document
 
