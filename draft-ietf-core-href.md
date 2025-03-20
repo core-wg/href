@@ -69,6 +69,7 @@ informative:
   W3C.REC-html52-20171214:
   I-D.ietf-cbor-edn-literals: edn
   I-D.carpenter-6man-rfc6874bis: zonebis
+  I-D.ietf-cbor-packed: packed
   I-D.bormann-cbor-notable-tags: notable
   RFC9170: use-lose
   GREENSPUN-10:
@@ -106,7 +107,6 @@ normative:
   STD94: cbor
 # RFC8949
   RFC9165: cddlcontrol
-  I-D.ietf-cbor-packed: packed
 
 --- abstract
 
