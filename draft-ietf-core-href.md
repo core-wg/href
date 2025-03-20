@@ -125,7 +125,7 @@ registry created by the present RFC.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –21 addresses a few post-WGLC nits.
+    The present revision –22 addresses a few remaining post-WGLC nits.
 
 --- middle
 
