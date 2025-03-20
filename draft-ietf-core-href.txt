@@ -738,7 +738,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
      scheme,
      authority / no-authority,
      path,                    ; use [] for empty path
-     query,                   ; use [] for absent query
+     query,                   ; use [] for empty query
      fragment / null
    ]
 
@@ -746,8 +746,8 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    CRI-Reference = [
      ((scheme / null, authority / no-authority)
       // discard),            ; relative reference
-     path / null,
-     query / null,            ; null is explicitly not set (no change)
+     path / null,             ; null is explicitly not set
+     query / null,            ; null is explicitly not set
      fragment / null
    ]
 
@@ -771,7 +771,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    discard     = DISCARD-ALL / 0..127
    DISCARD-ALL = true
    path        = [*text]
-   query       = [+text]
+   query       = [*text]
    fragment    = text
 
                  Figure 2: CDDL for CRI CBOR representation
@@ -2130,12 +2130,6 @@ Bormann & Birkholz      Expires 21 September 2025              [Page 38]
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
-   [I-D.ietf-cbor-packed]
-              Bormann, C. and M. Gütschow, "Packed CBOR", Work in
-              Progress, Internet-Draft, draft-ietf-cbor-packed-14, 3
-              March 2025, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-cbor-packed-14>.
-
    [IANA.cbor-tags]
               IANA, "Concise Binary Object Representation (CBOR) Tags",
               <https://www.iana.org/assignments/cbor-tags>.
@@ -2179,16 +2173,18 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
               Environments (ACE)", RFC 9237, DOI 10.17487/RFC9237,
               August 2022, <https://www.rfc-editor.org/rfc/rfc9237>.
 
+   [STD63]    Internet Standard 63,
+              <https://www.rfc-editor.org/info/std63>.
+              At the time of writing, this STD comprises the following:
+
+
+
 
 
 Bormann & Birkholz      Expires 21 September 2025              [Page 39]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
-
-   [STD63]    Internet Standard 63,
-              <https://www.rfc-editor.org/info/std63>.
-              At the time of writing, this STD comprises the following:
 
               Yergeau, F., "UTF-8, a transformation format of ISO
               10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
@@ -2230,7 +2226,11 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
               Wikipedia, "Greenspun's tenth rule",
               <https://en.wikipedia.org/wiki/Greenspun's_tenth_rule>.
 
-
+   [I-D.bormann-cbor-notable-tags]
+              Bormann, C., "Notable CBOR Tags", Work in Progress,
+              Internet-Draft, draft-bormann-cbor-notable-tags-12, 12
+              February 2025, <https://datatracker.ietf.org/doc/html/
+              draft-bormann-cbor-notable-tags-12>.
 
 
 
@@ -2241,12 +2241,6 @@ Bormann & Birkholz      Expires 21 September 2025              [Page 40]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
-
-   [I-D.bormann-cbor-notable-tags]
-              Bormann, C., "Notable CBOR Tags", Work in Progress,
-              Internet-Draft, draft-bormann-cbor-notable-tags-12, 12
-              February 2025, <https://datatracker.ietf.org/doc/html/
-              draft-bormann-cbor-notable-tags-12>.
 
    [I-D.carpenter-6man-rfc6874bis]
               Carpenter, B. E., Cheshire, S., and R. M. Hinden,
@@ -2262,6 +2256,12 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
               literals-16, 8 January 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
               edn-literals-16>.
+
+   [I-D.ietf-cbor-packed]
+              Bormann, C. and M. Gütschow, "Packed CBOR", Work in
+              Progress, Internet-Draft, draft-ietf-cbor-packed-14, 3
+              March 2025, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-cbor-packed-14>.
 
    [I-D.ietf-iotops-7228bis]
               Bormann, C., Ersue, M., Keränen, A., and C. Gomez,
