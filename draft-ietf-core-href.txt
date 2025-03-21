@@ -6,7 +6,7 @@ CoRE Working Group                                       C. Bormann, Ed.
 Internet-Draft                                    Universität Bremen TZI
 Updates: 7595 (if approved)                                  H. Birkholz
 Intended status: Standards Track                          Fraunhofer SIT
-Expires: 21 September 2025                                 20 March 2025
+Expires: 22 September 2025                                 21 March 2025
 
 
                     Constrained Resource Identifiers
@@ -27,7 +27,7 @@ Abstract
 
 
    // (This "cref" paragraph will be removed by the RFC editor:) The
-   // present revision –21 addresses a few post-WGLC nits.
+   // present revision –22 addresses a few remaining post-WGLC nits.
 
 About This Document
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Bormann & Birkholz      Expires 21 September 2025               [Page 1]
+Bormann & Birkholz      Expires 22 September 2025               [Page 1]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -68,7 +68,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 September 2025.
+   This Internet-Draft will expire on 22 September 2025.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bormann & Birkholz      Expires 21 September 2025               [Page 2]
+Bormann & Birkholz      Expires 22 September 2025               [Page 2]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -165,7 +165,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025               [Page 3]
+Bormann & Birkholz      Expires 22 September 2025               [Page 3]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -221,7 +221,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025               [Page 4]
+Bormann & Birkholz      Expires 22 September 2025               [Page 4]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -277,7 +277,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025               [Page 5]
+Bormann & Birkholz      Expires 22 September 2025               [Page 5]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -333,7 +333,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025               [Page 6]
+Bormann & Birkholz      Expires 22 September 2025               [Page 6]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -389,7 +389,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025               [Page 7]
+Bormann & Birkholz      Expires 22 September 2025               [Page 7]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -445,7 +445,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025               [Page 8]
+Bormann & Birkholz      Expires 22 September 2025               [Page 8]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -501,7 +501,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025               [Page 9]
+Bormann & Birkholz      Expires 22 September 2025               [Page 9]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -557,7 +557,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 10]
+Bormann & Birkholz      Expires 22 September 2025              [Page 10]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -613,7 +613,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 11]
+Bormann & Birkholz      Expires 22 September 2025              [Page 11]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -669,7 +669,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 12]
+Bormann & Birkholz      Expires 22 September 2025              [Page 12]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -725,7 +725,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 13]
+Bormann & Birkholz      Expires 22 September 2025              [Page 13]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -781,7 +781,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 14]
+Bormann & Birkholz      Expires 22 September 2025              [Page 14]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -837,7 +837,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 15]
+Bormann & Birkholz      Expires 22 September 2025              [Page 15]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -893,7 +893,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 16]
+Bormann & Birkholz      Expires 22 September 2025              [Page 16]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -949,7 +949,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 17]
+Bormann & Birkholz      Expires 22 September 2025              [Page 17]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1005,7 +1005,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 18]
+Bormann & Birkholz      Expires 22 September 2025              [Page 18]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1061,7 +1061,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 19]
+Bormann & Birkholz      Expires 22 September 2025              [Page 19]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1117,7 +1117,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 20]
+Bormann & Birkholz      Expires 22 September 2025              [Page 20]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1173,7 +1173,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 21]
+Bormann & Birkholz      Expires 22 September 2025              [Page 21]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1229,7 +1229,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 22]
+Bormann & Birkholz      Expires 22 September 2025              [Page 22]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1285,7 +1285,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 23]
+Bormann & Birkholz      Expires 22 September 2025              [Page 23]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1341,7 +1341,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 24]
+Bormann & Birkholz      Expires 22 September 2025              [Page 24]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1397,7 +1397,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 25]
+Bormann & Birkholz      Expires 22 September 2025              [Page 25]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1453,7 +1453,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 26]
+Bormann & Birkholz      Expires 22 September 2025              [Page 26]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1509,7 +1509,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 27]
+Bormann & Birkholz      Expires 22 September 2025              [Page 27]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1565,7 +1565,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 28]
+Bormann & Birkholz      Expires 22 September 2025              [Page 28]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1621,7 +1621,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 29]
+Bormann & Birkholz      Expires 22 September 2025              [Page 29]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1677,7 +1677,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 30]
+Bormann & Birkholz      Expires 22 September 2025              [Page 30]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1733,7 +1733,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 31]
+Bormann & Birkholz      Expires 22 September 2025              [Page 31]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1789,7 +1789,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 32]
+Bormann & Birkholz      Expires 22 September 2025              [Page 32]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1845,7 +1845,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 33]
+Bormann & Birkholz      Expires 22 September 2025              [Page 33]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1901,7 +1901,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 34]
+Bormann & Birkholz      Expires 22 September 2025              [Page 34]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -1957,7 +1957,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 35]
+Bormann & Birkholz      Expires 22 September 2025              [Page 35]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2013,7 +2013,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 36]
+Bormann & Birkholz      Expires 22 September 2025              [Page 36]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2069,7 +2069,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 37]
+Bormann & Birkholz      Expires 22 September 2025              [Page 37]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2125,7 +2125,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 38]
+Bormann & Birkholz      Expires 22 September 2025              [Page 38]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2181,7 +2181,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 39]
+Bormann & Birkholz      Expires 22 September 2025              [Page 39]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2237,7 +2237,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 40]
+Bormann & Birkholz      Expires 22 September 2025              [Page 40]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2293,7 +2293,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 41]
+Bormann & Birkholz      Expires 22 September 2025              [Page 41]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2349,7 +2349,7 @@ Appendix A.  The Small Print
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 42]
+Bormann & Birkholz      Expires 22 September 2025              [Page 42]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2405,7 +2405,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 43]
+Bormann & Birkholz      Expires 22 September 2025              [Page 43]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2461,7 +2461,7 @@ Appendix B.  CBOR Extended Diagnostic Notation (EDN): The "cri"
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 44]
+Bormann & Birkholz      Expires 22 September 2025              [Page 44]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2517,7 +2517,7 @@ B.1.  cri: ABNF Definition of URI Representation of a CRI
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 45]
+Bormann & Birkholz      Expires 22 September 2025              [Page 45]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2573,7 +2573,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 46]
+Bormann & Birkholz      Expires 22 September 2025              [Page 46]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2629,7 +2629,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 47]
+Bormann & Birkholz      Expires 22 September 2025              [Page 47]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2685,7 +2685,7 @@ Appendix C.  Mapping Scheme Numbers to Scheme Names
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 48]
+Bormann & Birkholz      Expires 22 September 2025              [Page 48]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2741,7 +2741,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 49]
+Bormann & Birkholz      Expires 22 September 2025              [Page 49]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2797,7 +2797,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 50]
+Bormann & Birkholz      Expires 22 September 2025              [Page 50]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2853,7 +2853,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 51]
+Bormann & Birkholz      Expires 22 September 2025              [Page 51]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2909,7 +2909,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 52]
+Bormann & Birkholz      Expires 22 September 2025              [Page 52]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -2965,7 +2965,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 53]
+Bormann & Birkholz      Expires 22 September 2025              [Page 53]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -3021,7 +3021,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 54]
+Bormann & Birkholz      Expires 22 September 2025              [Page 54]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -3077,7 +3077,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 55]
+Bormann & Birkholz      Expires 22 September 2025              [Page 55]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -3133,7 +3133,7 @@ Appendix D.  Change Log
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 56]
+Bormann & Birkholz      Expires 22 September 2025              [Page 56]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -3189,7 +3189,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 57]
+Bormann & Birkholz      Expires 22 September 2025              [Page 57]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -3245,7 +3245,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 58]
+Bormann & Birkholz      Expires 22 September 2025              [Page 58]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -3301,7 +3301,7 @@ Internet-Draft      Constrained Resource Identifiers          March 2025
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 59]
+Bormann & Birkholz      Expires 22 September 2025              [Page 59]
 
 Internet-Draft      Constrained Resource Identifiers          March 2025
 
@@ -3357,4 +3357,4 @@ Authors' Addresses
 
 
 
-Bormann & Birkholz      Expires 21 September 2025              [Page 60]
+Bormann & Birkholz      Expires 22 September 2025              [Page 60]
