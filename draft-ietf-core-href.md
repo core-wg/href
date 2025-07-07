@@ -320,7 +320,7 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
 7. {:#c-port-omitted} If the scheme's port handling is known to the
    CRI creator, it is RECOMMENDED to omit the port if and only if the
    port would be the same as the scheme's default port (provided the
-   scheme is defining such a default port) or the scheme is not using
+   scheme defines such a default port) or the scheme is not using
    ports.
 
 8. {:#c-path} A path consists of zero or more path segments.
@@ -584,7 +584,7 @@ reference resolution MUST yield the original CRI.
 
 When testing for equivalence or difference, it is rarely appropriate
 for applications to directly compare CRI references; instead, the
-references are typically resolved to their respective CRI before
+references are typically resolved to their respective CRIs before
 comparison.
 
 ## CBOR Representation {#cbor-representation}
@@ -815,7 +815,7 @@ the CRI is treated as "unprocessable".
 
 When encountering an unprocessable CRI,
 the processor skips the entire CRI top-level array, including any CBOR
-items contained in there,
+items contained therein,
 and continues processing the CBOR items surrounding the unprocessable CRI.
 (Note: this skipping can be implemented in bounded memory for CRIs
 that do not use indefinite length encoding, as mandated for CRIs as separate
@@ -986,8 +986,8 @@ authority
 
   {:aside}
   > Implementations with scheme-specific knowledge MAY convert
-    individual elements by using the ToASCII procedure {{Section 4.1 of
-    -toascii}} as discussed in more detail in {{Section 3.1 of -iri}}.
+    individual elements by using the ToASCII procedure ({{Section 4.1 of
+    -toascii}}) as discussed in more detail in {{Section 3.1 of -iri}}.
     This should not be done if the next step of conversion is to an
     IRI as defined in {{critoiri}} (CRI to IRI).
   >
