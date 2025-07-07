@@ -212,7 +212,7 @@ registry that {{RFC7595}} describes.
 In this specification, the term "byte" is used in its now customary
 sense as a synonym for "octet".
 
-Terms defined in this document appear in *cursive* where they
+Terms defined in this document appear in *italics* where they
 are introduced (in the plaintext form of this document, they are
 rendered as the new term surrounded by underscores).
 
