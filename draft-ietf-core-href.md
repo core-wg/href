@@ -74,12 +74,6 @@ informative:
   I-D.ietf-cbor-packed: packed
   I-D.bormann-cbor-notable-tags: notable
   RFC9170: use-lose
-  GREENSPUN-10:
-    target: https://en.wikipedia.org/wiki/Greenspun's_tenth_rule
-    title: Greenspun's tenth rule
-    date: false
-    author:
-      org: Wikipedia
   MNU: I-D.bormann-dispatch-modern-network-unicode
 normative:
   RFC4007: zone-orig
