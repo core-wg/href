@@ -1539,6 +1539,8 @@ apply analogously to AIF-CRI {{toid}}.
 [^removenumbers]: RFC-editor: Please replace all references to
     {{sec-numbers}} by a reference to the IANA registry.
 
+[^replace-xxxx]
+
 ## CRI Scheme Numbers Registry {#cri-reg}
 
 This specification defines a new "CRI Scheme Numbers" registry in the
@@ -1651,7 +1653,6 @@ IANA is requested to register the application-extension identifier
 | cri                              | Constrained Resource Identifier | IETF              | RFC-XXXX, {{edn-cri}} |
 {: #tab-iana title="CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI"}
 
-[^replace-xxxx]
 
 ## CBOR Tags Registry {#tags-iana}
 
@@ -1678,6 +1679,17 @@ specification reference.
 
 ## CoAP Option Numbers Registry
 
+
+[^tbd]
+
+[^tbd]: RFC-Editor: For each usage of the term "TBD", please remove
+      the prefix "TBD" from the indicated value and replace the
+      residue with the value actually assigned by IANA; perform an
+      analogous substitution for all other occurrences of the prefix
+      "TBD" in the document.
+      Finally, please remove this note.
+
+
 In the "CoAP Option Numbers" registry in the "CoRE Parameters" registry group [IANA.core-parameters],
 IANA is requested to register the CoAP Option Numbers
 as described in {{tab-iana-options}} and defined in {{coap-options}}.
@@ -1686,8 +1698,6 @@ as described in {{tab-iana-options}} and defined in {{coap-options}}.
    | TBD235 | Proxy-Cri           | RFC-XXXX  |
    | TBD239 | Proxy-Scheme-Number | RFC-XXXX  |
 {: #tab-iana-options title="New CoAP Option Numbers"}
-
-[^replace-xxxx]
 
 ## Media-Type subparameters for ACE AIF {#toidreg}
 
@@ -1702,7 +1712,6 @@ register:
 {: #tab-iana-toid title="ACE AIF Toid for CRI"}
 
 
-[^replace-xxxx]
 
 
 ## Content-Format for CRI in AIF
@@ -1716,7 +1725,6 @@ RESTful Environments (CoRE) Parameters" registry group
 | application/aif+cbor;Toid=CRI-local-part | -              | TBD | RFC-XXXX  |
 {: #tab-iana-toid-ct title="Content-Format for ACE AIF with CRI-local-part Toid"}
 
-[^replace-xxxx]
 
 
 --- back
