@@ -490,13 +490,14 @@ the following (and only the following) normalizations to get the CRI
 more likely to validate:
 
 * map the scheme name to lowercase ({{<c-scheme}});
-* map the registered name to NFC ({{<c-reg-name}}) and split it on
-  embedded dots;
+* map the registered name to NFC ({{<c-nfc}}) and split it on
+  embedded dots ({{<c-reg-name}});
 * elide the port if it is the default port for the scheme
 ({{<c-port-omitted}});
 <!-- * elide a single zero-length path segment ({{<c-path}}); -->
-* map path segments, query parameters, and the fragment identifier to
-  NFC form ({{<c-path-segment}}, {{<c-query}}, {{<c-fragment}}).
+* map path segments ({{<c-path-segment}}), query parameters
+  ({{<c-query}}), and the fragment identifier ({{<c-fragment}}) to
+  NFC form ({{<c-nfc}}).
 
 Once a CRI has been created, it can be used and transferred without
 further normalization.
