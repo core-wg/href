@@ -68,7 +68,9 @@ informative:
   # RFC8820
   W3C.REC-html52-20171214:
   I-D.ietf-cbor-edn-literals: edn
-  I-D.carpenter-6man-rfc6874bis: zonebis
+  I-D.ietf-6man-zone-ui: zone-ui
+  RFC6874: zone-old
+  I-D.schinazi-httpbis-link-local-uri-bcp: zone-info
   I-D.ietf-cbor-packed: packed
   I-D.bormann-cbor-notable-tags: notable
   RFC9170: use-lose
@@ -80,11 +82,12 @@ informative:
       org: Wikipedia
   MNU: I-D.bormann-dispatch-modern-network-unicode
 normative:
+  RFC4007: zone-orig
+  I-D.ietf-netmod-rfc6991-bis: 6991bis
   STD66: uri
   STD63: utf-8
 # RFC 3986
   RFC3987: iri
-  RFC6874: zone
   BCP35: schemes
 # RFC7595
   IANA.uri-schemes:
@@ -129,7 +132,13 @@ registry created by the present RFC.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –22 addresses a few remaining post-WGLC nits.
+    The present revision –23 attempts to address the AD review
+    comments; it is submitted right before the I-D deadline in order to
+    serve as discussion input to IETF 123 even though
+    not all discussions have completed.
+    In particular, the updated handling of zone identifiers requires
+    some additional scrutiny.
+
 
 --- middle
 
@@ -293,7 +302,7 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    deprecated as a way to delimit a cleartext password in a userinfo.
 
 4. {:#c-ip-address} An IP address can be either an IPv4 address or an
-   IPv6 address (optionally with a zone identifier {{-zone}}; see
+   IPv6 address (optionally with a zone identifier; see
    {{zone-id-issue}}).
    Future versions of IP are not supported (it is likely that a binary
    mapping would be strongly desirable, and that cannot be designed
@@ -991,22 +1000,21 @@ authority
   "IP-literal" rule ({{Section 3.2.2 of RFC3986@-uri}}).
 
   {: #zone-id-issue}
-  Any zone-id is appended to the string; the details for how this is
-  done are currently in flux in the URI specification: {{Section 2 of
-  -zone}} uses percent-encoding and a separator of "%25", while
-  proposals for a future superseding zone-id specification document
-  (such as {{-zonebis}}) are being prepared; this also leads to a modified
-  "IP-literal" rule as specified in these documents.
-  While the discussion about the representation of zone-id information
-  in URIs is ongoing, CRIs maintain a position in the grammar for it
-  (`zone-id`).
-  This can be used by consenting implementations to exchange zone
-  information without being concerned by the ambiguity at the URI
-  syntax level.
-  The assumption is that the present specification (1) either will be
-  updated eventually to obtain consistent URI conversion of zone-id
-  information (2) or there will be no representation of zone-id
-  information in URIs.
+  The inclusion of zone-ids {{-zone-orig}} in URIs has a complex history
+  and currently has no interoperable representation (the previous
+  specification for this, {{-zone-old}}, is now obsoleted by
+  {{-zone-ui}}; more background information is available in {{-zone-info}}).
+  The CRI specification does not define a conversion from a
+  CRI containing a zone-id to a URI.
+  As keeping a zone-id with an IP address in a URI turned out to be
+  useful while {{-zone-old}} was in effect, CRIs maintain a position in
+  the grammar to optionally store a `zone-id`.
+  This can be used by consenting CRI implementations to exchange zone
+  information without being concerned by the lack of a specification
+  at the URI syntax level.
+  The goal is to achieve approximate feature parity with the zone-id
+  support in {{-6991bis}}, which also contains further
+  clarifications on the use of zone-ids with IP addresses.
 
   If the CRI reference contains a `port` item, the port
   subcomponent consists of the value of that item in decimal
@@ -1334,11 +1342,13 @@ value from a data item in the CRI, the presence of any
        values of the `host-name` elements joined by dots.
 
        If the `host` component of »cri« is a `host-ip`, check whether
-       the IP address given represents the request's
-       destination IP address (and, if present, zone-id).
+       the IP address given represents the request's destination IP
+       address (and the zone-ids of both addresses also match by being
+       absent or by pointing to the same interface).
        Only if it does not, include a Uri-Host Option, and let that
        option's value be the text value of the URI representation of
-       the IP address, as derived in {{host-ip-to-uri}}.
+       the IP address, as derived in {{host-ip-to-uri}} (note that
+       zone-ids are never present in Uri-Host Options).
 
    5.  If the `port` subcomponent in a »cri« is not absent, then let »port« be that
        subcomponent's unsigned integer value; otherwise, let »port« be
@@ -1374,16 +1384,19 @@ value from a data item in the CRI, the presence of any
         If the value of the Uri-Host Option is a `reg-name`, split it
         on any dots in the name and use the resulting text string
         values as the elements of the `host-name` array.
-        If the value is an IP-literal or IPv4address, extract any
-        `zone-id`, and represent the IP address as a byte string of
-        the correct length in `host-ip`, followed by any `zone-id`
-        extracted if present.
+        If the value is an IP-literal or IPv4address, represent the IP
+        address as a byte string of
+        the correct length in `host-ip`; if a `zone-id` can be
+        extracted from the request's destination
+        IP address and if the IP address is ambiguous in the context
+        of the local system, append the zone-id.
         If the value is none of the three, fail this algorithm.
 
         If the request does not include a Uri-Host Option, insert an
         `authority` with `host-ip` being the byte string that
         represents the request's destination IP address and,
-        if one is present in the request's destination, add a `zone-id`.
+        if one is present in the request's destination address, add a
+        `zone-id`.
 
    3.   If the request includes a Uri-Port Option, let »port« be that
         option's value.  Otherwise, let »port« be the request's
@@ -2060,7 +2073,7 @@ Changes from -05 to -06
 
 * rework authority:
   * split reg-names at dots;
-  * add optional zone identifiers {{-zone}} to IP addresses
+  * add optional zone identifiers {{-zone-orig}} to IP addresses
 
 Changes from -04 to -05
 
