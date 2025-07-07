@@ -893,9 +893,10 @@ an CRI reference:
    elements from the path array to the array in the path section in
    the buffer; set query to empty and fragment to null.
 
-5. Apart from the path and discard, copy all non-null sections from
-   the CRI reference to the buffer in sequence; set fragment to `null`
-   in the buffer if query is non-null in the CRI reference.
+5. If query is non-null in the CRI reference, set fragment to `null`
+   in the buffer.
+   Apart from the path and discard, copy all non-null sections from
+   the CRI reference to the buffer in sequence.
 
 6. Return the sections in the buffer as the resolved CRI.
 
