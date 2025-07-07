@@ -173,8 +173,7 @@ Overall, the proper handling of URI references is quite intricate.
 This can be a problem especially in constrained environments {{-term}}{{-termbis}},
 where nodes often have severe code size and memory size limitations.
 As a result, many implementations in such environments support only an
-ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
-half of {{STD66}} (aperçu adapted from {{GREENSPUN-10}}).
+ad-hoc, informally-specified, bug-ridden, non-interoperable subset.
 
 This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
