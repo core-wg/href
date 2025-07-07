@@ -673,8 +673,9 @@ embedded CRIs.
 
 ### `scheme-name` and `scheme-id` {#scheme-id}
 
-In the scheme section, a CRI scheme can be given as a negative integer
-`scheme-id` derived from the *scheme number*, or optionally by its
+In the scheme section, a CRI scheme is usually given as a negative integer
+`scheme-id` derived from the *scheme number*.
+Optionally, it can instead be identified by its
 `scheme-name` (a text string giving the scheme name as in URIs' scheme
 section, mapped to lower case).
 (Note that, in {{cddl}}, `scheme-name` is marked as a feature, as only
