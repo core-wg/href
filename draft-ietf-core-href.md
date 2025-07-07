@@ -993,6 +993,14 @@ authority
     -toascii}} as discussed in more detail in {{Section 3.1 of -iri}}.
     This should not be done if the next step of conversion is to an
     IRI as defined in {{critoiri}} (CRI to IRI).
+  >
+  > [^toascii-note]
+
+[^toascii-note]:
+    Editor's note: Some other RFCs reference RFC5890 as the source of ToASCII, since that is the document that replaces RFC3490 and at least mentions ToASCII.
+    Unfortunately, this doesn’t define ToASCII (pointing to RFC 3490 instead), so we consider these references broken.
+    Instead, we reference RFC 3490, which is the document that actually does define ToASCII.
+    RFC 3987 (IRIs) references RFC 3490, too, kind of keeping it alive.
 
   {: #host-ip-to-uri}
   The value of a `host-ip` item MUST be
