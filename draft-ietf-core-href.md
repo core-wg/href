@@ -824,8 +824,8 @@ the processor skips the entire CRI top-level array, including any CBOR
 items contained in there,
 and continues processing the CBOR items surrounding the unprocessable CRI.
 (Note: this skipping can be implemented in bounded memory for CRIs
-that do not use indefinite length encoding, as mandated in
-{{cbor-representation}}.)
+that do not use indefinite length encoding, as mandated for CRIs as separate
+encoded data items in {{no-indef}}.)
 
 The unprocessable CRI is treated as an opaque identifier
 that is distinct from all processable CRIs,
