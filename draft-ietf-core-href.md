@@ -104,6 +104,10 @@ normative:
     date: 2020-03
     seriesinfo:
       ISBN: 978-1-936213-26-9
+    ann: >
+      RFC Editor: please replace with version current at publication
+      (probably 17.0.0) and check whether D80, D120, and D92 are still
+      pointing to the same definitions as in 13.0.0.
   STD94: cbor
 # RFC8949
   RFC9165: cddlcontrol
