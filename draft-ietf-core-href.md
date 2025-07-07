@@ -354,12 +354,14 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    (See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 10. {:#c-query} Queries are optional in URIs; there is a difference
-   between an absent query and a single query parameter that is the
+   between an absent query and a present query that is the
    empty string.
    A CRI represents its query component as an array of zero or more query
    parameters, which are CRI text strings.
-   Zero query parameters (an empty array) is equivalent to a URI
-   where the query is absent.
+   Zero query parameters (an empty array) is equivalent to a URI where
+   the query is absent; a single query parameter that is the empty
+   string is equivalent to a URI with a present, but empty, query
+   string.
    A query in a URI is represented in a CRI by splitting its text up
    on any ampersand ("&") characters into one or more query
    parameters, which may contain certain characters (including
