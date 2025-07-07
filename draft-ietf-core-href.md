@@ -940,12 +940,11 @@ IRI to CRI
   described in {{Section 3.1 of RFC3987}}, and then
   converting the URI to a CRI as described above.
 
-<!-- What? -->
-Everything in this section also applies to CRI references, URI
-references, and IRI references.
+Everything about CRI references, URI references, and IRI references in
+this section also applies to CRIs, URIs, and IRIs.
 
 
-## Converting CRIs to URIs {#cri-to-uri}
+## Converting CRI (references) to URI (references) {#cri-to-uri}
 
 Applications MUST convert a CRI reference to a URI
 reference by determining the components of the URI reference according
