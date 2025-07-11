@@ -1725,7 +1725,7 @@ RESTful Environments (CoRE) Parameters" registry group
 
 --- back
 
-# The Small Print
+# Examples of Corner Cases {#the-small-print}
 
 {:sp: type="SP%d." group="SP"}
 
