@@ -68,23 +68,20 @@ informative:
   # RFC8820
   W3C.REC-html52-20171214:
   I-D.ietf-cbor-edn-literals: edn
-  I-D.carpenter-6man-rfc6874bis: zonebis
+  I-D.ietf-6man-zone-ui: zone-ui
+  RFC6874: zone-old
+  I-D.schinazi-httpbis-link-local-uri-bcp: zone-info
   I-D.ietf-cbor-packed: packed
   I-D.bormann-cbor-notable-tags: notable
   RFC9170: use-lose
-  GREENSPUN-10:
-    target: https://en.wikipedia.org/wiki/Greenspun's_tenth_rule
-    title: Greenspun's tenth rule
-    date: false
-    author:
-      org: Wikipedia
   MNU: I-D.bormann-dispatch-modern-network-unicode
 normative:
+  RFC4007: zone-orig
+  I-D.ietf-netmod-rfc6991-bis: 6991bis
   STD66: uri
   STD63: utf-8
 # RFC 3986
   RFC3987: iri
-  RFC6874: zone
   BCP35: schemes
 # RFC7595
   IANA.uri-schemes:
@@ -104,6 +101,10 @@ normative:
     date: 2020-03
     seriesinfo:
       ISBN: 978-1-936213-26-9
+    ann: >
+      RFC Editor: please replace with version current at publication
+      (probably 17.0.0) and check whether D80, D120, and D92 are still
+      pointing to the same definitions as in 13.0.0.
   STD94: cbor
 # RFC8949
   RFC9165: cddlcontrol
@@ -125,7 +126,13 @@ registry created by the present RFC.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –22 addresses a few remaining post-WGLC nits.
+    The present revision –23 attempts to address the AD review
+    comments; it is submitted right before the I-D deadline in order to
+    serve as discussion input to IETF 123 even though
+    not all discussions have completed.
+    In particular, the updated handling of zone identifiers requires
+    some additional scrutiny.
+
 
 --- middle
 
@@ -160,8 +167,7 @@ Overall, the proper handling of URI references is quite intricate.
 This can be a problem especially in constrained environments {{-term}}{{-termbis}},
 where nodes often have severe code size and memory size limitations.
 As a result, many implementations in such environments support only an
-ad-hoc, informally-specified, bug-ridden, non-interoperable subset of
-half of {{STD66}} (aperçu adapted from {{GREENSPUN-10}}).
+ad-hoc, informally-specified, bug-ridden, non-interoperable subset.
 
 This document defines the *Constrained Resource Identifier (CRI)* by
 constraining URIs to a simplified subset and representing their
@@ -200,7 +206,7 @@ registry that {{RFC7595}} describes.
 In this specification, the term "byte" is used in its now customary
 sense as a synonym for "octet".
 
-Terms defined in this document appear in *cursive* where they
+Terms defined in this document appear in *italics* where they
 are introduced (in the plaintext form of this document, they are
 rendered as the new term surrounded by underscores).
 
@@ -289,7 +295,7 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    deprecated as a way to delimit a cleartext password in a userinfo.
 
 4. {:#c-ip-address} An IP address can be either an IPv4 address or an
-   IPv6 address (optionally with a zone identifier {{-zone}}; see
+   IPv6 address (optionally with a zone identifier; see
    {{zone-id-issue}}).
    Future versions of IP are not supported (it is likely that a binary
    mapping would be strongly desirable, and that cannot be designed
@@ -314,7 +320,7 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
 7. {:#c-port-omitted} If the scheme's port handling is known to the
    CRI creator, it is RECOMMENDED to omit the port if and only if the
    port would be the same as the scheme's default port (provided the
-   scheme is defining such a default port) or the scheme is not using
+   scheme defines such a default port) or the scheme is not using
    ports.
 
 8. {:#c-path} A path consists of zero or more path segments.
@@ -342,12 +348,14 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    (See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 10. {:#c-query} Queries are optional in URIs; there is a difference
-   between an absent query and a single query parameter that is the
+   between an absent query and a present query that is the
    empty string.
    A CRI represents its query component as an array of zero or more query
    parameters, which are CRI text strings.
-   Zero query parameters (an empty array) is equivalent to a URI
-   where the query is absent.
+   Zero query parameters (an empty array) is equivalent to a URI where
+   the query is absent; a single query parameter that is the empty
+   string is equivalent to a URI with a present, but empty, query
+   string.
    A query in a URI is represented in a CRI by splitting its text up
    on any ampersand ("&") characters into one or more query
    parameters, which may contain certain characters (including
@@ -476,13 +484,14 @@ the following (and only the following) normalizations to get the CRI
 more likely to validate:
 
 * map the scheme name to lowercase ({{<c-scheme}});
-* map the registered name to NFC ({{<c-reg-name}}) and split it on
-  embedded dots;
+* map the registered name to NFC ({{<c-nfc}}) and split it on
+  embedded dots ({{<c-reg-name}});
 * elide the port if it is the default port for the scheme
 ({{<c-port-omitted}});
 <!-- * elide a single zero-length path segment ({{<c-path}}); -->
-* map path segments, query parameters, and the fragment identifier to
-  NFC form ({{<c-path-segment}}, {{<c-query}}, {{<c-fragment}}).
+* map path segments ({{<c-path-segment}}), query parameters
+  ({{<c-query}}), and the fragment identifier ({{<c-fragment}}) to
+  NFC form ({{<c-nfc}}).
 
 Once a CRI has been created, it can be used and transferred without
 further normalization.
@@ -575,7 +584,7 @@ reference resolution MUST yield the original CRI.
 
 When testing for equivalence or difference, it is rarely appropriate
 for applications to directly compare CRI references; instead, the
-references are typically resolved to their respective CRI before
+references are typically resolved to their respective CRIs before
 comparison.
 
 ## CBOR Representation {#cbor-representation}
@@ -658,8 +667,9 @@ embedded CRIs.
 
 ### `scheme-name` and `scheme-id` {#scheme-id}
 
-In the scheme section, a CRI scheme can be given as a negative integer
-`scheme-id` derived from the *scheme number*, or optionally by its
+In the scheme section, a CRI scheme is usually given as a negative integer
+`scheme-id` derived from the *scheme number*.
+Optionally, it can instead be identified by its
 `scheme-name` (a text string giving the scheme name as in URIs' scheme
 section, mapped to lower case).
 (Note that, in {{cddl}}, `scheme-name` is marked as a feature, as only
@@ -805,11 +815,11 @@ the CRI is treated as "unprocessable".
 
 When encountering an unprocessable CRI,
 the processor skips the entire CRI top-level array, including any CBOR
-items contained in there,
+items contained therein,
 and continues processing the CBOR items surrounding the unprocessable CRI.
 (Note: this skipping can be implemented in bounded memory for CRIs
-that do not use indefinite length encoding, as mandated in
-{{cbor-representation}}.)
+that do not use indefinite length encoding, as mandated for CRIs as separate
+encoded data items in {{no-indef}}.)
 
 The unprocessable CRI is treated as an opaque identifier
 that is distinct from all processable CRIs,
@@ -877,9 +887,10 @@ an CRI reference:
    elements from the path array to the array in the path section in
    the buffer; set query to empty and fragment to null.
 
-5. Apart from the path and discard, copy all non-null sections from
-   the CRI reference to the buffer in sequence; set fragment to `null`
-   in the buffer if query is non-null in the CRI reference.
+5. If query is non-null in the CRI reference, set fragment to `null`
+   in the buffer.
+   Apart from the path and discard, copy all non-null sections from
+   the CRI reference to the buffer in sequence.
 
 6. Return the sections in the buffer as the resolved CRI.
 
@@ -923,12 +934,11 @@ IRI to CRI
   described in {{Section 3.1 of RFC3987}}, and then
   converting the URI to a CRI as described above.
 
-<!-- What? -->
-Everything in this section also applies to CRI references, URI
-references, and IRI references.
+Everything about CRI references, URI references, and IRI references in
+this section also applies to CRIs, URIs, and IRIs.
 
 
-## Converting CRIs to URIs {#cri-to-uri}
+## Converting CRI (references) to URI (references) {#cri-to-uri}
 
 Applications MUST convert a CRI reference to a URI
 reference by determining the components of the URI reference according
@@ -976,10 +986,18 @@ authority
 
   {:aside}
   > Implementations with scheme-specific knowledge MAY convert
-    individual elements by using the ToASCII procedure {{Section 4.1 of
-    -toascii}} as discussed in more detail in {{Section 3.1 of -iri}}.
+    individual elements by using the ToASCII procedure ({{Section 4.1 of
+    -toascii}}) as discussed in more detail in {{Section 3.1 of -iri}}.
     This should not be done if the next step of conversion is to an
     IRI as defined in {{critoiri}} (CRI to IRI).
+  >
+  > [^toascii-note]
+
+[^toascii-note]:
+    Editor's note: Some other RFCs reference RFC5890 as the source of ToASCII, since that is the document that replaces RFC3490 and at least mentions ToASCII.
+    Unfortunately, this doesn’t define ToASCII (pointing to RFC 3490 instead), so we consider these references broken.
+    Instead, we reference RFC 3490, which is the document that actually does define ToASCII.
+    RFC 3987 (IRIs) references RFC 3490, too, kind of keeping it alive.
 
   {: #host-ip-to-uri}
   The value of a `host-ip` item MUST be
@@ -987,22 +1005,21 @@ authority
   "IP-literal" rule ({{Section 3.2.2 of RFC3986@-uri}}).
 
   {: #zone-id-issue}
-  Any zone-id is appended to the string; the details for how this is
-  done are currently in flux in the URI specification: {{Section 2 of
-  -zone}} uses percent-encoding and a separator of "%25", while
-  proposals for a future superseding zone-id specification document
-  (such as {{-zonebis}}) are being prepared; this also leads to a modified
-  "IP-literal" rule as specified in these documents.
-  While the discussion about the representation of zone-id information
-  in URIs is ongoing, CRIs maintain a position in the grammar for it
-  (`zone-id`).
-  This can be used by consenting implementations to exchange zone
-  information without being concerned by the ambiguity at the URI
-  syntax level.
-  The assumption is that the present specification (1) either will be
-  updated eventually to obtain consistent URI conversion of zone-id
-  information (2) or there will be no representation of zone-id
-  information in URIs.
+  The inclusion of zone-ids {{-zone-orig}} in URIs has a complex history
+  and currently has no interoperable representation (the previous
+  specification for this, {{-zone-old}}, is now obsoleted by
+  {{-zone-ui}}; more background information is available in {{-zone-info}}).
+  The CRI specification does not define a conversion from a
+  CRI containing a zone-id to a URI.
+  As keeping a zone-id with an IP address in a URI turned out to be
+  useful while {{-zone-old}} was in effect, CRIs maintain a position in
+  the grammar to optionally store a `zone-id`.
+  This can be used by consenting CRI implementations to exchange zone
+  information without being concerned by the lack of a specification
+  at the URI syntax level.
+  The goal is to achieve approximate feature parity with the zone-id
+  support in {{-6991bis}}, which also contains further
+  clarifications on the use of zone-ids with IP addresses.
 
   If the CRI reference contains a `port` item, the port
   subcomponent consists of the value of that item in decimal
@@ -1330,11 +1347,13 @@ value from a data item in the CRI, the presence of any
        values of the `host-name` elements joined by dots.
 
        If the `host` component of »cri« is a `host-ip`, check whether
-       the IP address given represents the request's
-       destination IP address (and, if present, zone-id).
+       the IP address given represents the request's destination IP
+       address (and the zone-ids of both addresses also match by being
+       absent or by pointing to the same interface).
        Only if it does not, include a Uri-Host Option, and let that
        option's value be the text value of the URI representation of
-       the IP address, as derived in {{host-ip-to-uri}}.
+       the IP address, as derived in {{host-ip-to-uri}} (note that
+       zone-ids are never present in Uri-Host Options).
 
    5.  If the `port` subcomponent in a »cri« is not absent, then let »port« be that
        subcomponent's unsigned integer value; otherwise, let »port« be
@@ -1370,16 +1389,19 @@ value from a data item in the CRI, the presence of any
         If the value of the Uri-Host Option is a `reg-name`, split it
         on any dots in the name and use the resulting text string
         values as the elements of the `host-name` array.
-        If the value is an IP-literal or IPv4address, extract any
-        `zone-id`, and represent the IP address as a byte string of
-        the correct length in `host-ip`, followed by any `zone-id`
-        extracted if present.
+        If the value is an IP-literal or IPv4address, represent the IP
+        address as a byte string of
+        the correct length in `host-ip`; if a `zone-id` can be
+        extracted from the request's destination
+        IP address and if the IP address is ambiguous in the context
+        of the local system, append the zone-id.
         If the value is none of the three, fail this algorithm.
 
         If the request does not include a Uri-Host Option, insert an
         `authority` with `host-ip` being the byte string that
         represents the request's destination IP address and,
-        if one is present in the request's destination, add a `zone-id`.
+        if one is present in the request's destination address, add a
+        `zone-id`.
 
    3.   If the request includes a Uri-Port Option, let »port« be that
         option's value.  Otherwise, let »port« be the request's
@@ -1511,6 +1533,8 @@ apply analogously to AIF-CRI {{toid}}.
 [^removenumbers]: RFC-editor: Please replace all references to
     {{sec-numbers}} by a reference to the IANA registry.
 
+[^replace-xxxx]
+
 ## CRI Scheme Numbers Registry {#cri-reg}
 
 This specification defines a new "CRI Scheme Numbers" registry in the
@@ -1623,7 +1647,6 @@ IANA is requested to register the application-extension identifier
 | cri                              | Constrained Resource Identifier | IETF              | RFC-XXXX, {{edn-cri}} |
 {: #tab-iana title="CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI"}
 
-[^replace-xxxx]
 
 ## CBOR Tags Registry {#tags-iana}
 
@@ -1650,6 +1673,17 @@ specification reference.
 
 ## CoAP Option Numbers Registry
 
+
+[^tbd]
+
+[^tbd]: RFC-Editor: For each usage of the term "TBD", please remove
+      the prefix "TBD" from the indicated value and replace the
+      residue with the value actually assigned by IANA; perform an
+      analogous substitution for all other occurrences of the prefix
+      "TBD" in the document.
+      Finally, please remove this note.
+
+
 In the "CoAP Option Numbers" registry in the "CoRE Parameters" registry group [IANA.core-parameters],
 IANA is requested to register the CoAP Option Numbers
 as described in {{tab-iana-options}} and defined in {{coap-options}}.
@@ -1658,8 +1692,6 @@ as described in {{tab-iana-options}} and defined in {{coap-options}}.
    | TBD235 | Proxy-Cri           | RFC-XXXX  |
    | TBD239 | Proxy-Scheme-Number | RFC-XXXX  |
 {: #tab-iana-options title="New CoAP Option Numbers"}
-
-[^replace-xxxx]
 
 ## Media-Type subparameters for ACE AIF {#toidreg}
 
@@ -1674,7 +1706,6 @@ register:
 {: #tab-iana-toid title="ACE AIF Toid for CRI"}
 
 
-[^replace-xxxx]
 
 
 ## Content-Format for CRI in AIF
@@ -1688,7 +1719,6 @@ RESTful Environments (CoRE) Parameters" registry group
 | application/aif+cbor;Toid=CRI-local-part | -              | TBD | RFC-XXXX  |
 {: #tab-iana-toid-ct title="Content-Format for ACE AIF with CRI-local-part Toid"}
 
-[^replace-xxxx]
 
 
 --- back
@@ -2056,7 +2086,7 @@ Changes from -05 to -06
 
 * rework authority:
   * split reg-names at dots;
-  * add optional zone identifiers {{-zone}} to IP addresses
+  * add optional zone identifiers {{-zone-orig}} to IP addresses
 
 Changes from -04 to -05
 
