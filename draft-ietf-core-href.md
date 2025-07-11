@@ -481,9 +481,9 @@ satisfies the required constraints defined in {{constraints}}. The creation of a
 CRI fails if the CRI cannot be validated to satisfy all of the required
 constraints.
 
-If a naming authority creates a CRI from user input, it may need to apply
-the following (and only the following) normalizations to get the CRI
-more likely to validate:
+If a naming authority creates a CRI from user input, the following
+normalizations can increase the likelihood that the resulting CRI
+will be valid:
 
 * map the scheme name to lowercase ({{<c-scheme}});
 * map the registered name to NFC ({{<c-nfc}}) and split it on
