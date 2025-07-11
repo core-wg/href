@@ -1322,10 +1322,11 @@ and URI scheme names shown in {{scheme-map}}:
 
 ### Decomposing a Request CRI into a set of CoAP Options {#decompose-coap}
 
-   The steps to parse a request's options from a CRI »cri« are as
+   The steps to parse a request's options from a CRI »cri« (and from
+   the request's intended destination IP address) are as
    follows.  These steps either result in zero or more of the Uri-Host,
    Uri-Port, Uri-Path, and Uri-Query Options being included in the
-   request or they fail.
+   request, or they fail.
 
 Where the following speaks of deriving a text-string for a CoAP Option
 value from a data item in the CRI, the presence of any
@@ -1378,7 +1379,8 @@ value from a data item in the CRI, the presence of any
 
 ### Composing a Request CRI from a Set of CoAP Options {#compose-coap}
 
-   The steps to construct a CRI from a request's options are as follows.
+   The steps to construct a CRI from a request's options (and the
+   destination IP address on which the request was received) are as follows.
    These steps either result in a CRI or they fail.
 
 
