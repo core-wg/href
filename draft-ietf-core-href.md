@@ -42,9 +42,6 @@ contributor:
   country: Sweden
   email: klaus.hartke@ericsson.com
 - name: Christian Amsüss
-  street: Hollandstr. 12/4
-  city: Vienna
-  code: 1020
   country: Austria
   email: christian@amsuess.com
 
