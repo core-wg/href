@@ -1303,6 +1303,18 @@ This section provides an analogue to {{Sections 6.4 and 6.5 of -coap}}:
 Computing a set of CoAP options from a request CRI ({{decompose-coap}}) and computing a
 request CRI from a set of COAP options ({{compose-coap}}).
 
+As with {{Sections 6.4 and 6.5 of -coap}}, the (intended or actually
+used) request's destination transport address is considered an
+additional parameter to these algorithms, usually used to be able to
+elide (by supplying default values for) CoAP options that would
+contain components of this transport address.
+As with {{Sections 6.4 and 6.5 of -coap}}, the text in this section
+speaks about the request's destination IP address and the request's
+destination UDP port as components of the request's destination
+transport address used in this way; transports that do not have these
+components or have other components that are to be used in this way
+need to specify the specifics.
+
 This section makes use of the mapping between CRI scheme numbers
 and URI scheme names shown in {{scheme-map}}:
 
