@@ -65,7 +65,7 @@ informative:
   # RFC8820
   W3C.REC-html52-20171214:
   I-D.ietf-cbor-edn-literals: edn
-  I-D.ietf-6man-zone-ui: zone-ui
+  RFC9844: zone-ui
   RFC6874: zone-old
   I-D.schinazi-httpbis-link-local-uri-bcp: zone-info
   I-D.ietf-cbor-packed: packed
