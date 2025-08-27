@@ -1313,7 +1313,7 @@ speaks about the request's destination IP address and the request's
 destination UDP port as components of the request's destination
 transport address used in this way; transports that do not have these
 components or have other components that are to be used in this way
-need to specify the specifics.
+need to specify their own URI conversion, which then applies here as well.
 
 This section makes use of the mapping between CRI scheme numbers
 and URI scheme names shown in {{scheme-map}}:
