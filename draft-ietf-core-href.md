@@ -347,17 +347,19 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
 10. {:#c-query} Queries are optional in URIs; there is a difference
    between an absent query and a present query that is the
    empty string.
-   A CRI represents its query component as an array of zero or more query
-   parameters, which are CRI text strings.
+   A CRI represents its query component as an array of zero or more CRI
+   text strings, called "query parameters."
    Zero query parameters (an empty array) is equivalent to a URI where
    the query is absent; a single query parameter that is the empty
    string is equivalent to a URI with a present, but empty, query
    string.
-   A query in a URI is represented in a CRI by splitting its text up
-   on any ampersand ("&") characters into one or more query
+   URI query strings are often in the form of "key=value" pairs joined
+   by ampersand characters.
+   A query string present in a URI is represented in a CRI by
+   splitting its text up on any ampersand ("&") characters into one or
+   more query
    parameters, which may contain certain characters (including
    ampersands) that were percent-encoded in the URI.
-   Query parameters are often in the form of a "key=value" pair.
    When converting a CRI to a URI, one or more query parameters are
    constructed into a URI query by joining them together with
    ampersand characters, where certain characters (including
@@ -476,9 +478,9 @@ satisfies the required constraints defined in {{constraints}}. The creation of a
 CRI fails if the CRI cannot be validated to satisfy all of the required
 constraints.
 
-If a naming authority creates a CRI from user input, it may need to apply
-the following (and only the following) normalizations to get the CRI
-more likely to validate:
+If a naming authority creates a CRI from user input, the following
+normalizations can increase the likelihood that the resulting CRI
+will be valid:
 
 * map the scheme name to lowercase ({{<c-scheme}});
 * map the registered name to NFC ({{<c-nfc}}) and split it on
@@ -1301,6 +1303,18 @@ This section provides an analogue to {{Sections 6.4 and 6.5 of -coap}}:
 Computing a set of CoAP options from a request CRI ({{decompose-coap}}) and computing a
 request CRI from a set of COAP options ({{compose-coap}}).
 
+As with {{Sections 6.4 and 6.5 of -coap}}, the (intended or actually
+used) request's destination transport address is considered an
+additional parameter to these algorithms, usually used to be able to
+elide (by supplying default values for) CoAP options that would
+contain components of this transport address.
+As with {{Sections 6.4 and 6.5 of -coap}}, the text in this section
+speaks about the request's destination IP address and the request's
+destination UDP port as components of the request's destination
+transport address used in this way; transports that do not have these
+components or have other components that are to be used in this way
+need to specify their own URI conversion, which then applies here as well.
+
 This section makes use of the mapping between CRI scheme numbers
 and URI scheme names shown in {{scheme-map}}:
 
@@ -1317,10 +1331,11 @@ and URI scheme names shown in {{scheme-map}}:
 
 ### Decomposing a Request CRI into a set of CoAP Options {#decompose-coap}
 
-   The steps to parse a request's options from a CRI »cri« are as
+   The steps to parse a request's options from a CRI »cri« (and from
+   the request's intended destination IP address) are as
    follows.  These steps either result in zero or more of the Uri-Host,
    Uri-Port, Uri-Path, and Uri-Query Options being included in the
-   request or they fail.
+   request, or they fail.
 
 Where the following speaks of deriving a text-string for a CoAP Option
 value from a data item in the CRI, the presence of any
@@ -1373,7 +1388,8 @@ value from a data item in the CRI, the presence of any
 
 ### Composing a Request CRI from a Set of CoAP Options {#compose-coap}
 
-   The steps to construct a CRI from a request's options are as follows.
+   The steps to construct a CRI from a request's options (and the
+   destination IP address on which the request was received) are as follows.
    These steps either result in a CRI or they fail.
 
 
@@ -1720,7 +1736,7 @@ RESTful Environments (CoRE) Parameters" registry group
 
 --- back
 
-# The Small Print
+# Examples of Corner Cases {#the-small-print}
 
 {:sp: type="SP%d." group="SP"}
 
