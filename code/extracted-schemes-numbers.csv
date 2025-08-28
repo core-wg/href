@@ -7,8 +7,8 @@
 5,did
 6,coap+tcp
 7,coaps+tcp
-8,coap+ws
-9,coaps+ws
+24,coap+ws
+25,coaps+ws
 1059,ms-gamingoverlay
 1165,snmp
 1220,cast
@@ -18,6 +18,8 @@
 1328,dweb
 1466,psyc
 1528,ms-people
+1560,ms-uup
+1562,ms-personacard
 1578,jar
 1658,wpid
 1762,payment
@@ -46,6 +48,7 @@
 3348,rtmfp
 3358,mtqp
 3365,filesystem
+3375,teapots
 3503,proxy
 3524,sms
 3634,jms
@@ -55,6 +58,7 @@
 3783,calculator
 3786,about
 3795,facetime
+3818,ari
 3837,ymsgr
 3886,dict
 3906,ldaps
@@ -75,6 +79,7 @@
 4559,web3
 4590,iris.lwz
 4598,diaspora
+4613,ms-widgets
 4619,rtsps
 4674,beshare
 4709,gtalk
@@ -199,6 +204,7 @@
 9910,wtai
 9965,num
 9981,ms-settings-language
+10024,bl
 10119,imap
 10147,query
 10176,ves
@@ -255,9 +261,11 @@
 11962,ws
 11999,rtspu
 12029,ms-settings-displays-topology
+12052,bluetooth
 12068,file
 12102,mailto
 12174,ms-launchremotedesktop
+12237,ilstring
 12242,cvs
 12337,mms
 12400,ssb
@@ -270,6 +278,7 @@
 12566,icap
 12569,mupdate
 12599,paparazzi
+12603,ms-widgetboard
 12634,fish
 12644,sip
 12699,mt
@@ -283,6 +292,7 @@
 12932,dns
 13014,doi
 13026,ms-settings-power
+13062,mtrust
 13068,git
 13094,openpgp4fpr
 13098,ms-secondary-screen-controller
@@ -323,6 +333,7 @@
 14595,market
 14627,stun
 14667,chrome-extension
+14709,wasm-js
 14830,itms
 14860,ms-whiteboard-cmd
 14867,wifi
@@ -334,6 +345,7 @@
 14962,tn3270
 14972,pres
 14982,p1
+15026,teapot
 15061,android
 15118,simplex
 15163,ms-visio
@@ -345,11 +357,13 @@
 15306,xfire
 15358,xmpp
 15361,ms-settings-cellular
+15461,shelter
 15579,v-event
 15639,iris.beep
 15641,wyciwyg
 15645,ms-meetnow
 15679,ms-search-repair
+15741,wasm
 15773,ms-settings-camera
 15776,ms-virtualtouchpad
 15805,xmlrpc.beeps

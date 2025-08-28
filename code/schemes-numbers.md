@@ -19,6 +19,7 @@
 |              1328 |             dweb | \[RFC-XXXX] |
 |              1466 |             psyc | \[RFC-XXXX] |
 |              1528 |        ms-people | \[RFC-XXXX] |
+|              1560 |           ms-uup | \[RFC-XXXX] |
 |              1562 |   ms-personacard | \[RFC-XXXX] |
 |              1578 |              jar | \[RFC-XXXX] |
 |              1658 |             wpid | \[RFC-XXXX] |
@@ -204,6 +205,7 @@
 |              9910 |             wtai | \[RFC-XXXX] |
 |              9965 |              num | \[RFC-XXXX] |
 |              9981 | ms-settings-language | \[RFC-XXXX] |
+|             10024 |               bl | \[RFC-XXXX] |
 |             10119 |             imap | \[RFC-XXXX] |
 |             10147 |            query | \[RFC-XXXX] |
 |             10176 |              ves | \[RFC-XXXX] |
@@ -291,6 +293,7 @@
 |             12932 |              dns | \[RFC-XXXX] |
 |             13014 |              doi | \[RFC-XXXX] |
 |             13026 | ms-settings-power | \[RFC-XXXX] |
+|             13062 |           mtrust | \[RFC-XXXX] |
 |             13068 |              git | \[RFC-XXXX] |
 |             13094 |      openpgp4fpr | \[RFC-XXXX] |
 |             13098 | ms-secondary-screen-controller | \[RFC-XXXX] |
@@ -331,6 +334,7 @@
 |             14595 |           market | \[RFC-XXXX] |
 |             14627 |             stun | \[RFC-XXXX] |
 |             14667 | chrome-extension | \[RFC-XXXX] |
+|             14709 |          wasm-js | \[RFC-XXXX] |
 |             14830 |             itms | \[RFC-XXXX] |
 |             14860 | ms-whiteboard-cmd | \[RFC-XXXX] |
 |             14867 |             wifi | \[RFC-XXXX] |
@@ -360,6 +364,7 @@
 |             15641 |          wyciwyg | \[RFC-XXXX] |
 |             15645 |       ms-meetnow | \[RFC-XXXX] |
 |             15679 | ms-search-repair | \[RFC-XXXX] |
+|             15741 |             wasm | \[RFC-XXXX] |
 |             15773 | ms-settings-camera | \[RFC-XXXX] |
 |             15776 | ms-virtualtouchpad | \[RFC-XXXX] |
 |             15805 |     xmlrpc.beeps | \[RFC-XXXX] |
