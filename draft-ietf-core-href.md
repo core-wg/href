@@ -396,9 +396,11 @@ URI and CRI references often *discard* part or all of the trailing
 path segments of the base URI or CRI.
 
 In a URI reference, this is expressed by syntax for its path component
-such as leading special path segments `.` and `..` or a leading
-slash before giving the path segments to be added at the end of the
-(now truncated) base URI.
+such as leading special path segments `.` (to protect a colon in the
+first path component) and `..` (to
+discard one more segment) or a leading slash (to discard all segments)
+before giving the path segments to be added at the end of the (now
+truncated) base URI.
 For use in CRI references, we instead add in a `discard` component as
 an alternative to the `scheme` and `authority` components, making the
 specification of discarding base URI path segments separate from
@@ -413,6 +415,17 @@ single value in its discard component:
 
 * the value `true` as the discard component
   specifies discarding all path segments from the base CRI.
+
+| CRI reference        | URI reference                                 |
+| `[0, ["a"]]`         | (cannot be expressed)                         |
+| `[1, ["a"]]`         | `a`                                           |
+| `[1, ["this:that"]]` | `./this:that`<br>({{Section 4.2 of RFC3986@-uri}}) |
+| `[1, ["a", "b"]]`    | `a/b`                                         |
+| `[2, ["a"]]`         | `../a`                                        |
+| `[3, ["a"]]`         | `../../a`                                     |
+| `[true, ["a"]]`      | `/a`                                          |
+{: #tbl-exa-discard
+title="URI reference equivalents of CRI reference examples with discard values"}
 
 If a scheme or authority is present in a CRI reference, the discard
 component is implicitly equivalent to a value of `true` and thus not
@@ -696,7 +709,8 @@ scheme nor an authority is present.
 It then expresses the operations performed on a base CRI by CRI references that
 are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.\\
 "." and ".." are not available in CRIs and are therefore expressed
-using `discard` after a normalization step, as is the presence or absence of a leading "/".
+using `discard` after a normalization step, as is the presence or
+absence of a leading "/" (see {{discard}} for examples).
 
 E.g., a simple URI reference "foo" specifies to remove one trailing
 segment, if any,
