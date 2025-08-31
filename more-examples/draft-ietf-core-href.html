@@ -18,12 +18,8 @@ memory size.
 registry of RFC 7595 cooperates with the "CRI Scheme Numbers"
 registry created by the present RFC. 
        (This "cref" paragraph will be removed by the RFC editor:) 
-The present revision –23 attempts to address the AD review
-comments; it is submitted right before the I-D deadline in order to
-serve as discussion input to IETF 123 even though
-not all discussions have completed.
-In particular, the updated handling of zone identifiers requires
-some additional scrutiny. 
+The present revision –24 attempts to address follow-on AD review
+comments as well as comments from the ARTART review. 
     ' name="description">
 <meta content="xml2rfc 3.30.0" name="generator">
 <meta content="draft-ietf-core-href-latest" name="ietf.draft">
@@ -1063,7 +1059,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 1 March 2026</td>
+<td class="center">Expires 4 March 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1079,12 +1075,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc7595" class="eref">7595</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-08-28" class="published">28 August 2025</time>
+<time datetime="2025-08-31" class="published">31 August 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-03-01">1 March 2026</time></dd>
+<dd class="expires"><time datetime="2026-03-04">4 March 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1112,12 +1108,8 @@ memory size.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 registry of RFC 7595 cooperates with the "CRI Scheme Numbers"
 registry created by the present RFC.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 <p id="section-abstract-3"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC editor:)<br>
-The present revision –23 attempts to address the AD review
-comments; it is submitted right before the I-D deadline in order to
-serve as discussion input to IETF 123 even though
-not all discussions have completed.
-In particular, the updated handling of zone identifiers requires
-some additional scrutiny.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
+The present revision –24 attempts to address follow-on AD review
+comments as well as comments from the ARTART review.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1153,7 +1145,7 @@ some additional scrutiny.</span><a href="#section-abstract-3" class="pilcrow">¶
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 March 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 March 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1527,7 +1519,8 @@ present), or<a href="#section-2.1-5.3.3.1.1" class="pilcrow">¶</a></p>
               <li class="normal" id="section-2.1-5.3.3.2">
                 <p id="section-2.1-5.3.3.2.1">the path can be rootless, which requires at least one path
 segment, the first one of which has non-zero length and is not
-started in the URI with "/".<a href="#section-2.1-5.3.3.2.1" class="pilcrow">¶</a></p>
+started in the URI with "/" (such as in <code>mailto:info@example.org</code>
+or in URNs <span>[<a href="#RFC8141" class="cite xref">RFC8141</a>]</span>).<a href="#section-2.1-5.3.3.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-2.1-5.3.4">
@@ -1723,6 +1716,10 @@ includes the value 0 which cannot be expressed in URI references that then add a
 specifies discarding all path segments from the base CRI.<a href="#section-2.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
+<p id="section-2.2-5">Note that path components can be empty; <code>ftp://example.com/a/</code>
+includes the two path components <code>"a"</code> and <code>""</code>; the latter is the one
+that will be discarded when the URI reference <code>"b"</code> is resolved with
+<code>ftp://example.com/a/</code> as its base URI.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
 <span id="name-uri-reference-equivalents-o"></span><div id="tbl-exa-discard">
 <table class="center" id="table-1">
           <caption>
@@ -1792,9 +1789,9 @@ specifies discarding all path segments from the base CRI.<a href="#section-2.2-4
           </tbody>
         </table>
 </div>
-<p id="section-2.2-6">If a scheme or authority is present in a CRI reference, the discard
+<p id="section-2.2-7">If a scheme or authority is present in a CRI reference, the discard
 component is implicitly equivalent to a value of <code>true</code> and thus not
-included in the interchanged data item.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+included in the interchanged data item.<a href="#section-2.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="constraints-not-expressed-by-the-data-model">
@@ -1914,13 +1911,13 @@ of the CRI, not on each processor (including consumer).
 This consideration extends to the sources the CRI creator uses in
 building the text strings, which the CRI creator <span class="bcp14">MAY</span> in turn expect to be in
 NFC form if that expectation is reasonable.
-See <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-dispatch-modern-network-unicode-06#appendix-C" class="relref">Appendix C</a> of [<a href="#MNU" class="cite xref">MNU</a>]</span> for some background.<a href="#section-3-7" class="pilcrow">¶</a></p>
+See <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-dispatch-modern-network-unicode-07#appendix-C" class="relref">Appendix C</a> of [<a href="#MNU" class="cite xref">MNU</a>]</span> for some background.<a href="#section-3-7" class="pilcrow">¶</a></p>
 </div>
 <p id="section-3-8">CRIs have been designed with the objective that, after the above
 normalization, conversion of two distinct CRIs to URIs do
 not yield the "same" URI, including equivalence under syntax-based
 normalization (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.2" class="relref">6.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), but not including
-protocol-based normalization.
+scheme-based or protocol-based normalization.
 Note that this objective exclusively applies to (full) CRIs, not
 to CRI references: these need to be resolved relative to a base URI,
 with results that may be equivalent or not depending on the base.<a href="#section-3-8" class="pilcrow">¶</a></p>
@@ -1944,8 +1941,10 @@ they are equivalent.<a href="#section-4-2" class="pilcrow">¶</a></p>
 strictly avoiding false positives.
 The constraints defined in <a href="#constraints" class="auto internal xref">Section 2</a> imply the most
 common forms of syntax- and scheme-based normalizations in URIs, but do
-not comprise protocol-based normalizations that require accessing the
-resources or detailed knowledge of the scheme's dereference algorithm.
+not comprise scheme-based or protocol-based normalizations that require accessing the
+resources or detailed knowledge of the scheme's dereference algorithm
+(such as the Scheme-Based Normalization (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.3" class="relref">6.2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>) specified for http(s) in Section <a href="https://rfc-editor.org/rfc/rfc9110#section-4.2.3" class="relref">4.2.3</a> of RFC 9110 <span>[<a href="#STD97" class="cite xref">STD97</a>]</span> that would
+classify <code>https://example.org:443</code> as equivalent to <code>https://example.org</code>).
 False negatives can be caused, for example, by CRIs that are not
 appropriately pre-normalized and by resource aliases.<a href="#section-4-3" class="pilcrow">¶</a></p>
 <p id="section-4-4">When CRIs are compared to select (or avoid) a network action, such as
@@ -3859,7 +3858,7 @@ RESTful Environments (CoRE) Parameters" registry group
 <dd class="break"></dd>
 <dt id="MNU">[MNU]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Modern Network Unicode"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-dispatch-modern-network-unicode-06</span>, <time datetime="2025-03-02" class="refDate">2 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-dispatch-modern-network-unicode-06">https://datatracker.ietf.org/doc/html/draft-bormann-dispatch-modern-network-unicode-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Modern Network Unicode"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-dispatch-modern-network-unicode-07</span>, <time datetime="2025-08-30" class="refDate">30 August 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-dispatch-modern-network-unicode-07">https://datatracker.ietf.org/doc/html/draft-bormann-dispatch-modern-network-unicode-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC3490">[RFC3490]</dt>
         <dd>
@@ -6458,7 +6457,11 @@ good integration with the potential use cases, both inside and outside of CoRAL.
 and
 <span class="contact-name">Marco Tiloca</span>
 for helpful comments and discussions that have shaped the
-document.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
+document, as well as to the reviewers
+<span class="contact-name">Mike Bishop</span>
+and
+<span class="contact-name">Arnt Gulbrandsen</span>
+that added useful perspective during the IESG stage.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="contributors">
