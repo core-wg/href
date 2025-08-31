@@ -123,13 +123,8 @@ registry created by the present RFC.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –23 attempts to address the AD review
-    comments; it is submitted right before the I-D deadline in order to
-    serve as discussion input to IETF 123 even though
-    not all discussions have completed.
-    In particular, the updated handling of zone identifiers requires
-    some additional scrutiny.
-
+    The present revision –24 attempts to address follow-on AD review
+    comments as well as comments from the ARTART review.
 
 --- middle
 
@@ -280,7 +275,8 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
      present), or
    * the path can be rootless, which requires at least one path
      segment, the first one of which has non-zero length and is not
-     started in the URI with "/".
+     started in the URI with "/" (such as in `mailto:info@example.org`
+     or in URNs {{-urn}}).
 
    (Note that, in {{cddl}}, `no-authority` is marked as a feature, as
    not all CRI implementations will support authority-less URIs.)
@@ -416,6 +412,11 @@ single value in its discard component:
 * the value `true` as the discard component
   specifies discarding all path segments from the base CRI.
 
+Note that path components can be empty; `ftp://example.com/a/`
+includes the two path components `"a"` and `""`; the latter is the one
+that will be discarded when the URI reference `"b"` is resolved with
+`ftp://example.com/a/` as its base URI.
+
 | CRI reference        | URI reference                                 |
 | `[0, ["a"]]`         | (cannot be expressed)                         |
 | `[1, ["a"]]`         | `a`                                           |
@@ -532,7 +533,7 @@ CRIs have been designed with the objective that, after the above
 normalization, conversion of two distinct CRIs to URIs do
 not yield the "same" URI, including equivalence under syntax-based
 normalization ({{Section 6.2.2 of RFC3986@-uri}}), but not including
-protocol-based normalization.
+scheme-based or protocol-based normalization.
 Note that this objective exclusively applies to (full) CRIs, not
 to CRI references: these need to be resolved relative to a base URI,
 with results that may be equivalent or not depending on the base.
@@ -554,8 +555,11 @@ This comparison mechanism is designed to minimize false negatives while
 strictly avoiding false positives.
 The constraints defined in {{constraints}} imply the most
 common forms of syntax- and scheme-based normalizations in URIs, but do
-not comprise protocol-based normalizations that require accessing the
-resources or detailed knowledge of the scheme's dereference algorithm.
+not comprise scheme-based or protocol-based normalizations that require accessing the
+resources or detailed knowledge of the scheme's dereference algorithm
+(such as the Scheme-Based Normalization ({{Section 6.2.3 of
+RFC3986@-uri}}) specified for http(s) in {{Section 4.2.3 of RFC9110@-http}} that would
+classify `https://example.org:443` as equivalent to `https://example.org`).
 False negatives can be caused, for example, by CRIs that are not
 appropriately pre-normalized and by resource aliases.
 
@@ -2179,7 +2183,11 @@ Thanks to
 and
 {{{Marco Tiloca}}}
 for helpful comments and discussions that have shaped the
-document.
+document, as well as to the reviewers
+{{{Mike Bishop}}}
+and
+{{{Arnt Gulbrandsen}}}
+that added useful perspective during the IESG stage.
 
 
 <!--  LocalWords:  CRI normalizations dereferencing dereference CRIs
