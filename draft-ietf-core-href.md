@@ -1007,7 +1007,7 @@ authority
     implement a shortcut to using the ToASCII procedure ({{Section 4.1 of
     -toascii}}) as discussed in more detail in {{Section 3.1 of -iri}}.
     Such an optimization is formally outside the scope of the CRI
-    specification, which is scheme-independent and in terms of IRIs
+    specification, which is scheme-independent and is in terms of IRIs
     and URIs.
 > [^toascii-note]
 
