@@ -1266,7 +1266,7 @@ Internet-Draft      Constrained Resource Identifiers      September 2025
          |  procedure (Section 4.1 of [RFC3490]) as discussed in more
          |  detail in Section 3.1 of [RFC3987].  Such an optimization is
          |  formally outside the scope of the CRI specification, which
-         |  is scheme-independent and in terms of IRIs and URIs.
+         |  is scheme-independent and is in terms of IRIs and URIs.
          |  // Editor's note: Some other RFCs reference RFC5890 as the
          |  source of
          |  // ToASCII, since that is the document that replaces RFC3490
