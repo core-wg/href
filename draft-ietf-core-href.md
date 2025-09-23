@@ -1002,13 +1002,14 @@ authority
   character that a dot is.)
 
   {:aside}
-  > Implementations with scheme-specific knowledge MAY convert
-    individual elements by using the ToASCII procedure ({{Section 4.1 of
+  > As an implementation note, an implementation with scheme-specific
+    knowledge that knows it will have to interface with DNS might
+    implement a shortcut to using the ToASCII procedure ({{Section 4.1 of
     -toascii}}) as discussed in more detail in {{Section 3.1 of -iri}}.
-    This should not be done if the next step of conversion is to an
-    IRI as defined in {{critoiri}} (CRI to IRI).
-  >
-  > [^toascii-note]
+    Such an optimization is formally outside the scope of the CRI
+    specification, which is scheme-independent and in terms of IRIs
+    and URIs.
+> [^toascii-note]
 
 [^toascii-note]:
     Editor's note: Some other RFCs reference RFC5890 as the source of ToASCII, since that is the document that replaces RFC3490 and at least mentions ToASCII.
