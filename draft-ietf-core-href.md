@@ -1762,7 +1762,7 @@ This appendix lists a few corner cases of URI semantics that
 implementers of CRIs need to be aware of, but that are not
 representative of the normal operation of CRIs.
 
-Additional test vectors may be available 
+Additional test vectors may be available
 through the CoRE WG Wiki, <https://wiki.ietf.org/group/core>.
 
 {:sp}
