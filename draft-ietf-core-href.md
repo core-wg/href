@@ -123,8 +123,11 @@ registry created by the present RFC.
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –24 attempts to address follow-on AD review
-    comments as well as comments from the ARTART review.
+    The present revision –25 contains a few more tweaks to address
+    follow-on AD review comments as well as comments from the ARTART
+    review.
+    It is intended to be ready for IESG evaluation.
+
 
 --- middle
 
