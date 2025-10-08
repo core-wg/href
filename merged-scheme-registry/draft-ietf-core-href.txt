@@ -6,7 +6,7 @@ CoRE Working Group                                       C. Bormann, Ed.
 Internet-Draft                                    Universität Bremen TZI
 Updates: 7595 (if approved)                                  H. Birkholz
 Intended status: Standards Track                          Fraunhofer SIT
-Expires: 4 March 2026                                     31 August 2025
+Expires: 11 April 2026                                    8 October 2025
 
 
                     Constrained Resource Identifiers
@@ -21,14 +21,19 @@ Abstract
    comparison, and reference resolution in environments with severe
    limitations on processing power, code size, and memory size.
 
-   This RFC updates RFC 7595 to add a note on how the "URI Schemes"
-   registry of RFC 7595 cooperates with the "CRI Scheme Numbers"
-   registry created by the present RFC.
+   This RFC updates RFC 7595 by adding a column on the "URI Schemes"
+   registry as well as a note on how that registry cooperates with the
+   "CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
+   created by the present RFC.
 
 
    // (This "cref" paragraph will be removed by the RFC editor:) The
-   // present revision –24 attempts to address follow-on AD review
-   // comments as well as comments from the ARTART review.
+   // present pull request revision is intended as additional input
+   // input for IESG evaluation (2025-10-09 telechat), exploring a way
+   // to integrate the two URI scheme registries created by RFC 7595 and
+   // by this document (issue #140).  It presents an alternative
+   // solution so that can be discussed in detail, not a consensus that
+   // this is a better solution than the one in the WG document.
 
 About This Document
 
@@ -45,18 +50,18 @@ About This Document
    Source for this draft and an issue tracker can be found at
    https://github.com/core-wg/href.
 
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                 [Page 1]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
 Status of This Memo
 
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                  [Page 1]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
@@ -68,7 +73,7 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 March 2026.
+   This Internet-Draft will expire on 11 April 2026.
 
 Copyright Notice
 
@@ -86,7 +91,7 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   4
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   5
    2.  From URIs to CRIs: Considerations and Constraints . . . . . .   5
      2.1.  The CRI interchange data model  . . . . . . . . . . . . .   5
@@ -95,25 +100,25 @@ Table of Contents
    3.  Creation and Normalization  . . . . . . . . . . . . . . . . .  11
    4.  Comparison  . . . . . . . . . . . . . . . . . . . . . . . . .  12
    5.  CRI References  . . . . . . . . . . . . . . . . . . . . . . .  13
-     5.1.  CBOR Representation . . . . . . . . . . . . . . . . . . .  13
+     5.1.  CBOR Representation . . . . . . . . . . . . . . . . . . .  14
        5.1.1.  scheme-name and scheme-id . . . . . . . . . . . . . .  17
        5.1.2.  The discard Section . . . . . . . . . . . . . . . . .  17
        5.1.3.  Examples  . . . . . . . . . . . . . . . . . . . . . .  18
        5.1.4.  Specific Terminology  . . . . . . . . . . . . . . . .  18
-     5.2.  Ingesting and encoding a CRI Reference  . . . . . . . . .  18
-       5.2.1.  Error handling and extensibility  . . . . . . . . . .  19
-     5.3.  Reference Resolution  . . . . . . . . . . . . . . . . . .  21
-   6.  Relationship between CRIs, URIs, and IRIs . . . . . . . . . .  21
-     6.1.  Converting CRI (references) to URI (references) . . . . .  22
-   7.  Extending CRIs  . . . . . . . . . . . . . . . . . . . . . . .  25
+     5.2.  Ingesting and encoding a CRI Reference  . . . . . . . . .  19
 
 
 
-Bormann & Birkholz        Expires 4 March 2026                  [Page 2]
+Bormann & Birkholz        Expires 11 April 2026                 [Page 2]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
+       5.2.1.  Error handling and extensibility  . . . . . . . . . .  20
+     5.3.  Reference Resolution  . . . . . . . . . . . . . . . . . .  21
+   6.  Relationship between CRIs, URIs, and IRIs . . . . . . . . . .  22
+     6.1.  Converting CRI (references) to URI (references) . . . . .  22
+   7.  Extending CRIs  . . . . . . . . . . . . . . . . . . . . . . .  26
      7.1.  Extended CRI: Stand-In Items  . . . . . . . . . . . . . .  27
      7.2.  Extended CRI: Accommodating Percent Encoding (PET)  . . .  27
    8.  Integration into CoAP and ACE . . . . . . . . . . . . . . . .  29
@@ -128,30 +133,42 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  34
    10. Security Considerations . . . . . . . . . . . . . . . . . . .  34
    11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  35
-     11.1.  CRI Scheme Numbers Registry  . . . . . . . . . . . . . .  35
-       11.1.1.  Instructions for the Designated Expert . . . . . . .  35
-       11.1.2.  Structure of Entries . . . . . . . . . . . . . . . .  36
-       11.1.3.  Initial Registrations  . . . . . . . . . . . . . . .  37
-     11.2.  Update to "Uniform Resource Identifier (URI) Schemes"
-            Registry . . . . . . . . . . . . . . . . . . . . . . . .  37
+     11.1.  Update to "Uniform Resource Identifier (URI) Schemes"
+            Registry . . . . . . . . . . . . . . . . . . . . . . . .  35
+     11.2.  CRI Scheme Numbers for Certain Unregistered Scheme Names
+            Registry . . . . . . . . . . . . . . . . . . . . . . . .  36
+       11.2.1.  Instructions for the Designated Expert . . . . . . .  36
+       11.2.2.  Structure of Entries . . . . . . . . . . . . . . . .  37
      11.3.  CBOR Diagnostic Notation Application-extension Identifiers
-            Registry . . . . . . . . . . . . . . . . . . . . . . . .  37
-     11.4.  CBOR Tags Registry . . . . . . . . . . . . . . . . . . .  37
-     11.5.  CoAP Option Numbers Registry . . . . . . . . . . . . . .  38
-     11.6.  Media-Type subparameters for ACE AIF . . . . . . . . . .  38
+            Registry . . . . . . . . . . . . . . . . . . . . . . . .  38
+     11.4.  CBOR Tags Registry . . . . . . . . . . . . . . . . . . .  38
+     11.5.  CoAP Option Numbers Registry . . . . . . . . . . . . . .  39
+     11.6.  Media-Type subparameters for ACE AIF . . . . . . . . . .  39
      11.7.  Content-Format for CRI in AIF  . . . . . . . . . . . . .  39
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  39
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  39
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  40
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  40
      12.2.  Informative References . . . . . . . . . . . . . . . . .  42
-   Appendix A.  Examples of Corner Cases . . . . . . . . . . . . . .  44
+   Appendix A.  Examples of Corner Cases . . . . . . . . . . . . . .  45
    Appendix B.  CBOR Extended Diagnostic Notation (EDN): The "cri"
-           Extension . . . . . . . . . . . . . . . . . . . . . . . .  46
-     B.1.  cri: ABNF Definition of URI Representation of a CRI . . .  47
-   Appendix C.  Mapping Scheme Numbers to Scheme Names . . . . . . .  49
-   Appendix D.  Change Log . . . . . . . . . . . . . . . . . . . . .  58
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  61
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  61
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  62
+           Extension . . . . . . . . . . . . . . . . . . . . . . . .  47
+     B.1.  cri: ABNF Definition of URI Representation of a CRI . . .  48
+   Appendix C.  Mapping Scheme Numbers to Scheme Names . . . . . . .  50
+   Appendix D.  Change Log . . . . . . . . . . . . . . . . . . . . .  59
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  62
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  62
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  63
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                 [Page 3]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
 1.  Introduction
 
@@ -159,16 +176,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    usage, the URI reference, are the Internet standard for linking to
    resources in hypertext formats such as HTML [W3C.REC-html52-20171214]
    or the HTTP "Link" header field [RFC8288].
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                  [Page 3]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    A URI reference is a sequence of characters chosen from the
    repertoire of US-ASCII characters (Section 4.1 of RFC 3986 [STD66]).
@@ -202,6 +209,23 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    small amount of code and to be less prone to bugs and
    interoperability issues.
 
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                 [Page 4]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    As a result of simplification, however, _Simple CRIs_ (i.e., not
    using CRI extensions, see Section 7) are not capable of expressing
    all URIs permitted by the generic syntax of [STD66] (hence the
@@ -214,17 +238,10 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    constraints and/or to provide more convenient representations for
    certain areas of application.
 
-   This RFC creates a "CRI Scheme Numbers" registry and updates RFC7595
-   to add a note on how this new registry cooperates with the "URI
-   Schemes" registry that RFC7595 describes.
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                  [Page 4]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
+   This RFC updates RFC 7595 [BCP35] by adding a column on the "URI
+   Schemes" registry as well as a note on how that registry cooperates
+   with the "CRI Scheme Numbers for Certain Unregistered Scheme Names"
+   registry created by the present RFC.
 
 1.1.  Notational Conventions
 
@@ -256,6 +273,15 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    A Constrained Resource Identifier consists of the same five
    components as a URI: scheme, authority, path, query, and fragment.
 
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                 [Page 5]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    Many components of a URI can be "absent", i.e., they are optional.
    This is not mirrored in CRIs, where all components are part of all
    CRIs.  Some CRI components can have values that are null or empty
@@ -272,15 +298,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    reference where authority is either not set or has either of the
    NOAUTHORITY values, the equivalent URI reference's authority is
    absent.)
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                  [Page 5]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    The components are subject to the considerations and constraints
    listed in this section.  Note that CRI extensions can relax
@@ -313,6 +330,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
             are each started in the URI with "/", as when the authority
             is present), or
 
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                 [Page 6]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
          *  the path can be rootless, which requires at least one path
             segment, the first one of which has non-zero length and is
             not started in the URI with "/" (such as in
@@ -328,15 +353,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
          encoded (Section 7.2).  Note that this excludes the ":"
          character, which is commonly deprecated as a way to delimit a
          cleartext password in a userinfo.
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                  [Page 6]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    C4.   An IP address can be either an IPv4 address or an IPv6 address
          (optionally with a zone identifier; see Section 6.1, Paragraph
@@ -363,6 +379,21 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
          be the same as the scheme's default port (provided the scheme
          defines such a default port) or the scheme is not using ports.
 
+
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                 [Page 7]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    C8.   A path consists of zero or more path segments.  Note that a
          path of just a single zero-length path segment is allowed —
          this is considered equivalent to a path of zero path segments
@@ -384,15 +415,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    C9.   A path segment can be any CRI text string, with the exception
          of the special "." and ".." complete path segments.  Note that
          this includes the zero-length string.
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                  [Page 7]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
          If no authority is present in a CRI, the leading path segment
          cannot be empty.  (See also SP1 in Appendix A.)
@@ -417,6 +439,17 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
          encoded.  (This matches the structure and encoding of the
          target URI in CoAP requests.)
 
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                 [Page 8]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    C11.  A fragment identifier can be any CRI text string.  Fragment
          identifiers are optional in URIs; in CRIs there is a difference
          between a null fragment identifier and a fragment identifier
@@ -437,18 +470,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    Examples for URIs at or beyond the boundaries of these constraints
    are in SP2 in Appendix A.
-
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                  [Page 8]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
 2.2.  CRI References: The discard Component
 
@@ -478,6 +499,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    *  the value true as the discard component specifies discarding all
       path segments from the base CRI.
 
+
+
+Bormann & Birkholz        Expires 11 April 2026                 [Page 9]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    Note that path components can be empty; ftp://example.com/a/ includes
    the two path components "a" and ""; the latter is the one that will
    be discarded when the URI reference "b" is resolved with
@@ -498,13 +526,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
            Table 1: URI reference equivalents of CRI reference
                        examples with discard values
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                  [Page 9]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    If a scheme or authority is present in a CRI reference, the discard
    component is implicitly equivalent to a value of true and thus not
@@ -533,6 +554,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    *  CRIs (and CRI references) containing dot-segments (path segment
       "." or "..").
 
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 10]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
       These segments would be removed by the remove_dot_segments
       algorithm of [STD66], and thus never produce a normalized URI
       after resolution.
@@ -550,17 +579,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
       slash characters.  (E.g., two leading empty segments would be
       indistinguishable from a URI with a shorter path and a present but
       empty authority component.)  (Compare C9.)
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 10]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    *  CRIs without authority that are rootless and have an empty path
       component (e.g., ["a", true, []]), which would be
@@ -592,6 +610,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    *  map the scheme name to lowercase (C1);
 
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 11]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    *  map the registered name to NFC (C0) and split it on embedded dots
       (C5);
 
@@ -610,14 +636,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    Note that the processing of CRIs does not imply that all the
    constraints continuously need to be checked and enforced.
    Specifically, the text normalization constraints (NFC) can be
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 11]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    expanded as: The recipient of a CRI MAY reasonably expect the text
    strings to be in NFC form, but as with any input MUST NOT fail
    (beyond possibly not being able to process the specific CRI) if they
@@ -649,6 +667,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    that are Unicode strings) then it is safe to conclude that they are
    equivalent.
 
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 12]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    This comparison mechanism is designed to minimize false negatives
    while strictly avoiding false positives.  The constraints defined in
    Section 2 imply the most common forms of syntax- and scheme-based
@@ -664,15 +689,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    When CRIs are compared to select (or avoid) a network action, such as
    retrieval of a representation, fragment components (if any) do not
    play a role and typically are excluded from the comparison.
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 12]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
 5.  CRI References
 
@@ -703,6 +719,17 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    requirement on a CRI reference is that reference resolution MUST
    yield the original CRI.
 
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 13]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    When testing for equivalence or difference, it is rarely appropriate
    for applications to directly compare CRI references; instead, the
    references are typically resolved to their respective CRIs before
@@ -718,17 +745,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    Section 3.1 of RFC 8949 [STD94]).  Figure 1 has a coarse
    visualization of the structure of this array, without going into the
    details of the elements.
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 13]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    cri-reference:
        │├──╮── scheme ── authority ──╭── local-part ──┤│
@@ -765,25 +781,9 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 14]
+Bormann & Birkholz        Expires 11 April 2026                [Page 14]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
    ; not expressed in this CDDL spec: trailing defaults to be left off
@@ -837,9 +837,9 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
 
 
-Bormann & Birkholz        Expires 4 March 2026                 [Page 15]
+Bormann & Birkholz        Expires 11 April 2026                [Page 15]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
    in Section 2.  For use in CRI references, the discard section (see
@@ -893,9 +893,9 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
 
 
-Bormann & Birkholz        Expires 4 March 2026                 [Page 16]
+Bormann & Birkholz        Expires 11 April 2026                [Page 16]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
    an encompassing CBOR representation that does provide for indefinite
@@ -912,8 +912,16 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    (Note that, in Figure 2, scheme-name is marked as a feature, as only
    less constrained CRI implementations might support scheme-name.)
 
-   Scheme numbers are unsigned integers that are mapped to and from URI
-   scheme names by the "CRI Scheme Numbers" registry (Section 11.1).
+   Scheme numbers are unsigned integers that are mapped to and from
+   scheme names by exactly one of the following two registries:
+
+   *  "Uniform Resource Identifier (URI) Schemes" Registry (Section 6
+      (IANA Considerations) of RFC 7595 [BCP35] as updated by
+      Section 11.1), or
+
+   *  "CRI Scheme Numbers for Certain Unregistered Scheme Names"
+      registry (Section 11.2).
+
    The relationship of a scheme number to its scheme-id is as follows:
 
    scheme-id = -1 - scheme-number
@@ -933,6 +941,19 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    using discard after a normalization step, as is the presence or
    absence of a leading "/" (see Section 2.2 for examples).
 
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 17]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    E.g., a simple URI reference "foo" specifies to remove one trailing
    segment, if any, from the base URI's path, which is represented in
    the equivalent CRI reference discard section as the value 1;
@@ -946,14 +967,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    resolution process to obtain a URI) correspond to the CRI reference
    form that starts with discard.  The exception are relative references
    with an authority (called a "network-path reference" in Section 4.2
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 17]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    of RFC 3986 [STD66]), which discard the entire path of the base CRI.
    These CRI references never carry a discard section: the value of
    discard defaults to true.
@@ -990,6 +1003,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    structure as expressed in Figure 2 in CDDL, with the additional
    requirement that trailing null values are removed from the array.
 
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 18]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    A CRI reference is considered a _full_ CRI if it is well-formed and
    the sequence of sections starts with a non-null scheme.
 
@@ -1001,14 +1021,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    From an abstract point of view, a CRI reference is a data structure
    with six sections:
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 18]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    scheme, authority, discard, path, query, fragment
 
@@ -1042,6 +1054,18 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    special case, an empty array is sent in place for a remaining [0]
    (URI reference "").
 
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 19]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
 5.2.1.  Error handling and extensibility
 
    It is recommended that specifications that describe the use of CRIs
@@ -1058,13 +1082,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
       by the term "well-formed", or
 
    *  uses features not supported by the implementation,
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 19]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    the CRI is treated as "unprocessable".
 
@@ -1097,6 +1114,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    information in a CRI (or merely performs reference resolution) MAY
    pass on a CRI/CRI reference without having fully checked it, relying
    on the producer having generated a valid CRI/CRI reference.  This is
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 20]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    true for both Simple CRIs (e.g., checking for valid UTF-8) and for
    extensions (e.g., checking both for valid UTF-8 and the minimal use
    of PET elements in the text-or-pet feature as per Section 7.2).
@@ -1108,19 +1133,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    components from making use of extensions.  If it passes through
    extensions unknown to it, that might allow semantics pass through
    that the system should have been designed to filter out.
-
-
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 20]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
 5.3.  Reference Resolution
 
@@ -1159,6 +1171,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    6.  Return the sections in the buffer as the resolved CRI.
 
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 21]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
 6.  Relationship between CRIs, URIs, and IRIs
 
    CRIs are meant to replace both Uniform Resource Identifiers (URIs)
@@ -1168,15 +1187,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    IRIs directly, especially when the resource identifier is used simply
    for identification purposes or when the CRI can be directly converted
    into a CoAP request.
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 21]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    However, it may be necessary in other environments to determine the
    associated URI or IRI of a CRI, and vice versa.  Applications can
@@ -1217,6 +1227,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    following steps and then recomposing the components to a URI
    reference string as specified in Section 5.3 of RFC 3986 [STD66].
 
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 22]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    scheme
       If the CRI reference contains a scheme section, the scheme
       component of the URI reference consists of the value of that
@@ -1226,14 +1243,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
       is not set.
 
    authority
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 22]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
       If the CRI reference contains a host-name or host-ip item, the
       authority component of the URI reference consists of a host
       subcomponent, optionally followed by a colon (":") character and a
@@ -1260,20 +1269,27 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
       normalization would turn the percent-encoding back to the
       unreserved character that a dot is.)
 
-         |  Implementations with scheme-specific knowledge MAY convert
-         |  individual elements by using the ToASCII procedure
-         |  (Section 4.1 of [RFC3490]) as discussed in more detail in
-         |  Section 3.1 of [RFC3987].  This should not be done if the
-         |  next step of conversion is to an IRI as defined in Section 6
-         |  (CRI to IRI).
-         |  
-         |  
+         |  As an implementation note, an implementation with scheme-
+         |  specific knowledge that knows it will have to interface with
+         |  DNS might implement a shortcut to using the ToASCII
+         |  procedure (Section 4.1 of [RFC3490]) as discussed in more
+         |  detail in Section 3.1 of [RFC3987].  Such an optimization is
+         |  formally outside the scope of the CRI specification, which
+         |  is scheme-independent and is in terms of IRIs and URIs.
          |  // Editor's note: Some other RFCs reference RFC5890 as the
          |  source of
          |  // ToASCII, since that is the document that replaces RFC3490
          |  and at
          |  // least mentions ToASCII.  Unfortunately, this doesn’t
          |  define
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 23]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
          |  // ToASCII (pointing to RFC 3490 instead), so we consider
          |  these
          |  // references broken.  Instead, we reference RFC 3490, which
@@ -1281,14 +1297,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
          |  // document that actually does define ToASCII.  RFC 3987
          |  (IRIs)
          |  // references RFC 3490, too, kind of keeping it alive.
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 23]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    The value of a host-ip item MUST be represented as a string that
    matches the "IPv4address" or "IP-literal" rule (Section 3.2.2 of RFC
@@ -1329,6 +1337,15 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
       is considered unrooted.  Otherwise, the path component is
       considered rooted.
 
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 24]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
       If the CRI reference contains one or more path items, the path
       component is constructed by concatenating the sequence of
       representations of these items.  These representations generally
@@ -1336,15 +1353,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
       item, processed as discussed below.  The leading slash character
       is omitted for the first path item only if the path component is
       considered "unrooted".
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 24]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
       Any character in the value of a path item that is not in the set
       of unreserved characters or "sub-delims" or a colon (":") or
@@ -1384,6 +1392,16 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
       commercial at ("@"), slash ("/"), or question mark ("?") character
       MUST be percent-encoded.
 
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 25]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
 7.  Extending CRIs
 
    The CRI structure described up to this point, without enabling any
@@ -1394,14 +1412,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    With one or more of the three features enabled, we speak of _Simple
    CRIs_, which cover a larger subset of protocols that employ URIs.  To
    overcome remaining limitations, _Extended Forms_ of CRIs may be
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 25]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    defined to enable further applications.  They will generally extend
    the CRI structure to accommodate more potential values of text
    components of URIs, such as userinfo, hostnames, paths, queries, and
@@ -1440,6 +1450,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
       did:web:alice:7%3A1-balun
 
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 26]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
       CRIs have been designed to relieve implementations operating on
       CRIs from string scanning, which both helps constrained
       implementations and implementations that need to achieve high
@@ -1447,16 +1465,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
       An extension supporting application-level percent-encoded text in
       CRIs is described in Section 7.2.
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 26]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    Consumers of CRIs will generally notice when an extended form is in
    use, by finding structures that do not match the CDDL rules given in
@@ -1499,6 +1507,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    The four CDDL rules
 
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 27]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    userinfo    = (false, text .feature "userinfo")
    host-name   = (*text)
    path        = [*text]
@@ -1506,13 +1521,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    fragment    = text
 
    are replaced with
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 27]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
    userinfo    = (false, text-or-pet .feature "userinfo")
    host-name   = (*text-or-pet)
@@ -1554,6 +1562,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    [-6, true, [["web:alice:", '7:', "1-balun"]]]
 
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 28]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    [-6, true, [["web:alice:7", ':1', "-balun"]]]
 
    An algorithm for constructing a valid text-pet-sequence might
@@ -1562,14 +1578,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    valid UTF-8 character ≥ U+0080, move this character over into a text
    string by appending it to the end of the preceding text string,
    prepending it to the start of the following text string, or splitting
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 28]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    the byte string and inserting a new text string with this character,
    all while preserving the order of the bytes.  (Note that the
    properties of UTF-8 make this a simple linear process; working around
@@ -1610,21 +1618,20 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    and 6.5 of [RFC7252], the text in this section speaks about the
    request's destination IP address and the request's destination UDP
    port as components of the request's destination transport address
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 29]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    used in this way; transports that do not have these components or
    have other components that are to be used in this way need to specify
    their own URI conversion, which then applies here as well.
 
    This section makes use of the mapping between CRI scheme numbers and
    URI scheme names shown in Table 3:
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 29]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
 
                   +-------------------+-----------------+
                   | CRI scheme number | URI scheme name |
@@ -1637,8 +1644,8 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
                   | 25                | coaps+ws        |
                   +-------------------+-----------------+
 
-                    Table 3: Mapping CRI scheme numbers
-                            and URI scheme names
+                    Table 3: Mapping CRI Scheme Numbers
+                            and URI Scheme Names
 
 8.1.1.  Decomposing a Request CRI into a set of CoAP Options
 
@@ -1670,16 +1677,9 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
 
 
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 30]
+Bormann & Birkholz        Expires 11 April 2026                [Page 30]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
        If the host component of »cri« is a host-ip, check whether the IP
@@ -1733,9 +1733,9 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
 
 
-Bormann & Birkholz        Expires 4 March 2026                 [Page 31]
+Bormann & Birkholz        Expires 11 April 2026                [Page 31]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
        If the request does not include a Uri-Host Option, insert an
@@ -1789,9 +1789,9 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
 
 
-Bormann & Birkholz        Expires 4 March 2026                 [Page 32]
+Bormann & Birkholz        Expires 11 April 2026                [Page 32]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 8.2.2.  Proxy-Scheme-Number
@@ -1804,7 +1804,7 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
                  Table 5: Proxy-Scheme-Number CoAP Option
 
-   The Proxy-Scheme-Number Option carries a CRI Scheme Number
+   The Proxy-Scheme-Number Option carries a CRI scheme number
    represented as a CoAP unsigned integer.  It is used analogously to
    Proxy-Scheme as defined in Section 5.10.2 of [RFC7252].
 
@@ -1845,9 +1845,9 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
 
 
-Bormann & Birkholz        Expires 4 March 2026                 [Page 33]
+Bormann & Birkholz        Expires 11 April 2026                [Page 33]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 9.  Implementation Status
@@ -1901,9 +1901,9 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
 
 
-Bormann & Birkholz        Expires 4 March 2026                 [Page 34]
+Bormann & Birkholz        Expires 11 April 2026                [Page 34]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 11.  IANA Considerations
@@ -1916,18 +1916,80 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    // RFC Ed.: throughout this section, please replace RFC-XXXX with the
    // RFC number of this specification and remove this note.
 
-11.1.  CRI Scheme Numbers Registry
+11.1.  Update to "Uniform Resource Identifier (URI) Schemes" Registry
 
-   This specification defines a new "CRI Scheme Numbers" registry in the
-   "Constrained RESTful Environments (CoRE) Parameters" registry group
+   RFC 7595 [BCP35] is updated to add a column "CRI Scheme Number" to
+   the "Uniform Resource Identifier (URI) Schemes" Registry, an unsigned
+   integer unique in the union of this registry and the "CRI Scheme
+   Numbers for Certain Unregistered Scheme Names" registry
+   (Section 11.1).
+
+   The column is initially populated from the numbers in the "CRI scheme
+   number" column of entries in Appendix C that do refer to registered
+   URI schemes.  Rows that are not listed in Appendix C at the time of
+   initial setup are treated as specified for new registrations below.
+
+   Also, the following note is added in the "Uniform Resource Identifier
+   (URI) Schemes" Registry [IANA.uri-schemes]:
+
+   |  The CRI Scheme Number column registers numeric identifiers for the
+   |  URI Schemes registered.  Registrants for the Uniform Resource
+   |  Identifier (URI) Schemes Registry are requested to indicate
+   |  whether there are special requirements on the CRI scheme number to
+   |  be assigned.
+   |  If that is not the case, IANA will assign a value in the range
+   |  1000 to 20000, inclusive.
+   |  If there is a special requirement, the value will be allocated via
+   |  Expert Review by the Designated Expert for the "CRI Scheme Numbers
+   |  for Certain Unregistered Scheme Names" registry in the
+   |  "Constrained RESTful Environments (CoRE) Parameters" registry
+   |  group [IANA.core-parameters].
+   |  Registrants that want to indicate special requirements for a CRI
+   |  Scheme Number are encouraged to notify the core-
+   |  parameters@ietf.org mailing list of these requirements as early as
+   |  possible.
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 35]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
+11.2.  CRI Scheme Numbers for Certain Unregistered Scheme Names Registry
+
+   This specification defines a new "CRI Scheme Numbers for Certain
+   Unregistered Scheme Names" registry in the "Constrained RESTful
+   Environments (CoRE) Parameters" registry group
    [IANA.core-parameters], with the policy "Expert Review" (Section 4.5
    of RFC 8126 [BCP26]).  The objective is to have CRI scheme number
-   values registered for all registered URI schemes (Uniform Resource
-   Identifier (URI) Schemes registry), as well as exceptionally for
-   certain text strings that the Designated Expert considers widely used
-   in constrained applications in place of URI scheme names.
+   values registered for certain unregistered URI schemes, i.e., text
+   strings that the Designated Expert considers widely used in
+   constrained applications in place of URI scheme names.
 
-11.1.1.  Instructions for the Designated Expert
+   At the time of initial setup of the new column "CRI Scheme Number" in
+   the "Uniform Resource Identifier (URI) Schemes" Registry, the rows in
+   Appendix C that are not referring to registered URI schemes are
+   copied into the "CRI Scheme Numbers for Certain Unregistered Scheme
+   Names" registry.  (At the time of writing, these are the two scheme
+   names "mqtt" and "mqtts".)
+
+   The Designated Expert performs the Expert Review for the "CRI Scheme
+   Numbers for Certain Unregistered Scheme Names" registry, but also
+   participates in the process for the "Uniform Resource Identifier
+   (URI) Schemes" registry as defined in Section 11.1.
+
+   The values used in the "CRI Scheme Number" columns of "Uniform
+   Resource Identifier (URI) Schemes" registry and "CRI Scheme Numbers
+   for Certain Unregistered Scheme Names" registry MUST NOT overlap.
+
+11.2.1.  Instructions for the Designated Expert
 
    The expert is instructed to be frugal in the allocation of CRI scheme
    number values whose scheme-id values (Section 5.1.1) have short
@@ -1935,38 +1997,27 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    applications that are likely to enjoy wide use and can make good use
    of their shortness.
 
-   When the expert notices that a registration has been made in the
+   When the expert is notified that a registration is impending in the
    Uniform Resource Identifier (URI) Schemes registry (see also
-   Section 11.2), the expert is requested to initiate a parallel
-   registration in the CRI Scheme Numbers registry.  CRI scheme number
-   values in the range between 1000 and 20000 (inclusive) should be
-   assigned unless a shorter representation in CRIs appears desirable.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 35]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
+   Section 11.1) that has declared a special requirement on the CRI
+   scheme number, the expert is assigning the CRI scheme number instead
+   of IANA doing that autonomously.  CRI scheme number values in the
+   range between 1000 and 20000 (inclusive) should be assigned unless a
+   shorter representation in CRIs appears desirable.
 
    The expert exceptionally also may make such a registration for text
    strings that have not been registered in the Uniform Resource
    Identifier (URI) Schemes registry if and only if the expert considers
    them to be in wide use in place of URI scheme names in constrained
    applications.  (Note that registrations in the CRI Scheme Numbers
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 36]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    registry are oblivious to the details of any URI Schemes registry
    registration, so if a registration is later made in the URI Schemes
    registry that uses such a previously unregistered text string as a
@@ -1977,17 +2028,25 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    Table 11 in Appendix C already include such registrations for the
    text strings "mqtt" and "mqtts".)
 
-   A registration in the CRI Scheme Numbers registry does not imply that
-   a URI scheme under this name exists or has been registered in the
-   Uniform Resource Identifier (URI) Schemes registry -- it essentially
-   is only providing an integer identifier for an otherwise
-   uninterpreted text string.
+   A registration in the "CRI Scheme Numbers for Certain Unregistered
+   Scheme Names" registry does not imply that a URI scheme under this
+   name exists or has been registered in the Uniform Resource Identifier
+   (URI) Schemes registry — it essentially is only providing an integer
+   identifier for an otherwise uninterpreted text string.
+
+   If a registration is made in the "Uniform Resource Identifier (URI)
+   Schemes" registry with a scheme name that has an entry in the "CRI
+   Scheme Numbers for Certain Unregistered Scheme Names" registry, the
+   CRI scheme number from this entry is copied over to the CRI scheme
+   number column of the "Uniform Resource Identifier (URI) Schemes"
+   Registry, and the row is deleted from the "CRI Scheme Numbers for
+   Certain Unregistered Scheme Names" registry.
 
    Any questions or issues that might interest a wider audience might be
    raised by the expert on the core-parameters@ietf.org mailing list for
    a time-limited discussion.
 
-11.1.2.  Structure of Entries
+11.2.2.  Structure of Entries
 
    Each entry in the registry must include:
 
@@ -2002,38 +2061,18 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    Reference:
       a reference to a document, if available, or the registrant
 
-   The Reference field can simply be a copy of the reference field for
-   the URI-Scheme registration if that exists.  If not, it can contain
-   helpful information (including the name of the registrant) that may
-   be available for the registration, with the expectation that this
-   will be updated if a URI-Scheme registration under that URI scheme
-   name is later made.
+   The Reference field can contain helpful information (including the
+   name of the registrant) that may be available for the registration,
+   with the expectation that this information may be made available with
+   a URI-Scheme registration that is later made under that URI scheme
+   name.
 
 
 
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 36]
+Bormann & Birkholz        Expires 11 April 2026                [Page 37]
 
-Internet-Draft      Constrained Resource Identifiers         August 2025
+Internet-Draft      Constrained Resource Identifiers        October 2025
 
-
-11.1.3.  Initial Registrations
-
-   The initial registrations for the CRI Scheme Numbers registry are
-   provided in Table 11 in Appendix C.
-
-11.2.  Update to "Uniform Resource Identifier (URI) Schemes" Registry
-
-   RFC 7595 [BCP35] is updated to add the following note in the "Uniform
-   Resource Identifier (URI) Schemes" Registry [IANA.uri-schemes]:
-
-   |  The CRI Scheme Numbers Registry registers numeric identifiers for
-   |  what essentially are URI Scheme names.  Registrants for the
-   |  Uniform Resource Identifier (URI) Schemes Registry are requested
-   |  to make a parallel registration in the CRI Scheme Numbers
-   |  registry.  The number for this registration will be assigned by
-   |  the Designated Expert for that registry.
 
 11.3.  CBOR Diagnostic Notation Application-extension Identifiers
        Registry
@@ -2066,14 +2105,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    // occurrences of the prefix "CPA" in the document.  Finally, please
    // remove this note.
 
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 37]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    In the "CBOR Tags" registry [IANA.cbor-tags], IANA is requested to
    assign the tags in Table 7 from the "specification required" space
    (suggested assignment: 99), with the present document as the
@@ -2086,6 +2117,18 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
              +-------+-----------+---------------+-----------+
 
                           Table 7: Values for Tags
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 38]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
 11.5.  CoAP Option Numbers Registry
 
@@ -2117,19 +2160,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    registry group [IANA.media-type-sub-parameters], IANA is requested to
    register:
 
-
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 38]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
        +-----------+----------------+---------------+-------------+
        | Parameter | Name           | Description/  | Reference   |
        |           |                | Specification |             |
@@ -2146,6 +2176,15 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    "CoAP Content-Formats" registry (range 256-999), within the
    "Constrained RESTful Environments (CoRE) Parameters" registry group
    [IANA.core-parameters], as follows:
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 39]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
     +------------------------------+----------------+-----+-----------+
     | Content Type                 | Content Coding | ID  | Reference |
@@ -2177,15 +2216,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               <https://www.rfc-editor.org/info/bcp26>.
               At the time of writing, this BCP comprises the following:
 
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 39]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
               Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
@@ -2199,6 +2229,18 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               and Registration Procedures for URI Schemes", BCP 35,
               RFC 7595, DOI 10.17487/RFC7595, June 2015,
               <https://www.rfc-editor.org/info/rfc7595>.
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 40]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    [I-D.ietf-netmod-rfc6991-bis]
               Schönwälder, J., "Common YANG Data Types", Work in
@@ -2233,15 +2275,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               DOI 10.17487/RFC4007, March 2005,
               <https://www.rfc-editor.org/rfc/rfc4007>.
 
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 40]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
               Definition Language (CDDL): A Notational Convention to
               Express Concise Binary Object Representation (CBOR) and
@@ -2257,6 +2290,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               for Authentication and Authorization for Constrained
               Environments (ACE)", RFC 9237, DOI 10.17487/RFC9237,
               August 2022, <https://www.rfc-editor.org/rfc/rfc9237>.
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 41]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    [STD63]    Internet Standard 63,
               <https://www.rfc-editor.org/info/std63>.
@@ -2291,13 +2331,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               (probably 17.0.0) and check whether D80, D120, and D92 are
               still pointing to the same definitions as in 13.0.0.
 
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 41]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
 12.2.  Informative References
 
    [BCP190]   Best Current Practice 190,
@@ -2313,6 +2346,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               Internet-Draft, draft-bormann-cbor-notable-tags-13, 20
               July 2025, <https://datatracker.ietf.org/doc/html/draft-
               bormann-cbor-notable-tags-13>.
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 42]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN)",
@@ -2347,13 +2387,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               <https://datatracker.ietf.org/doc/html/draft-bormann-
               dispatch-modern-network-unicode-07>.
 
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 42]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    [RFC3490]  Faltstrom, P., Hoffman, P., and A. Costello,
               "Internationalizing Domain Names in Applications (IDNA)",
               RFC 3490, DOI 10.17487/RFC3490, March 2003,
@@ -2368,6 +2401,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               IPv6 Zone Identifiers in Address Literals and Uniform
               Resource Identifiers", RFC 6874, DOI 10.17487/RFC6874,
               February 2013, <https://www.rfc-editor.org/rfc/rfc6874>.
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 43]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    [RFC7228]  Bormann, C., Ersue, M., and A. Keranen, "Terminology for
               Constrained-Node Networks", RFC 7228,
@@ -2401,16 +2442,7 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               Extension Mechanisms", RFC 9170, DOI 10.17487/RFC9170,
               December 2021, <https://www.rfc-editor.org/rfc/rfc9170>.
 
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 43]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
-   [RFC9844]  Carpenter, B. and B. Hinden, "Entering IPv6 Zone
+   [RFC9844]  Carpenter, B. and R. Hinden, "Entering IPv6 Zone
               Identifiers in User Interfaces", RFC 9844,
               DOI 10.17487/RFC9844, August 2025,
               <https://www.rfc-editor.org/rfc/rfc9844>.
@@ -2424,6 +2456,16 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
               DOI 10.17487/RFC9110, June 2022,
               <https://www.rfc-editor.org/info/rfc9110>.
 
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 44]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    [W3C.REC-html52-20171214]
               Danilo, A., Ed., Eicholz, A., Ed., Moon, S., Ed.,
               Faulkner, S., Ed., and T. Leithead, Ed., "HTML 5.2", W3C
@@ -2436,6 +2478,9 @@ Appendix A.  Examples of Corner Cases
    This appendix lists a few corner cases of URI semantics that
    implementers of CRIs need to be aware of, but that are not
    representative of the normal operation of CRIs.
+
+   Additional test vectors may be available through the CoRE WG Wiki,
+   https://wiki.ietf.org/group/core (https://wiki.ietf.org/group/core).
 
    SP1.  Initial (Lone/Leading) Empty Path Segments:
 
@@ -2453,19 +2498,6 @@ Appendix A.  Examples of Corner Cases
    |  In general, a URI that uses the generic syntax for authority with
    |  an empty path should be normalized to a path of "/".
 
-
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 44]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    *  _Leading empty path segments without authority_: Somewhat related,
       note also that URIs and URI references that do not carry an
       authority cannot represent leading empty path segments (i.e., that
@@ -2482,6 +2514,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
          by example:
 
          *  https://host%ffname, https://example.com/x?data=%ff
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 45]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
             All URI components must, after percent decoding, be valid
             UTF-8 encoded text.  Bytes that are not valid UTF-8 show up,
@@ -2514,14 +2553,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
             https://example.com/x?ampersand=%26&questionmark=?
 
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 45]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
          *  https://alice@example.com/
 
             The user information can be expressed in CRIs if the
@@ -2535,6 +2566,17 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
             including this syntactic feature instead of disabling it as
             a mechanism against potential uses of colons for the
             deprecated inclusion of unencrypted secrets.)
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 46]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
 Appendix B.  CBOR Extended Diagnostic Notation (EDN): The "cri"
              Extension
@@ -2570,14 +2612,6 @@ Appendix B.  CBOR Extended Diagnostic Notation (EDN): The "cri"
    // occurrences of the prefix "CPA" in the document.  Finally, please
    // remove this note.
 
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 46]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    As an example, the CBOR diagnostic notation
 
    cri'https://example.com/bottarga/shaved'
@@ -2590,6 +2624,15 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    See Appendix B.1 for an ABNF definition for the content of cri
    literals.
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 47]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
 B.1.  cri: ABNF Definition of URI Representation of a CRI
 
@@ -2626,14 +2669,6 @@ B.1.  cri: ABNF Definition of URI Representation of a CRI
                     / path-noscheme
                     / path-empty
 
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 47]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
 
    authority     = [ userinfo "@" ] host [ ":" port ]
@@ -2647,6 +2682,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    ; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged
    ; for PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 48]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    IPv6address   =                            6( h16 ":" ) ls32
                  /                       "::" 5( h16 ":" ) ls32
@@ -2682,14 +2724,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    path-abempty  = *( "/" segment )
    path-absolute = "/" [ segment-nz *( "/" segment ) ]
    path-noscheme = segment-nz-nc *( "/" segment )
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 48]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    path-rootless = segment-nz *( "/" segment )
    path-empty    = 0<pchar>
 
@@ -2703,6 +2737,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    query         = *( pchar / "/" / "?" )
 
    fragment      = *( pchar / "/" / "?" )
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 49]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    pct-encoded   = "%" HEXDIG HEXDIG
 
@@ -2723,7 +2765,13 @@ Appendix C.  Mapping Scheme Numbers to Scheme Names
    // RFC number of this specification and remove this note.
 
    Table 11 defines the initial mapping from CRI scheme numbers to URI
-   scheme names.
+   scheme names.  Rows with URI scheme names hat have a registration in
+   "Uniform Resource Identifier (URI) Schemes" registry are used to
+   populate the new "CRI scheme numbers" column in that registry
+   (Section 11.1).  Rows with URI scheme names hat do not have a
+   registration in "Uniform Resource Identifier (URI) Schemes" registry
+   are used to populate the "CRI Scheme Numbers for Certain Unregistered
+   Scheme Names" registry (Section 11.2).
 
     +------------+--------------------------------------+------------+
     | CRI scheme | URI scheme name                      | Reference  |
@@ -2738,14 +2786,6 @@ Appendix C.  Mapping Scheme Numbers to Scheme Names
     | 6          | coap+tcp                             | [RFC-XXXX] |
     | 7          | coaps+tcp                            | [RFC-XXXX] |
     | 24         | coap+ws                              | [RFC-XXXX] |
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 49]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
     | 25         | coaps+ws                             | [RFC-XXXX] |
     | 1059       | ms-gamingoverlay                     | [RFC-XXXX] |
     | 1165       | snmp                                 | [RFC-XXXX] |
@@ -2754,6 +2794,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 1273       | hs20                                 | [RFC-XXXX] |
     | 1319       | z39.50                               | [RFC-XXXX] |
     | 1328       | dweb                                 | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 50]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
     | 1466       | psyc                                 | [RFC-XXXX] |
     | 1528       | ms-people                            | [RFC-XXXX] |
     | 1560       | ms-uup                               | [RFC-XXXX] |
@@ -2794,14 +2842,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 3690       | ms-calculator                        | [RFC-XXXX] |
     | 3775       | gitoid                               | [RFC-XXXX] |
     | 3783       | calculator                           | [RFC-XXXX] |
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 50]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
     | 3786       | about                                | [RFC-XXXX] |
     | 3795       | facetime                             | [RFC-XXXX] |
     | 3818       | ari                                  | [RFC-XXXX] |
@@ -2810,6 +2850,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 3906       | ldaps                                | [RFC-XXXX] |
     | 3920       | rtmp                                 | [RFC-XXXX] |
     | 3959       | ms-settings-proximity                | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 51]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
     | 4053       | fax                                  | [RFC-XXXX] |
     | 4102       | ms-drive-to                          | [RFC-XXXX] |
     | 4153       | res                                  | [RFC-XXXX] |
@@ -2850,14 +2898,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 5480       | lvlt                                 | [RFC-XXXX] |
     | 5492       | sftp                                 | [RFC-XXXX] |
     | 5536       | ms-excel                             | [RFC-XXXX] |
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 51]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
     | 5557       | dlna-playcontainer                   | [RFC-XXXX] |
     | 5705       | go                                   | [RFC-XXXX] |
     | 5717       | fido                                 | [RFC-XXXX] |
@@ -2866,6 +2906,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 5825       | swidpath                             | [RFC-XXXX] |
     | 5883       | microsoft.windows.camera.picker      | [RFC-XXXX] |
     | 5990       | crid                                 | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 52]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
     | 6007       | at                                   | [RFC-XXXX] |
     | 6024       | hcp                                  | [RFC-XXXX] |
     | 6030       | content-type                         | [RFC-XXXX] |
@@ -2906,14 +2954,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 7520       | feed                                 | [RFC-XXXX] |
     | 7667       | ssh                                  | [RFC-XXXX] |
     | 7743       | ms-transit-to                        | [RFC-XXXX] |
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 52]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
     | 7809       | ms-help                              | [RFC-XXXX] |
     | 7812       | vscode                               | [RFC-XXXX] |
     | 7856       | apt                                  | [RFC-XXXX] |
@@ -2922,6 +2962,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 7913       | ethereum                             | [RFC-XXXX] |
     | 7923       | tv                                   | [RFC-XXXX] |
     | 7942       | microsoft.windows.camera.multipicker | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 53]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
     | 8041       | msnim                                | [RFC-XXXX] |
     | 8085       | ms-remotedesktop-launch              | [RFC-XXXX] |
     | 8093       | spiffe                               | [RFC-XXXX] |
@@ -2962,14 +3010,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 9805       | magnet                               | [RFC-XXXX] |
     | 9816       | vsls                                 | [RFC-XXXX] |
     | 9859       | drm                                  | [RFC-XXXX] |
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 53]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
     | 9875       | hcap                                 | [RFC-XXXX] |
     | 9910       | wtai                                 | [RFC-XXXX] |
     | 9965       | num                                  | [RFC-XXXX] |
@@ -2978,6 +3018,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 10119      | imap                                 | [RFC-XXXX] |
     | 10147      | query                                | [RFC-XXXX] |
     | 10176      | ves                                  | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 54]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
     | 10183      | ms-recall                            | [RFC-XXXX] |
     | 10196      | acr                                  | [RFC-XXXX] |
     | 10225      | barion                               | [RFC-XXXX] |
@@ -3018,14 +3066,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 11537      | vnc                                  | [RFC-XXXX] |
     | 11583      | graph                                | [RFC-XXXX] |
     | 11645      | dvx                                  | [RFC-XXXX] |
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 54]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
     | 11718      | lorawan                              | [RFC-XXXX] |
     | 11742      | lastfm                               | [RFC-XXXX] |
     | 11799      | w3                                   | [RFC-XXXX] |
@@ -3034,6 +3074,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 11824      | feedready                            | [RFC-XXXX] |
     | 11857      | microsoft.windows.camera             | [RFC-XXXX] |
     | 11892      | wcr                                  | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 55]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
     | 11945      | ms-mobileplans                       | [RFC-XXXX] |
     | 11950      | ms-settings-lock                     | [RFC-XXXX] |
     | 11962      | ws                                   | [RFC-XXXX] |
@@ -3074,14 +3122,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 13068      | git                                  | [RFC-XXXX] |
     | 13094      | openpgp4fpr                          | [RFC-XXXX] |
     | 13098      | ms-secondary-screen-controller       | [RFC-XXXX] |
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 55]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
     | 13228      | mvrps                                | [RFC-XXXX] |
     | 13285      | snews                                | [RFC-XXXX] |
     | 13340      | smtp                                 | [RFC-XXXX] |
@@ -3090,6 +3130,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 13372      | mongodb                              | [RFC-XXXX] |
     | 13404      | afp                                  | [RFC-XXXX] |
     | 13440      | msrps                                | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 56]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
     | 13442      | ldap                                 | [RFC-XXXX] |
     | 13451      | mvrp                                 | [RFC-XXXX] |
     | 13499      | nntp                                 | [RFC-XXXX] |
@@ -3130,14 +3178,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 14936      | ms-settings-workplace                | [RFC-XXXX] |
     | 14962      | tn3270                               | [RFC-XXXX] |
     | 14972      | pres                                 | [RFC-XXXX] |
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 56]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
     | 14982      | p1                                   | [RFC-XXXX] |
     | 15026      | teapot                               | [RFC-XXXX] |
     | 15061      | android                              | [RFC-XXXX] |
@@ -3146,6 +3186,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 15202      | cid                                  | [RFC-XXXX] |
     | 15206      | unreal                               | [RFC-XXXX] |
     | 15230      | tool                                 | [RFC-XXXX] |
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 57]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
     | 15254      | ms-secondary-screen-setup            | [RFC-XXXX] |
     | 15267      | rtsp                                 | [RFC-XXXX] |
     | 15306      | xfire                                | [RFC-XXXX] |
@@ -3186,14 +3234,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     | 17097      | dtmi                                 | [RFC-XXXX] |
     | 17134      | dis                                  | [RFC-XXXX] |
     | 17170      | iotdisco                             | [RFC-XXXX] |
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 57]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
     | 17175      | ms-restoretabcompanion               | [RFC-XXXX] |
     | 17264      | service                              | [RFC-XXXX] |
     | 17315      | finger                               | [RFC-XXXX] |
@@ -3202,6 +3242,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
     +------------+--------------------------------------+------------+
 
              Table 11: Mapping Scheme Numbers to Scheme Names
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 58]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    The assignments from this table can be extracted from the XML form of
    this document (when stored in a file "this.xml") into CSV form
@@ -3243,19 +3290,21 @@ Appendix D.  Change Log
       3 (rootless CRIs without authority that do not have a path
       component)
 
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 58]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    *  Generalize Section 7, discuss PET (percent-encoded text) extension
       in more detail
 
    *  Add registry of URI scheme numbers (Appendix C, Section 11)
 
    *  Add user information to the authority ("userinfo" feature)
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 59]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    *  Figure 2: Use separate rule for CRI, allow [] for query in CRI
       Reference; generalize scheme numbers, add userinfo; add list of
@@ -3299,19 +3348,19 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
       however, when converted back, does not produce a slash after the
       authority).
 
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 59]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
       (Add an appendix "the small print" for more detailed discussion of
       pesky corner cases like this.)
 
    Changes from -07 to -08
 
    *  Fix the encoding of NOAUTH-NOSLASH / NOAUTH-LEADINGSLASH
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 60]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    *  Add URN and DID schemes, add example.
 
@@ -3323,7 +3372,7 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    Changes from -06 to -07
 
    *  More explicitly discuss constraints (Section 2), add examples
-      (Appendix A, Paragraph 6, Item 1).
+      (Appendix A, Paragraph 7, Item 1).
 
    *  Make CDDL more explicit about special simple values.
 
@@ -3354,14 +3403,6 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    *  Simplified the table "resolution-variables".
 
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 60]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    *  Use the CBOR structure inspired by Jim Schaad's proposals.
 
    Changes from -02 to -03:
@@ -3369,6 +3410,13 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
    *  Expanded the set of supported schemes (#3).
 
    *  Specified creation, normalization and comparison (#9).
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 61]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    *  Clarified the default value of the path.type option (#33).
 
@@ -3408,16 +3456,6 @@ Acknowledgements
 
 Contributors
 
-
-
-
-
-
-Bormann & Birkholz        Expires 4 March 2026                 [Page 61]
-
-Internet-Draft      Constrained Resource Identifiers         August 2025
-
-
    Klaus Hartke
    Ericsson
    Torshamnsgatan 23
@@ -3428,6 +3466,14 @@ Internet-Draft      Constrained Resource Identifiers         August 2025
 
    Christian Amsüss
    Austria
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 62]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    Email: christian@amsuess.com
 
 
@@ -3469,4 +3515,14 @@ Authors' Addresses
 
 
 
-Bormann & Birkholz        Expires 4 March 2026                 [Page 62]
+
+
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 11 April 2026                [Page 63]

@@ -14,29 +14,36 @@ Binary Object Representation (CBOR) rather than as a sequence of characters.
 This approach simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size. 
-       This RFC updates RFC 7595 to add a note on how the "URI Schemes"
-registry of RFC 7595 cooperates with the "CRI Scheme Numbers"
-registry created by the present RFC. 
-       (This "cref" paragraph will be removed by the RFC editor:) 
-The present revision –24 attempts to address follow-on AD review
-comments as well as comments from the ARTART review. 
+       This RFC updates RFC 7595 by adding a column on the "URI Schemes"
+registry as well as a note on how that registry cooperates with the
+"CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
+created by the present RFC. 
+       (This "cref" paragraph will be removed by the RFC
+editor:) 
+The present pull request revision is intended as additional input
+input for IESG evaluation (2025-10-09 telechat), exploring a way
+to integrate the two URI scheme registries created by RFC 7595 and
+by this document (issue #140). 
+It presents an alternative solution so that can be discussed in
+detail, not a consensus that this is a better solution than the
+one in the WG document. 
     ' name="description">
-<meta content="xml2rfc 3.30.0" name="generator">
+<meta content="xml2rfc 3.30.2" name="generator">
 <meta content="draft-ietf-core-href-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.30.0
+  xml2rfc 3.30.2
     Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.6
     lxml 5.3.1
-    platformdirs 4.3.8
+    platformdirs 4.4.0
     pycountry 24.6.1
     PyYAML 6.0.2
-    requests 2.32.4
+    requests 2.32.5
     setuptools 80.9.0
-    wcwidth 0.2.13
+    wcwidth 0.2.14
 -->
 <link href="draft-ietf-core-href.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1055,11 +1062,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Constrained Resource Identifiers</td>
-<td class="right">August 2025</td>
+<td class="right">October 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 4 March 2026</td>
+<td class="center">Expires 11 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1075,12 +1082,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc7595" class="eref">7595</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-08-31" class="published">31 August 2025</time>
+<time datetime="2025-10-08" class="published">8 October 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-03-04">4 March 2026</time></dd>
+<dd class="expires"><time datetime="2026-04-11">11 April 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1104,12 +1111,19 @@ Binary Object Representation (CBOR) rather than as a sequence of characters.
 This approach simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">This RFC updates RFC 7595 to add a note on how the "URI Schemes"
-registry of RFC 7595 cooperates with the "CRI Scheme Numbers"
-registry created by the present RFC.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
-<p id="section-abstract-3"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC editor:)<br>
-The present revision –24 attempts to address follow-on AD review
-comments as well as comments from the ARTART review.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">This RFC updates RFC 7595 by adding a column on the "URI Schemes"
+registry as well as a note on how that registry cooperates with the
+"CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
+created by the present RFC.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC
+editor:)<br>
+The present pull request revision is intended as additional input
+input for IESG evaluation (2025-10-09 telechat), exploring a way
+to integrate the two URI scheme registries created by RFC 7595 and
+by this document (issue #140).<br>
+It presents an alternative solution so that can be discussed in
+detail, not a consensus that this is a better solution than the
+one in the WG document.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1145,7 +1159,7 @@ comments as well as comments from the ARTART review.</span><a href="#section-abs
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 March 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 11 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1294,21 +1308,18 @@ comments as well as comments from the ARTART review.</span><a href="#section-abs
             <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
-                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-cri-scheme-numbers-registry" class="internal xref">CRI Scheme Numbers Registry</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.1">
-                    <p id="section-toc.1-1.11.2.1.2.1.1"><a href="#section-11.1.1" class="auto internal xref">11.1.1</a>.  <a href="#name-instructions-for-the-design" class="internal xref">Instructions for the Designated Expert</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.2">
-                    <p id="section-toc.1-1.11.2.1.2.2.1"><a href="#section-11.1.2" class="auto internal xref">11.1.2</a>.  <a href="#name-structure-of-entries" class="internal xref">Structure of Entries</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.3">
-                    <p id="section-toc.1-1.11.2.1.2.3.1"><a href="#section-11.1.3" class="auto internal xref">11.1.3</a>.  <a href="#name-initial-registrations" class="internal xref">Initial Registrations</a></p>
-</li>
-                </ul>
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-update-to-uniform-resource-" class="internal xref">Update to "Uniform Resource Identifier (URI) Schemes" Registry</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-update-to-uniform-resource-" class="internal xref">Update to "Uniform Resource Identifier (URI) Schemes" Registry</a></p>
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-cri-scheme-numbers-for-cert" class="internal xref">CRI Scheme Numbers for Certain Unregistered Scheme Names Registry</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2.2.1">
+                    <p id="section-toc.1-1.11.2.2.2.1.1"><a href="#section-11.2.1" class="auto internal xref">11.2.1</a>.  <a href="#name-instructions-for-the-design" class="internal xref">Instructions for the Designated Expert</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2.2.2">
+                    <p id="section-toc.1-1.11.2.2.2.2.1"><a href="#section-11.2.2" class="auto internal xref">11.2.2</a>.  <a href="#name-structure-of-entries" class="internal xref">Structure of Entries</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
                 <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-cbor-diagnostic-notation-ap" class="internal xref">CBOR Diagnostic Notation Application-extension Identifiers Registry</a></p>
@@ -1416,9 +1427,10 @@ The exact constraints are defined in <a href="#constraints" class="auto internal
 CRI extensions (<a href="#extending" class="auto internal xref">Section 7</a>) can be defined to address some of the
 constraints and/or to provide more convenient representations for
 certain areas of application.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">This RFC creates a "CRI Scheme Numbers" registry and updates <a href="#RFC7595" class="auto internal xref">RFC7595</a>
-to add a note on how this new registry cooperates with the "URI Schemes"
-registry that <a href="#RFC7595" class="auto internal xref">RFC7595</a> describes.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-7">This RFC updates RFC 7595 <span>[<a href="#BCP35" class="cite xref">BCP35</a>]</span> by adding a column on the "URI Schemes"
+registry as well as a note on how that registry cooperates with the
+"CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
+created by the present RFC.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <div id="notational-conventions">
 <section id="section-1.1">
         <h3 id="name-notational-conventions">
@@ -2233,11 +2245,20 @@ Optionally, it can instead be identified by its
 section, mapped to lower case).
 (Note that, in <a href="#cddl" class="auto internal xref">Figure 2</a>, <code>scheme-name</code> is marked as a feature, as only
 less constrained CRI implementations might support <code>scheme-name</code>.)<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1.1-2">Scheme numbers are unsigned integers that are mapped to and from URI
-scheme names by the "CRI Scheme Numbers" registry (<a href="#cri-reg" class="auto internal xref">Section 11.1</a>).
-The relationship of a scheme number to its <code>scheme-id</code> is as follows:<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
-<div id="section-5.1.1-3">
-            <div class="alignLeft art-svg artwork" id="section-5.1.1-3.1">
+<p id="section-5.1.1-2">Scheme numbers are unsigned integers that are mapped to and from
+scheme names by exactly one of the following two registries:<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1.1-3.1">
+              <p id="section-5.1.1-3.1.1">"Uniform Resource Identifier (URI) Schemes" Registry (Section <span><a href="https://rfc-editor.org/rfc/rfc7595#section-6" class="relref">6</a> (<a href="https://rfc-editor.org/rfc/rfc7595#section-6" class="relref">IANA Considerations</a>)</span> of RFC 7595 <span>[<a href="#BCP35" class="cite xref">BCP35</a>]</span> as updated by <a href="#upd" class="auto internal xref">Section 11.1</a>), or<a href="#section-5.1.1-3.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-5.1.1-3.2">
+              <p id="section-5.1.1-3.2.1">"CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
+(<a href="#cri-reg" class="auto internal xref">Section 11.2</a>).<a href="#section-5.1.1-3.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-5.1.1-4">The relationship of a scheme number to its <code>scheme-id</code> is as follows:<a href="#section-5.1.1-4" class="pilcrow">¶</a></p>
+<div id="section-5.1.1-5">
+            <div class="alignLeft art-svg artwork" id="section-5.1.1-5.1">
 <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" height="5.009ex" role="img" viewBox="0 -791.3 43055.4 2156.8" width="100ex">
                 <defs>
                   <path d="M390 441l-24 -146h-15c0 64 -36 120 -92 120c-25 0 -51 -17 -51 -58c0 -55 134 -147 134 -242c0 -62 -48 -125 -135 -125c-34 0 -98 20 -110 20c-9 0 -18 -4 -30 -21h-17l25 156h16c0 -63 41 -130 104 -130c59 0 73 50 73 89c0 82 -130 132 -130 230c0 79 59 107 114 107 c43 0 63 -20 92 -20c11 0 22 10 30 20h16Z" id="E1-STIXWEBNORMALI-1D460" stroke-width="1"></path>
@@ -2314,12 +2335,12 @@ The relationship of a scheme number to its <code>scheme-id</code> is as follows:
                     <use xlink:href="#E1-STIXWEBNORMALI-1D451" x="13484" y="0"></use>
                   </g>
                 </g>
-              </svg><a href="#section-5.1.1-3.1" class="pilcrow">¶</a>
+              </svg><a href="#section-5.1.1-5.1" class="pilcrow">¶</a>
 </div>
 </div>
-<p id="section-5.1.1-4">For example, the scheme-name <code>coap</code> has the (unsigned integer)
+<p id="section-5.1.1-6">For example, the scheme-name <code>coap</code> has the (unsigned integer)
 scheme-number <code>0</code> which is represented in a (negative integer)
-scheme-id <code>-1</code>.<a href="#section-5.1.1-4" class="pilcrow">¶</a></p>
+scheme-id <code>-1</code>.<a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="the-discard-section">
@@ -2677,14 +2698,16 @@ If there are dots (".") in such elements, the conversion fails
 normalization would turn the percent-encoding back to the unreserved
 character that a dot is.)<a href="#section-6.1-2.4.4" class="pilcrow">¶</a></p>
 <aside id="section-6.1-2.4.5">
-              <p id="section-6.1-2.4.5.1">Implementations with scheme-specific knowledge <span class="bcp14">MAY</span> convert
-  individual elements by using the ToASCII procedure (<span><a href="https://rfc-editor.org/rfc/rfc3490#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC3490" class="cite xref">RFC3490</a>]</span>) as discussed in more detail in <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>.
-  This should not be done if the next step of conversion is to an
-  IRI as defined in <a href="#critoiri" class="auto internal xref">Section 6</a> (CRI to IRI).<a href="#section-6.1-2.4.5.1" class="pilcrow">¶</a></p>
-<p id="section-6.1-2.4.5.2"><span class="cref" id="toascii-note">Editor's note: Some other RFCs reference RFC5890 as the source of ToASCII, since that is the document that replaces RFC3490 and at least mentions ToASCII.
+              <p id="section-6.1-2.4.5.1">As an implementation note, an implementation with scheme-specific
+  knowledge that knows it will have to interface with DNS might
+  implement a shortcut to using the ToASCII procedure (<span><a href="https://rfc-editor.org/rfc/rfc3490#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC3490" class="cite xref">RFC3490</a>]</span>) as discussed in more detail in <span><a href="https://rfc-editor.org/rfc/rfc3987#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>.
+  Such an optimization is formally outside the scope of the CRI
+  specification, which is scheme-independent and is in terms of IRIs
+  and URIs.
+<span class="cref" id="toascii-note">Editor's note: Some other RFCs reference RFC5890 as the source of ToASCII, since that is the document that replaces RFC3490 and at least mentions ToASCII.
 Unfortunately, this doesn’t define ToASCII (pointing to RFC 3490 instead), so we consider these references broken.
 Instead, we reference RFC 3490, which is the document that actually does define ToASCII.
-RFC 3987 (IRIs) references RFC 3490, too, kind of keeping it alive.</span><a href="#section-6.1-2.4.5.2" class="pilcrow">¶</a></p>
+RFC 3987 (IRIs) references RFC 3490, too, kind of keeping it alive.</span><a href="#section-6.1-2.4.5.1" class="pilcrow">¶</a></p>
 </aside>
 </dd>
         <dd class="break"></dd>
@@ -3023,7 +3046,7 @@ and URI scheme names shown in <a href="#scheme-map" class="auto internal xref">T
 <table class="center" id="table-3">
           <caption>
 <a href="#table-3" class="selfRef">Table 3</a>:
-<a href="#name-mapping-cri-scheme-numbers-" class="selfRef">Mapping CRI scheme numbers and URI scheme names</a>
+<a href="#name-mapping-cri-scheme-numbers-" class="selfRef">Mapping CRI Scheme Numbers and URI Scheme Names</a>
           </caption>
 <thead>
             <tr>
@@ -3291,7 +3314,7 @@ included in a request containing the Proxy-Cri Option).<a href="#section-8.2.1-2
             </tbody>
           </table>
 </div>
-<p id="section-8.2.2-2">The Proxy-Scheme-Number Option carries a CRI Scheme Number represented as a
+<p id="section-8.2.2-2">The Proxy-Scheme-Number Option carries a CRI scheme number represented as a
 CoAP unsigned integer.
 It is used analogously to Proxy-Scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc7252#section-5.10.2" class="relref">Section 5.10.2</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>.<a href="#section-8.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-8.2.2-3">The Proxy-Scheme Option <span class="bcp14">MUST NOT</span> be included in a request that also
@@ -3401,37 +3424,85 @@ apply analogously to AIF-CRI <a href="#toid" class="auto internal xref">Section 
 <p id="section-11-2"><span class="cref" id="replace-xxxx_1">RFC Ed.: throughout this section, please replace
 RFC-XXXX with the RFC number of this specification and remove this
 note.</span><a href="#section-11-2" class="pilcrow">¶</a></p>
-<div id="cri-reg">
+<div id="upd">
 <section id="section-11.1">
-        <h3 id="name-cri-scheme-numbers-registry">
-<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-cri-scheme-numbers-registry" class="section-name selfRef">CRI Scheme Numbers Registry</a>
+        <h3 id="name-update-to-uniform-resource-">
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-update-to-uniform-resource-" class="section-name selfRef">Update to "Uniform Resource Identifier (URI) Schemes" Registry</a>
         </h3>
-<p id="section-11.1-1">This specification defines a new "CRI Scheme Numbers" registry in the
+<p id="section-11.1-1">RFC 7595 <span>[<a href="#BCP35" class="cite xref">BCP35</a>]</span> is updated to add a column "CRI Scheme Number" to
+the "Uniform Resource Identifier (URI) Schemes" Registry, an unsigned
+integer unique in the union of this registry and the "CRI Scheme Numbers for
+Certain Unregistered Scheme Names" registry (<a href="#upd" class="auto internal xref">Section 11.1</a>).<a href="#section-11.1-1" class="pilcrow">¶</a></p>
+<p id="section-11.1-2">The column is initially populated from the numbers in the "CRI scheme
+number" column of entries in <a href="#sec-numbers" class="auto internal xref">Appendix C</a> that do refer to registered URI
+schemes.
+Rows that are not listed in <a href="#sec-numbers" class="auto internal xref">Appendix C</a> at the time of initial
+setup are treated as specified for new registrations below.<a href="#section-11.1-2" class="pilcrow">¶</a></p>
+<p id="section-11.1-3">Also, the following note is added in the "Uniform
+Resource Identifier (URI) Schemes" Registry <span>[<a href="#IANA.uri-schemes" class="cite xref">IANA.uri-schemes</a>]</span>:<a href="#section-11.1-3" class="pilcrow">¶</a></p>
+<blockquote id="section-11.1-4">
+          <p id="section-11.1-4.1">The CRI Scheme Number column registers numeric identifiers for the URI
+Schemes registered.
+Registrants for the Uniform Resource Identifier (URI) Schemes Registry
+are requested to indicate whether there are special requirements on
+the CRI scheme number to be assigned.<br>
+If that is not the case, IANA will assign a value in the range 1000 to 20000, inclusive.<br>
+If there is a special requirement, the value will be allocated via
+Expert Review by the Designated Expert for the "CRI Scheme Numbers for
+Certain Unregistered Scheme Names" registry in the
+"Constrained RESTful Environments (CoRE) Parameters" registry group
+<span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>.<br>
+Registrants that want to indicate special requirements for a CRI
+Scheme Number are encouraged to notify the <code>core-parameters@ietf.org</code>
+mailing list of these requirements as early as possible.<a href="#section-11.1-4.1" class="pilcrow">¶</a></p>
+</blockquote>
+</section>
+</div>
+<div id="cri-reg">
+<section id="section-11.2">
+        <h3 id="name-cri-scheme-numbers-for-cert">
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-cri-scheme-numbers-for-cert" class="section-name selfRef">CRI Scheme Numbers for Certain Unregistered Scheme Names Registry</a>
+        </h3>
+<p id="section-11.2-1">This specification defines a new "CRI Scheme Numbers for Certain
+Unregistered Scheme Names" registry in the
 "Constrained RESTful Environments (CoRE) Parameters" registry group
 <span>[<a href="#IANA.core-parameters" class="cite xref">IANA.core-parameters</a>]</span>, with the policy "Expert Review" (Section <a href="https://rfc-editor.org/rfc/rfc8126#section-4.5" class="relref">4.5</a> of RFC 8126 <span>[<a href="#BCP26" class="cite xref">BCP26</a>]</span>).
-The objective is to have CRI scheme number values registered for all
-registered URI schemes (Uniform Resource Identifier (URI) Schemes
-registry), as well as exceptionally for certain text strings that the
+The objective is to have CRI scheme number values registered for
+certain unregistered URI schemes, i.e., text strings that the
 Designated Expert considers widely used in constrained applications in
-place of URI scheme names.<a href="#section-11.1-1" class="pilcrow">¶</a></p>
+place of URI scheme names.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-2">At the time of initial setup of the new column "CRI Scheme Number" in
+the "Uniform Resource Identifier (URI) Schemes" Registry, the rows in
+<a href="#sec-numbers" class="auto internal xref">Appendix C</a> that are not referring to registered URI schemes are
+copied into the "CRI Scheme Numbers for Certain Unregistered Scheme
+Names" registry.
+(At the time of writing, these are the two scheme names "mqtt" and "mqtts".)<a href="#section-11.2-2" class="pilcrow">¶</a></p>
+<p id="section-11.2-3">The Designated Expert performs the Expert Review for the "CRI Scheme
+Numbers for Certain Unregistered Scheme Names" registry, but
+also participates in the process for the "Uniform Resource Identifier
+(URI) Schemes" registry as defined in <a href="#upd" class="auto internal xref">Section 11.1</a>.<a href="#section-11.2-3" class="pilcrow">¶</a></p>
+<p id="section-11.2-4">The values used in the "CRI Scheme Number" columns of "Uniform
+Resource Identifier (URI) Schemes" registry and "CRI Scheme Numbers
+for Certain Unregistered Scheme Names" registry <span class="bcp14">MUST NOT</span> overlap.<a href="#section-11.2-4" class="pilcrow">¶</a></p>
 <div id="de-instructions">
-<section id="section-11.1.1">
+<section id="section-11.2.1">
           <h4 id="name-instructions-for-the-design">
-<a href="#section-11.1.1" class="section-number selfRef">11.1.1. </a><a href="#name-instructions-for-the-design" class="section-name selfRef">Instructions for the Designated Expert</a>
+<a href="#section-11.2.1" class="section-number selfRef">11.2.1. </a><a href="#name-instructions-for-the-design" class="section-name selfRef">Instructions for the Designated Expert</a>
           </h4>
-<p id="section-11.1.1-1">The expert is instructed to be frugal in the allocation of CRI scheme
+<p id="section-11.2.1-1">The expert is instructed to be frugal in the allocation of CRI scheme
 number values whose scheme-id values (<a href="#scheme-id" class="auto internal xref">Section 5.1.1</a>) have short
 representations (1+0 and 1+1 encoding), keeping them in
 reserve for applications that are likely to enjoy wide use and can
-make good use of their shortness.<a href="#section-11.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-11.1.1-2">When the expert notices that a registration has been made in the
-Uniform Resource Identifier (URI) Schemes registry (see also <a href="#upd" class="auto internal xref">Section 11.2</a>),
-the expert is requested to initiate a parallel registration in the CRI
-Scheme Numbers registry.
+make good use of their shortness.<a href="#section-11.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-11.2.1-2">When the expert is notified that a registration is impending in the
+Uniform Resource Identifier (URI) Schemes registry (see also <a href="#upd" class="auto internal xref">Section 11.1</a>)
+that has declared a special requirement on the CRI scheme number,
+the expert is assigning the CRI scheme number instead of IANA doing
+that autonomously.
 CRI scheme number values in the range between 1000 and
 20000 (inclusive) should be assigned unless a shorter representation
-in CRIs appears desirable.<a href="#section-11.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-11.1.1-3">The expert exceptionally also may make such a registration for text
+in CRIs appears desirable.<a href="#section-11.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-11.2.1-3">The expert exceptionally also may make such a registration for text
 strings that have not been registered in the Uniform Resource
 Identifier (URI) Schemes registry if and only if the expert considers
 them to be in wide use in place of URI scheme names in constrained
@@ -3446,77 +3517,56 @@ expert had in mind at the time for the CRI Scheme Numbers
 registration.
 Also note that the initial registrations in <a href="#tab-numbers" class="auto internal xref">Table 11</a> in
 <a href="#sec-numbers" class="auto internal xref">Appendix C</a> already include such registrations for the text strings
-"mqtt" and "mqtts".)<a href="#section-11.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-11.1.1-4">A registration in the CRI Scheme Numbers registry does not imply that
+"mqtt" and "mqtts".)<a href="#section-11.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-11.2.1-4">A registration in the "CRI Scheme Numbers for Certain Unregistered
+Scheme Names" registry does not imply that
 a URI scheme under this name exists or has been registered in the
-Uniform Resource Identifier (URI) Schemes registry -- it essentially
+Uniform Resource Identifier (URI) Schemes registry — it essentially
 is only providing an integer identifier for an otherwise uninterpreted
-text string.<a href="#section-11.1.1-4" class="pilcrow">¶</a></p>
-<p id="section-11.1.1-5">Any questions or issues that might interest a wider audience might be
+text string.<a href="#section-11.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-11.2.1-5">If a registration is made in the "Uniform Resource Identifier (URI)
+Schemes" registry with a scheme name that has an entry in the "CRI
+Scheme Numbers for Certain Unregistered Scheme Names" registry, the
+CRI scheme number from this entry is copied over to the CRI scheme
+number column of the "Uniform Resource Identifier (URI) Schemes"
+Registry, and the row is deleted from the "CRI Scheme Numbers for
+Certain Unregistered Scheme Names" registry.<a href="#section-11.2.1-5" class="pilcrow">¶</a></p>
+<p id="section-11.2.1-6">Any questions or issues that might interest a wider audience might be
 raised by the expert on the core-parameters@ietf.org mailing list for
-a time-limited discussion.<a href="#section-11.1.1-5" class="pilcrow">¶</a></p>
+a time-limited discussion.<a href="#section-11.2.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="structure-of-entries">
-<section id="section-11.1.2">
+<section id="section-11.2.2">
           <h4 id="name-structure-of-entries">
-<a href="#section-11.1.2" class="section-number selfRef">11.1.2. </a><a href="#name-structure-of-entries" class="section-name selfRef">Structure of Entries</a>
+<a href="#section-11.2.2" class="section-number selfRef">11.2.2. </a><a href="#name-structure-of-entries" class="section-name selfRef">Structure of Entries</a>
           </h4>
-<p id="section-11.1.2-1">Each entry in the registry must include:<a href="#section-11.1.2-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlNewline" id="section-11.1.2-2">
-            <dt id="section-11.1.2-2.1">CRI scheme number:</dt>
-            <dd style="margin-left: 1.5em" id="section-11.1.2-2.2">
-              <p id="section-11.1.2-2.2.1">An unsigned integer unique in this registry<a href="#section-11.1.2-2.2.1" class="pilcrow">¶</a></p>
+<p id="section-11.2.2-1">Each entry in the registry must include:<a href="#section-11.2.2-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-11.2.2-2">
+            <dt id="section-11.2.2-2.1">CRI scheme number:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.2.2-2.2">
+              <p id="section-11.2.2-2.2.1">An unsigned integer unique in this registry<a href="#section-11.2.2-2.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-11.1.2-2.3">URI scheme name:</dt>
-            <dd style="margin-left: 1.5em" id="section-11.1.2-2.4">
-              <p id="section-11.1.2-2.4.1">a text string that would be acceptable for registration as a URI
+<dt id="section-11.2.2-2.3">URI scheme name:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.2.2-2.4">
+              <p id="section-11.2.2-2.4.1">a text string that would be acceptable for registration as a URI
 Scheme Name in the Uniform Resource Identifier (URI) Schemes
-registry<a href="#section-11.1.2-2.4.1" class="pilcrow">¶</a></p>
+registry<a href="#section-11.2.2-2.4.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-11.1.2-2.5">Reference:</dt>
-            <dd style="margin-left: 1.5em" id="section-11.1.2-2.6">
-              <p id="section-11.1.2-2.6.1">a reference to a document, if available, or the registrant<a href="#section-11.1.2-2.6.1" class="pilcrow">¶</a></p>
+<dt id="section-11.2.2-2.5">Reference:</dt>
+            <dd style="margin-left: 1.5em" id="section-11.2.2-2.6">
+              <p id="section-11.2.2-2.6.1">a reference to a document, if available, or the registrant<a href="#section-11.2.2-2.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
-<p id="section-11.1.2-3">The Reference field can simply be a copy of the reference field for the
-URI-Scheme registration if that exists.
-If not, it can contain helpful information (including the name of the
-registrant) that may be available for the registration, with the
-expectation that this will be updated if a URI-Scheme registration
-under that URI scheme name is later made.<a href="#section-11.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-11.2.2-3">The Reference field can contain helpful information (including the
+name of the registrant) that may be available for the registration,
+with the expectation that this information may be made available with
+a URI-Scheme registration that is later made under that URI scheme name.<a href="#section-11.2.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="initial-registrations">
-<section id="section-11.1.3">
-          <h4 id="name-initial-registrations">
-<a href="#section-11.1.3" class="section-number selfRef">11.1.3. </a><a href="#name-initial-registrations" class="section-name selfRef">Initial Registrations</a>
-          </h4>
-<p id="section-11.1.3-1">The initial registrations for the CRI Scheme Numbers registry are
-provided in <a href="#tab-numbers" class="auto internal xref">Table 11</a> in <a href="#sec-numbers" class="auto internal xref">Appendix C</a>.<a href="#section-11.1.3-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-</section>
-</div>
-<div id="upd">
-<section id="section-11.2">
-        <h3 id="name-update-to-uniform-resource-">
-<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-update-to-uniform-resource-" class="section-name selfRef">Update to "Uniform Resource Identifier (URI) Schemes" Registry</a>
-        </h3>
-<p id="section-11.2-1">RFC 7595 <span>[<a href="#BCP35" class="cite xref">BCP35</a>]</span> is updated to add the following note in the "Uniform
-Resource Identifier (URI) Schemes" Registry <span>[<a href="#IANA.uri-schemes" class="cite xref">IANA.uri-schemes</a>]</span>:<a href="#section-11.2-1" class="pilcrow">¶</a></p>
-<blockquote id="section-11.2-2">
-          <p id="section-11.2-2.1">The CRI Scheme Numbers Registry registers numeric identifiers for what
-essentially are URI Scheme names.
-Registrants for the Uniform Resource Identifier (URI) Schemes Registry
-are requested to make a parallel registration in the CRI Scheme
-Numbers registry.
-The number for this registration will be assigned by the Designated
-Expert for that registry.<a href="#section-11.2-2.1" class="pilcrow">¶</a></p>
-</blockquote>
 </section>
 </div>
 <div id="cri-iana">
@@ -3902,7 +3952,7 @@ RESTful Environments (CoRE) Parameters" registry group
 <dd class="break"></dd>
 <dt id="RFC9844">[RFC9844]</dt>
         <dd>
-<span class="refAuthor">Carpenter, B.</span> and <span class="refAuthor">B. Hinden</span>, <span class="refTitle">"Entering IPv6 Zone Identifiers in User Interfaces"</span>, <span class="seriesInfo">RFC 9844</span>, <span class="seriesInfo">DOI 10.17487/RFC9844</span>, <time datetime="2025-08" class="refDate">August 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9844">https://www.rfc-editor.org/rfc/rfc9844</a>&gt;</span>. </dd>
+<span class="refAuthor">Carpenter, B.</span> and <span class="refAuthor">R. Hinden</span>, <span class="refTitle">"Entering IPv6 Zone Identifiers in User Interfaces"</span>, <span class="seriesInfo">RFC 9844</span>, <span class="seriesInfo">DOI 10.17487/RFC9844</span>, <time datetime="2025-08" class="refDate">August 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9844">https://www.rfc-editor.org/rfc/rfc9844</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="STD97">[STD97]</dt>
         <dd>
@@ -3929,18 +3979,20 @@ RESTful Environments (CoRE) Parameters" registry group
 <p id="appendix-A-1">This appendix lists a few corner cases of URI semantics that
 implementers of CRIs need to be aware of, but that are not
 representative of the normal operation of CRIs.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="olPercent" id="appendix-A-2">
+<p id="appendix-A-2">Additional test vectors may be available
+through the CoRE WG Wiki, <a href="https://wiki.ietf.org/group/core">https://wiki.ietf.org/group/core</a>.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="olPercent" id="appendix-A-3">
 <dt>SP1.</dt>
-<dd id="appendix-A-2.1">
+<dd id="appendix-A-3.1">
 <div id="sp-leading-empty">
-          <p id="appendix-A-2.1.1">Initial (Lone/Leading) Empty Path Segments:<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-A-3.1.1">Initial (Lone/Leading) Empty Path Segments:<a href="#appendix-A-3.1.1" class="pilcrow">¶</a></p>
 </div>
       </dd>
 <dd class="break"></dd>
 </dl>
 <ul class="normal">
-<li class="normal" id="appendix-A-3.1">
-          <p id="appendix-A-3.1.1"><em>Lone empty path segments:</em>
+<li class="normal" id="appendix-A-4.1">
+          <p id="appendix-A-4.1.1"><em>Lone empty path segments:</em>
   As per <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>, <code>s://x</code> is distinct from <code>s://x/</code> -- i.e., a URI
   with an empty path (<code>[]</code> in CRI) is different from one with a lone
   empty path segment (<code>[""]</code>).
@@ -3950,72 +4002,72 @@ representative of the normal operation of CRIs.<a href="#appendix-A-1" class="pi
   without Uri-Path Options from the other URI-related CoAP Options
   produces <code>s://x/</code>, not <code>s://x</code> -- CoAP prefers the lone empty path
   segment form.
-  Similarly, after discussing HTTP semantics, Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.3" class="relref">6.2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> states:<a href="#appendix-A-3.1.1" class="pilcrow">¶</a></p>
+  Similarly, after discussing HTTP semantics, Section <a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.3" class="relref">6.2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> states:<a href="#appendix-A-4.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<blockquote id="appendix-A-4">
-        <p id="appendix-A-4.1">In general, a URI that uses the generic syntax for authority with an
-  empty path should be normalized to a path of "/".<a href="#appendix-A-4.1" class="pilcrow">¶</a></p>
+<blockquote id="appendix-A-5">
+        <p id="appendix-A-5.1">In general, a URI that uses the generic syntax for authority with an
+  empty path should be normalized to a path of "/".<a href="#appendix-A-5.1" class="pilcrow">¶</a></p>
 </blockquote>
 <ul class="normal">
-<li class="normal" id="appendix-A-5.1">
-          <p id="appendix-A-5.1.1"><em>Leading empty path segments without authority</em>:
+<li class="normal" id="appendix-A-6.1">
+          <p id="appendix-A-6.1.1"><em>Leading empty path segments without authority</em>:
   Somewhat related, note also that URIs and URI references that do not
   carry an authority cannot represent leading empty path segments
   (i.e., that are followed by further path segments): <code>s://x//foo</code>
   works, but in a <code>s://foo</code> URI or an (absolute-path) URI reference of
   the form <code>//foo</code> the double slash would be mis-parsed as leading in
-  to an authority.<a href="#appendix-A-5.1.1" class="pilcrow">¶</a></p>
+  to an authority.<a href="#appendix-A-6.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<span class="break"></span><dl class="olPercent" id="appendix-A-6">
+<span class="break"></span><dl class="olPercent" id="appendix-A-7">
 <dt>SP2.</dt>
-<dd id="appendix-A-6.1">
+<dd id="appendix-A-7.1">
 <div id="sp-constraints">
-          <p id="appendix-A-6.1.1">Constraints (<a href="#constraints" class="auto internal xref">Section 2</a>) of CRIs/basic CRIs<a href="#appendix-A-6.1.1" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.2">
+          <p id="appendix-A-7.1.1">Constraints (<a href="#constraints" class="auto internal xref">Section 2</a>) of CRIs/basic CRIs<a href="#appendix-A-7.1.1" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.2">
 While most URIs in everyday use can be converted to CRIs and back to URIs
 matching the input after syntax-based normalization of the URI,
-these URIs illustrate the constraints by example:<a href="#appendix-A-6.1.2" class="pilcrow">¶</a></p>
+these URIs illustrate the constraints by example:<a href="#appendix-A-7.1.2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-6.1.3.1">
-              <p id="appendix-A-6.1.3.1.1"><code>https://host%ffname</code>, <code>https://example.com/x?data=%ff</code><a href="#appendix-A-6.1.3.1.1" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.1.2">
+<li class="normal" id="appendix-A-7.1.3.1">
+              <p id="appendix-A-7.1.3.1.1"><code>https://host%ffname</code>, <code>https://example.com/x?data=%ff</code><a href="#appendix-A-7.1.3.1.1" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.3.1.2">
 All URI components must, after percent decoding, be valid UTF-8 encoded text.
-Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.<a href="#appendix-A-6.1.3.1.2" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.1.3">
-These URIs can be expressed when using the <code>text-or-pet</code> feature.<a href="#appendix-A-6.1.3.1.3" class="pilcrow">¶</a></p>
+Bytes that are not valid UTF-8 show up, for example, in BitTorrent web seeds.<a href="#appendix-A-7.1.3.1.2" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.3.1.3">
+These URIs can be expressed when using the <code>text-or-pet</code> feature.<a href="#appendix-A-7.1.3.1.3" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A-6.1.3.2">
-              <p id="appendix-A-6.1.3.2.1"><code>https://example.com/component%3bone;component%3btwo</code>, <code>http://example.com/component%3dequals</code><a href="#appendix-A-6.1.3.2.1" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.2.2">
+            <li class="normal" id="appendix-A-7.1.3.2">
+              <p id="appendix-A-7.1.3.2.1"><code>https://example.com/component%3bone;component%3btwo</code>, <code>http://example.com/component%3dequals</code><a href="#appendix-A-7.1.3.2.1" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.3.2.2">
 While delimiters can be used in an escaped and unescaped form in URIs with generally distinct meanings,
 basic CRIs (i.e., without percent-encoded text <a href="#pet" class="auto internal xref">Section 7.2</a>) only support one escapable delimiter character per component,
-which is the delimiter by which the component is split up in the CRI.<a href="#appendix-A-6.1.3.2.2" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.2.3">
+which is the delimiter by which the component is split up in the CRI.<a href="#appendix-A-7.1.3.2.2" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.3.2.3">
 Note that the separators <code>.</code> (for authority parts), <code>/</code> (for paths), <code>&amp;</code> (for query parameters)
 are special in that they are syntactic delimiters of their
 respective components in CRIs (note that <code>.</code> is doubly special
 because it is not a <code>reserved</code> character in <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> and therefore
-any percent-encoding would be normalized away).<a href="#appendix-A-6.1.3.2.3" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.2.4">
-Thus, the following examples <em>are</em> convertible to basic CRIs without the <code>text-or-pet</code> feature:<a href="#appendix-A-6.1.3.2.4" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.2.5"><code>https://example.com/path%2fcomponent/second-component</code><a href="#appendix-A-6.1.3.2.5" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.2.6"><code>https://example.com/x?ampersand=%26&amp;questionmark=?</code><a href="#appendix-A-6.1.3.2.6" class="pilcrow">¶</a></p>
+any percent-encoding would be normalized away).<a href="#appendix-A-7.1.3.2.3" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.3.2.4">
+Thus, the following examples <em>are</em> convertible to basic CRIs without the <code>text-or-pet</code> feature:<a href="#appendix-A-7.1.3.2.4" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.3.2.5"><code>https://example.com/path%2fcomponent/second-component</code><a href="#appendix-A-7.1.3.2.5" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.3.2.6"><code>https://example.com/x?ampersand=%26&amp;questionmark=?</code><a href="#appendix-A-7.1.3.2.6" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A-6.1.3.3">
-              <p id="appendix-A-6.1.3.3.1"><code>https://alice@example.com/</code><a href="#appendix-A-6.1.3.3.1" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.3.2">
+            <li class="normal" id="appendix-A-7.1.3.3">
+              <p id="appendix-A-7.1.3.3.1"><code>https://alice@example.com/</code><a href="#appendix-A-7.1.3.3.1" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.3.3.2">
 The user information can be expressed in CRIs if the "userinfo"
 feature is present.  The URI <code>https://@example.com</code> is
 represented as <code>[-4, [false, "", "example", "com"]]</code>; the <code>false</code>
-serves as a marker that the next element is the userinfo.<a href="#appendix-A-6.1.3.3.2" class="pilcrow">¶</a></p>
-<p id="appendix-A-6.1.3.3.3">
+serves as a marker that the next element is the userinfo.<a href="#appendix-A-7.1.3.3.2" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.3.3.3">
 The rules explicitly cater for unencoded ":" in userinfo (without
 needing the <code>text-or-pet</code> feature).
 (We opted for including this syntactic feature instead of
 disabling it as a mechanism against potential uses of colons for
-the deprecated inclusion of unencrypted secrets.)<a href="#appendix-A-6.1.3.3.3" class="pilcrow">¶</a></p>
+the deprecated inclusion of unencrypted secrets.)<a href="#appendix-A-7.1.3.3.3" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </div>
@@ -4199,7 +4251,14 @@ sub-delims    = "!" / "$" / "&amp;" / "'" / "(" / ")"
 RFC-XXXX with the RFC number of this specification and remove this
 note.</span><a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <p id="appendix-C-3"><a href="#tab-numbers" class="auto internal xref">Table 11</a> defines the initial mapping from CRI scheme numbers to
-URI scheme names.<a href="#appendix-C-3" class="pilcrow">¶</a></p>
+URI scheme names.
+Rows with URI scheme names hat have a registration in "Uniform
+Resource Identifier (URI) Schemes" registry are used to populate the
+new "CRI scheme numbers" column in that registry (<a href="#upd" class="auto internal xref">Section 11.1</a>).
+Rows with URI scheme names hat do not have a registration in "Uniform
+Resource Identifier (URI) Schemes" registry are used to populate the
+"CRI Scheme Numbers for Certain Unregistered Scheme Names"
+registry (<a href="#cri-reg" class="auto internal xref">Section 11.2</a>).<a href="#appendix-C-3" class="pilcrow">¶</a></p>
 <span id="name-mapping-scheme-numbers-to-sc"></span><div id="tab-numbers">
 <table class="center" id="table-11">
         <caption>
@@ -6344,7 +6403,7 @@ CDDL (which is not a transformation language).<a href="#appendix-D-13.4.1" class
 <p id="appendix-D-14">Changes from -06 to -07<a href="#appendix-D-14" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-15.1">
-          <p id="appendix-D-15.1.1">More explicitly discuss constraints (<a href="#constraints" class="auto internal xref">Section 2</a>), add examples (<a href="#sp-constraints" class="auto internal xref">Appendix A, Paragraph 6, Item 1</a>).<a href="#appendix-D-15.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-15.1.1">More explicitly discuss constraints (<a href="#constraints" class="auto internal xref">Section 2</a>), add examples (<a href="#sp-constraints" class="auto internal xref">Appendix A, Paragraph 7, Item 1</a>).<a href="#appendix-D-15.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-15.2">
           <p id="appendix-D-15.2.1">Make CDDL more explicit about special simple values.<a href="#appendix-D-15.2.1" class="pilcrow">¶</a></p>
