@@ -1617,7 +1617,7 @@ mailing list of these requirements as early as possible.
 ## CRI Scheme Numbers for Certain Unregistered Scheme Names Registry {#cri-reg}
 
 This specification defines a new "CRI Scheme Numbers for Certain
-Unregistered Scheme Names" registry in the 
+Unregistered Scheme Names" registry in the
 "Constrained RESTful Environments (CoRE) Parameters" registry group
 {{IANA.core-parameters}}, with the policy "Expert Review" ({{Section 4.5
 of RFC8126@-ianacons}}).
