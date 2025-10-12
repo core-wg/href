@@ -1949,7 +1949,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    |  parameters@ietf.org mailing list of these requirements early.
 
    For the autonomous assignment, IANA will check whether the scheme
-   name already has been registered in the ""CRI Scheme Numbers for
+   name already has been registered in the "CRI Scheme Numbers for
    Certain Unregistered Scheme Names" registry (Section 11.2).
 
 
@@ -1985,7 +1985,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
       |        registration procedure for URI schemes, as the additional
       |        actions are performed by IANA autonomously.
       |  
-      |     *  For a name that is not registered as a name for an URI
+      |     *  For a name that is not registered as a name for a URI
       |        scheme, but could be (lexically), a CRI scheme number can
       |        be registered in the "CRI Scheme Numbers for Certain
       |        Unregistered Scheme Names" registry, under Expert Review
