@@ -1616,7 +1616,7 @@ Scheme Number are encouraged to notify the `core-parameters@ietf.org`
 mailing list of these requirements early.
 
 For the autonomous assignment, IANA will check whether the scheme name
-already has been registered in the ""CRI Scheme Numbers for Certain
+already has been registered in the "CRI Scheme Numbers for Certain
 Unregistered Scheme Names" registry ({{cri-reg}}).
 
 * If such a registration exists, IANA will assign the same CRI scheme
@@ -1643,7 +1643,7 @@ Note that the objectives for the procedure described here are:
   the existing registration procedure for URI schemes, as the
   additional actions are performed by IANA autonomously.
 
-* For a name that is not registered as a name for an URI scheme, but
+* For a name that is not registered as a name for a URI scheme, but
   could be (lexically), a CRI scheme number can be registered in the
   "CRI Scheme Numbers for Certain Unregistered Scheme Names" registry,
   under Expert Review ({{cri-reg}}).
