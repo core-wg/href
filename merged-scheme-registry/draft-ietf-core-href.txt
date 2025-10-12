@@ -6,7 +6,7 @@ CoRE Working Group                                       C. Bormann, Ed.
 Internet-Draft                                    Universität Bremen TZI
 Updates: 7595 (if approved)                                  H. Birkholz
 Intended status: Standards Track                          Fraunhofer SIT
-Expires: 11 April 2026                                    8 October 2025
+Expires: 15 April 2026                                   12 October 2025
 
 
                     Constrained Resource Identifiers
@@ -53,7 +53,7 @@ About This Document
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                 [Page 1]
+Bormann & Birkholz        Expires 15 April 2026                 [Page 1]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -73,7 +73,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 April 2026.
+   This Internet-Draft will expire on 15 April 2026.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                 [Page 2]
+Bormann & Birkholz        Expires 15 April 2026                 [Page 2]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -137,26 +137,26 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
             Registry . . . . . . . . . . . . . . . . . . . . . . . .  35
      11.2.  CRI Scheme Numbers for Certain Unregistered Scheme Names
             Registry . . . . . . . . . . . . . . . . . . . . . . . .  36
-       11.2.1.  Instructions for the Designated Expert . . . . . . .  36
-       11.2.2.  Structure of Entries . . . . . . . . . . . . . . . .  37
+       11.2.1.  Instructions for the Designated Expert . . . . . . .  37
+       11.2.2.  Structure of Entries . . . . . . . . . . . . . . . .  38
      11.3.  CBOR Diagnostic Notation Application-extension Identifiers
             Registry . . . . . . . . . . . . . . . . . . . . . . . .  38
-     11.4.  CBOR Tags Registry . . . . . . . . . . . . . . . . . . .  38
+     11.4.  CBOR Tags Registry . . . . . . . . . . . . . . . . . . .  39
      11.5.  CoAP Option Numbers Registry . . . . . . . . . . . . . .  39
-     11.6.  Media-Type subparameters for ACE AIF . . . . . . . . . .  39
-     11.7.  Content-Format for CRI in AIF  . . . . . . . . . . . . .  39
+     11.6.  Media-Type subparameters for ACE AIF . . . . . . . . . .  40
+     11.7.  Content-Format for CRI in AIF  . . . . . . . . . . . . .  40
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  40
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  40
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  42
-   Appendix A.  Examples of Corner Cases . . . . . . . . . . . . . .  45
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  41
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  43
+   Appendix A.  Examples of Corner Cases . . . . . . . . . . . . . .  46
    Appendix B.  CBOR Extended Diagnostic Notation (EDN): The "cri"
-           Extension . . . . . . . . . . . . . . . . . . . . . . . .  47
-     B.1.  cri: ABNF Definition of URI Representation of a CRI . . .  48
-   Appendix C.  Mapping Scheme Numbers to Scheme Names . . . . . . .  50
-   Appendix D.  Change Log . . . . . . . . . . . . . . . . . . . . .  59
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  62
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  62
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  63
+           Extension . . . . . . . . . . . . . . . . . . . . . . . .  48
+     B.1.  cri: ABNF Definition of URI Representation of a CRI . . .  49
+   Appendix C.  Mapping Scheme Numbers to Scheme Names . . . . . . .  51
+   Appendix D.  Change Log . . . . . . . . . . . . . . . . . . . . .  60
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  63
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  63
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  64
 
 
 
@@ -165,7 +165,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                 [Page 3]
+Bormann & Birkholz        Expires 15 April 2026                 [Page 3]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -221,7 +221,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                 [Page 4]
+Bormann & Birkholz        Expires 15 April 2026                 [Page 4]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -277,7 +277,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                 [Page 5]
+Bormann & Birkholz        Expires 15 April 2026                 [Page 5]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -333,7 +333,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                 [Page 6]
+Bormann & Birkholz        Expires 15 April 2026                 [Page 6]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -389,7 +389,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                 [Page 7]
+Bormann & Birkholz        Expires 15 April 2026                 [Page 7]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -445,7 +445,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                 [Page 8]
+Bormann & Birkholz        Expires 15 April 2026                 [Page 8]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -501,7 +501,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                 [Page 9]
+Bormann & Birkholz        Expires 15 April 2026                 [Page 9]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -557,7 +557,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 10]
+Bormann & Birkholz        Expires 15 April 2026                [Page 10]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -613,7 +613,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 11]
+Bormann & Birkholz        Expires 15 April 2026                [Page 11]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -669,7 +669,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 12]
+Bormann & Birkholz        Expires 15 April 2026                [Page 12]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -725,7 +725,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 13]
+Bormann & Birkholz        Expires 15 April 2026                [Page 13]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -781,7 +781,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 14]
+Bormann & Birkholz        Expires 15 April 2026                [Page 14]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -837,7 +837,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 15]
+Bormann & Birkholz        Expires 15 April 2026                [Page 15]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -893,7 +893,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 16]
+Bormann & Birkholz        Expires 15 April 2026                [Page 16]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -949,7 +949,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 17]
+Bormann & Birkholz        Expires 15 April 2026                [Page 17]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1005,7 +1005,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 18]
+Bormann & Birkholz        Expires 15 April 2026                [Page 18]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1061,7 +1061,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 19]
+Bormann & Birkholz        Expires 15 April 2026                [Page 19]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1117,7 +1117,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 20]
+Bormann & Birkholz        Expires 15 April 2026                [Page 20]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1173,7 +1173,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 21]
+Bormann & Birkholz        Expires 15 April 2026                [Page 21]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1229,7 +1229,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 22]
+Bormann & Birkholz        Expires 15 April 2026                [Page 22]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1285,7 +1285,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 23]
+Bormann & Birkholz        Expires 15 April 2026                [Page 23]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1341,7 +1341,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 24]
+Bormann & Birkholz        Expires 15 April 2026                [Page 24]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1397,7 +1397,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 25]
+Bormann & Birkholz        Expires 15 April 2026                [Page 25]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1453,7 +1453,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 26]
+Bormann & Birkholz        Expires 15 April 2026                [Page 26]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1509,7 +1509,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 27]
+Bormann & Birkholz        Expires 15 April 2026                [Page 27]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1565,7 +1565,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 28]
+Bormann & Birkholz        Expires 15 April 2026                [Page 28]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1621,7 +1621,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 29]
+Bormann & Birkholz        Expires 15 April 2026                [Page 29]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1677,7 +1677,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 30]
+Bormann & Birkholz        Expires 15 April 2026                [Page 30]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1733,7 +1733,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 31]
+Bormann & Birkholz        Expires 15 April 2026                [Page 31]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1789,7 +1789,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 32]
+Bormann & Birkholz        Expires 15 April 2026                [Page 32]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1845,7 +1845,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 33]
+Bormann & Birkholz        Expires 15 April 2026                [Page 33]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1901,7 +1901,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 34]
+Bormann & Birkholz        Expires 15 April 2026                [Page 34]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -1922,23 +1922,23 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    the "Uniform Resource Identifier (URI) Schemes" Registry, an unsigned
    integer unique in the union of this registry and the "CRI Scheme
    Numbers for Certain Unregistered Scheme Names" registry
-   (Section 11.1).
+   (Section 11.2).
 
    The column is initially populated from the numbers in the "CRI scheme
    number" column of entries in Appendix C that do refer to registered
-   URI schemes.  Rows that are not listed in Appendix C at the time of
-   initial setup are treated as specified for new registrations below.
+   URI schemes.  Existing rows that are not listed in Appendix C at the
+   time of initial setup are treated as specified for new registrations
+   below.
 
    Also, the following note is added in the "Uniform Resource Identifier
    (URI) Schemes" Registry [IANA.uri-schemes]:
 
    |  The CRI Scheme Number column registers numeric identifiers for the
    |  URI Schemes registered.  Registrants for the Uniform Resource
-   |  Identifier (URI) Schemes Registry are requested to indicate
-   |  whether there are special requirements on the CRI scheme number to
-   |  be assigned.
-   |  If that is not the case, IANA will assign a value in the range
-   |  1000 to 20000, inclusive.
+   |  Identifier (URI) Schemes Registry are requested to indicate if
+   |  there are special requirements on the CRI scheme number to be
+   |  assigned for the new URI Scheme.
+   |  If that is not the case, IANA will assign a value autonomously.
    |  If there is a special requirement, the value will be allocated via
    |  Expert Review by the Designated Expert for the "CRI Scheme Numbers
    |  for Certain Unregistered Scheme Names" registry in the
@@ -1946,21 +1946,55 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    |  group [IANA.core-parameters].
    |  Registrants that want to indicate special requirements for a CRI
    |  Scheme Number are encouraged to notify the core-
-   |  parameters@ietf.org mailing list of these requirements as early as
-   |  possible.
+   |  parameters@ietf.org mailing list of these requirements early.
+
+   For the autonomous assignment, IANA will check whether the scheme
+   name already has been registered in the ""CRI Scheme Numbers for
+   Certain Unregistered Scheme Names" registry (Section 11.2).
 
 
 
 
 
 
-
-
-
-Bormann & Birkholz        Expires 11 April 2026                [Page 35]
+Bormann & Birkholz        Expires 15 April 2026                [Page 35]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
+
+   *  If such a registration exists, IANA will assign the same CRI
+      scheme number for the "Uniform Resource Identifier (URI) Schemes"
+      registry that had been assigned in the row of the "CRI Scheme
+      Numbers for Certain Unregistered Scheme Names" registry, and will
+      remove that row from the latter registry autonomously.
+
+   *  If such a registration does not exist, IANA will autonomously
+      assign a number in the range 1000 to 20000, inclusive, that has
+      not yet been used in either registry.
+
+      |  Note that the objectives for the procedure described here are:
+      |  
+      |     *  For every URI scheme registered now or in the future,
+      |        there is not only a unique scheme name, but also a unique
+      |        CRI scheme number that can stand in for the scheme name
+      |        in a CRI.  To support constrained applications, a URI-
+      |        scheme registrant can ask for a scheme number that will
+      |        be a little more compact in the representation of a CRI
+      |        than the usual ones.  If that is not needed, the
+      |        registrant perceives no difference from the existing
+      |        registration procedure for URI schemes, as the additional
+      |        actions are performed by IANA autonomously.
+      |  
+      |     *  For a name that is not registered as a name for an URI
+      |        scheme, but could be (lexically), a CRI scheme number can
+      |        be registered in the "CRI Scheme Numbers for Certain
+      |        Unregistered Scheme Names" registry, under Expert Review
+      |        (Section 11.2).  When a URI scheme is later actually
+      |        registered under that name, this number will then be used
+      |        as the CRI scheme number of the new registration and will
+      |        be removed from the "CRI Scheme Numbers for Certain
+      |        Unregistered Scheme Names" registry.  This procedure is
+      |        designed to avoid the "X-Dash" problem [RFC6648].
 
 11.2.  CRI Scheme Numbers for Certain Unregistered Scheme Names Registry
 
@@ -1976,6 +2010,14 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    At the time of initial setup of the new column "CRI Scheme Number" in
    the "Uniform Resource Identifier (URI) Schemes" Registry, the rows in
    Appendix C that are not referring to registered URI schemes are
+
+
+
+Bormann & Birkholz        Expires 15 April 2026                [Page 36]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
+
    copied into the "CRI Scheme Numbers for Certain Unregistered Scheme
    Names" registry.  (At the time of writing, these are the two scheme
    names "mqtt" and "mqtts".)
@@ -1985,9 +2027,10 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    participates in the process for the "Uniform Resource Identifier
    (URI) Schemes" registry as defined in Section 11.1.
 
-   The values used in the "CRI Scheme Number" columns of "Uniform
-   Resource Identifier (URI) Schemes" registry and "CRI Scheme Numbers
-   for Certain Unregistered Scheme Names" registry MUST NOT overlap.
+   The same CRI scheme number value MUST NOT be assigned both in the
+   "CRI Scheme Number" column of the "Uniform Resource Identifier (URI)
+   Schemes" registry and in the "CRI Scheme Number" column of the "CRI
+   Scheme Numbers for Certain Unregistered Scheme Names" registry.
 
 11.2.1.  Instructions for the Designated Expert
 
@@ -2010,14 +2053,6 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    Identifier (URI) Schemes registry if and only if the expert considers
    them to be in wide use in place of URI scheme names in constrained
    applications.  (Note that registrations in the CRI Scheme Numbers
-
-
-
-Bormann & Birkholz        Expires 11 April 2026                [Page 36]
-
-Internet-Draft      Constrained Resource Identifiers        October 2025
-
-
    registry are oblivious to the details of any URI Schemes registry
    registration, so if a registration is later made in the URI Schemes
    registry that uses such a previously unregistered text string as a
@@ -2027,6 +2062,17 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    Numbers registration.  Also note that the initial registrations in
    Table 11 in Appendix C already include such registrations for the
    text strings "mqtt" and "mqtts".)
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 15 April 2026                [Page 37]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    A registration in the "CRI Scheme Numbers for Certain Unregistered
    Scheme Names" registry does not imply that a URI scheme under this
@@ -2067,13 +2113,6 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    a URI-Scheme registration that is later made under that URI scheme
    name.
 
-
-
-Bormann & Birkholz        Expires 11 April 2026                [Page 37]
-
-Internet-Draft      Constrained Resource Identifiers        October 2025
-
-
 11.3.  CBOR Diagnostic Notation Application-extension Identifiers
        Registry
 
@@ -2081,6 +2120,15 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    Diagnostic Notation" registry group [IANA.cbor-diagnostic-notation],
    IANA is requested to register the application-extension identifier
    cri as described in Table 6 and defined in Appendix B.
+
+
+
+
+
+Bormann & Birkholz        Expires 15 April 2026                [Page 38]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
      +-----------------------+-------------+------------+-----------+
      | Application-extension | Description | Change     | Reference |
@@ -2118,18 +2166,6 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
                           Table 7: Values for Tags
 
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 11 April 2026                [Page 38]
-
-Internet-Draft      Constrained Resource Identifiers        October 2025
-
-
 11.5.  CoAP Option Numbers Registry
 
 
@@ -2138,6 +2174,17 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    // the value actually assigned by IANA; perform an analogous
    // substitution for all other occurrences of the prefix "TBD" in the
    // document.  Finally, please remove this note.
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 15 April 2026                [Page 39]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    In the "CoAP Option Numbers" registry in the "CoRE Parameters"
    registry group [IANA.core-parameters], IANA is requested to register
@@ -2177,15 +2224,6 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    "Constrained RESTful Environments (CoRE) Parameters" registry group
    [IANA.core-parameters], as follows:
 
-
-
-
-
-Bormann & Birkholz        Expires 11 April 2026                [Page 39]
-
-Internet-Draft      Constrained Resource Identifiers        October 2025
-
-
     +------------------------------+----------------+-----+-----------+
     | Content Type                 | Content Coding | ID  | Reference |
     +------------------------------+----------------+-----+-----------+
@@ -2196,6 +2234,13 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
        Table 10: Content-Format for ACE AIF with CRI-local-part Toid
 
 12.  References
+
+
+
+Bormann & Birkholz        Expires 15 April 2026                [Page 40]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
 12.1.  Normative References
 
@@ -2230,18 +2275,6 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
               RFC 7595, DOI 10.17487/RFC7595, June 2015,
               <https://www.rfc-editor.org/info/rfc7595>.
 
-
-
-
-
-
-
-
-Bormann & Birkholz        Expires 11 April 2026                [Page 40]
-
-Internet-Draft      Constrained Resource Identifiers        October 2025
-
-
    [I-D.ietf-netmod-rfc6991-bis]
               Schönwälder, J., "Common YANG Data Types", Work in
               Progress, Internet-Draft, draft-ietf-netmod-rfc6991-bis-
@@ -2256,6 +2289,14 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
               IANA, "Constrained RESTful Environments (CoRE)
               Parameters",
               <https://www.iana.org/assignments/core-parameters>.
+
+
+
+
+Bormann & Birkholz        Expires 15 April 2026                [Page 41]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    [IANA.media-type-sub-parameters]
               IANA, "Media Type Sub-Parameter Registries",
@@ -2291,13 +2332,6 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
               Environments (ACE)", RFC 9237, DOI 10.17487/RFC9237,
               August 2022, <https://www.rfc-editor.org/rfc/rfc9237>.
 
-
-
-Bormann & Birkholz        Expires 11 April 2026                [Page 41]
-
-Internet-Draft      Constrained Resource Identifiers        October 2025
-
-
    [STD63]    Internet Standard 63,
               <https://www.rfc-editor.org/info/std63>.
               At the time of writing, this STD comprises the following:
@@ -2309,6 +2343,16 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
    [STD66]    Internet Standard 66,
               <https://www.rfc-editor.org/info/std66>.
               At the time of writing, this STD comprises the following:
+
+
+
+
+
+
+Bormann & Birkholz        Expires 15 April 2026                [Page 42]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
               Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
@@ -2347,19 +2391,24 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
               July 2025, <https://datatracker.ietf.org/doc/html/draft-
               bormann-cbor-notable-tags-13>.
 
-
-
-Bormann & Birkholz        Expires 11 April 2026                [Page 42]
-
-Internet-Draft      Constrained Resource Identifiers        October 2025
-
-
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN)",
               Work in Progress, Internet-Draft, draft-ietf-cbor-edn-
               literals-18, 7 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
               edn-literals-18>.
+
+
+
+
+
+
+
+
+Bormann & Birkholz        Expires 15 April 2026                [Page 43]
+
+Internet-Draft      Constrained Resource Identifiers        October 2025
+
 
    [I-D.ietf-cbor-packed]
               Bormann, C. and M. Gütschow, "Packed CBOR", Work in
@@ -2397,6 +2446,12 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
               DOI 10.17487/RFC4180, October 2005,
               <https://www.rfc-editor.org/rfc/rfc4180>.
 
+   [RFC6648]  Saint-Andre, P., Crocker, D., and M. Nottingham,
+              "Deprecating the "X-" Prefix and Similar Constructs in
+              Application Protocols", BCP 178, RFC 6648,
+              DOI 10.17487/RFC6648, June 2012,
+              <https://www.rfc-editor.org/rfc/rfc6648>.
+
    [RFC6874]  Carpenter, B., Cheshire, S., and R. Hinden, "Representing
               IPv6 Zone Identifiers in Address Literals and Uniform
               Resource Identifiers", RFC 6874, DOI 10.17487/RFC6874,
@@ -2405,7 +2460,8 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 43]
+
+Bormann & Birkholz        Expires 15 April 2026                [Page 44]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2461,7 +2517,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 44]
+Bormann & Birkholz        Expires 15 April 2026                [Page 45]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2517,7 +2573,7 @@ Appendix A.  Examples of Corner Cases
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 45]
+Bormann & Birkholz        Expires 15 April 2026                [Page 46]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2573,7 +2629,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 46]
+Bormann & Birkholz        Expires 15 April 2026                [Page 47]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2629,7 +2685,7 @@ Appendix B.  CBOR Extended Diagnostic Notation (EDN): The "cri"
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 47]
+Bormann & Birkholz        Expires 15 April 2026                [Page 48]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2685,7 +2741,7 @@ B.1.  cri: ABNF Definition of URI Representation of a CRI
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 48]
+Bormann & Birkholz        Expires 15 April 2026                [Page 49]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2741,7 +2797,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 49]
+Bormann & Birkholz        Expires 15 April 2026                [Page 50]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2797,7 +2853,7 @@ Appendix C.  Mapping Scheme Numbers to Scheme Names
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 50]
+Bormann & Birkholz        Expires 15 April 2026                [Page 51]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2853,7 +2909,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 51]
+Bormann & Birkholz        Expires 15 April 2026                [Page 52]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2909,7 +2965,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 52]
+Bormann & Birkholz        Expires 15 April 2026                [Page 53]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -2965,7 +3021,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 53]
+Bormann & Birkholz        Expires 15 April 2026                [Page 54]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3021,7 +3077,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 54]
+Bormann & Birkholz        Expires 15 April 2026                [Page 55]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3077,7 +3133,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 55]
+Bormann & Birkholz        Expires 15 April 2026                [Page 56]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3133,7 +3189,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 56]
+Bormann & Birkholz        Expires 15 April 2026                [Page 57]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3189,7 +3245,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 57]
+Bormann & Birkholz        Expires 15 April 2026                [Page 58]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3245,7 +3301,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 58]
+Bormann & Birkholz        Expires 15 April 2026                [Page 59]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3301,7 +3357,7 @@ Appendix D.  Change Log
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 59]
+Bormann & Birkholz        Expires 15 April 2026                [Page 60]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3357,7 +3413,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 60]
+Bormann & Birkholz        Expires 15 April 2026                [Page 61]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3413,7 +3469,7 @@ Internet-Draft      Constrained Resource Identifiers        October 2025
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 61]
+Bormann & Birkholz        Expires 15 April 2026                [Page 62]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3469,7 +3525,7 @@ Contributors
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 62]
+Bormann & Birkholz        Expires 15 April 2026                [Page 63]
 
 Internet-Draft      Constrained Resource Identifiers        October 2025
 
@@ -3525,4 +3581,4 @@ Authors' Addresses
 
 
 
-Bormann & Birkholz        Expires 11 April 2026                [Page 63]
+Bormann & Birkholz        Expires 15 April 2026                [Page 64]
