@@ -211,7 +211,8 @@ extensions](#RFC9165).
 Specific examples are notated in CBOR Extended
 Diagnostic Notation (EDN), as originally introduced in {{Section 8 of
 RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
-({{-edn}} more rigorously defines and further extends EDN.)
+({{-edn}} more rigorously defines and further extends EDN; it also
+provides an application-extension syntax for the notation of CRIs.)
 
 
 # From URIs to CRIs: Considerations and Constraints {#constraints}
@@ -1670,19 +1671,6 @@ The number for this registration will be assigned by the Designated
 Expert for that registry.
 
 
-## CBOR Diagnostic Notation Application-extension Identifiers Registry {#cri-iana}
-
-In the "Application-Extension Identifiers" registry in the "CBOR
-Diagnostic Notation" registry group \[IANA.cbor-diagnostic-notation],
-IANA is requested to register the application-extension identifier
-`cri` as described in {{tab-iana}} and defined in {{edn-cri}}.
-
-| Application-extension Identifier | Description                     | Change Controller | Reference         |
-|----------------------------------|---------------------------------|-------------------|-------------------|
-| cri                              | Constrained Resource Identifier | IETF              | RFC-XXXX, {{edn-cri}} |
-{: #tab-iana title="CBOR Extended Diagnostic Notation (EDN) Application-extension Identifier for CRI"}
-
-
 ## CBOR Tags Registry {#tags-iana}
 
 [^cpa]
@@ -1842,161 +1830,6 @@ through the CoRE WG Wiki, <https://wiki.ietf.org/group/core>.
      disabling it as a mechanism against potential uses of colons for
      the deprecated inclusion of unencrypted secrets.)
 
-# CBOR Extended Diagnostic Notation (EDN): The "cri" Extension {#edn-cri}
-
-{{-edn}} more rigorously defines and further extends the CBOR Extended
-Diagnostic Notation (EDN), as originally introduced in {{Section 8 of
-RFC8949@-cbor}} and extended in {{Appendix G of -cddl}}.
-Among others, it provides an extension point for
-"application-extension identifiers" that can be used to notate CBOR
-data items in application-specific ways.
-
-The present document defines and registers ({{cri-iana}}) the
-application-extension identifier "`cri`", which can be used to notate
-an EDN literal for a CRI reference as defined in this document.
-
-The text of the literal is a URI Reference as per {{-uri}} or an IRI
-Reference as per {{-iri}}.
-
-The value of the literal is a CRI reference that can be converted to
-the text of the literal using the procedure of {{cri-to-uri}}.
-Note that there may be more than one CRI reference that can be
-converted to the URI/IRI reference given; implementations are expected
-to favor the simplest variant available and make non-surprising
-choices otherwise.
-In the all-upper-case variant of the app-prefix, the value is enclosed
-in a tag number CPA99.
-
-[^cpa]
-
-As an example, the CBOR diagnostic notation
-
-~~~ cbor-diag
-cri'https://example.com/bottarga/shaved'
-CRI'https://example.com/bottarga/shaved'
-~~~
-
-is equivalent to
-
-~~~ cbor-diag
-[-4, ["example", "com"], ["bottarga", "shaved"]]
-CPA99([-4, ["example", "com"], ["bottarga", "shaved"]])
-~~~
-
-See {{cri-grammar}} for an ABNF definition for the content of `cri` literals.
-
-
-## cri: ABNF Definition of URI Representation of a CRI {#cri-grammar}
-
-It can be expected that implementations of the application-extension
-identifier "`cri`" will make use of platform-provided URI
-implementations, which will include a URI parser.
-
-In case such a URI parser is not available or inconvenient to
-integrate,
-a grammar of the content of `cri` literals is provided by the
-ABNF for `URI-reference` in {{Section 4.1 of RFC3986@-uri}} with certain
-re-arrangements taken from {{figure-5 (Figure 5)<I-D.ietf-cbor-edn-literals}} of {{I-D.ietf-cbor-edn-literals}};
-these are reproduced in {{abnf-grammar-cri}}.
-If the content is not ASCII only (i.e., for IRIs), first apply
-{{Section 3.1 of RFC3987}} and apply this grammar to the result.
-
-~~~ abnf
-app-string-cri = URI-reference
-; ABNF from RFC 3986:
-
-URI           = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
-
-hier-part     = "//" authority path-abempty
-                 / path-absolute
-                 / path-rootless
-                 / path-empty
-
-URI-reference = URI / relative-ref
-
-absolute-URI  = scheme ":" hier-part [ "?" query ]
-
-relative-ref  = relative-part [ "?" query ] [ "#" fragment ]
-
-relative-part = "//" authority path-abempty
-                 / path-absolute
-                 / path-noscheme
-                 / path-empty
-
-scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
-
-authority     = [ userinfo "@" ] host [ ":" port ]
-userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
-host          = IP-literal / IPv4address / reg-name
-port          = *DIGIT
-
-IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
-
-IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
-
-; Use IPv6address, h16, ls32, IPv4adress, dec-octet as re-arranged
-; for PEG Compatibility in Figure 5 of [I-D.ietf-cbor-edn-literals]:
-
-IPv6address   =                            6( h16 ":" ) ls32
-              /                       "::" 5( h16 ":" ) ls32
-              / [ h16               ] "::" 4( h16 ":" ) ls32
-              / [ h16 *1( ":" h16 ) ] "::" 3( h16 ":" ) ls32
-              / [ h16 *2( ":" h16 ) ] "::" 2( h16 ":" ) ls32
-              / [ h16 *3( ":" h16 ) ] "::"    h16 ":"   ls32
-              / [ h16 *4( ":" h16 ) ] "::"              ls32
-              / [ h16 *5( ":" h16 ) ] "::"              h16
-              / [ h16 *6( ":" h16 ) ] "::"
-
-h16           = 1*4HEXDIG
-ls32          = ( h16 ":" h16 ) / IPv4address
-IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
-dec-octet     = "25" %x30-35         ; 250-255
-              / "2" %x30-34 DIGIT    ; 200-249
-              / "1" 2DIGIT           ; 100-199
-              / %x31-39 DIGIT        ; 10-99
-              / DIGIT                ; 0-9
-ALPHA         = %x41-5a / %x61-7a
-DIGIT         = %x30-39
-HEXDIG        = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
-; case insensitive matching, i.e., including lower case
-
-reg-name      = *( unreserved / pct-encoded / sub-delims )
-
-path          = path-abempty    ; begins with "/" or is empty
-                 / path-absolute   ; begins with "/" but not "//"
-                 / path-noscheme   ; begins with a non-colon segment
-                 / path-rootless   ; begins with a segment
-                 / path-empty      ; zero characters
-
-path-abempty  = *( "/" segment )
-path-absolute = "/" [ segment-nz *( "/" segment ) ]
-path-noscheme = segment-nz-nc *( "/" segment )
-path-rootless = segment-nz *( "/" segment )
-path-empty    = 0<pchar>
-
-segment       = *pchar
-segment-nz    = 1*pchar
-segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
-                 ; non-zero-length segment without any colon ":"
-
-pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
-
-query         = *( pchar / "/" / "?" )
-
-fragment      = *( pchar / "/" / "?" )
-
-pct-encoded   = "%" HEXDIG HEXDIG
-
-unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
-reserved      = gen-delims / sub-delims
-gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
-sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
-                 / "*" / "+" / "," / ";" / "="
-~~~
-{: #abnf-grammar-cri sourcecode-name="cbor-edn-cri.abnf"
-title="ABNF Definition of URI Representation of a CRI"
-}
-
 
 # Mapping Scheme Numbers to Scheme Names {#sec-numbers}
 {:removeinrfc}
@@ -2065,8 +1898,7 @@ Changes from -09 to -14
 
 * Add Christian Amsüss as contributor
 
-* Add CBOR EDN application-extension "`cri`" (see {{edn-cri}} and
-  {{cri-iana}}).
+* Add CBOR EDN application-extension "`cri`" (since moved to the EDN spec)
 
 * Add Section on CoAP integration (and new CoAP Options Proxy-Cri and
   Proxy-Scheme-Number).
