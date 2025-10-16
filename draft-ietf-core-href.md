@@ -126,13 +126,15 @@ created by the present RFC.
 
 [^status]: (This "cref" paragraph will be removed by the RFC
     editor:)\\
-    The present pull request revision is intended as additional input
-    input for IESG evaluation (2025-10-09 telechat), exploring a way
-    to integrate the two URI scheme registries created by RFC 7595 and
-    by this document (issue #140).\\
-    It presents an alternative solution so that can be discussed in
-    detail, not a consensus that this is a better solution than the
-    one in the WG document.
+    The present revision `-26` is taking on the results from the
+    2025-10-09 IESG telechat (issue #140), by integrating the CRI
+    scheme number column into the URI scheme registry created by RFC
+    7595 and keeping the URI-Scheme registration process essentially
+    unchanged from the point of view of a registrant that does not
+    have any special requirements on the CRI scheme number assigned.\\
+    Also, the cri'' application-extension syntax has been moved to
+    draft-ietf-cbor-edn-literals, which is currently lagging behind in
+    the approval process.
 
 --- middle
 
