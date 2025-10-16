@@ -1603,7 +1603,7 @@ Resource Identifier (URI) Schemes" Registry {{IANA.uri-schemes}}:
 The CRI Scheme Number column registers numeric identifiers for the URI
 Schemes registered.
 Registrants for the Uniform Resource Identifier (URI) Schemes Registry
-are requested to indicate if there are special requirements on
+may indicate that there are special requirements on
 the CRI scheme number to be assigned for the new URI Scheme.\\
 If that is not the case, IANA will assign a value autonomously.\\
 If there is a special requirement, the value will be allocated via
@@ -1611,8 +1611,9 @@ Expert Review by the Designated Expert for the "CRI Scheme Numbers for
 Certain Unregistered Scheme Names" registry in the
 "Constrained RESTful Environments (CoRE) Parameters" registry group
 {{IANA.core-parameters}}.\\
-Registrants that want to indicate special requirements for a CRI
-Scheme Number are encouraged to notify the `core-parameters@ietf.org`
+Registrants that want to indicate special requirements on a CRI
+Scheme Number for a new URI-Scheme assignment are encouraged to notify
+the `core-parameters@ietf.org`
 mailing list of these requirements early.
 
 For the autonomous assignment, IANA will check whether the scheme name
