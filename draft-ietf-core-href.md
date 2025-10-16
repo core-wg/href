@@ -72,6 +72,7 @@ informative:
   I-D.bormann-cbor-notable-tags: notable
   RFC9170: use-lose
   MNU: I-D.bormann-dispatch-modern-network-unicode
+  RFC6648: x-dash
 normative:
   RFC4007: zone-orig
   I-D.ietf-netmod-rfc6991-bis: 6991bis
@@ -116,18 +117,22 @@ This approach simplifies parsing, comparison, and reference resolution in
 environments with severe limitations on processing power, code size, and
 memory size.
 
-This RFC updates RFC 7595 to add a note on how the "URI Schemes"
-registry of RFC 7595 cooperates with the "CRI Scheme Numbers"
-registry created by the present RFC.
+This RFC updates RFC 7595 by adding a column on the "URI Schemes"
+registry as well as a note on how that registry cooperates with the
+"CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
+created by the present RFC.
 
 [^status]
 
-[^status]: (This "cref" paragraph will be removed by the RFC editor:)\\
-    The present revision –25 contains a few more tweaks to address
-    follow-on AD review comments as well as comments from the ARTART
-    review.
-    It is intended to be ready for IESG evaluation.
-
+[^status]: (This "cref" paragraph will be removed by the RFC
+    editor:)\\
+    The present pull request revision is intended as additional input
+    input for IESG evaluation (2025-10-09 telechat), exploring a way
+    to integrate the two URI scheme registries created by RFC 7595 and
+    by this document (issue #140).\\
+    It presents an alternative solution so that can be discussed in
+    detail, not a consensus that this is a better solution than the
+    one in the WG document.
 
 --- middle
 
@@ -189,9 +194,10 @@ CRI extensions ({{extending}}) can be defined to address some of the
 constraints and/or to provide more convenient representations for
 certain areas of application.
 
-This RFC creates a "CRI Scheme Numbers" registry and updates {{RFC7595}}
-to add a note on how this new registry cooperates with the "URI Schemes"
-registry that {{RFC7595}} describes.
+This RFC updates {{RFC7595@-schemes}} by adding a column on the "URI Schemes"
+registry as well as a note on how that registry cooperates with the
+"CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
+created by the present RFC.
 
 
 ## Notational Conventions
@@ -695,8 +701,14 @@ section, mapped to lower case).
 (Note that, in {{cddl}}, `scheme-name` is marked as a feature, as only
 less constrained CRI implementations might support `scheme-name`.)
 
-Scheme numbers are unsigned integers that are mapped to and from URI
-scheme names by the "CRI Scheme Numbers" registry ({{cri-reg}}).
+Scheme numbers are unsigned integers that are mapped to and from
+scheme names by exactly one of the following two registries:
+
+* "Uniform Resource Identifier (URI) Schemes" Registry ({{Section 6
+  (IANA Considerations) of RFC7595@-schemes}} as updated by {{upd}}), or
+* "CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
+  ({{cri-reg}}).
+
 The relationship of a scheme number to its `scheme-id` is as follows:
 
 ~~~ math
@@ -1349,7 +1361,7 @@ and URI scheme names shown in {{scheme-map}}:
 |                 7 | coaps+tcp       |
 |                24 | coap+ws         |
 |                25 | coaps+ws        |
-{: #scheme-map title="Mapping CRI scheme numbers and URI scheme names"}
+{: #scheme-map title="Mapping CRI Scheme Numbers and URI Scheme Names"}
 
 
 ### Decomposing a Request CRI into a set of CoAP Options {#decompose-coap}
@@ -1491,7 +1503,7 @@ included in a request containing the Proxy-Cri Option).
    | TBD239 | x | x | - |   | Proxy-Scheme-Number | uint   |    0-3 | (none)  |
 {: #tab-proxy-scheme-number title="Proxy-Scheme-Number CoAP Option"}
 
-The Proxy-Scheme-Number Option carries a CRI Scheme Number represented as a
+The Proxy-Scheme-Number Option carries a CRI scheme number represented as a
 CoAP unsigned integer.
 It is used analogously to Proxy-Scheme as defined in {{Section 5.10.2
 of -coap}}.
@@ -1571,17 +1583,108 @@ apply analogously to AIF-CRI {{toid}}.
 
 [^replace-xxxx]
 
-## CRI Scheme Numbers Registry {#cri-reg}
+## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
 
-This specification defines a new "CRI Scheme Numbers" registry in the
+{{RFC7595@-schemes}} is updated to add a column "CRI Scheme Number" to
+the "Uniform Resource Identifier (URI) Schemes" Registry, an unsigned
+integer unique in the union of this registry and the "CRI Scheme Numbers for
+Certain Unregistered Scheme Names" registry ({{cri-reg}}).
+
+The column is initially populated from the numbers in the "CRI scheme
+number" column of entries in {{sec-numbers}} that do refer to registered URI
+schemes.
+Existing rows that are not listed in {{sec-numbers}} at the time of initial
+setup are treated as specified for new registrations below.
+
+Also, the following note is added in the "Uniform
+Resource Identifier (URI) Schemes" Registry {{IANA.uri-schemes}}:
+
+{:quote}
+>
+The CRI Scheme Number column registers numeric identifiers for the URI
+Schemes registered.
+Registrants for the Uniform Resource Identifier (URI) Schemes Registry
+may indicate that there are special requirements on
+the CRI scheme number to be assigned for the new URI Scheme.\\
+If that is not the case, IANA will assign a value autonomously.\\
+If there is a special requirement, the value will be allocated via
+Expert Review by the Designated Expert for the "CRI Scheme Numbers for
+Certain Unregistered Scheme Names" registry in the
+"Constrained RESTful Environments (CoRE) Parameters" registry group
+{{IANA.core-parameters}}.\\
+Registrants that want to indicate special requirements on a CRI
+Scheme Number for a new URI-Scheme assignment are encouraged to notify
+the `core-parameters@ietf.org`
+mailing list of these requirements early.
+
+For the autonomous assignment, IANA will check whether the scheme name
+already has been registered in the "CRI Scheme Numbers for Certain
+Unregistered Scheme Names" registry ({{cri-reg}}).
+
+* If such a registration exists, IANA will assign the same CRI scheme
+  number for the "Uniform Resource Identifier (URI) Schemes" registry
+  that had been assigned in the row of the "CRI Scheme Numbers for
+  Certain Unregistered Scheme Names" registry, and will remove that row
+  from the latter registry autonomously.
+
+* If such a registration does not exist, IANA will autonomously assign
+  a number in the range 1000 to 20000, inclusive, that has not yet
+  been used in either registry.
+
+<aside markdown="1">
+
+Note that the objectives for the procedure described here are:
+
+* For every URI scheme registered now or in the future, there is not
+  only a unique scheme name, but also a unique CRI scheme number that
+  can stand in for the scheme name in a CRI.
+  To support constrained applications, a URI-scheme registrant can ask
+  for a scheme number that will be a little more compact in the
+  representation of a CRI than the usual ones.
+  If that is not needed, the registrant perceives no difference from
+  the existing registration procedure for URI schemes, as the
+  additional actions are performed by IANA autonomously.
+
+* For a name that is not registered as a name for a URI scheme, but
+  could be (lexically), a CRI scheme number can be registered in the
+  "CRI Scheme Numbers for Certain Unregistered Scheme Names" registry,
+  under Expert Review ({{cri-reg}}).
+  When a URI scheme is later actually registered under that name, this
+  number will then be used as the CRI scheme number of the new
+  registration and will be removed from the "CRI Scheme Numbers for
+  Certain Unregistered Scheme Names" registry.
+  This procedure is designed to avoid the "X-Dash" problem {{-x-dash}}.
+
+</aside>
+
+## CRI Scheme Numbers for Certain Unregistered Scheme Names Registry {#cri-reg}
+
+This specification defines a new "CRI Scheme Numbers for Certain
+Unregistered Scheme Names" registry in the
 "Constrained RESTful Environments (CoRE) Parameters" registry group
 {{IANA.core-parameters}}, with the policy "Expert Review" ({{Section 4.5
 of RFC8126@-ianacons}}).
-The objective is to have CRI scheme number values registered for all
-registered URI schemes (Uniform Resource Identifier (URI) Schemes
-registry), as well as exceptionally for certain text strings that the
+The objective is to have CRI scheme number values registered for
+certain unregistered URI schemes, i.e., text strings that the
 Designated Expert considers widely used in constrained applications in
 place of URI scheme names.
+
+At the time of initial setup of the new column "CRI Scheme Number" in
+the "Uniform Resource Identifier (URI) Schemes" Registry, the rows in
+{{sec-numbers}} that are not referring to registered URI schemes are
+copied into the "CRI Scheme Numbers for Certain Unregistered Scheme
+Names" registry.
+(At the time of writing, these are the two scheme names "mqtt" and "mqtts".)
+
+The Designated Expert performs the Expert Review for the "CRI Scheme
+Numbers for Certain Unregistered Scheme Names" registry, but
+also participates in the process for the "Uniform Resource Identifier
+(URI) Schemes" registry as defined in {{upd}}.
+
+The same CRI scheme number value MUST NOT be assigned both in the "CRI
+Scheme Number" column of the "Uniform Resource Identifier (URI)
+Schemes" registry and in the "CRI Scheme Number" column of the "CRI
+Scheme Numbers for Certain Unregistered Scheme Names" registry.
 
 ### Instructions for the Designated Expert {#de-instructions}
 
@@ -1591,10 +1694,11 @@ representations (1+0 and 1+1 encoding), keeping them in
 reserve for applications that are likely to enjoy wide use and can
 make good use of their shortness.
 
-When the expert notices that a registration has been made in the
-Uniform Resource Identifier (URI) Schemes registry (see also {{upd}}),
-the expert is requested to initiate a parallel registration in the CRI
-Scheme Numbers registry.
+When the expert is notified that a registration is impending in the
+Uniform Resource Identifier (URI) Schemes registry (see also {{upd}})
+that has declared a special requirement on the CRI scheme number,
+the expert is assigning the CRI scheme number instead of IANA doing
+that autonomously.
 CRI scheme number values in the range between 1000 and
 20000 (inclusive) should be assigned unless a shorter representation
 in CRIs appears desirable.
@@ -1616,11 +1720,20 @@ Also note that the initial registrations in {{tab-numbers}} in
 {{sec-numbers}} already include such registrations for the text strings
 "mqtt" and "mqtts".)
 
-A registration in the CRI Scheme Numbers registry does not imply that
+A registration in the "CRI Scheme Numbers for Certain Unregistered
+Scheme Names" registry does not imply that
 a URI scheme under this name exists or has been registered in the
-Uniform Resource Identifier (URI) Schemes registry -- it essentially
+Uniform Resource Identifier (URI) Schemes registry — it essentially
 is only providing an integer identifier for an otherwise uninterpreted
 text string.
+
+If a registration is made in the "Uniform Resource Identifier (URI)
+Schemes" registry with a scheme name that has an entry in the "CRI
+Scheme Numbers for Certain Unregistered Scheme Names" registry, the
+CRI scheme number from this entry is copied over to the CRI scheme
+number column of the "Uniform Resource Identifier (URI) Schemes"
+Registry, and the row is deleted from the "CRI Scheme Numbers for
+Certain Unregistered Scheme Names" registry.
 
 Any questions or issues that might interest a wider audience might be
 raised by the expert on the core-parameters@ietf.org mailing list for
@@ -1642,34 +1755,10 @@ URI scheme name:
 Reference:
 : a reference to a document, if available, or the registrant
 
-The Reference field can simply be a copy of the reference field for the
-URI-Scheme registration if that exists.
-If not, it can contain helpful information (including the name of the
-registrant) that may be available for the registration, with the
-expectation that this will be updated if a URI-Scheme registration
-under that URI scheme name is later made.
-
-### Initial Registrations
-
-The initial registrations for the CRI Scheme Numbers registry are
-provided in {{tab-numbers}} in {{sec-numbers}}.
-
-
-## Update to "Uniform Resource Identifier (URI) Schemes" Registry {#upd}
-
-{{RFC7595@-schemes}} is updated to add the following note in the "Uniform
-Resource Identifier (URI) Schemes" Registry {{IANA.uri-schemes}}:
-
-{:quote}
->
-The CRI Scheme Numbers Registry registers numeric identifiers for what
-essentially are URI Scheme names.
-Registrants for the Uniform Resource Identifier (URI) Schemes Registry
-are requested to make a parallel registration in the CRI Scheme
-Numbers registry.
-The number for this registration will be assigned by the Designated
-Expert for that registry.
-
+The Reference field can contain helpful information (including the
+name of the registrant) that may be available for the registration,
+with the expectation that this information may be made available with
+a URI-Scheme registration that is later made under that URI scheme name.
 
 ## CBOR Tags Registry {#tags-iana}
 
@@ -1838,6 +1927,13 @@ through the CoRE WG Wiki, <https://wiki.ietf.org/group/core>.
 
 {{tab-numbers}} defines the initial mapping from CRI scheme numbers to
 URI scheme names.
+Rows with URI scheme names hat have a registration in "Uniform
+Resource Identifier (URI) Schemes" registry are used to populate the
+new "CRI scheme numbers" column in that registry ({{upd}}).
+Rows with URI scheme names hat do not have a registration in "Uniform
+Resource Identifier (URI) Schemes" registry are used to populate the
+"CRI Scheme Numbers for Certain Unregistered Scheme Names"
+registry ({{cri-reg}}).
 
 {::include code/schemes-numbers.md}
 {: #tab-numbers title="Mapping Scheme Numbers to Scheme Names"}
