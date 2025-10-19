@@ -160,8 +160,8 @@ used in a non-delimiting function.
 The resolution of URI references ({{Section 5 of RFC3986@-uri}})
 involves parsing a character sequence
 into its components, combining those components with the components of a
-base URI, merging path components, removing dot-segments (`"." and
-".."`, see {{Section 3.3
+base URI, merging path components, removing dot-segments ("`.`" and
+"`..`", see {{Section 3.3
 of RFC3986@-uri}}), and
 recomposing the result back into a character sequence.
 
@@ -283,11 +283,11 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    modeled by two different special values used in the CRI authority component:
 
    * the path can be root-based (zero or more path segments that are
-     each started in the URI with "/", as when the authority is
+     each started in the URI with "`/`", as when the authority is
      present), or
    * the path can be rootless, which requires at least one path
      segment, the first one of which has non-zero length and is not
-     started in the URI with "/" (such as in `mailto:info@example.org`
+     started in the URI with "`/`" (such as in `mailto:info@example.org`
      or in URNs {{-urn}}).
 
    (Note that, in {{cddl}}, `no-authority` is marked as a feature, as
@@ -296,7 +296,7 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
 3. {:#c-userinfo} A userinfo is a text string built out of unreserved
   characters ({{Section 2.3 of RFC3986@-uri}}) or "sub-delims" ({{Section 2.2
   of RFC3986@-uri}}); any other character needs to be percent-encoded ({{pet}}).
-   Note that this excludes the ":" character, which is commonly
+   Note that this excludes the "`:`" character, which is commonly
    deprecated as a way to delimit a cleartext password in a userinfo.
 
 4. {:#c-ip-address} An IP address can be either an IPv4 address or an
@@ -309,8 +309,8 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
 
 5. {:#c-reg-name} A _registered name_ is represented as a sequence of
    one or more lowercase CRI text string *labels* that do not contain
-   dots (".").
-   (These labels joined with dots (".") in between them result in the
+   dots ("`.`").
+   (These labels joined with dots ("`.`") in between them result in the
    CRI equivalent of a URI registered name as per {{Section 3.2.2 of
    RFC3986@-uri}}.
    The syntax may be further restricted by the scheme.
@@ -346,7 +346,7 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    -coap}}.  See also {{<sp-leading-empty}} in {{the-small-print}}.)
 
 9. {:#c-path-segment} A path segment can be any CRI text string, with
-   the exception of the special "." and ".." complete path segments.
+   the exception of the special "`.`" and "`..`" complete path segments.
    Note that this includes the zero-length string.
 
    If no authority is present in a CRI, the leading path segment cannot be empty.
@@ -364,7 +364,7 @@ example, see {{pet}} for partially relaxing constraint {{<c-nfc}}.
    URI query strings are often in the form of "key=value" pairs joined
    by ampersand characters.
    A query string present in a URI is represented in a CRI by
-   splitting its text up on any ampersand ("&") characters into one or
+   splitting its text up on any ampersand ("`&`") characters into one or
    more query
    parameters, which may contain certain characters (including
    ampersands) that were percent-encoded in the URI.
@@ -404,8 +404,8 @@ URI and CRI references often *discard* part or all of the trailing
 path segments of the base URI or CRI.
 
 In a URI reference, this is expressed by syntax for its path component
-such as leading special path segments `.` (to protect a colon in the
-first path component) and `..` (to
+such as leading special path segments "`.`" (to protect a colon in the
+first path component) and "`..`" (to
 discard one more segment) or a leading slash (to discard all segments)
 before giving the path segments to be added at the end of the (now
 truncated) base URI.
@@ -452,7 +452,7 @@ CRI references of this kind can be acceptable -- they still can be resolved
 and result in a valid full CRI that can be converted back.
 Examples of this are:
 
-* `[0, ["p"]]`: appends a slash and the path segment "p" to its base,
+* `[0, ["p"]]`: appends a slash and the path segment "`p`" to its base,
   sets the query to an empty array and the fragment to `null`
 * `[0, null, []]`: leaves the path alone but sets the query to an
   empty array and the fragment to `null`
@@ -461,14 +461,14 @@ Examples of this are:
 Normatively they are characterized by the {{cri-to-uri}} process not producing a valid and syntax-normalized URI.
 For easier understanding, they are listed here:
 
-* CRIs (and CRI references) containing dot-segments (path segment `"."` or `".."`).
+* CRIs (and CRI references) containing dot-segments (path segment "`.`" or "`..`").
 
   These segments would be removed by the remove_dot_segments algorithm of {{STD66}},
   and thus never produce a normalized URI after resolution.
 
   (In CRI references, the `discard` value is used to afford segment
   removal (see {{discard}}),
-  and with "." being an unreserved character, expressing them as "%2e" and "%2e%2e" is not even viable,
+  and with "`.`" being an unreserved character, expressing them as "`%2e`" and "`%2e%2e`" is not even viable,
   let alone practical).
 
 * CRIs without authority whose path starts with a leading empty segment
@@ -729,17 +729,17 @@ scheme-id `-1`.
 The `discard` section can be used in a CRI reference when neither a
 scheme nor an authority is present.
 It then expresses the operations performed on a base CRI by CRI references that
-are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.\\
-"." and ".." are not available in CRIs and are therefore expressed
+are equivalent to URI references with relative paths and path prefixes such as "`/`", "`./`", "`../`", "`../../`", etc.\\
+"`.`" and "`..`" are not available in CRIs and are therefore expressed
 using `discard` after a normalization step, as is the presence or
-absence of a leading "/" (see {{discard}} for examples).
+absence of a leading "`/`" (see {{discard}} for examples).
 
-E.g., a simple URI reference "foo" specifies to remove one trailing
+E.g., a simple URI reference "`foo`" specifies to remove one trailing
 segment, if any,
 from the base URI's path, which is represented in the equivalent CRI
-reference discard section as the value `1`; similarly "../foo" removes
+reference discard section as the value `1`; similarly "`../foo`" removes
 two trailing segments, if any, represented as `2`;
-and "/foo" removes all segments, represented in the `discard` section as the value `true`.
+and "`/foo`" removes all segments, represented in the `discard` section as the value `true`.
 The exact semantics of the section values are defined by
 {{reference-resolution}}.
 
@@ -992,7 +992,7 @@ scheme
 authority
 : If the CRI reference contains a `host-name` or `host-ip` item, the
   authority component of the URI reference consists of a host
-  subcomponent, optionally followed by a colon (":") character and a
+  subcomponent, optionally followed by a colon ("`:`") character and a
   port subcomponent, optionally preceded by a `userinfo` subcomponent.
   Otherwise, the authority component is not set.
 
@@ -1001,20 +1001,20 @@ authority
 
   The `userinfo` subcomponent, if present, is turned into a single
   string by
-  appending a "@".  Otherwise, both the subcomponent and the "@" sign
+  appending a "`@`".  Otherwise, both the subcomponent and the "`@`" sign
   are omitted.
   Any character in the value of the `userinfo` element that is not in
   the set of unreserved characters ({{Section 2.3 of RFC3986@-uri}}) or
-  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) or a colon (":") MUST be
+  "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) or a colon ("`:`") MUST be
   percent-encoded.
 
   The `host-name` is turned into a single string by joining the
-  elements separated by dots (".").
+  elements separated by dots ("`.`").
   Any character in the elements of a `host-name` item that is not in
   the set of unreserved characters ({{Section 2.3 of RFC3986@-uri}}) or
   "sub-delims" ({{Section 2.2 of RFC3986@-uri}}) MUST be
   percent-encoded.
-  If there are dots (".") in such elements, the conversion fails
+  If there are dots ("`.`") in such elements, the conversion fails
   (percent-encoding is not able to represent such elements, as
   normalization would turn the percent-encoding back to the unreserved
   character that a dot is.)
@@ -1060,7 +1060,7 @@ authority
   If the CRI reference contains a `port` item, the port
   subcomponent consists of the value of that item in decimal
   notation.
-  Otherwise, the colon (":") character and the port subcomponent are
+  Otherwise, the colon ("`:`") character and the port subcomponent are
   both omitted.
 
 path
@@ -1069,9 +1069,9 @@ path
   contains a `discard` item of value `0` and the `path` item is
   present, the conversion fails.  If it contains a positive discard
   item, the path component is considered *unrooted* and
-  prefixed by as many "../" components as the `discard` value minus
+  prefixed by as many "`../`" components as the `discard` value minus
   one indicates.  If the discard value is `1` and the first element of
-  the path contains a `:`, the path component is prefixed by "./"
+  the path contains a `:`, the path component is prefixed by "`./`"
   (this avoids the first element to appear as supplying a URI scheme;
   compare `path-noscheme` in {{Section 4.2 of RFC3986@-uri}}).
   {:#colon}
@@ -1084,7 +1084,7 @@ path
   If the CRI reference contains one or more `path` items, the path
   component is constructed by concatenating the sequence of
   representations of these items.  These representations generally
-  contain a leading slash ("/") character and the value of each item,
+  contain a leading slash ("`/`") character and the value of each item,
   processed as discussed below.  The leading slash character is
   omitted for the first path item only if the path component is
   considered "unrooted".  <!-- A path segment that contains a colon
@@ -1095,7 +1095,7 @@ path
 
   Any character in the value of a `path` item that is not
   in the set of unreserved characters or "sub-delims" or a colon
-  (":") or commercial at ("@") character MUST be
+  ("`:`") or commercial at ("`@`") character MUST be
   percent-encoded.
 
   If the authority component is present (not `null` or `true`) and the
@@ -1115,14 +1115,14 @@ path
 query
 : If the CRI reference contains one or more `query` items,
   the query component of the URI reference consists of the value of
-  each item, separated by an ampersand ("&") character.
+  each item, separated by an ampersand ("`&`") character.
   Otherwise, the query component is not set.
 
   Any character in the value of a `query` item that is not
   in the set of unreserved characters or "sub-delims" or a colon
-  (":"), commercial at ("@"), slash ("/"), or question mark ("?")
+  ("`:`"), commercial at ("`@`"), slash ("`/`"), or question mark ("`?`")
   character MUST be percent-encoded.
-  Additionally, any ampersand character ("&") in the item
+  Additionally, any ampersand character ("`&`") in the item
   value MUST be percent-encoded.
 
 fragment
@@ -1133,7 +1133,7 @@ fragment
 
   Any character in the value of a `fragment` item that is
   not in the set of unreserved characters or "sub-delims" or a colon
-  (":"), commercial at ("@"), slash ("/"), or question mark ("?")
+  ("`:`"), commercial at ("`@`"), slash ("`/`"), or question mark ("`?`")
   character MUST be percent-encoded.
 
 # Extending CRIs {#extending}
@@ -1915,7 +1915,7 @@ through the CoRE WG Wiki, <https://wiki.ietf.org/group/core>.
      represented as `[-4, [false, "", "example", "com"]]`; the `false`
      serves as a marker that the next element is the userinfo.
 
-     The rules explicitly cater for unencoded ":" in userinfo (without
+     The rules explicitly cater for unencoded "`:`" in userinfo (without
      needing the `text-or-pet` feature).
      (We opted for including this syntactic feature instead of
      disabling it as a mechanism against potential uses of colons for
