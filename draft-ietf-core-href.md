@@ -239,7 +239,7 @@ be elided at the tail of the serialized form during interchange.
 (Note that some subcomponents such as port numbers or userinfo are
 optional in a CRI as well and therefore can be absent from a CRI.)
 
-In a CRI reference, components can additionally be _not set_
+In a CRI reference, components can additionally be "not set"
 (indicated by interchanging a discard value instead of scheme and
 authority, or by `null` for the scheme, path and query components that
 can otherwise not have that value).
@@ -806,7 +806,7 @@ We refer to this as the *abstract form*, while the *interchange form* ({{cddl}})
 two sections for scheme and authority or one section for discard, but
 never both of these alternatives.
 
-Each of the sections in the abstract form can be _not set_ ("null"),
+Each of the sections in the abstract form can be "not set" (`null`),
 <!-- "not defined" in RFC 3986 -->
 except for discard,
 which is always an unsigned integer or `true`.  If scheme and/or
