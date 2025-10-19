@@ -409,7 +409,8 @@ first path component) and "`..`" (to
 discard one more segment) or a leading slash (to discard all segments)
 before giving the path segments to be added at the end of the (now
 truncated) base URI.
-For use in CRI references, we instead add in a `discard` component as
+For use in CRI references, instead a `discard` component has been
+added as
 an alternative to the `scheme` and `authority` components, making the
 specification of discarding base URI path segments separate from
 adding new path segments from the CRI reference.
@@ -639,7 +640,7 @@ local-part = [path [query [fragment]]]
 {: #cddl title="CDDL for CRI CBOR representation"}
 
 {:#discard1}
-We call the elements of the top-level array *sections*.
+The elements of the top-level array are called *sections*.
 The sections containing the rules `scheme`, `authority`, `path`, `query`, `fragment`
 correspond to the components of a URI and thus of a CRI, as described in
 {{constraints}}.
@@ -802,7 +803,7 @@ with six sections:
 
 scheme, authority, discard, path, query, fragment
 
-We refer to this as the *abstract form*, while the *interchange form* ({{cddl}}) has either
+This is referred to as the *abstract form*, while the *interchange form* ({{cddl}}) has either
 two sections for scheme and authority or one section for discard, but
 never both of these alternatives.
 
@@ -1031,8 +1032,8 @@ authority
 
 [^toascii-note]:
     Editor's note: Some other RFCs reference RFC5890 as the source of ToASCII, since that is the document that replaces RFC3490 and at least mentions ToASCII.
-    Unfortunately, this doesn’t define ToASCII (pointing to RFC 3490 instead), so we consider these references broken.
-    Instead, we reference RFC 3490, which is the document that actually does define ToASCII.
+    Unfortunately, this doesn’t define ToASCII (pointing to RFC 3490 instead), so these references are considered broken.
+    Instead, the present document references RFC 3490, which is the document that actually does define ToASCII.
     RFC 3987 (IRIs) references RFC 3490, too, kind of keeping it alive.
 
   {: #host-ip-to-uri}
@@ -1144,7 +1145,7 @@ _Basic CRI_.
 It should be sufficient for all applications that use the CoAP
 protocol, as well as most other protocols employing URIs.
 
-With one or more of the three features enabled, we speak of _Simple
+CRIs with one or more of the three features enabled are called _Simple
 CRIs_, which cover a larger subset of protocols that employ URIs.
 To overcome remaining limitations, _Extended Forms_ of CRIs may be
 defined to enable further applications.
@@ -1917,7 +1918,7 @@ through the CoRE WG Wiki, <https://wiki.ietf.org/group/core>.
 
      The rules explicitly cater for unencoded "`:`" in userinfo (without
      needing the `text-or-pet` feature).
-     (We opted for including this syntactic feature instead of
+     (This document includes this syntactic feature instead of
      disabling it as a mechanism against potential uses of colons for
      the deprecated inclusion of unencrypted secrets.)
 
