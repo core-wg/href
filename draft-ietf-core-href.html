@@ -20,31 +20,24 @@ registry as well as a note on how that registry cooperates with the
 created by the present RFC. 
        (This &quot;cref&quot; paragraph will be removed by the RFC
 editor:) 
-The present revision  -26  is taking on the results from the
-2025-10-09 IESG telechat (issue #140), by integrating the CRI
-scheme number column into the URI scheme registry created by RFC
-7595 and keeping the URI-Scheme registration process essentially
-unchanged from the point of view of a registrant that does not
-have any special requirements on the CRI scheme number assigned. 
-Also, the cri'' application-extension syntax has been moved to
-draft-ietf-cbor-edn-literals, which is currently lagging behind in
-the approval process. 
+The present revision  -27  is a fixup to revision  -26 , which was
+missing the fixes for Éric Vyncke's COMMENTs.
+This is now intended to be ready for document approval. 
     " name="description">
-<meta content="xml2rfc 3.30.2" name="generator">
+<meta content="xml2rfc 3.31.0" name="generator">
 <meta content="draft-ietf-core-href-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.30.2
-    Python 3.12.11
+  xml2rfc 3.31.0
+    Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.6
     lxml 5.3.1
-    platformdirs 4.4.0
+    platformdirs 4.5.0
     pycountry 24.6.1
     PyYAML 6.0.2
     requests 2.32.5
-    setuptools 80.9.0
     wcwidth 0.2.14
 -->
 <link href="draft-ietf-core-href.xml" rel="alternate" type="application/rfc+xml">
@@ -1068,7 +1061,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 19 April 2026</td>
+<td class="center">Expires 23 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1084,12 +1077,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc7595" class="eref">7595</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-10-16" class="published">16 October 2025</time>
+<time datetime="2025-10-20" class="published">20 October 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-04-19">19 April 2026</time></dd>
+<dd class="expires"><time datetime="2026-04-23">23 April 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1119,15 +1112,9 @@ registry as well as a note on how that registry cooperates with the
 created by the present RFC.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 <p id="section-abstract-3"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC
 editor:)<br>
-The present revision <code>-26</code> is taking on the results from the
-2025-10-09 IESG telechat (issue #140), by integrating the CRI
-scheme number column into the URI scheme registry created by RFC
-7595 and keeping the URI-Scheme registration process essentially
-unchanged from the point of view of a registrant that does not
-have any special requirements on the CRI scheme number assigned.<br>
-Also, the cri'' application-extension syntax has been moved to
-draft-ietf-cbor-edn-literals, which is currently lagging behind in
-the approval process.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
+The present revision <code>-27</code> is a fixup to revision <code>-26</code>, which was
+missing the fixes for Éric Vyncke's COMMENTs.
+This is now intended to be ready for document approval.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1163,7 +1150,7 @@ the approval process.</span><a href="#section-abstract-3" class="pilcrow">¶</a>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1390,8 +1377,8 @@ used in a non-delimiting function.
 The resolution of URI references (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-5" class="relref">5</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>)
 involves parsing a character sequence
 into its components, combining those components with the components of a
-base URI, merging path components, removing dot-segments (<code>"." and
-".."</code>, see Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">3.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), and
+base URI, merging path components, removing dot-segments ("<code>.</code>" and
+"<code>..</code>", see Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">3.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), and
 recomposing the result back into a character sequence.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">Overall, the proper handling of URI references is quite intricate.
 This can be a problem especially in constrained environments <span>[<a href="#RFC7228" class="cite xref">RFC7228</a>]</span><span>[<a href="#I-D.ietf-iotops-7228bis" class="cite xref">I-D.ietf-iotops-7228bis</a>]</span>,
@@ -1469,7 +1456,7 @@ By defining a default value for each of certain components, they often can
 be elided at the tail of the serialized form during interchange.
 (Note that some subcomponents such as port numbers or userinfo are
 optional in a CRI as well and therefore can be absent from a CRI.)<a href="#section-2.1-2" class="pilcrow">¶</a></p>
-<p id="section-2.1-3">In a CRI reference, components can additionally be <em>not set</em>
+<p id="section-2.1-3">In a CRI reference, components can additionally be "not set"
 (indicated by interchanging a discard value instead of scheme and
 authority, or by <code>null</code> for the scheme, path and query components that
 can otherwise not have that value).
@@ -1519,13 +1506,13 @@ modeled by two different special values used in the CRI authority component:<a h
 <ul class="normal">
 <li class="normal" id="section-2.1-5.3.3.1">
                 <p id="section-2.1-5.3.3.1.1">the path can be root-based (zero or more path segments that are
-each started in the URI with "/", as when the authority is
+each started in the URI with "<code>/</code>", as when the authority is
 present), or<a href="#section-2.1-5.3.3.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-2.1-5.3.3.2">
                 <p id="section-2.1-5.3.3.2.1">the path can be rootless, which requires at least one path
 segment, the first one of which has non-zero length and is not
-started in the URI with "/" (such as in <code>mailto:info@example.org</code>
+started in the URI with "<code>/</code>" (such as in <code>mailto:info@example.org</code>
 or in URNs <span>[<a href="#RFC8141" class="cite xref">RFC8141</a>]</span>).<a href="#section-2.1-5.3.3.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
@@ -1540,7 +1527,7 @@ not all CRI implementations will support authority-less URIs.)<a href="#section-
 <div id="c-userinfo">
             <p id="section-2.1-5.4.1">A userinfo is a text string built out of unreserved
   characters (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-2.3" class="relref">2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>) or "sub-delims" (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-2.2" class="relref">2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>); any other character needs to be percent-encoded (<a href="#pet" class="auto internal xref">Section 7.2</a>).
-Note that this excludes the ":" character, which is commonly
+Note that this excludes the "<code>:</code>" character, which is commonly
 deprecated as a way to delimit a cleartext password in a userinfo.<a href="#section-2.1-5.4.1" class="pilcrow">¶</a></p>
 </div>
           </dd>
@@ -1563,8 +1550,8 @@ extension if needed).<a href="#section-2.1-5.5.1" class="pilcrow">¶</a></p>
 <div id="c-reg-name">
             <p id="section-2.1-5.6.1">A <em>registered name</em> is represented as a sequence of
 one or more lowercase CRI text string <em>labels</em> that do not contain
-dots (".").
-(These labels joined with dots (".") in between them result in the
+dots ("<code>.</code>").
+(These labels joined with dots ("<code>.</code>") in between them result in the
 CRI equivalent of a URI registered name as per Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.2.2" class="relref">3.2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>.
 The syntax may be further restricted by the scheme.
 A URI registered name can be empty, for which case a scheme can
@@ -1617,7 +1604,7 @@ performing the check and jump in item 8 of <span><a href="https://rfc-editor.org
 <dd id="section-2.1-5.10">
 <div id="c-path-segment">
             <p id="section-2.1-5.10.1">A path segment can be any CRI text string, with
-the exception of the special "." and ".." complete path segments.
+the exception of the special "<code>.</code>" and "<code>..</code>" complete path segments.
 Note that this includes the zero-length string.<a href="#section-2.1-5.10.1" class="pilcrow">¶</a></p>
 <p id="section-2.1-5.10.2">
 If no authority is present in a CRI, the leading path segment cannot be empty.
@@ -1640,7 +1627,7 @@ If no authority is present in a CRI, the leading path segment cannot be empty.
    URI query strings are often in the form of "key=value" pairs joined
    by ampersand characters.
    A query string present in a URI is represented in a CRI by
-   splitting its text up on any ampersand ("&amp;") characters into one or
+   splitting its text up on any ampersand ("<code>&amp;</code>") characters into one or
    more query
    parameters, which may contain certain characters (including
    ampersands) that were percent-encoded in the URI.
@@ -1700,12 +1687,13 @@ CRI that is expressed relative to a base CRI.
 URI and CRI references often <em>discard</em> part or all of the trailing
 path segments of the base URI or CRI.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">In a URI reference, this is expressed by syntax for its path component
-such as leading special path segments <code>.</code> (to protect a colon in the
-first path component) and <code>..</code> (to
+such as leading special path segments "<code>.</code>" (to protect a colon in the
+first path component) and "<code>..</code>" (to
 discard one more segment) or a leading slash (to discard all segments)
 before giving the path segments to be added at the end of the (now
 truncated) base URI.
-For use in CRI references, we instead add in a <code>discard</code> component as
+For use in CRI references, instead a <code>discard</code> component has been
+added as
 an alternative to the <code>scheme</code> and <code>authority</code> components, making the
 specification of discarding base URI path segments separate from
 adding new path segments from the CRI reference.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
@@ -1811,7 +1799,7 @@ and result in a valid full CRI that can be converted back.
 Examples of this are:<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.3-3.1">
-            <p id="section-2.3-3.1.1"><code>[0, ["p"]]</code>: appends a slash and the path segment "p" to its base,
+            <p id="section-2.3-3.1.1"><code>[0, ["p"]]</code>: appends a slash and the path segment "<code>p</code>" to its base,
 sets the query to an empty array and the fragment to <code>null</code><a href="#section-2.3-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.3-3.2">
@@ -1824,14 +1812,14 @@ Normatively they are characterized by the <a href="#cri-to-uri" class="auto inte
 For easier understanding, they are listed here:<a href="#section-2.3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.3-5.1">
-            <p id="section-2.3-5.1.1">CRIs (and CRI references) containing dot-segments (path segment <code>"."</code> or <code>".."</code>).<a href="#section-2.3-5.1.1" class="pilcrow">¶</a></p>
+            <p id="section-2.3-5.1.1">CRIs (and CRI references) containing dot-segments (path segment "<code>.</code>" or "<code>..</code>").<a href="#section-2.3-5.1.1" class="pilcrow">¶</a></p>
 <p id="section-2.3-5.1.2">
 These segments would be removed by the remove_dot_segments algorithm of <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>,
 and thus never produce a normalized URI after resolution.<a href="#section-2.3-5.1.2" class="pilcrow">¶</a></p>
 <p id="section-2.3-5.1.3">
 (In CRI references, the <code>discard</code> value is used to afford segment
 removal (see <a href="#discard" class="auto internal xref">Section 2.2</a>),
-and with "." being an unreserved character, expressing them as "%2e" and "%2e%2e" is not even viable,
+and with "<code>.</code>" being an unreserved character, expressing them as "<code>%2e</code>" and "<code>%2e%2e</code>" is not even viable,
 let alone practical).<a href="#section-2.3-5.1.3" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.3-5.2">
@@ -2122,7 +2110,7 @@ fragment    = text
           </figcaption></figure>
 </div>
 <div id="discard1">
-<p id="section-5.1-6">We call the elements of the top-level array <em>sections</em>.
+<p id="section-5.1-6">The elements of the top-level array are called <em>sections</em>.
 The sections containing the rules <code>scheme</code>, <code>authority</code>, <code>path</code>, <code>query</code>, <code>fragment</code>
 correspond to the components of a URI and thus of a CRI, as described in
 <a href="#constraints" class="auto internal xref">Section 2</a>.
@@ -2345,16 +2333,16 @@ scheme-id <code>-1</code>.<a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
 <p id="section-5.1.2-1">The <code>discard</code> section can be used in a CRI reference when neither a
 scheme nor an authority is present.
 It then expresses the operations performed on a base CRI by CRI references that
-are equivalent to URI references with relative paths and path prefixes such as "/", "./", "../", "../../", etc.<br>
-"." and ".." are not available in CRIs and are therefore expressed
+are equivalent to URI references with relative paths and path prefixes such as "<code>/</code>", "<code>./</code>", "<code>../</code>", "<code>../../</code>", etc.<br>
+"<code>.</code>" and "<code>..</code>" are not available in CRIs and are therefore expressed
 using <code>discard</code> after a normalization step, as is the presence or
-absence of a leading "/" (see <a href="#discard" class="auto internal xref">Section 2.2</a> for examples).<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.1.2-2">E.g., a simple URI reference "foo" specifies to remove one trailing
+absence of a leading "<code>/</code>" (see <a href="#discard" class="auto internal xref">Section 2.2</a> for examples).<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-2">E.g., a simple URI reference "<code>foo</code>" specifies to remove one trailing
 segment, if any,
 from the base URI's path, which is represented in the equivalent CRI
-reference discard section as the value <code>1</code>; similarly "../foo" removes
+reference discard section as the value <code>1</code>; similarly "<code>../foo</code>" removes
 two trailing segments, if any, represented as <code>2</code>;
-and "/foo" removes all segments, represented in the <code>discard</code> section as the value <code>true</code>.
+and "<code>/foo</code>" removes all segments, represented in the <code>discard</code> section as the value <code>true</code>.
 The exact semantics of the section values are defined by
 <a href="#reference-resolution" class="auto internal xref">Section 5.3</a>.<a href="#section-5.1.2-2" class="pilcrow">¶</a></p>
 <p id="section-5.1.2-3">Most URI references that Section <a href="https://rfc-editor.org/rfc/rfc3986#section-4.2" class="relref">4.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span> calls "relative
@@ -2444,10 +2432,10 @@ than those that would constitute a <code>scheme</code>.<a href="#section-5.1.4-3
 <p id="section-5.2-1">From an abstract point of view, a CRI reference is a data structure
 with six sections:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">scheme, authority, discard, path, query, fragment<a href="#section-5.2-2" class="pilcrow">¶</a></p>
-<p id="section-5.2-3">We refer to this as the <em>abstract form</em>, while the <em>interchange form</em> (<a href="#cddl" class="auto internal xref">Figure 2</a>) has either
+<p id="section-5.2-3">This is referred to as the <em>abstract form</em>, while the <em>interchange form</em> (<a href="#cddl" class="auto internal xref">Figure 2</a>) has either
 two sections for scheme and authority or one section for discard, but
 never both of these alternatives.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
-<p id="section-5.2-4">Each of the sections in the abstract form can be <em>not set</em> ("null"),
+<p id="section-5.2-4">Each of the sections in the abstract form can be "not set" (<code>null</code>),
 
 except for discard,
 which is always an unsigned integer or <code>true</code>.  If scheme and/or
@@ -2668,26 +2656,26 @@ Otherwise, the scheme component is not set.<a href="#section-6.1-2.2.1" class="p
           <dd style="margin-left: 1.5em" id="section-6.1-2.4">
             <p id="section-6.1-2.4.1">If the CRI reference contains a <code>host-name</code> or <code>host-ip</code> item, the
 authority component of the URI reference consists of a host
-subcomponent, optionally followed by a colon (":") character and a
+subcomponent, optionally followed by a colon ("<code>:</code>") character and a
 port subcomponent, optionally preceded by a <code>userinfo</code> subcomponent.
 Otherwise, the authority component is not set.<a href="#section-6.1-2.4.1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2.4.2">The host subcomponent consists of the value of the <code>host-name</code> or
 <code>host-ip</code> item.<a href="#section-6.1-2.4.2" class="pilcrow">¶</a></p>
 <p id="section-6.1-2.4.3">The <code>userinfo</code> subcomponent, if present, is turned into a single
 string by
-appending a "@".  Otherwise, both the subcomponent and the "@" sign
+appending a "<code>@</code>".  Otherwise, both the subcomponent and the "<code>@</code>" sign
 are omitted.
 Any character in the value of the <code>userinfo</code> element that is not in
 the set of unreserved characters (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-2.3" class="relref">2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>) or
-"sub-delims" (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-2.2" class="relref">2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>) or a colon (":") <span class="bcp14">MUST</span> be
+"sub-delims" (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-2.2" class="relref">2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>) or a colon ("<code>:</code>") <span class="bcp14">MUST</span> be
 percent-encoded.<a href="#section-6.1-2.4.3" class="pilcrow">¶</a></p>
 <p id="section-6.1-2.4.4">The <code>host-name</code> is turned into a single string by joining the
-elements separated by dots (".").
+elements separated by dots ("<code>.</code>").
 Any character in the elements of a <code>host-name</code> item that is not in
 the set of unreserved characters (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-2.3" class="relref">2.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>) or
 "sub-delims" (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-2.2" class="relref">2.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>) <span class="bcp14">MUST</span> be
 percent-encoded.
-If there are dots (".") in such elements, the conversion fails
+If there are dots ("<code>.</code>") in such elements, the conversion fails
 (percent-encoding is not able to represent such elements, as
 normalization would turn the percent-encoding back to the unreserved
 character that a dot is.)<a href="#section-6.1-2.4.4" class="pilcrow">¶</a></p>
@@ -2699,8 +2687,8 @@ character that a dot is.)<a href="#section-6.1-2.4.4" class="pilcrow">¶</a></p>
   specification, which is scheme-independent and is in terms of IRIs
   and URIs.
 <span class="cref" id="toascii-note">Editor's note: Some other RFCs reference RFC5890 as the source of ToASCII, since that is the document that replaces RFC3490 and at least mentions ToASCII.
-Unfortunately, this doesn’t define ToASCII (pointing to RFC 3490 instead), so we consider these references broken.
-Instead, we reference RFC 3490, which is the document that actually does define ToASCII.
+Unfortunately, this doesn’t define ToASCII (pointing to RFC 3490 instead), so these references are considered broken.
+Instead, the present document references RFC 3490, which is the document that actually does define ToASCII.
 RFC 3987 (IRIs) references RFC 3490, too, kind of keeping it alive.</span><a href="#section-6.1-2.4.5.1" class="pilcrow">¶</a></p>
 </aside>
 </dd>
@@ -2731,7 +2719,7 @@ RFC 3987 (IRIs) references RFC 3490, too, kind of keeping it alive.</span><a hre
 <p id="section-6.1-5">If the CRI reference contains a <code>port</code> item, the port
   subcomponent consists of the value of that item in decimal
   notation.
-  Otherwise, the colon (":") character and the port subcomponent are
+  Otherwise, the colon ("<code>:</code>") character and the port subcomponent are
   both omitted.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-6.1-6">
           <dt id="section-6.1-6.1">path</dt>
@@ -2742,9 +2730,9 @@ path component is considered <em>rooted</em>.  If it
 contains a <code>discard</code> item of value <code>0</code> and the <code>path</code> item is
 present, the conversion fails.  If it contains a positive discard
 item, the path component is considered <em>unrooted</em> and
-prefixed by as many "../" components as the <code>discard</code> value minus
+prefixed by as many "<code>../</code>" components as the <code>discard</code> value minus
 one indicates.  If the discard value is <code>1</code> and the first element of
-the path contains a <code>:</code>, the path component is prefixed by "./"
+the path contains a <code>:</code>, the path component is prefixed by "<code>./</code>"
 (this avoids the first element to appear as supplying a URI scheme;
 compare <code>path-noscheme</code> in Section <a href="https://rfc-editor.org/rfc/rfc3986#section-4.2" class="relref">4.2</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>).<a href="#section-6.1-6.2.1" class="pilcrow">¶</a></p>
 </div>
@@ -2755,13 +2743,13 @@ rooted.<a href="#section-6.1-6.2.2" class="pilcrow">¶</a></p>
 <p id="section-6.1-6.2.3">If the CRI reference contains one or more <code>path</code> items, the path
 component is constructed by concatenating the sequence of
 representations of these items.  These representations generally
-contain a leading slash ("/") character and the value of each item,
+contain a leading slash ("<code>/</code>") character and the value of each item,
 processed as discussed below.  The leading slash character is
 omitted for the first path item only if the path component is
 considered "unrooted".<a href="#section-6.1-6.2.3" class="pilcrow">¶</a></p>
 <p id="section-6.1-6.2.4">Any character in the value of a <code>path</code> item that is not
 in the set of unreserved characters or "sub-delims" or a colon
-(":") or commercial at ("@") character <span class="bcp14">MUST</span> be
+("<code>:</code>") or commercial at ("<code>@</code>") character <span class="bcp14">MUST</span> be
 percent-encoded.<a href="#section-6.1-6.2.4" class="pilcrow">¶</a></p>
 <p id="section-6.1-6.2.5">If the authority component is present (not <code>null</code> or <code>true</code>) and the
 path component does not match the "path-abempty" rule (Section <a href="https://rfc-editor.org/rfc/rfc3986#section-3.3" class="relref">3.3</a> of RFC 3986 <span>[<a href="#STD66" class="cite xref">STD66</a>]</span>), the conversion fails.<a href="#section-6.1-6.2.5" class="pilcrow">¶</a></p>
@@ -2778,13 +2766,13 @@ conversion fails.<a href="#section-6.1-6.2.7" class="pilcrow">¶</a></p>
           <dd style="margin-left: 1.5em" id="section-6.1-6.4">
             <p id="section-6.1-6.4.1">If the CRI reference contains one or more <code>query</code> items,
 the query component of the URI reference consists of the value of
-each item, separated by an ampersand ("&amp;") character.
+each item, separated by an ampersand ("<code>&amp;</code>") character.
 Otherwise, the query component is not set.<a href="#section-6.1-6.4.1" class="pilcrow">¶</a></p>
 <p id="section-6.1-6.4.2">Any character in the value of a <code>query</code> item that is not
 in the set of unreserved characters or "sub-delims" or a colon
-(":"), commercial at ("@"), slash ("/"), or question mark ("?")
+("<code>:</code>"), commercial at ("<code>@</code>"), slash ("<code>/</code>"), or question mark ("<code>?</code>")
 character <span class="bcp14">MUST</span> be percent-encoded.
-Additionally, any ampersand character ("&amp;") in the item
+Additionally, any ampersand character ("<code>&amp;</code>") in the item
 value <span class="bcp14">MUST</span> be percent-encoded.<a href="#section-6.1-6.4.2" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
@@ -2796,7 +2784,7 @@ item.
 Otherwise, the fragment component is not set.<a href="#section-6.1-6.6.1" class="pilcrow">¶</a></p>
 <p id="section-6.1-6.6.2">Any character in the value of a <code>fragment</code> item that is
 not in the set of unreserved characters or "sub-delims" or a colon
-(":"), commercial at ("@"), slash ("/"), or question mark ("?")
+("<code>:</code>"), commercial at ("<code>@</code>"), slash ("<code>/</code>"), or question mark ("<code>?</code>")
 character <span class="bcp14">MUST</span> be percent-encoded.<a href="#section-6.1-6.6.2" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
@@ -2815,7 +2803,7 @@ feature ("scheme-name", "no-authority", "userinfo"), is termed the
 <em>Basic CRI</em>.
 It should be sufficient for all applications that use the CoAP
 protocol, as well as most other protocols employing URIs.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">With one or more of the three features enabled, we speak of <em>Simple
+<p id="section-7-2">CRIs with one or more of the three features enabled are called <em>Simple
 CRIs</em>, which cover a larger subset of protocols that employ URIs.
 To overcome remaining limitations, <em>Extended Forms</em> of CRIs may be
 defined to enable further applications.
@@ -4071,9 +4059,9 @@ feature is present.  The URI <code>https://@example.com</code> is
 represented as <code>[-4, [false, "", "example", "com"]]</code>; the <code>false</code>
 serves as a marker that the next element is the userinfo.<a href="#appendix-A-7.1.3.3.2" class="pilcrow">¶</a></p>
 <p id="appendix-A-7.1.3.3.3">
-The rules explicitly cater for unencoded ":" in userinfo (without
+The rules explicitly cater for unencoded "<code>:</code>" in userinfo (without
 needing the <code>text-or-pet</code> feature).
-(We opted for including this syntactic feature instead of
+(This document includes this syntactic feature instead of
 disabling it as a mechanism against potential uses of colons for
 the deprecated inclusion of unencrypted secrets.)<a href="#appendix-A-7.1.3.3.3" class="pilcrow">¶</a></p>
 </li>
