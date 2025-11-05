@@ -118,16 +118,13 @@ environments with severe limitations on processing power, code size, and
 memory size.
 
 This RFC updates RFC 7595 by adding a column on the "URI Schemes"
-registry as well as a note on how that registry cooperates with the
-"CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
-created by the present RFC.
+registry.
 
 [^status]
 
 [^status]: (This "cref" paragraph will be removed by the RFC
     editor:)\\
-    The present revision `-27` is a fixup to revision `-26`, which was
-    missing the fixes for Éric Vyncke's COMMENTs.
+    The present revision `-28-to-be` is revision of `-27` to simplify the IANA registration.
     This is now intended to be ready for document approval.
 
 --- middle
@@ -191,9 +188,7 @@ constraints and/or to provide more convenient representations for
 certain areas of application.
 
 This RFC updates {{RFC7595@-schemes}} by adding a column on the "URI Schemes"
-registry as well as a note on how that registry cooperates with the
-"CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
-created by the present RFC.
+registry.
 
 
 ## Notational Conventions
@@ -699,12 +694,9 @@ section, mapped to lower case).
 less constrained CRI implementations might support `scheme-name`.)
 
 Scheme numbers are unsigned integers that are mapped to and from
-scheme names by exactly one of the following two registries:
-
-* "Uniform Resource Identifier (URI) Schemes" Registry ({{Section 6
-  (IANA Considerations) of RFC7595@-schemes}} as updated by {{upd}}), or
-* "CRI Scheme Numbers for Certain Unregistered Scheme Names" registry
-  ({{cri-reg}}).
+scheme names by the "Uniform Resource Identifier (URI) Schemes"
+Registry ({{Section 6 (IANA Considerations) of RFC7595@-schemes}} as
+updated by {{upd}}).
 
 The relationship of a scheme number to its `scheme-id` is as follows:
 
@@ -1832,11 +1824,12 @@ URI scheme names.
 Rows with URI scheme names hat have a registration in "Uniform
 Resource Identifier (URI) Schemes" registry are used to populate the
 new "CRI scheme numbers" column in that registry ({{upd}}).
-Rows with URI scheme names hat do not have a registration in "Uniform
-Resource Identifier (URI) Schemes" registry are used to populate the
-"CRI Scheme Numbers for Certain Unregistered Scheme Names"
-registry ({{cri-reg}}).
 
+[^add-regs]
+
+[^add-regs]:
+    Rows with URI scheme names hat do not currently have a registration in the "Uniform Resource Identifier (URI) Schemes" registry are intended for registration before publication of this document.
+    
 {::include code/schemes-numbers.md}
 {: #tab-numbers title="Mapping Scheme Numbers to Scheme Names"}
 
