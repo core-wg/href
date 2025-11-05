@@ -2487,7 +2487,7 @@ Appendix B.  Mapping Scheme Numbers to Scheme Names
    (Section 11.1).
 
 
-   // Rows with URI scheme names hat do not currently have a
+   // Rows with URI scheme names that do not currently have a
    // registration in the "Uniform Resource Identifier (URI) Schemes"
    // registry are intended for registration before publication of this
    // document.
