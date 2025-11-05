@@ -1824,7 +1824,7 @@ new "CRI scheme numbers" column in that registry ({{upd}}).
 [^add-regs]
 
 [^add-regs]:
-    Rows with URI scheme names hat do not currently have a registration in the "Uniform Resource Identifier (URI) Schemes" registry are intended for registration before publication of this document.
+    Rows with URI scheme names that do not currently have a registration in the "Uniform Resource Identifier (URI) Schemes" registry are intended for registration before publication of this document.
 
 {::include code/schemes-numbers.md}
 {: #tab-numbers title="Mapping Scheme Numbers to Scheme Names"}
