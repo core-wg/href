@@ -72,7 +72,6 @@ informative:
   I-D.bormann-cbor-notable-tags: notable
   RFC9170: use-lose
   MNU: I-D.bormann-dispatch-modern-network-unicode
-  RFC6648: x-dash
 normative:
   RFC4007: zone-orig
   I-D.ietf-netmod-rfc6991-bis: 6991bis
@@ -83,9 +82,6 @@ normative:
   BCP35: schemes
 # RFC7595
   IANA.uri-schemes:
-  BCP26:
-    -: ianacons
-#    =: RFC8126
   IANA.media-type-sub-parameters: mtsub
   RFC9237: aif
   IANA.core-parameters:
