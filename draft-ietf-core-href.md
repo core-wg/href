@@ -126,9 +126,9 @@ created by the present RFC.
 
 [^status]: (This "cref" paragraph will be removed by the RFC
     editor:)\\
-    The present revision `-27` is a fixup to revision `-26`, which was
-    missing the fixes for Éric Vyncke's COMMENTs.
-    This is now intended to be ready for document approval.
+    After approval of -28, the present revision `-29` pulls in the
+    newest URI Schemes and assigns URI scheme numbers for them.
+    This is now intended to be ready for integration into the IANA database.
 
 --- middle
 
