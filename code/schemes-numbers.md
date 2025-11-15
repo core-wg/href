@@ -24,6 +24,7 @@
 |              1578 |              jar | \[RFC-XXXX] |
 |              1658 |             wpid | \[RFC-XXXX] |
 |              1762 |          payment | \[RFC-XXXX] |
+|              1819 |           linkid | \[RFC-XXXX] |
 |              1895 |             news | \[RFC-XXXX] |
 |              1905 |             irc6 | \[RFC-XXXX] |
 |              1926 |            turns | \[RFC-XXXX] |
@@ -42,6 +43,7 @@
 |              2945 | ms-newsandinterests | \[RFC-XXXX] |
 |              3005 |      xmlrpc.beep | \[RFC-XXXX] |
 |              3018 |              ark | \[RFC-XXXX] |
+|              3032 |             esim | \[RFC-XXXX] |
 |              3119 |              wss | \[RFC-XXXX] |
 |              3143 |              tel | \[RFC-XXXX] |
 |              3255 |  vscode-insiders | \[RFC-XXXX] |
@@ -208,6 +210,7 @@
 |             10024 |               bl | \[RFC-XXXX] |
 |             10119 |             imap | \[RFC-XXXX] |
 |             10147 |            query | \[RFC-XXXX] |
+|             10150 |            donau | \[RFC-XXXX] |
 |             10176 |              ves | \[RFC-XXXX] |
 |             10183 |        ms-recall | \[RFC-XXXX] |
 |             10196 |              acr | \[RFC-XXXX] |
@@ -218,6 +221,7 @@
 |             10247 |              lid | \[RFC-XXXX] |
 |             10317 |             h323 | \[RFC-XXXX] |
 |             10327 |              aim | \[RFC-XXXX] |
+|             10328 |               i0 | \[RFC-XXXX] |
 |             10333 |             turn | \[RFC-XXXX] |
 |             10361 |      ms-stickers | \[RFC-XXXX] |
 |             10373 | ms-settings-location | \[RFC-XXXX] |
@@ -311,6 +315,7 @@
 |             13608 |          onenote | \[RFC-XXXX] |
 |             13650 |            sarif | \[RFC-XXXX] |
 |             13680 |             elsi | \[RFC-XXXX] |
+|             13785 |         xcompute | \[RFC-XXXX] |
 |             13829 |          otpauth | \[RFC-XXXX] |
 |             13846 |             info | \[RFC-XXXX] |
 |             13862 |              aaa | \[RFC-XXXX] |
@@ -368,6 +373,7 @@
 |             15773 | ms-settings-camera | \[RFC-XXXX] |
 |             15776 | ms-virtualtouchpad | \[RFC-XXXX] |
 |             15805 |     xmlrpc.beeps | \[RFC-XXXX] |
+|             15819 |              dnp | \[RFC-XXXX] |
 |             15972 |             ipfs | \[RFC-XXXX] |
 |             15994 | ms-settings-wifi | \[RFC-XXXX] |
 |             16051 |               aw | \[RFC-XXXX] |

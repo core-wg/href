@@ -23,6 +23,7 @@
 1578,jar
 1658,wpid
 1762,payment
+1819,linkid
 1895,news
 1905,irc6
 1926,turns
@@ -41,6 +42,7 @@
 2945,ms-newsandinterests
 3005,xmlrpc.beep
 3018,ark
+3032,esim
 3119,wss
 3143,tel
 3255,vscode-insiders
@@ -207,6 +209,7 @@
 10024,bl
 10119,imap
 10147,query
+10150,donau
 10176,ves
 10183,ms-recall
 10196,acr
@@ -217,6 +220,7 @@
 10247,lid
 10317,h323
 10327,aim
+10328,i0
 10333,turn
 10361,ms-stickers
 10373,ms-settings-location
@@ -310,6 +314,7 @@
 13608,onenote
 13650,sarif
 13680,elsi
+13785,xcompute
 13829,otpauth
 13846,info
 13862,aaa
@@ -367,6 +372,7 @@
 15773,ms-settings-camera
 15776,ms-virtualtouchpad
 15805,xmlrpc.beeps
+15819,dnp
 15972,ipfs
 15994,ms-settings-wifi
 16051,aw
