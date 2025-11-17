@@ -28,8 +28,8 @@ a = REXML::XPath.each(schemes.root, "//registry[@id=\"uri-schemes-1\"]/record").
   get_one(rec, "value")
 end
 warn a.count
-a << "mqtt" # Unregistered
-a << "mqtts" # Unregistered
+# a << "mqtt" # Unregistered
+# a << "mqtts" # Unregistered
 warn a.count
 
 prefill = DATA.read

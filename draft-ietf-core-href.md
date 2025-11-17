@@ -120,8 +120,11 @@ registry.
 
 [^status]: (This "cref" paragraph will be removed by the RFC
     editor:)\\
-    The present revision `-28-to-be` is revision of `-27` to simplify the IANA registration.
-    This is now intended to be ready for document approval.
+    After approval of -28, the present revision `-29` pulls in the
+    newest URI Schemes and assigns URI scheme numbers for them; it
+    also adjusts the content-format registration to follow the
+    preferred string format defined in Section 4.1.4 of RFC 9876.
+    This is now intended to be ready for integration into the IANA database.
 
 --- middle
 
@@ -1718,7 +1721,7 @@ RESTful Environments (CoRE) Parameters" registry group
 [IANA.core-parameters], as follows:
 
 | Content Type                             | Content Coding | ID  | Reference |
-| application/aif+cbor;Toid=CRI-local-part | -              | TBD | RFC-XXXX  |
+| application/aif+cbor;toid=CRI-local-part | -              | TBD | RFC-XXXX  |
 {: #tab-iana-toid-ct title="Content-Format for ACE AIF with CRI-local-part Toid"}
 
 
