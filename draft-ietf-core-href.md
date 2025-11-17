@@ -1167,7 +1167,7 @@ Simple CRIs:
 
   is represented by the Basic CRI
 
-  ~~~ coap-diag
+  ~~~ cbor-diag
   [-4, ["alice"], ["3/4-inch"]]
   ~~~
 
