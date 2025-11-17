@@ -6,7 +6,7 @@ CoRE Working Group                                       C. Bormann, Ed.
 Internet-Draft                                    Universität Bremen TZI
 Updates: 7595 (if approved)                                  H. Birkholz
 Intended status: Standards Track                          Fraunhofer SIT
-Expires: 19 May 2026                                    15 November 2025
+Expires: 21 May 2026                                    17 November 2025
 
 
                     Constrained Resource Identifiers
@@ -27,8 +27,10 @@ Abstract
 
    // (This "cref" paragraph will be removed by the RFC editor:) After
    // approval of -28, the present revision -29 pulls in the newest URI
-   // Schemes and assigns URI scheme numbers for them.  This is now
-   // intended to be ready for integration into the IANA database.
+   // Schemes and assigns URI scheme numbers for them; it also adjusts
+   // the content-format registration to follow the preferred string
+   // format defined in Section 4.1.4 of RFC 9876.  This is now intended
+   // to be ready for integration into the IANA database.
 
 About This Document
 
@@ -45,18 +47,21 @@ About This Document
    Source for this draft and an issue tracker can be found at
    https://github.com/core-wg/href.
 
+
+
+
+
+
+
+Bormann & Birkholz         Expires 21 May 2026                  [Page 1]
+
+Internet-Draft      Constrained Resource Identifiers       November 2025
+
+
 Status of This Memo
 
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
-
-
-
-
-Bormann & Birkholz         Expires 19 May 2026                  [Page 1]
-
-Internet-Draft      Constrained Resource Identifiers       November 2025
-
 
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
@@ -68,7 +73,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 May 2026.
+   This Internet-Draft will expire on 21 May 2026.
 
 Copyright Notice
 
@@ -101,19 +106,19 @@ Table of Contents
        5.1.3.  Examples  . . . . . . . . . . . . . . . . . . . . . .  18
        5.1.4.  Specific Terminology  . . . . . . . . . . . . . . . .  18
      5.2.  Ingesting and encoding a CRI Reference  . . . . . . . . .  19
+
+
+
+Bormann & Birkholz         Expires 21 May 2026                  [Page 2]
+
+Internet-Draft      Constrained Resource Identifiers       November 2025
+
+
        5.2.1.  Error handling and extensibility  . . . . . . . . . .  19
      5.3.  Reference Resolution  . . . . . . . . . . . . . . . . . .  21
    6.  Relationship between CRIs, URIs, and IRIs . . . . . . . . . .  21
      6.1.  Converting CRI (references) to URI (references) . . . . .  22
    7.  Extending CRIs  . . . . . . . . . . . . . . . . . . . . . . .  25
-
-
-
-Bormann & Birkholz         Expires 19 May 2026                  [Page 2]
-
-Internet-Draft      Constrained Resource Identifiers       November 2025
-
-
      7.1.  Extended CRI: Stand-In Items  . . . . . . . . . . . . . .  27
      7.2.  Extended CRI: Accommodating Percent Encoding (PET)  . . .  27
    8.  Integration into CoAP and ACE . . . . . . . . . . . . . . . .  29
@@ -152,29 +157,19 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
    resources in hypertext formats such as HTML [W3C.REC-html52-20171214]
    or the HTTP "Link" header field [RFC8288].
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bormann & Birkholz         Expires 19 May 2026                  [Page 3]
-
-Internet-Draft      Constrained Resource Identifiers       November 2025
-
-
    A URI reference is a sequence of characters chosen from the
    repertoire of US-ASCII characters (Section 4.1 of RFC 3986 [STD66]).
    The individual components of a URI reference are delimited by a
    number of reserved characters, which necessitates the use of a
    character escape mechanism called "percent-encoding" when these
+
+
+
+Bormann & Birkholz         Expires 21 May 2026                  [Page 3]
+
+Internet-Draft      Constrained Resource Identifiers       November 2025
+
+
    reserved characters are used in a non-delimiting function.  The
    resolution of URI references (Section 5 of RFC 3986 [STD66]) involves
    parsing a character sequence into its components, combining those
@@ -221,7 +216,12 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                  [Page 4]
+
+
+
+
+
+Bormann & Birkholz         Expires 21 May 2026                  [Page 4]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -277,7 +277,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                  [Page 5]
+Bormann & Birkholz         Expires 21 May 2026                  [Page 5]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -333,7 +333,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                  [Page 6]
+Bormann & Birkholz         Expires 21 May 2026                  [Page 6]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -389,7 +389,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                  [Page 7]
+Bormann & Birkholz         Expires 21 May 2026                  [Page 7]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -445,7 +445,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                  [Page 8]
+Bormann & Birkholz         Expires 21 May 2026                  [Page 8]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -501,7 +501,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                  [Page 9]
+Bormann & Birkholz         Expires 21 May 2026                  [Page 9]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -557,7 +557,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 10]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 10]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -613,7 +613,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 11]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 11]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -669,7 +669,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 12]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 12]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -725,7 +725,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 13]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 13]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -781,7 +781,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 14]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 14]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -837,7 +837,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 15]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 15]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -893,7 +893,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 16]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 16]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -949,7 +949,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 17]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 17]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1005,7 +1005,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 18]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 18]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1061,7 +1061,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 19]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 19]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1117,7 +1117,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 20]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 20]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1173,7 +1173,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 21]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 21]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1229,7 +1229,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 22]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 22]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1285,7 +1285,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 23]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 23]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1341,7 +1341,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 24]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 24]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1397,7 +1397,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 25]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 25]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1453,7 +1453,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 26]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 26]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1509,7 +1509,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 27]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 27]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1565,7 +1565,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 28]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 28]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1621,7 +1621,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 29]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 29]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1677,7 +1677,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 30]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 30]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1733,7 +1733,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 31]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 31]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1789,7 +1789,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 32]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 32]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1845,7 +1845,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 33]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 33]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1901,7 +1901,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 34]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 34]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -1957,7 +1957,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 35]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 35]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2013,7 +2013,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 36]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 36]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2069,7 +2069,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 37]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 37]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2095,7 +2095,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
     | Content Type                 | Content Coding | ID  | Reference |
     +------------------------------+----------------+-----+-----------+
     | application/                 | -              | TBD | RFC-XXXX  |
-    | aif+cbor;Toid=CRI-local-part |                |     |           |
+    | aif+cbor;toid=CRI-local-part |                |     |           |
     +------------------------------+----------------+-----+-----------+
 
         Table 9: Content-Format for ACE AIF with CRI-local-part Toid
@@ -2125,7 +2125,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 38]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 38]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2181,7 +2181,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 39]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 39]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2237,7 +2237,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 40]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 40]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2293,7 +2293,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 41]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 41]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2349,7 +2349,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 42]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 42]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2405,7 +2405,7 @@ Appendix A.  Examples of Corner Cases
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 43]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 43]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2461,7 +2461,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 44]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 44]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2517,7 +2517,7 @@ Appendix B.  Mapping Scheme Numbers to Scheme Names
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 45]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 45]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2573,7 +2573,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 46]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 46]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2629,7 +2629,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 47]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 47]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2685,7 +2685,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 48]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 48]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2741,7 +2741,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 49]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 49]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2797,7 +2797,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 50]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 50]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2853,7 +2853,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 51]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 51]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2909,7 +2909,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 52]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 52]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -2965,7 +2965,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 53]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 53]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -3021,7 +3021,7 @@ Appendix C.  Change Log
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 54]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 54]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -3077,7 +3077,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 55]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 55]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -3133,7 +3133,7 @@ Internet-Draft      Constrained Resource Identifiers       November 2025
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 56]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 56]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -3189,7 +3189,7 @@ Contributors
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 57]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 57]
 
 Internet-Draft      Constrained Resource Identifiers       November 2025
 
@@ -3245,4 +3245,4 @@ Authors' Addresses
 
 
 
-Bormann & Birkholz         Expires 19 May 2026                 [Page 58]
+Bormann & Birkholz         Expires 21 May 2026                 [Page 58]
