@@ -18,8 +18,11 @@ memory size.
 registry. 
        (This "cref" paragraph will be removed by the RFC
 editor:) 
-The present revision  -28-to-be  is revision of  -27  to simplify the IANA registration.
-This is now intended to be ready for document approval. 
+After approval of -28, the present revision  -29  pulls in the
+newest URI Schemes and assigns URI scheme numbers for them; it
+also adjusts the content-format registration to follow the
+preferred string format defined in Section 4.1.4 of RFC 9876.
+This is now intended to be ready for integration into the IANA database. 
     ' name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
 <meta content="draft-ietf-core-href-latest" name="ietf.draft">
@@ -1058,7 +1061,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann &amp; Birkholz</td>
-<td class="center">Expires 9 May 2026</td>
+<td class="center">Expires 21 May 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1074,12 +1077,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc7595" class="eref">7595</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-11-05" class="published">5 November 2025</time>
+<time datetime="2025-11-17" class="published">17 November 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-05-09">9 May 2026</time></dd>
+<dd class="expires"><time datetime="2026-05-21">21 May 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1107,8 +1110,11 @@ memory size.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 registry.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 <p id="section-abstract-3"><span class="cref" id="status">(This "cref" paragraph will be removed by the RFC
 editor:)<br>
-The present revision <code>-28-to-be</code> is revision of <code>-27</code> to simplify the IANA registration.
-This is now intended to be ready for document approval.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
+After approval of -28, the present revision <code>-29</code> pulls in the
+newest URI Schemes and assigns URI scheme numbers for them; it
+also adjusts the content-format registration to follow the
+preferred string format defined in Section 4.1.4 of RFC 9876.
+This is now intended to be ready for integration into the IANA database.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1144,7 +1150,7 @@ This is now intended to be ready for document approval.</span><a href="#section-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 9 May 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 21 May 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -3615,7 +3621,7 @@ RESTful Environments (CoRE) Parameters" registry group
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">application/aif+cbor;Toid=CRI-local-part</td>
+              <td class="text-left" rowspan="1" colspan="1">application/aif+cbor;toid=CRI-local-part</td>
               <td class="text-left" rowspan="1" colspan="1">-</td>
               <td class="text-left" rowspan="1" colspan="1">TBD</td>
               <td class="text-left" rowspan="1" colspan="1">RFC-XXXX</td>
@@ -4082,6 +4088,11 @@ new "CRI scheme numbers" column in that registry (<a href="#upd" class="auto int
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">1819</td>
+            <td class="text-left" rowspan="1" colspan="1">linkid</td>
+            <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
+          </tr>
+          <tr>
             <td class="text-left" rowspan="1" colspan="1">1895</td>
             <td class="text-left" rowspan="1" colspan="1">news</td>
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
@@ -4169,6 +4180,11 @@ new "CRI scheme numbers" column in that registry (<a href="#upd" class="auto int
           <tr>
             <td class="text-left" rowspan="1" colspan="1">3018</td>
             <td class="text-left" rowspan="1" colspan="1">ark</td>
+            <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">3032</td>
+            <td class="text-left" rowspan="1" colspan="1">esim</td>
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
           </tr>
           <tr>
@@ -5002,6 +5018,11 @@ new "CRI scheme numbers" column in that registry (<a href="#upd" class="auto int
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">10150</td>
+            <td class="text-left" rowspan="1" colspan="1">donau</td>
+            <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
+          </tr>
+          <tr>
             <td class="text-left" rowspan="1" colspan="1">10176</td>
             <td class="text-left" rowspan="1" colspan="1">ves</td>
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
@@ -5049,6 +5070,11 @@ new "CRI scheme numbers" column in that registry (<a href="#upd" class="auto int
           <tr>
             <td class="text-left" rowspan="1" colspan="1">10327</td>
             <td class="text-left" rowspan="1" colspan="1">aim</td>
+            <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">10328</td>
+            <td class="text-left" rowspan="1" colspan="1">i0</td>
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
           </tr>
           <tr>
@@ -5517,6 +5543,11 @@ new "CRI scheme numbers" column in that registry (<a href="#upd" class="auto int
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">13785</td>
+            <td class="text-left" rowspan="1" colspan="1">xcompute</td>
+            <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
+          </tr>
+          <tr>
             <td class="text-left" rowspan="1" colspan="1">13829</td>
             <td class="text-left" rowspan="1" colspan="1">otpauth</td>
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
@@ -5799,6 +5830,11 @@ new "CRI scheme numbers" column in that registry (<a href="#upd" class="auto int
           <tr>
             <td class="text-left" rowspan="1" colspan="1">15805</td>
             <td class="text-left" rowspan="1" colspan="1">xmlrpc.beeps</td>
+            <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">15819</td>
+            <td class="text-left" rowspan="1" colspan="1">dnp</td>
             <td class="text-left" rowspan="1" colspan="1">[RFC-XXXX]</td>
           </tr>
           <tr>
