@@ -120,11 +120,9 @@ registry.
 
 [^status]: (This "cref" paragraph will be removed by the RFC
     editor:)\\
-    After approval of -28, the present revision `-29` pulls in the
-    newest URI Schemes and assigns URI scheme numbers for them; it
-    also adjusts the content-format registration to follow the
-    preferred string format defined in Section 4.1.4 of RFC 9876.
-    This is now intended to be ready for integration into the IANA database.
+    After approval of -28 and nit fixes in -29, the present revision
+    `-30` contains two more small fixes for nits that were uncovered
+    in the RPC intake process.
 
 --- middle
 
